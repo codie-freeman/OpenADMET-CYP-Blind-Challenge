@@ -5,6 +5,20 @@ Centralized here per CLAUDE.md's "fingerprints/similarity/splits go through one
 shared module" rule -- these are used identically across notebooks (canonicalization/
 InChIKey in curation; fingerprints/similarity/SALI/descriptors/scaffolds in chemical
 space exploration and beyond) rather than redefined per notebook.
+
+Two descriptor options are provided, for two different purposes: `isoform_structural_
+descriptors` is a narrow, pharmacologically-motivated 9-descriptor set built for
+notebook 02's isoform-specific SAR interpretability work; `rdkit_2d_descriptors` is the
+full RDKit 2D descriptor set (200+ descriptors), added in notebook 03 (Section 2) as the
+broader tabular-baseline feature option matching this challenge's official baseline
+models (RDKit 2D + ECFP4). Neither replaces the other -- pick per the notebook's
+purpose.
+
+`frozen_encoder_embeddings` is the shared forward-pass/batching loop for extracting
+molecule embeddings from an already-loaded, already-frozen chemprop encoder + agg pair
+-- used by both `chemeleon_embeddings` (CheMeleon's own checkpoint) and
+`scripts/train_log2fc_encoder.py` (a freshly-trained-then-frozen encoder, notebook 03b),
+so that loop isn't duplicated between the two.
 """
 
 import numpy as np
@@ -187,6 +201,161 @@ def isoform_structural_descriptors(smiles: str) -> dict:
         "logd_proxy": logp,
         "vsa_acc_proxy": Descriptors.PEOE_VSA1(mol) + Descriptors.PEOE_VSA2(mol),
     }
+
+
+# Reference descriptor-name ordering for `rdkit_2d_descriptors`, computed once from a
+# trivial valid molecule at module load (confirmed identical across a range of
+# molecules -- including disconnected/ionic species -- during development of that
+# function, not assumed) and reused as the NaN-fallback key set for unparseable SMILES,
+# so the failure case always returns the same shape as the success case.
+_RDKIT_2D_DESCRIPTOR_NAMES = tuple(Descriptors.CalcMolDescriptors(Chem.MolFromSmiles("C")).keys())
+
+
+def rdkit_2d_descriptors(smiles: str) -> dict:
+    """All RDKit-computed 2D descriptors (via `Descriptors.CalcMolDescriptors`) for
+    `smiles`, as a dict keyed by descriptor name.
+
+    This is the full RDKit 2D descriptor set (200+ descriptors), used here as the
+    broader companion to `isoform_structural_descriptors` -- see that function's
+    docstring for the narrower, pharmacologically-motivated alternative. Matches the
+    feature recipe used by this challenge's official baseline models (RDKit 2D
+    descriptors + ECFP4), per OpenADMET's own description of XGB-baseline/LGBM-baseline
+    (confirmed via the project's OpenADMET Discord thread).
+
+    Returns a dict of NaN for every field if the SMILES fails to parse. Field set is
+    determined by the installed RDKit version -- callers needing a stable, versioned
+    column set should pin rdkit's version and log it, not assume this list is fixed
+    across environments.
+    """
+    mol = Chem.MolFromSmiles(smiles)
+    if mol is None:
+        return {name: np.nan for name in _RDKIT_2D_DESCRIPTOR_NAMES}
+    return Descriptors.CalcMolDescriptors(mol)
+
+
+def chemeleon_embeddings(
+    smiles_list: list[str],
+    checkpoint_path: str | None = None,
+    batch_size: int = 128,
+    device: str = "cpu",
+) -> np.ndarray:
+    """Mean-pooled molecule embeddings from the pretrained CheMeleon foundation-model
+    encoder (chemprop `BondMessagePassing`, Zenodo record 15460715).
+
+    A single frozen forward pass -- the checkpoint's weights are loaded and never
+    updated here, so this is feature extraction, not training, matching the "fast
+    forward pass" framing it's used under in notebook 03. `checkpoint_path` defaults to
+    `~/.chemprop/chemeleon_mp.pt`, chemprop's own foundation-model cache location
+    (downloaded automatically by chemprop/openadmet tooling on first use, or manually
+    from https://zenodo.org/records/15460715/files/chemeleon_mp.pt); raises
+    `FileNotFoundError` rather than downloading it here, so this function has no
+    network dependency. `device` defaults to CPU rather than MPS for exact
+    run-to-run determinism, since this output is meant to be frozen to disk once and
+    never recomputed.
+
+    torch/chemprop are imported lazily inside this function so notebooks that only
+    need canonicalization/fingerprints/descriptors aren't forced to load them.
+
+    Caller must set `OMP_NUM_THREADS=1` (via `os.environ`, before rdkit/torch/chemprop
+    are first imported anywhere in the process -- e.g. at the very top of a notebook)
+    to avoid a segfault from rdkit and torch each bundling their own conflicting
+    OpenMP runtime on macOS; confirmed via direct reproduction during development of
+    this function (crashes intermittently, sometimes silently, without it). This
+    function does not set it itself since it must be set before those modules'
+    top-level imports elsewhere in the process, which may already have happened by the
+    time this function is called.
+
+    Every SMILES in `smiles_list` must already be RDKit-parseable (callers should
+    pre-filter with `canonicalize_smiles`) -- chemprop's own SMILES parser raises on a
+    failure rather than returning None, so there is no per-row failure mode to handle
+    here. Returns a `(len(smiles_list), 2048)` float32 array in the same row order as
+    `smiles_list`; order is preserved by disabling dataloader shuffling and forcing
+    `drop_last=False` (chemprop's own default can silently drop the final row when
+    `len(dataset) % batch_size == 1`).
+    """
+    from pathlib import Path
+
+    import torch
+    from chemprop import data as cp_data
+    from chemprop import nn as cp_nn
+
+    if checkpoint_path is None:
+        checkpoint_path = Path.home() / ".chemprop" / "chemeleon_mp.pt"
+    checkpoint_path = Path(checkpoint_path)
+    if not checkpoint_path.exists():
+        raise FileNotFoundError(
+            f"CheMeleon checkpoint not found at {checkpoint_path} -- download it from "
+            "https://zenodo.org/records/15460715/files/chemeleon_mp.pt first."
+        )
+
+    ckpt = torch.load(checkpoint_path, weights_only=True, map_location="cpu")
+    encoder = cp_nn.BondMessagePassing(**ckpt["hyper_parameters"])
+    encoder.load_state_dict(ckpt["state_dict"])
+    encoder = encoder.to(device).eval()
+    agg = cp_nn.MeanAggregation().to(device)
+
+    datapoints = [cp_data.MoleculeDatapoint.from_smi(smi) for smi in smiles_list]
+    dataset = cp_data.MoleculeDataset(datapoints)
+    loader = cp_data.build_dataloader(
+        dataset, batch_size=batch_size, shuffle=False, num_workers=0, drop_last=False
+    )
+
+    embeddings = []
+    with torch.no_grad():
+        for batch in loader:
+            bmg = batch.bmg
+            bmg.to(device)
+            h = encoder(bmg)
+            embeddings.append(agg(h, bmg.batch).cpu().numpy())
+    return np.concatenate(embeddings, axis=0).astype(np.float32)
+
+
+def frozen_encoder_embeddings(
+    smiles_list: list[str],
+    encoder,
+    agg,
+    batch_size: int = 128,
+    device: str = "cpu",
+) -> np.ndarray:
+    """Mean-pooled molecule embeddings from an already-loaded, already-frozen chemprop
+    message-passing encoder (`encoder`) + aggregation module (`agg`).
+
+    This is the shared batching/forward-pass loop behind `chemeleon_embeddings` (which
+    loads CheMeleon's specific Zenodo checkpoint) and `scripts/train_log2fc_encoder.py`
+    (which extracts embeddings from a freshly-trained-then-frozen encoder) -- added here
+    as a standalone function rather than duplicating the loop in the training script,
+    per the shared-module rule. `chemeleon_embeddings` is left as-is (not refactored to
+    call this) since it's already a shipped, verified artifact-producing function --
+    this is purely additive.
+
+    Callers are responsible for putting `encoder`/`agg` in eval mode and on `device`
+    before calling this -- this function does not change their mode or device
+    placement, only runs the forward pass under `torch.no_grad()`.
+
+    Same row-order and parse-failure contract as `chemeleon_embeddings`: dataloader
+    shuffling is disabled and `drop_last=False` is forced, so no row is silently
+    reordered or dropped; every SMILES must already be RDKit-parseable (callers should
+    pre-filter with `canonicalize_smiles`). Returns a `(len(smiles_list), d_h)` float32
+    array in the same row order as `smiles_list`, where `d_h` is `encoder`'s own output
+    dimension.
+    """
+    import torch
+    from chemprop import data as cp_data
+
+    datapoints = [cp_data.MoleculeDatapoint.from_smi(smi) for smi in smiles_list]
+    dataset = cp_data.MoleculeDataset(datapoints)
+    loader = cp_data.build_dataloader(
+        dataset, batch_size=batch_size, shuffle=False, num_workers=0, drop_last=False
+    )
+
+    embeddings = []
+    with torch.no_grad():
+        for batch in loader:
+            bmg = batch.bmg
+            bmg.to(device)
+            h = encoder(bmg)
+            embeddings.append(agg(h, bmg.batch).cpu().numpy())
+    return np.concatenate(embeddings, axis=0).astype(np.float32)
 
 
 def bemis_murcko_scaffold(smiles: str) -> str | None:
