@@ -1,0 +1,94 @@
+2026-08-23 20:05:10,887 [INFO] ======================================================================
+2026-08-23 20:05:10,887 [INFO] starting train_log2fc_encoder.py
+2026-08-23 20:05:11,873 [INFO] python: 3.11.13
+2026-08-23 20:05:11,874 [INFO] torch: 2.2.2
+2026-08-23 20:05:11,874 [INFO] chemprop: 2.3.1
+2026-08-23 20:05:11,874 [INFO] lightning: 2.6.5
+2026-08-23 20:05:11,874 [INFO] OMP_NUM_THREADS=1
+2026-08-23 20:05:11,874 [INFO] seed: 42
+2026-08-23 20:05:11,874 [INFO] hyperparameters: epochs=50, batch_size=64, d_h=300, depth=3, aggregation=mean
+2026-08-23 20:05:11,895 [INFO] loaded log2fc_targets.csv: (4376, 6)
+2026-08-23 20:05:11,895 [INFO] loaded train_inhibition_curated.csv: (4905, 20)
+2026-08-23 20:05:11,900 [INFO] rows after SMILES join: 4376 (missing SMILES: 0)
+2026-08-23 20:05:11,901 [INFO] NaN values across the four log2fc target columns: 0
+2026-08-23 20:05:11,907 [INFO] target scaler fit -- per-task mean/std used for training (predictions are un-scaled back to raw log2fc units by the model's own output_transform):
+2026-08-23 20:05:11,907 [INFO]   CYP1A2_log2fc: mean=-0.6431, std=0.6887
+2026-08-23 20:05:11,907 [INFO]   CYP2C9_log2fc: mean=-0.6896, std=0.4628
+2026-08-23 20:05:11,907 [INFO]   CYP2D6_log2fc: mean=-0.4108, std=1.1111
+2026-08-23 20:05:11,907 [INFO]   CYP3A4_log2fc: mean=-1.9102, std=1.3624
+2026-08-23 20:05:12,407 [INFO] training dataset: 4376 compounds, 4 tasks
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+2026-08-23 20:05:12,496 [INFO] training start: 2026-08-23 20:05:12
+/opt/anaconda3/envs/cyp-admet/lib/python3.11/site-packages/lightning/pytorch/trainer/configuration_validator.py:70: You defined a `validation_step` but have no `val_dataloader`. Skipping val loop.
+Loading `train_dataloader` to estimate number of stepping batches.
+/opt/anaconda3/envs/cyp-admet/lib/python3.11/site-packages/lightning/pytorch/trainer/connectors/data_connector.py:434: The 'train_dataloader' does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` to `num_workers=10` in the `DataLoader` to improve performance.
+2026-08-23 20:05:25,364 [INFO] epoch 1/50 done, train_loss=0.8193
+2026-08-23 20:05:38,120 [INFO] epoch 2/50 done, train_loss=0.7090
+2026-08-23 20:05:51,113 [INFO] epoch 3/50 done, train_loss=0.6768
+2026-08-23 20:06:04,072 [INFO] epoch 4/50 done, train_loss=0.6261
+2026-08-23 20:06:16,946 [INFO] epoch 5/50 done, train_loss=0.5920
+2026-08-23 20:06:29,708 [INFO] epoch 6/50 done, train_loss=0.5705
+2026-08-23 20:06:42,887 [INFO] epoch 7/50 done, train_loss=0.5462
+2026-08-23 20:06:55,659 [INFO] epoch 8/50 done, train_loss=0.5342
+2026-08-23 20:07:08,278 [INFO] epoch 9/50 done, train_loss=0.5149
+2026-08-23 20:07:20,987 [INFO] epoch 10/50 done, train_loss=0.5004
+2026-08-23 20:07:33,632 [INFO] epoch 11/50 done, train_loss=0.4729
+2026-08-23 20:07:46,342 [INFO] epoch 12/50 done, train_loss=0.4632
+2026-08-23 20:07:58,993 [INFO] epoch 13/50 done, train_loss=0.4504
+2026-08-23 20:08:11,748 [INFO] epoch 14/50 done, train_loss=0.4246
+2026-08-23 20:08:24,571 [INFO] epoch 15/50 done, train_loss=0.4127
+2026-08-23 20:08:37,761 [INFO] epoch 16/50 done, train_loss=0.3921
+2026-08-23 20:08:50,927 [INFO] epoch 17/50 done, train_loss=0.3742
+2026-08-23 20:09:03,601 [INFO] epoch 18/50 done, train_loss=0.3643
+2026-08-23 20:09:16,289 [INFO] epoch 19/50 done, train_loss=0.3415
+2026-08-23 20:09:28,952 [INFO] epoch 20/50 done, train_loss=0.3285
+2026-08-23 20:09:41,617 [INFO] epoch 21/50 done, train_loss=0.3184
+2026-08-23 20:09:54,334 [INFO] epoch 22/50 done, train_loss=0.3011
+2026-08-23 20:10:06,964 [INFO] epoch 23/50 done, train_loss=0.2880
+2026-08-23 20:10:19,654 [INFO] epoch 24/50 done, train_loss=0.2791
+2026-08-23 20:10:32,255 [INFO] epoch 25/50 done, train_loss=0.2628
+2026-08-23 20:10:45,231 [INFO] epoch 26/50 done, train_loss=0.2587
+2026-08-23 20:10:58,050 [INFO] epoch 27/50 done, train_loss=0.2421
+2026-08-23 20:11:10,794 [INFO] epoch 28/50 done, train_loss=0.2246
+2026-08-23 20:11:23,676 [INFO] epoch 29/50 done, train_loss=0.2167
+2026-08-23 20:11:36,501 [INFO] epoch 30/50 done, train_loss=0.2098
+2026-08-23 20:11:49,218 [INFO] epoch 31/50 done, train_loss=0.2017
+2026-08-23 20:12:01,836 [INFO] epoch 32/50 done, train_loss=0.1957
+2026-08-23 20:12:14,548 [INFO] epoch 33/50 done, train_loss=0.1843
+2026-08-23 20:12:27,950 [INFO] epoch 34/50 done, train_loss=0.1783
+2026-08-23 20:12:40,935 [INFO] epoch 35/50 done, train_loss=0.1690
+2026-08-23 20:12:53,640 [INFO] epoch 36/50 done, train_loss=0.1610
+2026-08-23 20:13:06,375 [INFO] epoch 37/50 done, train_loss=0.1552
+2026-08-23 20:13:19,416 [INFO] epoch 38/50 done, train_loss=0.1517
+2026-08-23 20:13:32,303 [INFO] epoch 39/50 done, train_loss=0.1455
+2026-08-23 20:13:45,138 [INFO] epoch 40/50 done, train_loss=0.1399
+2026-08-23 20:13:57,806 [INFO] epoch 41/50 done, train_loss=0.1403
+2026-08-23 20:14:10,459 [INFO] epoch 42/50 done, train_loss=0.1341
+2026-08-23 20:14:23,098 [INFO] epoch 43/50 done, train_loss=0.1276
+2026-08-23 20:14:35,717 [INFO] epoch 44/50 done, train_loss=0.1233
+2026-08-23 20:14:48,382 [INFO] epoch 45/50 done, train_loss=0.1213
+2026-08-23 20:15:00,988 [INFO] epoch 46/50 done, train_loss=0.1191
+2026-08-23 20:15:13,637 [INFO] epoch 47/50 done, train_loss=0.1142
+2026-08-23 20:15:26,268 [INFO] epoch 48/50 done, train_loss=0.1105
+2026-08-23 20:15:38,927 [INFO] epoch 49/50 done, train_loss=0.1066
+2026-08-23 20:15:51,580 [INFO] epoch 50/50 done, train_loss=0.1053
+`Trainer.fit` stopped: `max_epochs=50` reached.
+2026-08-23 20:15:51,582 [INFO] training end:   2026-08-23 20:15:51
+2026-08-23 20:15:51,582 [INFO] training elapsed: 639.1s (10.7 min)
+2026-08-23 20:15:51,584 [INFO] wrote encoder checkpoint: /Users/codiefreeman/OpenADMET-CYP-Blind-Challenge/models/log2fc_encoder_mp.pt
+2026-08-23 20:15:51,711 [INFO] loaded tabular_baseline_features.csv compound index: (5655, 3)
+2026-08-23 20:15:51,729 [INFO] rows after SMILES join: 5655 (before: 5655, missing SMILES: 0)
+2026-08-23 20:15:51,730 [INFO] embedding extraction start: 2026-08-23 20:15:51 (5655 compounds)
+2026-08-23 20:15:59,340 [INFO] embedding extraction end:   2026-08-23 20:15:59
+2026-08-23 20:15:59,340 [INFO] embedding extraction elapsed: 7.6s
+2026-08-23 20:15:59,341 [INFO] embeddings shape: (5655, 300), dtype: float32
+2026-08-23 20:15:59,341 [INFO] NaN values in embeddings: 0
+2026-08-23 20:15:59,341 [INFO] rows before save: 5655
+2026-08-23 20:15:59,352 [INFO] wrote /Users/codiefreeman/OpenADMET-CYP-Blind-Challenge/data/processed/log2fc_pretrained_embeddings.npy
+2026-08-23 20:15:59,352 [INFO] wrote /Users/codiefreeman/OpenADMET-CYP-Blind-Challenge/data/processed/log2fc_pretrained_embeddings_index.csv
+2026-08-23 20:15:59,357 [INFO] rows after reading back from disk: 5655 / 5655
+2026-08-23 20:15:59,358 [INFO] alignment confirmed: log2fc_pretrained_embeddings.npy row i corresponds to log2fc_pretrained_embeddings_index.csv row i.
+2026-08-23 20:15:59,358 [INFO] total script wall time: 648.5s (10.8 min)
+2026-08-23 20:15:59,358 [INFO] done.
