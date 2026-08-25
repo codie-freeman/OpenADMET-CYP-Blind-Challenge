@@ -19,6 +19,13 @@ molecule embeddings from an already-loaded, already-frozen chemprop encoder + ag
 -- used by both `chemeleon_embeddings` (CheMeleon's own checkpoint) and
 `scripts/train_log2fc_encoder.py` (a freshly-trained-then-frozen encoder, notebook 03b),
 so that loop isn't duplicated between the two.
+
+`assign_screen_split`, added for notebook 04a's cheap single-fold baseline screen, is
+the other half of the "splits go through one shared module" rule -- it's called
+identically (same args) from both `notebooks/04a_baseline_screen.ipynb` (tabular
+configs) and `scripts/run_baseline_screen_chemprop.py` (Chemprop configs), so both
+processes see byte-identical train/inner-val/test assignments without needing to freeze
+an intermediate split file or coordinate launch order.
 """
 
 import numpy as np
@@ -26,6 +33,7 @@ import pandas as pd
 from rdkit import Chem, DataStructs
 from rdkit.Chem import Crippen, Descriptors, rdFingerprintGenerator, rdMolDescriptors
 from rdkit.Chem.Scaffolds import MurckoScaffold
+from sklearn.model_selection import train_test_split
 
 
 def canonicalize_smiles(smiles: str) -> str | None:
@@ -366,3 +374,68 @@ def bemis_murcko_scaffold(smiles: str) -> str | None:
         return None
     scaffold = MurckoScaffold.GetScaffoldForMol(mol)
     return Chem.MolToSmiles(scaffold)
+
+
+def assign_screen_split(
+    cv_folds: pd.DataFrame,
+    repeat_col: str = "repeat_0",
+    test_fold: int = 0,
+    val_fraction: float = 0.15,
+    seed: int = 42,
+) -> pd.DataFrame:
+    """Compound-level train/inner-val/test assignment for notebook 04a's cheap,
+    single-fold baseline screen -- NOT the 25-fold (5x5) comparison's own splitting.
+
+    `test_fold` of `repeat_col` (default: fold 0 of `repeat_0`) is held out as
+    `"screen_test"`; the remaining compounds (the pooled training side for this screen)
+    are further split `1 - val_fraction` / `val_fraction` into `"screen_inner_train"` /
+    `"screen_inner_val"` via `sklearn.train_test_split(random_state=seed)`, for
+    early-stopping-capable configurations (XGBoost, LightGBM, both Chemprop variants)
+    to validate against without ever touching `screen_test`. Configurations with no
+    early-stopping concept (RF, TabICLv2) are expected to fit on
+    `screen_inner_train` + `screen_inner_val` pooled back together -- this function
+    doesn't do that pooling itself, callers select the rows they need by
+    `screen_split`.
+
+    Deliberately named `screen_*` rather than plain `"train"`/`"val"`/"test"` -- these
+    values must never be confused with the `split` column already used in the tabular
+    feature files (official train/test, i.e. which compounds are in the real blinded
+    leaderboard test set) or with that real test set itself. This screen's `"screen_
+    test"` compounds are ordinary held-out *training* compounds; the official blinded
+    test set is never touched anywhere in this function.
+
+    A pure, deterministic function of `cv_folds` + these fixed arguments (no I/O, no
+    hidden state) -- calling it with the same arguments from two different processes
+    (as `notebooks/04a_baseline_screen.ipynb` and
+    `scripts/run_baseline_screen_chemprop.py` both do) yields byte-identical output, so
+    the split never needs to be frozen to disk or coordinated by launch order.
+
+    Args:
+        cv_folds: `data/folds/cv_folds.csv`, loaded as-is -- must contain
+            `Molecule_Name`, `inchikey`, and `repeat_col`.
+        repeat_col: Which of the 5 repeat columns to draw `test_fold` from.
+        test_fold: Which fold (0-4) of `repeat_col` is this screen's held-out test set.
+        val_fraction: Fraction of the non-test compounds set aside as
+            `"screen_inner_val"`.
+        seed: Passed to `train_test_split` for the inner train/val split. Logged by
+            callers, not here (this function has no logging of its own).
+
+    Returns:
+        DataFrame with `Molecule_Name`, `inchikey`, `screen_split` (one of
+        `"screen_test"`, `"screen_inner_train"`, `"screen_inner_val"`), one row per
+        compound in `cv_folds`.
+    """
+    test_mask = cv_folds[repeat_col] == test_fold
+    test_df = cv_folds.loc[test_mask, ["Molecule_Name", "inchikey"]].copy()
+    test_df["screen_split"] = "screen_test"
+
+    pool_df = cv_folds.loc[~test_mask, ["Molecule_Name", "inchikey"]].copy()
+    inner_train_ik, inner_val_ik = train_test_split(
+        pool_df["inchikey"].to_numpy(), test_size=val_fraction, random_state=seed
+    )
+    inner_val_set = set(inner_val_ik)
+    pool_df["screen_split"] = np.where(
+        pool_df["inchikey"].isin(inner_val_set), "screen_inner_val", "screen_inner_train"
+    )
+
+    return pd.concat([test_df, pool_df], ignore_index=True)
