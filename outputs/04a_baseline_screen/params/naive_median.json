@@ -1,0 +1,22 @@
+{
+  "config": "naive_median",
+  "strategy": "median",
+  "per_isoform": {
+    "CYP1A2_pIC50_direct_inhibition": {
+      "n_pool_train": 1135,
+      "constant": 5.142250608
+    },
+    "CYP2C9_pIC50_direct_inhibition": {
+      "n_pool_train": 1021,
+      "constant": 4.599812188
+    },
+    "CYP2D6_pIC50_direct_inhibition": {
+      "n_pool_train": 1198,
+      "constant": 4.711865766
+    },
+    "CYP3A4_pIC50_direct_inhibition": {
+      "n_pool_train": 1885,
+      "constant": 4.257986495
+    }
+  }
+}
