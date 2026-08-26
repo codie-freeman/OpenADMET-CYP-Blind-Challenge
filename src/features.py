@@ -439,3 +439,48 @@ def assign_screen_split(
     )
 
     return pd.concat([test_df, pool_df], ignore_index=True)
+
+
+def assign_final_submission_split(
+    curated: pd.DataFrame,
+    val_fraction: float = 0.15,
+    seed: int = 42,
+) -> pd.DataFrame:
+    """Compound-level train/val assignment for the final activity-track submission
+    model (`scripts/train_final_submission_multitask.py`) -- an internal validation
+    slice used purely for Chemprop's `--patience`-based early stopping when training on
+    the FULL labeled set (all 4,905 compounds in `train_inhibition_curated.csv`), not a
+    CV fold.
+
+    Entirely independent of `data/folds/cv_folds.csv` and `assign_screen_split` above:
+    this function only ever reads `curated`, never touches `cv_folds.csv`, and returns
+    a `final_submission_split` column (values `"final_train"`/`"final_val"`) --
+    deliberately distinct naming from `screen_split`'s `"screen_inner_train"`/
+    `"screen_inner_val"` so the two can never be confused or accidentally merged.
+
+    `val_fraction=0.15` matches this project's own precedent for the same purpose
+    (`assign_screen_split`'s own `VAL_FRACTION`, used for the same "hold out a slice for
+    Chemprop's --patience early stopping" role) -- not an independently invented cutoff.
+
+    A pure, deterministic function of `curated` + these fixed arguments (no I/O) --
+    the caller writes the returned split to disk itself.
+
+    Args:
+        curated: e.g. `data/processed/train_inhibition_curated.csv`, loaded as-is --
+            must contain `Molecule_Name` and `inchikey`.
+        val_fraction: Fraction of compounds set aside as `"final_val"`.
+        seed: Passed to `train_test_split`. Logged by callers, not here.
+
+    Returns:
+        DataFrame with `Molecule_Name`, `inchikey`, `final_submission_split` (one of
+        `"final_train"`, `"final_val"`), one row per compound in `curated`.
+    """
+    out = curated[["Molecule_Name", "inchikey"]].copy()
+    train_ik, val_ik = train_test_split(
+        out["inchikey"].to_numpy(), test_size=val_fraction, random_state=seed
+    )
+    val_set = set(val_ik)
+    out["final_submission_split"] = np.where(
+        out["inchikey"].isin(val_set), "final_val", "final_train"
+    )
+    return out

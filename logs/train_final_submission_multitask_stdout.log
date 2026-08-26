@@ -1,0 +1,179 @@
+2026-08-26 01:57:08,890 [INFO] ======================================================================
+2026-08-26 01:57:08,890 [INFO] starting train_final_submission_multitask.py
+2026-08-26 01:57:08,890 [INFO] Reproducing the 04a screen's winning config (chemprop_multitask_chemeleoninit) on the FULL labeled training set (4,905 compounds) -- same architecture/hyperparameters as the screen, more data, real blinded test-set predictions.
+2026-08-26 01:57:08,890 [INFO] EXPECT SEVERAL HOURS: more training compounds than the screen's own multitask model (~101 min for 7 epochs on 3,924 compounds) -- an overnight run is expected, not a sign something's wrong.
+2026-08-26 01:57:11,212 [INFO] python: 3.11.13
+2026-08-26 01:57:11,212 [INFO] torch: 2.2.2
+2026-08-26 01:57:11,212 [INFO] chemprop: 2.3.1
+2026-08-26 01:57:11,212 [INFO] lightning: 2.6.5
+2026-08-26 01:57:11,212 [INFO] OMP_NUM_THREADS=1
+2026-08-26 01:57:11,212 [INFO] seed: 42 (--data-seed, --pytorch-seed, and assign_final_submission_split)
+2026-08-26 01:57:11,212 [INFO] hyperparameters: epochs=50, patience=5, from_foundation=CHEMELEON, multi_hot_atom_featurizer_mode=V2 -- identical to run_baseline_screen_chemprop_chemeleon.py's multitask config
+2026-08-26 01:57:11,230 [INFO] loaded train_inhibition_curated.csv: (4905, 20)
+2026-08-26 01:57:11,230 [INFO] rows before/after filtering: 4905/4905 (no filtering -- multitask training keeps every compound; chemprop NaN-masks any missing per-task target on its own, matching the screen's own multitask config)
+2026-08-26 01:57:11,244 [INFO] assign_final_submission_split(val_fraction=0.15, seed=42) split counts: {'final_train': 4169, 'final_val': 736}
+2026-08-26 01:57:11,249 [INFO] wrote /Users/codiefreeman/OpenADMET-CYP-Blind-Challenge/outputs/final_submission/final_train_val_split.csv (4905 rows) -- independent of data/folds/cv_folds.csv, which this script never opens
+2026-08-26 01:57:11,253 [INFO] rows after SMILES/target join: 4905 (missing: 0)
+2026-08-26 01:57:11,255 [INFO]   CYP1A2_pIC50_direct_inhibition: labeled-compound counts per split = {'final_train': 1205, 'final_val': 207}
+2026-08-26 01:57:11,256 [INFO]   CYP2C9_pIC50_direct_inhibition: labeled-compound counts per split = {'final_train': 1092, 'final_val': 193}
+2026-08-26 01:57:11,256 [INFO]   CYP2D6_pIC50_direct_inhibition: labeled-compound counts per split = {'final_train': 1271, 'final_val': 222}
+2026-08-26 01:57:11,257 [INFO]   CYP3A4_pIC50_direct_inhibition: labeled-compound counts per split = {'final_train': 1993, 'final_val': 342}
+2026-08-26 01:57:11,269 [INFO] wrote /Users/codiefreeman/OpenADMET-CYP-Blind-Challenge/outputs/final_submission/chemprop_run/train_input.csv (4905 rows, chemprop_split counts: {'train': 4169, 'val': 736})
+2026-08-26 01:57:11,269 [INFO] running: chemprop train -i /Users/codiefreeman/OpenADMET-CYP-Blind-Challenge/outputs/final_submission/chemprop_run/train_input.csv -s canonical_smiles --target-columns CYP1A2_pIC50_direct_inhibition CYP2C9_pIC50_direct_inhibition CYP2D6_pIC50_direct_inhibition CYP3A4_pIC50_direct_inhibition --splits-column chemprop_split -t regression --from-foundation CHEMELEON --multi-hot-atom-featurizer-mode V2 --epochs 50 --patience 5 --data-seed 42 --pytorch-seed 42 --accelerator cpu --devices 1 -o /Users/codiefreeman/OpenADMET-CYP-Blind-Challenge/outputs/final_submission/chemprop_run
+2026-08-26 01:57:15,277 [INFO] 2026-08-26T01:57:15 - INFO:chemprop.cli.main - Running in mode 'train' with args: {'smiles_columns': ['canonical_smiles'], 'reaction_columns': None, 'no_header_row': False, 'num_workers': 0, 'batch_size': 64, 'accelerator': 'cpu', 'devices': '1', 'rxn_mode': 'REAC_DIFF', 'multi_hot_atom_featurizer_mode': 'V2', 'keep_h': False, 'add_h': False, 'ignore_stereo': False, 'reorder_atoms': False, 'molecule_featurizers': None, 'descriptors_path': None, 'descriptors_columns': None, 'no_descriptor_scaling': False, 'no_atom_feature_scaling': False, 'no_atom_descriptor_scaling': False, 'no_bond_feature_scaling': False, 'no_bond_descriptor_scaling': False, 'atom_features_path': None, 'atom_descriptors_path': None, 'bond_features_path': None, 'bond_descriptors_path': None, 'constraints_path': None, 'constraints_to_targets': None, 'use_cuikmolmaker_featurization': False, 'config_path': None, 'data_path': [PosixPath('/Users/codiefreeman/OpenADMET-CYP-Blind-Challenge/outputs/final_submission/chemprop_run/train_input.csv')], 'output_dir': PosixPath('/Users/codiefreeman/OpenADMET-CYP-Blind-Challenge/outputs/final_submission/chemprop_run'), 'remove_checkpoints': False, 'checkpoint': None, 'freeze_encoder': False, 'model_frzn': None, 'frzn_ffn_layers': 0, 'from_foundation': 'CHEMELEON', 'ensemble_size': 1, 'message_hidden_dim': [300], 'message_bias': False, 'depth': [3], 'undirected': False, 'dropout': 0.0, 'mpn_shared': False, 'aggregation': 'norm', 'aggregation_norm': 100, 'atom_messages': False, 'activation': 'RELU', 'activation_args': None, 'ffn_hidden_dim': [300], 'ffn_num_layers': 1, 'batch_norm': False, 'multiclass_num_classes': 3, 'atom_task_weights': None, 'atom_ffn_hidden_dim': [300], 'atom_ffn_num_layers': 1, 'atom_multiclass_num_classes': 3, 'bond_task_weights': None, 'bond_ffn_hidden_dim': [300], 'bond_ffn_num_layers': 1, 'bond_multiclass_num_classes': 3, 'atom_constrainer_ffn_hidden_dim': [300], 'atom_constrainer_ffn_num_layers': 1, 'bond_constrainer_ffn_hidden_dim': [300], 'bond_constrainer_ffn_num_layers': 1, 'weight_column': None, 'target_columns': ['CYP1A2_pIC50_direct_inhibition', 'CYP2C9_pIC50_direct_inhibition', 'CYP2D6_pIC50_direct_inhibition', 'CYP3A4_pIC50_direct_inhibition'], 'mol_target_columns': None, 'atom_target_columns': None, 'bond_target_columns': None, 'ignore_columns': None, 'no_cache': False, 'splits_column': 'chemprop_split', 'task_type': 'regression', 'loss_function': None, 'v_kl': 0.0, 'eps': 1e-08, 'alpha': 0.1, 'metrics': None, 'tracking_metric': 'val_loss', 'show_individual_scores': False, 'task_weights': None, 'warmup_epochs': 2, 'init_lr': 0.0001, 'max_lr': 0.001, 'final_lr': 0.0001, 'epochs': 50, 'patience': 5, 'min_delta': 0.0, 'grad_clip': None, 'class_balance': False, 'split': 'RANDOM', 'split_sizes': [0.8, 0.1, 0.1], 'split_key_molecule': 0, 'num_replicates': 1, 'num_folds': None, 'save_smiles_splits': False, 'save_data_splits': False, 'splits_file': None, 'data_seed': 42, 'pytorch_seed': 42}
+2026-08-26 01:57:15,277 [INFO] 2026-08-26T01:57:15 - WARNING:chemprop.cli.train - The following arguments are ignored when making the message passing layer because it is initialized from a foundation model:
+2026-08-26 01:57:15,277 [INFO] `--message-hidden-dim [300]`
+2026-08-26 01:57:15,277 [INFO] `--message-bias False`
+2026-08-26 01:57:15,277 [INFO] `--depth [3]`
+2026-08-26 01:57:15,277 [INFO] `--undirected False`
+2026-08-26 01:57:15,277 [INFO] `--dropout 0.0`
+2026-08-26 01:57:15,277 [INFO] `--activation RELU`
+2026-08-26 01:57:15,277 [INFO] `--aggregation norm`
+2026-08-26 01:57:15,277 [INFO] `--aggregation-norm 100`
+2026-08-26 01:57:15,277 [INFO] `--atom-messages False`
+2026-08-26 01:57:15,280 [INFO] 2026-08-26T01:57:15 - INFO:chemprop.cli.train - Pulling data from file(s): [PosixPath('/Users/codiefreeman/OpenADMET-CYP-Blind-Challenge/outputs/final_submission/chemprop_run/train_input.csv')]
+2026-08-26 01:57:15,831 [INFO] 2026-08-26T01:57:15 - INFO:chemprop.cli.train - train/val/test split_0 sizes: [4169, 736, 0]
+2026-08-26 01:57:15,842 [INFO] 2026-08-26T01:57:15 - INFO:chemprop.cli.train -
+2026-08-26 01:57:15,842 [INFO]                                                                                Summary of Training Data
+2026-08-26 01:57:15,842 [INFO] ┏━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+2026-08-26 01:57:15,842 [INFO] ┃       Statistic ┃ Value (CYP1A2_pIC50_direct_inhibition) ┃ Value (CYP2C9_pIC50_direct_inhibition) ┃ Value (CYP2D6_pIC50_direct_inhibition) ┃ Value (CYP3A4_pIC50_direct_inhibition) ┃
+2026-08-26 01:57:15,842 [INFO] ┡━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+2026-08-26 01:57:15,842 [INFO] │     Num. smiles │                                   4169 │                                   4169 │                                   4169 │                                   4169 │
+2026-08-26 01:57:15,842 [INFO] │    Num. targets │                                   1205 │                                   1092 │                                   1271 │                                   1993 │
+2026-08-26 01:57:15,842 [INFO] │        Num. NaN │                                   2964 │                                   3077 │                                   2898 │                                   2176 │
+2026-08-26 01:57:15,842 [INFO] │            Mean │                                   4.97 │                                   4.58 │                                   4.77 │                                   4.09 │
+2026-08-26 01:57:15,842 [INFO] │       Std. dev. │                                   1.02 │                                  0.767 │                                   0.91 │                                    1.1 │
+2026-08-26 01:57:15,842 [INFO] │          Median │                                   5.14 │                                   4.61 │                                   4.72 │                                   4.25 │
+2026-08-26 01:57:15,842 [INFO] │ % within 1 s.d. │                                    75% │                                    71% │                                    79% │                                    66% │
+2026-08-26 01:57:15,842 [INFO] │ % within 2 s.d. │                                    93% │                                    94% │                                    92% │                                    99% │
+2026-08-26 01:57:15,842 [INFO] └─────────────────┴────────────────────────────────────────┴────────────────────────────────────────┴────────────────────────────────────────┴────────────────────────────────────────┘
+2026-08-26 01:57:15,842 [INFO] 
+2026-08-26 01:57:15,844 [INFO] 2026-08-26T01:57:15 - INFO:chemprop.cli.train -
+2026-08-26 01:57:15,844 [INFO]                                                                               Summary of Validation Data
+2026-08-26 01:57:15,844 [INFO] ┏━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+2026-08-26 01:57:15,844 [INFO] ┃       Statistic ┃ Value (CYP1A2_pIC50_direct_inhibition) ┃ Value (CYP2C9_pIC50_direct_inhibition) ┃ Value (CYP2D6_pIC50_direct_inhibition) ┃ Value (CYP3A4_pIC50_direct_inhibition) ┃
+2026-08-26 01:57:15,845 [INFO] ┡━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+2026-08-26 01:57:15,845 [INFO] │     Num. smiles │                                    736 │                                    736 │                                    736 │                                    736 │
+2026-08-26 01:57:15,845 [INFO] │    Num. targets │                                    207 │                                    193 │                                    222 │                                    342 │
+2026-08-26 01:57:15,845 [INFO] │        Num. NaN │                                    529 │                                    543 │                                    514 │                                    394 │
+2026-08-26 01:57:15,845 [INFO] │            Mean │                                   4.89 │                                    4.6 │                                   4.85 │                                   4.13 │
+2026-08-26 01:57:15,845 [INFO] │       Std. dev. │                                   1.08 │                                  0.863 │                                  0.948 │                                   1.08 │
+2026-08-26 01:57:15,845 [INFO] │          Median │                                   5.08 │                                   4.66 │                                   4.78 │                                   4.33 │
+2026-08-26 01:57:15,845 [INFO] │ % within 1 s.d. │                                    72% │                                    70% │                                    82% │                                    67% │
+2026-08-26 01:57:15,845 [INFO] │ % within 2 s.d. │                                    92% │                                    94% │                                    91% │                                    99% │
+2026-08-26 01:57:15,845 [INFO] └─────────────────┴────────────────────────────────────────┴────────────────────────────────────────┴────────────────────────────────────────┴────────────────────────────────────────┘
+2026-08-26 01:57:15,845 [INFO] 
+2026-08-26 01:57:15,845 [INFO] 2026-08-26T01:57:15 - INFO:chemprop.cli.train -
+2026-08-26 01:57:15,845 [INFO] Test set is empty.
+2026-08-26 01:57:15,914 [INFO] 2026-08-26T01:57:15 - INFO:chemprop.cli.train - Train data: mean = [4.96669413 4.57709102 4.77189718 4.09044371] | std = [1.02138956 0.76677346 0.9095227  1.09545193]
+2026-08-26 01:57:15,933 [INFO] 2026-08-26T01:57:15 - INFO:chemprop.cli.train - Caching training and validation datasets...
+2026-08-26 01:57:17,330 [INFO] 2026-08-26T01:57:17 - INFO:chemprop.cli.train - Loading cached CheMeleon from /Users/codiefreeman/.chemprop/chemeleon_mp.pt
+2026-08-26 01:57:17,330 [INFO] 2026-08-26T01:57:17 - INFO:chemprop.cli.train - Please cite DOI: 10.48550/arXiv.2506.15792 when using CheMeleon in published work
+2026-08-26 01:57:17,382 [INFO] 2026-08-26T01:57:17 - INFO:chemprop.cli.train - No loss function was specified! Using class default: <class 'chemprop.nn.metrics.MSE'>
+2026-08-26 01:57:17,383 [INFO] 2026-08-26T01:57:17 - INFO:chemprop.cli.train - MPNN(
+2026-08-26 01:57:17,383 [INFO]   (message_passing): BondMessagePassing(
+2026-08-26 01:57:17,383 [INFO]     (W_i): Linear(in_features=86, out_features=2048, bias=False)
+2026-08-26 01:57:17,383 [INFO]     (W_h): Linear(in_features=2048, out_features=2048, bias=False)
+2026-08-26 01:57:17,383 [INFO]     (W_o): Linear(in_features=2120, out_features=2048, bias=True)
+2026-08-26 01:57:17,383 [INFO]     (dropout): Dropout(p=0.0, inplace=False)
+2026-08-26 01:57:17,383 [INFO]     (tau): ReLU()
+2026-08-26 01:57:17,383 [INFO]     (V_d_transform): Identity()
+2026-08-26 01:57:17,383 [INFO]     (graph_transform): Identity()
+2026-08-26 01:57:17,383 [INFO]   )
+2026-08-26 01:57:17,383 [INFO]   (agg): MeanAggregation()
+2026-08-26 01:57:17,383 [INFO]   (bn): Identity()
+2026-08-26 01:57:17,383 [INFO]   (predictor): RegressionFFN(
+2026-08-26 01:57:17,383 [INFO]     (ffn): MLP(
+2026-08-26 01:57:17,383 [INFO]       (0): Sequential(
+2026-08-26 01:57:17,383 [INFO]         (0): Linear(in_features=2048, out_features=300, bias=True)
+2026-08-26 01:57:17,383 [INFO]       )
+2026-08-26 01:57:17,383 [INFO]       (1): Sequential(
+2026-08-26 01:57:17,383 [INFO]         (0): ReLU()
+2026-08-26 01:57:17,383 [INFO]         (1): Dropout(p=0.0, inplace=False)
+2026-08-26 01:57:17,383 [INFO]         (2): Linear(in_features=300, out_features=4, bias=True)
+2026-08-26 01:57:17,383 [INFO]       )
+2026-08-26 01:57:17,383 [INFO]     )
+2026-08-26 01:57:17,383 [INFO]     (criterion): MSE(task_weights=[[1.0, 1.0, 1.0, 1.0]])
+2026-08-26 01:57:17,383 [INFO]     (output_transform): UnscaleTransform()
+2026-08-26 01:57:17,383 [INFO]   )
+2026-08-26 01:57:17,384 [INFO]   (X_d_transform): Identity()
+2026-08-26 01:57:17,384 [INFO]   (metrics): ModuleList(
+2026-08-26 01:57:17,384 [INFO]     (0): MSE(task_weights=[[1.0]])
+2026-08-26 01:57:17,384 [INFO]     (1): MSE(task_weights=[[1.0, 1.0, 1.0, 1.0]])
+2026-08-26 01:57:17,384 [INFO]   )
+2026-08-26 01:57:17,384 [INFO] )
+2026-08-26 01:57:17,384 [INFO] 2026-08-26T01:57:17 - WARNING:chemprop.cli.train - Unable to import TensorBoardLogger, reverting to CSVLogger (original error: Neither `tensorboard` nor `tensorboardX` is available. Try `pip install`ing either.
+2026-08-26 01:57:17,384 [INFO] Requirement 'tensorboardX' not met. HINT: Try running `pip install -U 'tensorboardX'`
+2026-08-26 01:57:17,384 [INFO] Requirement 'tensorboard' not met. HINT: Try running `pip install -U 'tensorboard'`).
+2026-08-26 01:57:17,517 [INFO] GPU available: False, used: False
+2026-08-26 01:57:17,517 [INFO] TPU available: False, using: 0 TPU cores
+2026-08-26 01:57:17,518 [INFO] 💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+2026-08-26 01:57:17,522 [INFO] Loading `train_dataloader` to estimate number of stepping batches.
+2026-08-26 01:57:17,522 [INFO] /opt/anaconda3/envs/cyp-admet/lib/python3.11/site-packages/lightning/pytorch/trainer/connectors/data_connector.py:434: The 'train_dataloader' does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` to `num_workers=10` in the `DataLoader` to improve performance.
+2026-08-26 01:57:17,530 [INFO] Wrote config file to /Users/codiefreeman/OpenADMET-CYP-Blind-Challenge/outputs/final_submission/chemprop_run/config.toml
+2026-08-26 01:57:17,530 [INFO] ┏━━━┳━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━┳━━━━━━━┳━━━━━━━┓
+2026-08-26 01:57:17,530 [INFO] ┃   ┃ Name            ┃ Type               ┃ Params ┃ Mode  ┃ FLOPs ┃
+2026-08-26 01:57:17,530 [INFO] ┡━━━╇━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━╇━━━━━━━╇━━━━━━━┩
+2026-08-26 01:57:17,530 [INFO] │ 0 │ message_passing │ BondMessagePassing │  8.7 M │ train │     0 │
+2026-08-26 01:57:17,530 [INFO] │ 1 │ agg             │ MeanAggregation    │      0 │ train │     0 │
+2026-08-26 01:57:17,530 [INFO] │ 2 │ bn              │ Identity           │      0 │ train │     0 │
+2026-08-26 01:57:17,530 [INFO] │ 3 │ predictor       │ RegressionFFN      │  615 K │ train │     0 │
+2026-08-26 01:57:17,530 [INFO] │ 4 │ X_d_transform   │ Identity           │      0 │ train │     0 │
+2026-08-26 01:57:17,530 [INFO] │ 5 │ metrics         │ ModuleList         │      0 │ train │     0 │
+2026-08-26 01:57:17,530 [INFO] └───┴─────────────────┴────────────────────┴────────┴───────┴───────┘
+2026-08-26 01:57:17,531 [INFO] Trainable params: 9.3 M
+2026-08-26 01:57:17,531 [INFO] Non-trainable params: 0
+2026-08-26 01:57:17,531 [INFO] Total params: 9.3 M
+2026-08-26 01:57:17,531 [INFO] Total estimated model params size (MB): 37.321
+2026-08-26 01:57:17,531 [INFO] Modules in train mode: 24
+2026-08-26 01:57:17,531 [INFO] Modules in eval mode: 0
+2026-08-26 01:57:17,531 [INFO] Total FLOPs: 0
+2026-08-26 01:57:17,533 [INFO] /opt/anaconda3/envs/cyp-admet/lib/python3.11/site-packages/lightning/pytorch/trainer/connectors/data_connector.py:434: The 'val_dataloader' does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` to `num_workers=10` in the `DataLoader` to improve performance.
+2026-08-26 02:11:11,731 [INFO]   epoch 0 done: train_loss=0.9029, val_loss=0.7902
+2026-08-26 02:24:42,366 [INFO]   epoch 1 done: train_loss=0.6593, val_loss=0.7523
+2026-08-26 02:38:03,202 [INFO]   epoch 2 done: train_loss=0.5359, val_loss=0.6938
+2026-08-26 02:51:34,020 [INFO]   epoch 3 done: train_loss=0.3901, val_loss=0.8566
+2026-08-26 03:04:54,804 [INFO]   epoch 4 done: train_loss=0.2789, val_loss=0.6641
+2026-08-26 03:18:25,604 [INFO]   epoch 5 done: train_loss=0.1639, val_loss=0.6412
+2026-08-26 03:31:46,415 [INFO]   epoch 6 done: train_loss=0.1044, val_loss=0.6475
+2026-08-26 03:45:17,282 [INFO]   epoch 7 done: train_loss=0.0727, val_loss=0.6505
+2026-08-26 03:58:38,141 [INFO]   epoch 8 done: train_loss=0.0472, val_loss=0.6553
+2026-08-26 04:12:09,010 [INFO]   epoch 9 done: train_loss=0.0342, val_loss=0.6464
+2026-08-26 04:25:29,831 [INFO]   epoch 10 done: train_loss=0.0267, val_loss=0.6386
+2026-08-26 04:39:00,669 [INFO]   epoch 11 done: train_loss=0.0192, val_loss=0.6288
+2026-08-26 04:52:21,455 [INFO]   epoch 12 done: train_loss=0.0119, val_loss=0.6337
+2026-08-26 05:05:52,280 [INFO]   epoch 13 done: train_loss=0.0075, val_loss=0.6305
+2026-08-26 05:19:13,129 [INFO]   epoch 14 done: train_loss=0.0053, val_loss=0.6286
+2026-08-26 05:32:43,965 [INFO]   epoch 15 done: train_loss=0.0040, val_loss=0.6310
+2026-08-26 05:46:04,813 [INFO]   epoch 16 done: train_loss=0.0038, val_loss=0.6280
+2026-08-26 05:59:35,643 [INFO]   epoch 17 done: train_loss=0.0031, val_loss=0.6314
+2026-08-26 06:12:56,461 [INFO]   epoch 18 done: train_loss=0.0024, val_loss=0.6282
+2026-08-26 06:26:27,276 [INFO]   epoch 19 done: train_loss=0.0016, val_loss=0.6303
+2026-08-26 06:39:48,101 [INFO]   epoch 20 done: train_loss=0.0011, val_loss=0.6299
+2026-08-26 06:53:09,558 [INFO] Epoch 21/49 ━━━━━━━━━━━━━━━━━ 66/66 0:11:58 • 0:00:00 0.13it/s v_num: 0.000
+2026-08-26 06:53:09,558 [INFO]                                                                train_loss_step:
+2026-08-26 06:53:09,558 [INFO]                                                                0.000 val_loss:
+2026-08-26 06:53:09,558 [INFO]                                                                0.630
+2026-08-26 06:53:09,558 [INFO]                                                                train_loss_epoch:
+2026-08-26 06:53:09,558 [INFO]                                                                0.001
+2026-08-26 06:53:09,998 [INFO] 2026-08-26T06:53:09 - INFO:chemprop.cli.train - Best model saved to '/Users/codiefreeman/OpenADMET-CYP-Blind-Challenge/outputs/final_submission/chemprop_run/model_0/best.pt'
+2026-08-26 06:53:10,708 [INFO] loaded test_blinded_curated.csv: (750, 4)
+2026-08-26 06:53:10,710 [INFO] wrote /Users/codiefreeman/OpenADMET-CYP-Blind-Challenge/outputs/final_submission/predict_input.csv (750 blinded test compounds)
+2026-08-26 06:53:10,710 [INFO] running: chemprop predict -i /Users/codiefreeman/OpenADMET-CYP-Blind-Challenge/outputs/final_submission/predict_input.csv -s canonical_smiles --model-paths /Users/codiefreeman/OpenADMET-CYP-Blind-Challenge/outputs/final_submission/chemprop_run --accelerator cpu --devices 1 -o /Users/codiefreeman/OpenADMET-CYP-Blind-Challenge/outputs/final_submission/predictions/chemprop_multitask_chemeleoninit_raw_predictions.csv
+2026-08-26 06:53:24,019 [INFO] 2026-08-26T06:53:24 - INFO:chemprop.cli.main - Running in mode 'predict' with args: {'smiles_columns': ['canonical_smiles'], 'reaction_columns': None, 'no_header_row': False, 'num_workers': 0, 'batch_size': 64, 'accelerator': 'cpu', 'devices': '1', 'rxn_mode': 'REAC_DIFF', 'multi_hot_atom_featurizer_mode': 'V2', 'keep_h': False, 'add_h': False, 'ignore_stereo': False, 'reorder_atoms': False, 'molecule_featurizers': None, 'descriptors_path': None, 'descriptors_columns': None, 'no_descriptor_scaling': False, 'no_atom_feature_scaling': False, 'no_atom_descriptor_scaling': False, 'no_bond_feature_scaling': False, 'no_bond_descriptor_scaling': False, 'atom_features_path': None, 'atom_descriptors_path': None, 'bond_features_path': None, 'bond_descriptors_path': None, 'constraints_path': None, 'constraints_to_targets': None, 'use_cuikmolmaker_featurization': False, 'test_path': PosixPath('/Users/codiefreeman/OpenADMET-CYP-Blind-Challenge/outputs/final_submission/predict_input.csv'), 'output': PosixPath('/Users/codiefreeman/OpenADMET-CYP-Blind-Challenge/outputs/final_submission/predictions/chemprop_multitask_chemeleoninit_raw_predictions.csv'), 'drop_extra_columns': False, 'model_paths': [PosixPath('/Users/codiefreeman/OpenADMET-CYP-Blind-Challenge/outputs/final_submission/chemprop_run')], 'callback': None, 'callback_params': {}, 'cal_path': None, 'uncertainty_method': 'none', 'calibration_method': None, 'evaluation_methods': None, 'uncertainty_dropout_p': 0.1, 'dropout_sampling_size': 10, 'calibration_interval_percentile': 95, 'conformal_alpha': 0.1, 'cal_descriptors_path': None, 'cal_atom_features_path': None, 'cal_atom_descriptors_path': None, 'cal_bond_features_path': None, 'cal_bond_descriptors_path': None, 'cal_constraints_path': None}
+2026-08-26 06:53:24,162 [INFO] 2026-08-26T06:53:24 - INFO:chemprop.cli.predict - test size: 750
+2026-08-26 06:53:24,239 [INFO] GPU available: False, used: False
+2026-08-26 06:53:24,240 [INFO] TPU available: False, using: 0 TPU cores
+2026-08-26 06:53:24,240 [INFO] 💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+2026-08-26 06:53:24,240 [INFO] 💡 Tip: For seamless cloud uploads and versioning, try installing [litmodels](https://pypi.org/project/litmodels/) to enable LitModelCheckpoint, which syncs automatically with the Lightning model registry.
+2026-08-26 06:53:24,242 [INFO] /opt/anaconda3/envs/cyp-admet/lib/python3.11/site-packages/lightning/pytorch/trainer/connectors/data_connector.py:434: The 'predict_dataloader' does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` to `num_workers=10` in the `DataLoader` to improve performance.
+2026-08-26 06:54:07,379 [INFO] Predicting ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12/12 0:00:43 • 0:00:00 0.28it/s
+2026-08-26 06:54:07,399 [INFO] 2026-08-26T06:54:07 - INFO:chemprop.cli.predict - Predictions saved to '/Users/codiefreeman/OpenADMET-CYP-Blind-Challenge/outputs/final_submission/predictions/chemprop_multitask_chemeleoninit_raw_predictions.csv'
+2026-08-26 06:54:07,903 [INFO] rows after reading chemprop_multitask_chemeleoninit_raw_predictions.csv back from disk: 750
+2026-08-26 06:54:07,905 [INFO] NaN values in chemprop_multitask_chemeleoninit_raw_predictions.csv target column(s): 0
+2026-08-26 06:54:07,911 [INFO] wrote /Users/codiefreeman/OpenADMET-CYP-Blind-Challenge/outputs/submissions/activity_submission_v1.csv (750 rows)
+2026-08-26 06:54:07,912 [INFO] rows after reading activity_submission_v1.csv back from disk: 750
+2026-08-26 06:54:07,916 [INFO] VALIDATION: PASS -- activity submission file is valid.
+2026-08-26 06:54:07,916 [INFO] ======================================================================
+2026-08-26 06:54:07,916 [INFO] total script wall time: 17819.0s (297.0 min)
+2026-08-26 06:54:07,916 [INFO] done.
