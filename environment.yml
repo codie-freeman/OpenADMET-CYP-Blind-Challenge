@@ -1,0 +1,444 @@
+# cyp-admet-v2 — permanent, architecture-agnostic environment spec.
+#
+# Originally drafted with name: cyp-admet (architecture-agnostic, no "arm64"/
+# "m3", since this is intended to also run on a cloud VM later on a possibly
+# different architecture again). Changed to cyp-admet-v2 on 2026-08-30, during
+# migration into the real repo, so that `conda env create -f environment.yml`
+# produces the same name as the already-built/verified environment on this
+# machine and in this repo's docs, rather than silently creating a
+# differently-named one. Fully pinned to versions actually confirmed installed
+# and working in a real `conda env create` on native osx-arm64 (test env
+# `cyp-admet-v2-test`, built with the native arm64 conda from
+# ~/miniconda3-arm64, not the Intel /opt/anaconda3 one) -- not a loose draft.
+#
+# Source: environment_backup.yml (frozen export of the current, working
+# x86_64/Rosetta cyp-admet env) plus README.md "Reproducing this work".
+#
+# THREE THINGS ANYONE USING THIS FILE MUST KNOW (see the full report for detail):
+# 1. RDKit moved from 2025.9.3 to 2026.3.3 -- a user-approved, not silent,
+#    change, forced by chemprop's dependency chain (see the pip-section
+#    comment on the rdkit line). RDKit version changes can alter
+#    canonicalisation/fingerprint output.
+# 2. The determinism check this file was supposed to be validated against
+#    (re-running canonical-SMILES/InChIKey generation against
+#    train_inhibition_curated.csv and comparing to what's already stored)
+#    could NOT be run -- that file does not exist in this duplicate repo
+#    (data/processed/ was never generated here). This environment has NOT
+#    been verified to reproduce the already-curated data's canonicalisation
+#    output. Do not treat it as safe for feature-regeneration work against
+#    the real repo until that check has actually run there.
+# 3. Chemprop training with --accelerator mps fails (confirmed, reproducible):
+#    scatter_reduce_mps has no deterministic kernel, and chemprop always
+#    enables deterministic algorithms when a pytorch-seed is set (this
+#    project's convention). CPU-only remains the only working path for
+#    Chemprop/CheMeleon training, same conclusion as the old x86_64 env's
+#    README note, though the underlying reason has changed (the op is no
+#    longer literally unimplemented on MPS -- it's implemented but
+#    non-deterministic, and chemprop's CLI exposes no way to relax that).
+name: cyp-admet-v2
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11.13
+  # numpy pinned <2 deliberately (exact current pin carried forward) -- matches
+  # the same caution reflected in Antonio de la Vega de León's requirements.txt
+  # for this stack. Confirmed below (comment near pip section) that this does
+  # not force an incompatible numpy on torch/lightning/scikit-learn/xgboost/
+  # lightgbm/chemprop at the versions actually resolved.
+  - numpy=1.26.4
+  # RDKit is installed via pip, NOT here -- see the pip section below.
+  # (First draft of this file put it here on conda-forge, reasoning it would
+  # help the OpenMP conflict described in README's "Hardware constraint".
+  # That broke at runtime: cuik_molmaker's compiled extension looks for
+  # RDKit's shared libraries at a path that only exists in pip's wheel layout
+  # (`../rdkit/.dylibs/libRDKitAbbreviations.1.dylib`) -- conda-forge's rdkit
+  # doesn't lay out its libraries that way, so `import chemprop` failed with
+  # a dlopen error. Discovered by actually running chemprop, not anticipated
+  # in advance. Reverted to pip to match what chemprop's dependency chain
+  # actually expects; see the pip-section comment for the version decision.)
+  # scikit-learn: exact current pin carried forward -- confirmed live via pip
+  # index that 1.9.0 is still the current latest release too, so "let this
+  # resolve to whatever's needed" and "keep the current pin" land on the same
+  # version. No compromise.
+  - scikit-learn=1.9.0
+  - statsmodels=0.14.6
+  # --- everything below this line: exact pins carried forward unchanged from
+  # environment_backup.yml (Jupyter/notebook/plotting/codec infrastructure,
+  # not touched by this task's per-package decisions). Report back if any of
+  # these fail to resolve natively on arm64 at these versions.
+  - _openmp_mutex
+  - anyio
+  - aom
+  - appnope
+  - argon2-cffi
+  - argon2-cffi-bindings
+  - arrow
+  - asttokens
+  - async-lru
+  - attrs
+  - babel
+  - beautifulsoup4
+  - bleach
+  - bleach-with-css
+  - brotli
+  - brotli-bin
+  - brotli-python
+  - bzip2
+  - ca-certificates
+  - cached-property
+  - cached_property
+  - cairo
+  - certifi
+  - cffi
+  - charset-normalizer
+  - comm
+  - contourpy
+  - cycler
+  - dav1d
+  - debugpy
+  - defusedxml
+  - exceptiongroup
+  - executing
+  - expat
+  - fontconfig
+  - fonttools
+  - fqdn
+  - freetype
+  - freetype-py
+  - fribidi
+  - gettext
+  - gettext-tools
+  - graphite2
+  - greenlet
+  - h11
+  - h2
+  - harfbuzz
+  - hpack
+  - httpcore
+  - httpx
+  - hyperframe
+  - icu
+  - idna
+  - importlib-metadata
+  - ipykernel
+  - ipython
+  - ipython_pygments_lexers
+  - ipywidgets
+  - isoduration
+  - jedi
+  - jinja2
+  - joblib
+  - jpeg
+  - json5
+  - jsonpointer
+  - jsonschema
+  - jsonschema-specifications
+  - jsonschema-with-format-nongpl
+  - jupyter
+  - jupyter-builder
+  - jupyter-lsp
+  - jupyter_client
+  - jupyter_console
+  - jupyter_core
+  - jupyter_events
+  - jupyter_server
+  - jupyter_server_terminals
+  - jupyterlab
+  - jupyterlab_pygments
+  - jupyterlab_server
+  - jupyterlab_widgets
+  - kiwisolver
+  - krb5
+  - lark
+  - lcms2
+  - lerc
+  - libasprintf
+  - libasprintf-devel
+  - libavif
+  - libavif16
+  - libblas
+  - libboost
+  - libboost-python
+  - libbrotlicommon
+  - libbrotlidec
+  - libbrotlienc
+  - libcblas
+  - libcxx
+  - libdeflate
+  - libedit
+  - libffi
+  - libgcc
+  - libgettextpo
+  - libgettextpo-devel
+  - libgfortran
+  - libgfortran5
+  - libglib
+  - libiconv
+  - libintl
+  - libintl-devel
+  - liblapack
+  - libopenblas
+  - libpng
+  - libsodium
+  - libtiff
+  - libwebp-base
+  - libxml2
+  - llvm-openmp
+  - lz4-c
+  - markupsafe
+  - matplotlib
+  - matplotlib-base
+  - matplotlib-inline
+  - mistune
+  - munkres
+  - narwhals
+  - nbclient
+  - nbconvert-core
+  - nbformat
+  - ncurses
+  - nest-asyncio2
+  - notebook
+  - notebook-shim
+  - openjpeg
+  - openssl
+  - overrides
+  - packaging
+  - pandocfilters
+  - parso
+  - patsy
+  - pcre2
+  - pexpect
+  - pillow
+  - pixman
+  - platformdirs
+  - prometheus_client
+  - prompt-toolkit
+  - prompt_toolkit
+  - psutil
+  - ptyprocess
+  - pure_eval
+  - pycairo
+  - pycparser
+  - pygments
+  - pyobjc-core
+  - pyobjc-framework-cocoa
+  - pyparsing
+  - pysocks
+  - python-dateutil
+  - python-fastjsonschema
+  - python-json-logger
+  - python-tzdata
+  - python_abi
+  - pyyaml
+  - pyzmq
+  - qhull
+  - rav1e
+  - readline
+  - referencing
+  - reportlab
+  - requests
+  - rfc3339-validator
+  - rfc3986-validator
+  - rfc3987-syntax
+  - rlpycairo
+  - rpds-py
+  - scipy
+  - seaborn
+  - seaborn-base
+  - send2trash
+  - setuptools
+  - six
+  - sniffio
+  - soupsieve
+  - sqlalchemy
+  - sqlite
+  - stack_data
+  - svt-av1
+  - terminado
+  - threadpoolctl
+  - tinycss2
+  - tk
+  - tomli
+  - tornado
+  - traitlets
+  - typing-extensions
+  - typing_extensions
+  - typing_utils
+  - tzdata
+  - unicodedata2
+  - uri-template
+  - urllib3
+  - wcwidth
+  - webcolors
+  - webencodings
+  - websocket-client
+  - wheel
+  - widgetsnbextension
+  - xz
+  - yaml
+  - zeromq
+  - zipp
+  - zlib
+  - zstandard
+  - zstd
+  - pip:
+      # --- let-resolve packages, now PINNED to what was actually confirmed
+      # installed and working in cyp-admet-v2-test (native osx-arm64), rather
+      # than left loose -- this file is meant to be a permanent, reproducible
+      # spec, not a draft. Each was deliberately left unpinned during
+      # resolution rather than reusing the old x86_64 pins verbatim.
+      - torch==2.13.0          # was 2.2.2 (x86_64-only build). Confirmed
+                                #   working: MPS available, tensor creation
+                                #   on mps:0 succeeds (see report).
+      - lightning==2.6.5       # was 2.6.5 -- resolved to the same version.
+      - pytorch-lightning==2.6.5   # was 2.6.5 -- resolved to the same version.
+      - torchmetrics==1.9.0    # was 1.9.0 -- not called out explicitly in the
+                                #   task, but transitively version-locked to
+                                #   torch/lightning; treated the same way as
+                                #   those. Resolved to the same version.
+      - chemprop==2.3.1        # was 2.3.1 -- resolved to the same version.
+                                #   Installs and imports cleanly, but see the
+                                #   report: training with --accelerator mps
+                                #   fails (scatter_reduce_mps has no
+                                #   deterministic kernel, and chemprop always
+                                #   enables deterministic algorithms when a
+                                #   pytorch-seed is set, which this project's
+                                #   convention requires). CPU-only remains the
+                                #   only working accelerator for Chemprop.
+      - xgboost==3.2.0         # was 3.2.0 -- resolved to the same version.
+      - lightgbm==4.7.0        # was 4.7.0 -- resolved to the same version.
+      # RDKit: CHANGED from the exact old pin (2025.9.3) to 2026.3.3 -- an
+      # explicit, user-confirmed decision, not a silent substitution. The old
+      # pin is no longer installable at all: chemprop's only currently-
+      # available releases (2.3.1, 2.3.0, 2.2.4 -- pip tried all three) hard-
+      # depend on cuik_molmaker_pin, whose only remaining PyPI releases
+      # (2026.3.3.post1/.post2/2026.3.4/2026.3.5) hard-require rdkit==2026.3.3
+      # exactly. The cuik-molmaker-pin release that matched rdkit==2025.9.3
+      # has been removed from PyPI entirely (confirmed live -- not an
+      # arm64-specific gap; a fresh install on any platform hits this today).
+      # Flagged to the user as a real conflict rather than resolved
+      # unilaterally; user chose to move RDKit forward rather than pin
+      # chemprop backward or bypass the dependency check.
+      # CONSEQUENCE THIS MUST NOT BE TRUSTED WITHOUT VERIFYING: RDKit version
+      # changes can alter canonicalisation/fingerprint output, and everything
+      # already curated (train_inhibition_curated.csv, cv_folds.csv, frozen
+      # feature sets) was generated under 2025.9.3 -- see the determinism
+      # check this environment.yml was built to be tested against before
+      # trusting it (BLOCKED in this duplicate repo -- see report: the
+      # curated CSV this check needs doesn't exist here).
+      # Pinned exactly here (not left free) for the same reason as
+      # cuik-molmaker-pin below: leaving it free let pip resolve whatever
+      # rdkit release it liked (2026.3.5, pulled in by the newest
+      # cuik-molmaker-pin), which is a *different* number than what was
+      # actually agreed to. 2026.3.3 is pip's version string for the same
+      # release conda-forge calls 2026.03.3.
+      - rdkit==2026.3.3
+      # --- exact pins carried forward unchanged from environment_backup.yml ---
+      - aimsim-core==2.2.3
+      - aiohappyeyeballs==2.7.1
+      - aiohttp==3.14.3
+      - aiosignal==1.4.0
+      - annotated-types==0.8.0
+      - anywidget==0.11.0
+      - astartes==1.3.3
+      - cattrs==26.1.0
+      - chembl-webresource-client==0.10.9
+      - configargparse==1.7.5
+      # FLAGGED: cuik-molmaker-pin==2025.9.3 (the exact old pin) no longer
+      # exists on PyPI at all -- only 2026.3.3.post1/.post2/2026.3.4/2026.3.5
+      # remain (confirmed live, not arm64-specific: the version itself is
+      # gone). It's a hard (non-optional) dependency of chemprop 2.3.1's own
+      # wheel metadata, so some version must resolve for chemprop to install.
+      # PINNED explicitly (not left free) to 2026.3.3.post2 -- this is the
+      # newer of the two available releases that require rdkit==2026.03.3
+      # exactly (confirmed via the pip conflict resolver's own output).
+      # Leaving this unpinned let pip pick the newest release (2026.3.5)
+      # instead, which silently pulled in rdkit 2026.3.5 -- three patches
+      # past the 2026.03.3 the user explicitly approved -- and pip uninstalled
+      # the conda-installed 2026.03.3 to do it. Pinning here keeps the actual
+      # installed RDKit matching the version that was actually agreed to.
+      - cuik-molmaker-pin==2026.3.3.post2
+      - dataclasses==0.6
+      - descriptastorus==2.8.0
+      - dill==0.4.1
+      - easydict==1.13
+      - einops==0.8.2
+      - et-xmlfile==2.0.0
+      - filelock==3.32.2
+      - frozenlist==1.8.0
+      - fsspec==2026.7.0
+      - fuzzywuzzy==0.18.0
+      - gradio-client==2.6.1
+      - hf-xet==1.6.0
+      - huggingface-hub==0.36.2
+      - levenshtein==0.27.4
+      - loguru==0.7.3
+      - markdown-it-py==4.2.0
+      - mdurl==0.1.2
+      - mhfp==1.9.6
+      - mols2grid==2.2.0
+      - mordredcommunity==2.0.7
+      - mpmath==1.3.0
+      - multidict==6.7.1
+      - multiprocess==0.70.19
+      - myerson==1.0.1
+      - networkx==3.6.1
+      - openpyxl==3.1.5
+      - padelpy==0.1.17
+      - pandas==2.3.3
+      - pandas-flavor==0.8.1
+      - pip==26.2.1
+      - propcache==0.5.2
+      - psygnal==0.15.1
+      - pydantic==2.13.4
+      - pydantic-core==2.46.4
+      # FLAGGED AND DROPPED: pytdc==1.1.15 (the only version PyPI has ever
+      # published under that constraint, confirmed via its PKG-INFO) hard-
+      # requires rdkit<2024.3.1,>=2023.9.5 -- incompatible with our pinned
+      # rdkit regardless of which of 2025.9.3 or 2026.03.3 we use; there is no
+      # pytdc release that relaxes this. Confirmed via `grep -rn "pytdc"
+      # src/ notebooks/ scripts/` that it is not imported anywhere in this
+      # repo's own code -- looks like leftover/exploratory cruft in the
+      # frozen export, not a real dependency. Dropped rather than blocking
+      # the whole spec on an apparently-unused package; flagging this
+      # decision explicitly for confirmation rather than silently omitting
+      # it. If pytdc IS actually needed for something not visible in this
+      # duplicate repo, it would need its own isolated environment (it caps
+      # rdkit two full years behind everything else in this stack).
+      - python-levenshtein==0.27.4
+      - pytz==2026.3.post1
+      - rapidfuzz==3.14.5
+      - requests-cache==1.3.3
+      - rich==15.0.0
+      - scikit-posthocs==0.14.0
+      - sympy==1.14.0
+      - tabicl==2.1.1
+      - tabulate==0.10.0
+      - tqdm==4.70.0
+      - typing-inspection==0.4.3
+      - url-normalize==3.0.0
+      - xarray==2026.7.0
+      - yarl==1.24.5
+      # --- new additions for the 5x5 CV comparison ---
+      # pingouin: not present in environment_backup.yml. Needed for the
+      # repeated-measures ANOVA / Tukey HSD analysis the 5x5 CV comparison
+      # depends on. Confirmed working: imports cleanly against numpy<2, and a
+      # trivial two-group pairwise Tukey HSD call ran without error (see
+      # report).
+      - pingouin==0.6.1
+      # mmpdb: new addition for matched-molecular-pair activity-cliff
+      # detection. Confirmed installs cleanly; not exercised beyond import/
+      # install in this task (out of scope -- see report).
+      - mmpdb==3.1.4
+      # tabpfn: new addition, lighter tabular foundation model alternative to
+      # TabICLv2 (which the README documents as segfaulting on MPS / OOMing
+      # on this machine's RAM at 04a). 8.5.0 was a large jump from what I'd
+      # have guessed from memory -- treated the live-checked number as
+      # authoritative rather than assuming it was wrong, and it did install
+      # cleanly. Not exercised beyond import/install in this task (out of
+      # scope -- see report).
+      - tabpfn==8.5.0
+# note: no `prefix:` key -- the old export had an absolute /opt/anaconda3/envs/...
+# path here, which is meaningless across machines/architectures. Omitted entirely
+# (rather than set to null/empty) since that's the portable way to write this key.
