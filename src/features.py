@@ -6,13 +6,15 @@ shared module" rule -- these are used identically across notebooks (canonicaliza
 InChIKey in curation; fingerprints/similarity/SALI/descriptors/scaffolds in chemical
 space exploration and beyond) rather than redefined per notebook.
 
-Two descriptor options are provided, for two different purposes: `isoform_structural_
+Three descriptor options are provided, for three different purposes: `isoform_structural_
 descriptors` is a narrow, pharmacologically-motivated 9-descriptor set built for
 notebook 02's isoform-specific SAR interpretability work; `rdkit_2d_descriptors` is the
 full RDKit 2D descriptor set (200+ descriptors), added in notebook 03 (Section 2) as the
 broader tabular-baseline feature option matching this challenge's official baseline
-models (RDKit 2D + ECFP4). Neither replaces the other -- pick per the notebook's
-purpose.
+models (RDKit 2D + ECFP4); `mordred_2d_descriptors` is the full Mordred 2D descriptor
+set (~1600 descriptors, via the maintained `mordred-community` fork), added to replace
+RDKit2D in the tabular arm of the 5x5 CV comparison, per Mauricio's suggestion. None
+replaces the others -- pick per the notebook's purpose.
 
 `frozen_encoder_embeddings` is the shared forward-pass/batching loop for extracting
 molecule embeddings from an already-loaded, already-frozen chemprop encoder + agg pair
@@ -27,6 +29,8 @@ configs) and `scripts/run_baseline_screen_chemprop.py` (Chemprop configs), so bo
 processes see byte-identical train/inner-val/test assignments without needing to freeze
 an intermediate split file or coordinate launch order.
 """
+
+import os
 
 import numpy as np
 import pandas as pd
@@ -239,6 +243,64 @@ def rdkit_2d_descriptors(smiles: str) -> dict:
     if mol is None:
         return {name: np.nan for name in _RDKIT_2D_DESCRIPTOR_NAMES}
     return Descriptors.CalcMolDescriptors(mol)
+
+
+def mordred_2d_descriptors(smiles_list: list[str], nproc: int | None = None) -> pd.DataFrame:
+    """Full Mordred 2D descriptor set (~1600 descriptors) for a list of SMILES.
+
+    Uses the actively-maintained `mordred-community` fork (PyPI package
+    `mordredcommunity`, already pinned in `environment.yml`; import name is still
+    `mordred`) -- NOT the original PyPI `mordred` package, which is unmaintained and
+    known to break on recent RDKit. Compatibility with this project's pinned RDKit
+    2026.3.3 was confirmed separately before this function was written: clean install,
+    clean run on a small sample of `train_inhibition_curated.csv`, no exceptions, no
+    Python warnings, no RDKit stderr output.
+
+    Mordred computes some descriptors (e.g. high-topological-distance autocorrelation
+    descriptors like `AATS8*`) that are structurally undefined for small/simple
+    molecules, and returns its own `Missing`/`Error` wrapper objects for those cells
+    instead of raising. This function coerces every such wrapper to NaN via
+    `pandas.to_numeric(errors="coerce")` per column, then casts every column to
+    float64 (some Mordred descriptors are boolean-valued, which would otherwise leave
+    mixed dtypes across columns) -- it does NOT drop or impute anything; NaN cells are
+    left as NaN in the returned DataFrame for the caller to inspect and decide how to
+    handle. SMILES that fail to parse produce an all-NaN row
+    (same descriptor columns) rather than being dropped, matching `rdkit_2d_descriptors`'s
+    contract.
+
+    Descriptor computation is farmed out to `nproc` worker processes internally by
+    Mordred (default: `os.cpu_count()`) for speed -- row order is preserved exactly
+    under multiprocessing, confirmed via direct comparison of `nproc=1` vs
+    `nproc=os.cpu_count()` output on a 200-compound sample during development.
+
+    Args:
+        smiles_list: SMILES strings (parsed independently here -- need not already be
+            canonical).
+        nproc: Mordred worker process count. Defaults to `os.cpu_count()`.
+
+    Returns:
+        DataFrame with `len(smiles_list)` rows in the same order, one column per
+        Mordred 2D descriptor (column names are Mordred's own descriptor names).
+    """
+    from mordred import Calculator
+    from mordred import descriptors as mordred_descriptors
+
+    calc = Calculator(mordred_descriptors, ignore_3D=True)
+    descriptor_names = [str(d) for d in calc.descriptors]
+
+    mols = [Chem.MolFromSmiles(s) for s in smiles_list]
+    valid_idx = [i for i, m in enumerate(mols) if m is not None]
+    valid_mols = [mols[i] for i in valid_idx]
+
+    if nproc is None:
+        nproc = os.cpu_count() or 1
+
+    out = pd.DataFrame(np.nan, index=range(len(smiles_list)), columns=descriptor_names)
+    if valid_mols:
+        computed = calc.pandas(valid_mols, nproc=nproc, quiet=True)
+        computed = computed[descriptor_names].apply(pd.to_numeric, errors="coerce").astype(np.float64)
+        out.iloc[valid_idx] = computed.to_numpy()
+    return out
 
 
 def chemeleon_embeddings(

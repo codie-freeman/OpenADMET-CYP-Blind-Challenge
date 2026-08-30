@@ -1,0 +1,22 @@
+2026-08-30 19:32:58,904 [INFO] ======================================================================
+2026-08-30 19:32:58,904 [INFO] starting generate_mordred_pca_features.py
+2026-08-30 19:32:58,920 [INFO] loaded train_inhibition_curated.csv: (4905, 20)
+2026-08-30 19:32:58,920 [INFO] rows before/after (no filtering, this script only computes descriptors): 4905/4905
+2026-08-30 19:33:58,432 [INFO] mordred_2d_descriptors: (4905, 1613) in 59.5s (nproc=11)
+2026-08-30 19:33:58,444 [INFO] descriptor NaN summary: 1286 always-clean, 82 always-fail (100% NaN), 245 partial-fail -- full breakdown at /Users/codiefreeman/OpenADMET-CYP-Blind-Challenge/outputs/mordred_pca/descriptor_nan_report.csv
+2026-08-30 19:33:58,449 [INFO] overall cell-level NaN rate: 9.18%
+2026-08-30 19:33:58,450 [INFO] per-compound NaN rate: mean=9.18%, max=19.47%, >10% NaN: 31 compounds
+2026-08-30 19:33:58,477 [INFO] dropped 82 always-fail (100% NaN) descriptors -- kept 1531 of 1613
+2026-08-30 19:33:58,477 [INFO] rows before/after descriptor drop: 4905/4905 (row count unaffected -- only columns dropped)
+2026-08-30 19:34:08,912 [INFO] fit_transform (median-impute -> standardize -> PCA, n_components=1531): 10.4s
+2026-08-30 19:34:08,912 [INFO] seed: 42 (PCA random_state -- unused by svd_solver='full', logged for the record)
+2026-08-30 19:34:08,915 [INFO] components needed for 90% cumulative variance: 85
+2026-08-30 19:34:08,915 [INFO] components needed for 95% cumulative variance: 132
+2026-08-30 19:34:08,915 [INFO] components needed for 99% cumulative variance: 252
+2026-08-30 19:34:08,915 [INFO] SUGGESTED default (not a locked-in decision): 132 components covering 95% cumulative variance
+2026-08-30 19:34:09,349 [INFO] wrote /Users/codiefreeman/OpenADMET-CYP-Blind-Challenge/outputs/mordred_pca/explained_variance_curve.png
+2026-08-30 19:34:09,355 [INFO] wrote fitted pipeline bundle to /Users/codiefreeman/OpenADMET-CYP-Blind-Challenge/models/mordred_pca_pipeline.joblib (impute+scale+pca, 1531 components, all fit on these 4905 training compounds only)
+2026-08-30 19:34:09,758 [INFO] wrote /Users/codiefreeman/OpenADMET-CYP-Blind-Challenge/data/processed/tabular_mordred_pca.csv ((4905, 135)) -- 132 PCA components (95% variance, suggested default)
+2026-08-30 19:34:09,758 [INFO] rows before/after: 4905/4905
+2026-08-30 19:34:09,758 [INFO] total runtime: 70.9s
+2026-08-30 19:34:09,759 [INFO] done.
