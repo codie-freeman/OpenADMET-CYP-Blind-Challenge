@@ -8,3 +8,16 @@ __pycache__/
 *.env
 *.pt
 *.ckpt
+
+# 05_cv_comparison (5x5 CV comparison, scripts/run_5x5_cv_comparison.py): only the
+# small, regeneratable-from-frozen-seeds summary/analysis outputs are tracked --
+# summary_table.csv and any notebook-produced statistical results/figures stay
+# tracked (NOT ignored), matching 04a_baseline_screen's own summary_table.csv
+# treatment. The bulk raw data (300 prediction CSVs, 300 bootstrap score CSVs, ~6.2GB
+# of Chemprop checkpoints/logs across 50 chemprop_runs/ subdirs -- a much larger scale
+# than 04a's own 10 subdirs, which is why this gets full-directory exclusion instead
+# of 04a's per-file-extension approach) is excluded.
+logs/*.log
+outputs/05_cv_comparison/chemprop_runs/
+outputs/05_cv_comparison/predictions/
+outputs/05_cv_comparison/scores/
