@@ -21,3 +21,18 @@ logs/*.log
 outputs/05_cv_comparison/chemprop_runs/
 outputs/05_cv_comparison/predictions/
 outputs/05_cv_comparison/scores/
+
+# 06_outlier_check (CYP2D6 outlier check, scripts/cyp2d6_outlier_check.py): same
+# treatment as 05_cv_comparison above, for the same reason -- chemprop_runs/ is
+# ~12GB of Chemprop checkpoints/logs across 50 subdirs (checked directly). predictions/
+# (14MB, 200 files) and scores/ (34MB, 200 files) are individually small but ~48MB
+# combined -- also checked directly, not assumed -- so excluded to match 05's own
+# predictions/scores precedent; both are fully regeneratable via
+# `python scripts/cyp2d6_outlier_check.py --retrain` (deterministic: reuses 05's own
+# manifest.csv seeds, the frozen cv_folds.csv partition, and the frozen
+# flagged_compounds/*.csv lists). flagged_compounds/*.csv (the frozen threshold audit
+# trail) and before_after_comparison.csv (the result table the notebook reports from)
+# stay tracked -- both are small and are what the notebook actually reads/writes.
+outputs/06_outlier_check/chemprop_runs/
+outputs/06_outlier_check/predictions/
+outputs/06_outlier_check/scores/
