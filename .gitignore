@@ -68,3 +68,14 @@ outputs/07_weighting_tuning/tuning_search/
 # small and are what the notebook reports from / step 4 consumes directly.
 outputs/08_ensemble_selection/predictions/
 outputs/08_ensemble_selection/scores/
+
+# 10_final_retrain_predict (final full-dataset retrain + blind-test predict,
+# scripts/10_final_retrain_predict.py): chemprop_runs/ (~500MB, checked directly --
+# 2 configs' worth of Chemprop checkpoints/logs, larger per-run than 05/06 since this
+# trains on the full ~4,900-compound pool rather than a ~3,900-compound CV fold) is
+# excluded, same reasoning as 05/06 above -- fully regeneratable by re-running the
+# script (deterministic: fixed SEED=42 throughout, and the resumability check skips
+# any config whose blind_predictions/ output already exists). blind_predictions/
+# (6 small CSVs, ~350KB total -- the actual task deliverable) and config_manifest.csv
+# stay tracked.
+outputs/10_final_retrain_predict/chemprop_runs/
