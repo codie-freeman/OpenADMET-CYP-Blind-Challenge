@@ -1,0 +1,5 @@
+isoform,decision,winning_combo,winning_mean_ST-RAE,single_best_label,single_best_mean_ST-RAE,test,p_value
+CYP1A2,ensemble adopted,chemprop_chemeleoninit+ecfp4_narrow__rf+chemeleon__rf+ecfp4_narrow__lightgbm,0.8022097981354902,chemprop_chemeleoninit,0.8684589730531901,paired t-test,6.298245138915644e-09
+CYP2C9,single model stands (no ensemble tested),,0.67869131237916,chemprop_chemeleoninit,0.67869131237916,,
+CYP2D6,ensemble adopted,chemeleon__rf+chemprop_chemeleoninit,0.8771515318426046,chemeleon__rf (07 tuned),0.8967697724320937,paired t-test,2.7897239996401452e-06
+CYP3A4,ensemble adopted,chemprop_chemeleoninit+ecfp4_narrow__lightgbm,0.5029007767184465,chemprop_chemeleoninit,0.5460557792815692,paired t-test,2.027235058846894e-07

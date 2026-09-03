@@ -54,3 +54,17 @@ outputs/06_outlier_check/scores/
 outputs/07_weighting_tuning/predictions/
 outputs/07_weighting_tuning/scores/
 outputs/07_weighting_tuning/tuning_search/
+
+# 08_ensemble_selection (simple-average ensemble selection, notebook-only -- no
+# companion script): same treatment as 05/06/07 above, for the same reason --
+# predictions/ (33MB, 575 files) and scores/ (117MB, 575 files: one per (isoform,
+# combo, repeat, fold), including the CYP2D6 extended-pool addendum's combos) are
+# bulk per-fold raw output, individually small but not worth tracking -- checked
+# directly, not assumed. Both are fully regeneratable by
+# re-running the notebook (deterministic: reuses 05's own manifest.csv seeds for
+# bootstrap scoring, and simple-averages already-frozen 05/06/07 predictions -- no
+# retraining, so no separate `--retrain` script exists here). combo_summary_table.csv,
+# pairwise_comparisons.csv, step3_summary.csv, and figures/ stay tracked -- all are
+# small and are what the notebook reports from / step 4 consumes directly.
+outputs/08_ensemble_selection/predictions/
+outputs/08_ensemble_selection/scores/
