@@ -1,0 +1,5 @@
+isoform,pursued_past_section2,kb_share_pct,adopted,slope,intercept,mean_ST-RAE_before,mean_ST-RAE_after,mean_R2_before,mean_R2_after,reason
+CYP1A2,False,1.0471130807403357,False,1.0,0.0,0.8022097981354902,0.8022097981354902,0.25389399034892873,0.25389399034892873,k+b share of R^2 gap (1.05%) below the 10% Section-2 pursuit threshold
+CYP2C9,False,0.9423086848377787,False,1.0,0.0,0.67869131237916,0.67869131237916,0.3838177395431736,0.3838177395431736,k+b share of R^2 gap (0.94%) below the 10% Section-2 pursuit threshold
+CYP2D6,False,1.7201783942809135,False,1.0,0.0,0.8771515318426046,0.8771515318426046,0.15599239259663938,0.15599239259663938,k+b share of R^2 gap (1.72%) below the 10% Section-2 pursuit threshold
+CYP3A4,False,0.36781429072949734,False,1.0,0.0,0.5029007767184465,0.5029007767184465,0.599446590880349,0.599446590880349,k+b share of R^2 gap (0.37%) below the 10% Section-2 pursuit threshold
