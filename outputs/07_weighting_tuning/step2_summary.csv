@@ -1,0 +1,3 @@
+config,baseline_ST-RAE,weighted_ST-RAE,weighted_significant,tuned_ST-RAE,tuned_significant,recommended_for_step3
+chemeleon__rf,0.9020733984933608,0.9788603211868222,True,0.8967697724320937,True,tuned
+chemeleon__lightgbm,0.9301946778189105,0.9920798717137131,True,0.9263986738425979,False,baseline (06 residual-excluded)

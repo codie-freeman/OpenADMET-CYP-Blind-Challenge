@@ -36,3 +36,18 @@ outputs/05_cv_comparison/scores/
 outputs/06_outlier_check/chemprop_runs/
 outputs/06_outlier_check/predictions/
 outputs/06_outlier_check/scores/
+
+# 07_weighting_tuning (CYP2D6 weighting/tuning, scripts/cyp2d6_weighting_tuning.py):
+# same treatment as 05/06 above, for the same reason -- predictions/ (5.8MB) and
+# scores/ (17MB, 50 files each: 2 configs x 2 levers x 25 folds) are bulk per-fold CV
+# output, individually small but not worth tracking -- checked directly, not assumed.
+# Both are fully regeneratable via `python scripts/cyp2d6_weighting_tuning.py
+# --retrain` (deterministic: reuses 05's own manifest.csv seeds and the frozen
+# cv_folds.csv partition, same as 06). tuning_search/ (200KB, the grid-search
+# landscape data the notebook plots from) and weighting_check/ (the confirmed
+# per-fold weight distribution, the sanity-check audit trail) stay tracked -- both are
+# small and are what the notebook actually reads from directly. No chemprop_runs/ --
+# this step is tabular-only (chemprop_chemeleoninit deferred, see the script/notebook
+# intro).
+outputs/07_weighting_tuning/predictions/
+outputs/07_weighting_tuning/scores/
