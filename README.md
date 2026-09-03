@@ -93,6 +93,24 @@ Submitted under the alias **`fold-zero`** (repo is currently private; revisit th
 
 One trained model from one training run — not the 5×5 repeated-CV comparison the baseline screen was built to precede.
 
+## Final retrain submission (notebook 10)
+
+`notebooks/10_final_retrain_predict.ipynb` (backed by `scripts/10_final_retrain_predict.py`) retrained every distinct model config referenced by notebook 08's per-isoform winning ensemble/single-best on the full 4,905-compound labeled set and combined them per isoform (CYP1A2: 4-way average, CYP2D6/CYP3A4: 2-way average, CYP2C9: single model, unaveraged) — intended to replace `04b`'s result as the live leaderboard entry.
+
+### Leaderboard result
+
+Submitted under the alias **`fold-zero`**, 2026-09-03 15:26 UTC:
+
+| Isoform | Rank | ST-RAE | MAE | R² | Spearman's ρ | Kendall's τ |
+|---|---|---|---|---|---|---|
+| Overall (macro) | 70 | 0.8299 | 0.9690 | 0.1054 | 0.6748 | 0.4977 |
+| CYP1A2 | 76 | 0.7850 | 1.0214 | 0.2051 | 0.7246 | 0.5297 |
+| CYP2C9 | 56 | 0.5489 | 0.5444 | 0.5272 | 0.7389 | 0.5462 |
+| CYP2D6 | 87 | 1.4603 | 1.7489 | −0.9392 | 0.4401 | 0.3081 |
+| CYP3A4 | 46 | 0.5253 | 0.5614 | 0.6285 | 0.7955 | 0.6065 |
+
+Scored substantially worse than `04b` on every isoform, on both ST-RAE and R². A read-only pipeline audit (6 checks: training volume, training-pool lineage, merge/row-alignment, prediction-scale sanity, individual-compound tracing, cross-script comparison against `04b`) found no pipeline bug — see `notebooks/10b_blind_regression_investigation.ipynb` for the follow-up investigation into *why* the decline happened (a spread-compression hypothesis, tested against both R² and the project's actual governing metric, ST-RAE; verdict: partially supported at best, not a clean or sufficient explanation).
+
 ## Reproducing this work
 
 **Environment:** conda env `cyp-admet-v2`, Python 3.11, Apple Silicon (native arm64, no Rosetta), built from [`environment.yml`](environment.yml) at the repo root via `conda env create -f environment.yml`. The original `cyp-admet` environment (x86_64/Rosetta) still exists on this machine as a fallback but is no longer the primary environment. A secondary `pip freeze` reference is provided at [`requirements.txt`](requirements.txt) — not an independent install path (some packages, RDKit in particular, were installed via specific channels/pip index ordering that a plain `pip install -r requirements.txt` into an empty environment may not replicate correctly); `environment.yml` is the authoritative spec.
