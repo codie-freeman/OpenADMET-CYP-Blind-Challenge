@@ -79,3 +79,35 @@ outputs/08_ensemble_selection/scores/
 # (6 small CSVs, ~350KB total -- the actual task deliverable) and config_manifest.csv
 # stay tracked.
 outputs/10_final_retrain_predict/chemprop_runs/
+
+# 11b_caruana_selection (Caruana bagged ensemble selection + size-cap revision,
+# notebook-only -- no companion script): predictions/ (2.0MB, 100 files) and scores/
+# (14MB, 100 files) are the per-(repeat, fold) weighted-ensemble outputs from
+# `score_weighted_ensemble_per_fold` -- bulk raw output, individually small but not
+# worth tracking, checked directly not assumed -- same treatment as 05/06/07/08 above.
+# Fully regeneratable by re-running the notebook (deterministic: reuses 05's own
+# manifest.csv bootstrap seeds; no retraining, just reweighting already-frozen
+# 11_caruana_prep OOF predictions). weights.csv/weights_uncapped.csv, summary.csv,
+# cap_comparison.csv, marginal_value_trajectory.csv,
+# placement_correction_diagnostic.csv, recalibration_params.csv, and figures/ all
+# stay tracked -- small, and what this notebook (and notebook 12) actually read/
+# report from.
+outputs/11b_caruana_selection/predictions/
+outputs/11b_caruana_selection/scores/
+
+# 12_caruana_retrain_predict (Caruana-weighted full retrain + blind predict,
+# scripts/12_caruana_retrain_predict.py): chemprop_runs/ (9MB, checked directly --
+# the one chemprop_randominit full-data training run this step needed; everything
+# else was reused from notebook 10's own chemprop_runs/ above) is excluded, same
+# reasoning as 10_final_retrain_predict above -- fully regeneratable by re-running
+# the script (deterministic: fixed SEED=42, resumability skip logic).
+# tabular_mordred_pca_blind_test.csv (1.9MB) is also excluded -- a deterministic
+# `.transform()`-only feature artifact (the already-fitted train-only pipeline
+# applied to the blind test set), mirroring how its train-side counterpart
+# (`data/processed/tabular_mordred_pca.csv`) is already covered by the blanket
+# `data/processed/` exclusion above; regeneratable by re-running the script's
+# mordred-transform stage. blind_predictions/ (784KB -- the actual per-config
+# deliverable), config_provenance.csv, and both submission_candidate*.csv files
+# stay tracked.
+outputs/12_caruana_retrain_predict/chemprop_runs/
+outputs/12_caruana_retrain_predict/tabular_mordred_pca_blind_test.csv
