@@ -1,0 +1,5 @@
+isoform,n_compounds,n_clusters,singleton_clusters,singleton_cluster_frac_of_clusters,compounds_in_singleton_clusters,compounds_in_singleton_frac,cluster_size_min,cluster_size_median,cluster_size_mean,cluster_size_max
+CYP1A2,1412,1013,724,0.7147,724,0.5127,1,1.0,1.394,10
+CYP2C9,1285,757,317,0.4188,317,0.2467,1,2.0,1.697,6
+CYP2D6,1493,1214,1063,0.8756,1063,0.712,1,1.0,1.23,19
+CYP3A4,2335,1105,508,0.4597,508,0.2176,1,2.0,2.113,19

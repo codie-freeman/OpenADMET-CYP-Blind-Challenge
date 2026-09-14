@@ -28,6 +28,10 @@ identically (same args) from both `notebooks/04a_baseline_screen.ipynb` (tabular
 configs) and `scripts/run_baseline_screen_chemprop.py` (Chemprop configs), so both
 processes see byte-identical train/inner-val/test assignments without needing to freeze
 an intermediate split file or coordinate launch order.
+
+`butina_clusters`, added for notebook 05b's cluster-aware CV split, is the clustering
+half of the same rule -- Tanimoto-similarity-threshold clustering (via RDKit's Butina
+algorithm), distinct from `bemis_murcko_scaffold`'s identity-based grouping.
 """
 
 import os
@@ -37,6 +41,7 @@ import pandas as pd
 from rdkit import Chem, DataStructs
 from rdkit.Chem import Crippen, Descriptors, rdFingerprintGenerator, rdMolDescriptors
 from rdkit.Chem.Scaffolds import MurckoScaffold
+from rdkit.ML.Cluster import Butina
 from sklearn.model_selection import train_test_split
 
 
@@ -426,6 +431,32 @@ def frozen_encoder_embeddings(
             h = encoder(bmg)
             embeddings.append(agg(h, bmg.batch).cpu().numpy())
     return np.concatenate(embeddings, axis=0).astype(np.float32)
+
+
+def butina_clusters(fps: list, cutoff: float = 0.4) -> list[tuple[int, ...]]:
+    """Cluster `fps` via RDKit's Butina algorithm (Butina, J. Chem. Inf. Comput. Sci.
+    1999) at Tanimoto similarity `cutoff` -- pairs within `1 - cutoff` Tanimoto
+    distance can land in the same cluster. Added for notebook 05b's cluster-aware CV
+    split (finer-grained than the Bemis-Murcko scaffold split notebook 02 already ruled
+    out) -- notebook 02's own SALI/nearest-neighbour analysis never needed clustering
+    itself, only the raw pairwise/NN similarity functions above.
+
+    `fps` must contain no `None` entries -- callers pre-filter (e.g. via
+    `ecfp4_fingerprints`'s own parse-failure contract) before calling this. O(N^2)
+    pairwise distance computation, same scale caveat as `pairwise_tanimoto_matrix`.
+
+    Returns one tuple of positional indices into `fps` per cluster, in Butina's own
+    output order (each tuple's first element is that cluster's centroid, the point
+    with the most neighbours within `cutoff`); singleton clusters (no other point
+    within `cutoff`) are single-element tuples. Every index in `range(len(fps))`
+    appears in exactly one cluster.
+    """
+    n = len(fps)
+    distances = []
+    for i in range(1, n):
+        sims = DataStructs.BulkTanimotoSimilarity(fps[i], fps[:i])
+        distances.extend(1.0 - s for s in sims)
+    return Butina.ClusterData(distances, n, 1.0 - cutoff, isDistData=True)
 
 
 def bemis_murcko_scaffold(smiles: str) -> str | None:

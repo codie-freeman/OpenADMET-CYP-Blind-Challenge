@@ -1,0 +1,5 @@
+isoform,original_random_cv_ST-RAE,cluster_cv_ST-RAE,blind_10c_ST-RAE,gap_original,gap_cluster,smaller_gap
+CYP1A2,0.8685,0.867,0.6954,0.1731,0.1716,cluster
+CYP2C9,0.6787,0.6666,0.5489,0.1298,0.1177,cluster
+CYP2D6,1.0039,1.0013,1.1673,0.1634,0.166,original
+CYP3A4,0.5461,0.5586,0.4434,0.1027,0.1152,original
