@@ -24,6 +24,60 @@ models/      frozen model checkpoints from scripts/ (gitignored)
 
 `data/raw/` and `data/processed/` are gitignored — see `data/raw/PROVENANCE.md` for download instructions and the pinned HuggingFace revision. A fresh clone must regenerate both by running the notebooks in order (see "Reproducing this work").
 
+## Notebook status overview
+
+A scannable index of all 25 notebooks currently in `notebooks/`, verified against what's actually
+on disk. This is a high-level index only — it sits alongside, and does not replace, the detailed
+per-notebook prose below or CLAUDE.md's own notebook-status log (the authoritative source for the
+full reasoning behind each entry; read it for detail this table deliberately omits).
+
+Status categories: **Core pipeline** (data/model work the project's real submissions depend on),
+**Diagnostic — negative result** (tested something, found it doesn't help or doesn't resolve the
+question, documented and closed), **Diagnostic — in progress** (not yet complete or not yet acted
+on), **Superseded** (replaced by a later notebook), and **Flagged — ambiguous** (doesn't cleanly
+fit one bucket — see the note below the table rather than treating the label as a guess).
+
+| Notebook | Purpose | Status |
+|---|---|---|
+| [`00_schema_audit.ipynb`](notebooks/00_schema_audit.ipynb) | Structural audit of raw HuggingFace files; scopes the track to `TRAIN_inhibition.csv`/`TEST-BLINDED.csv` | Core pipeline |
+| [`01_data_curation.ipynb`](notebooks/01_data_curation.ipynb) | SMILES canonicalization, InChIKey generation, duplicate/leakage checks | Core pipeline |
+| [`02_chemical_space_exploration.ipynb`](notebooks/02_chemical_space_exploration.ipynb) | Chemical-space and cluster-split feasibility exploration | Core pipeline |
+| [`03_features_and_fold_split.ipynb`](notebooks/03_features_and_fold_split.ipynb) | Freezes the 5×5 repeated-CV fold assignment and tabular feature sets (never touched again) | Core pipeline |
+| [`03b_log2fc_pretrained_encoder.ipynb`](notebooks/03b_log2fc_pretrained_encoder.ipynb) | log2fc-pretrained Chemprop encoder embeddings, reporting only | Diagnostic — in progress (not yet ablated downstream; paused pending a leakage check) |
+| [`04a_baseline_screen.ipynb`](notebooks/04a_baseline_screen.ipynb) | Single-fold 21-config screen that picked the CheMeleon-init recipe | Superseded (by 05's full 5×5 CV comparison) |
+| [`04b_final_submission.ipynb`](notebooks/04b_final_submission.ipynb) | First live submission — single, unensembled `chemprop_chemeleoninit` | Core pipeline (reference baseline every later submission is compared against) |
+| [`04c_submission_diagnostics.ipynb`](notebooks/04c_submission_diagnostics.ipynb) | Diagnoses 04b's CYP2D6 underperformance; confirms cause via OpenADMET Discord | Diagnostic — negative result |
+| [`05_cv_comparison.ipynb`](notebooks/05_cv_comparison.ipynb) | Full 5×5 CV comparison, all 11 real configs — the authoritative CV table | Core pipeline |
+| [`05b_cluster_cv_comparison.ipynb`](notebooks/05b_cluster_cv_comparison.ipynb) | Cluster-aware (Butina) CV split vs. random split, `chemprop_chemeleoninit` only | Diagnostic — negative result (mixed/inconclusive, no adoption) |
+| [`05c_cluster_cv_leakage_sensitivity.ipynb`](notebooks/05c_cluster_cv_leakage_sensitivity.ipynb) | Tests whether non-chemprop configs swing more under cluster CV (leakage-sensitivity check) | Diagnostic — negative result (real CYP3A4 signal found, descriptive only, no adoption) |
+| [`06_outlier_check.ipynb`](notebooks/06_outlier_check.ipynb) | CYP2D6 residual/CI-width outlier exclusion | Flagged — ambiguous (see note) |
+| [`07_weighting_tuning.ipynb`](notebooks/07_weighting_tuning.ipynb) | CYP2D6 sample weighting + hyperparameter tuning, tabular configs | Flagged — ambiguous (see note) |
+| [`08_ensemble_selection.ipynb`](notebooks/08_ensemble_selection.ipynb) | Per-isoform ensemble selection via CV tiers, simple averaging | Superseded (by 11b's Caruana selection) |
+| [`09_placement_recalibration.ipynb`](notebooks/09_placement_recalibration.ipynb) | R²-decomposition placement/recalibration diagnostic | Diagnostic — negative result |
+| [`10_final_retrain_predict.ipynb`](notebooks/10_final_retrain_predict.ipynb) | Second live submission, using 08's simple-average ensembles | Flagged — ambiguous (see note) |
+| [`10b_blind_regression_investigation.ipynb`](notebooks/10b_blind_regression_investigation.ipynb) | Investigates notebook 10's blind-score regression | Diagnostic — negative result (root cause not definitively isolated) |
+| [`10c_control_submission.ipynb`](notebooks/10c_control_submission.ipynb) | Control submission isolating environment migration from ensembling | Core pipeline (active reference point; reused directly by later notebooks) |
+| [`11_caruana_prep.ipynb`](notebooks/11_caruana_prep.ipynb) | Pooled OOF prep table across all 25 CV folds, all 11 configs | Core pipeline |
+| [`11b_caruana_selection.ipynb`](notebooks/11b_caruana_selection.ipynb) | Caruana bagged ensemble selection, capped — current ensemble-selection method | Core pipeline |
+| [`12_caruana_retrain_predict.ipynb`](notebooks/12_caruana_retrain_predict.ipynb) | Third live submission, using 11b's capped Caruana ensembles | Core pipeline |
+| [`12b_caruana_vs_control_comparison.ipynb`](notebooks/12b_caruana_vs_control_comparison.ipynb) | Compares notebook 12 vs. 10c prediction spread/agreement | Diagnostic — negative result (capping helped but didn't fully close the spread-compression gap) |
+| [`13_aid1851_blind_population_calibration.ipynb`](notebooks/13_aid1851_blind_population_calibration.ipynb) | AID 1851 external population calibration; fifth live submission | Diagnostic — negative result (worse than 04b/10c on every isoform on real blind data) |
+| [`14_censored_mle_population_calibration.ipynb`](notebooks/14_censored_mle_population_calibration.ipynb) | Censored-MLE re-estimate of AID 1851 population moments | Diagnostic — negative result (clean OOF negative for every isoform) |
+| [`15_analog_holdout_comparison.ipynb`](notebooks/15_analog_holdout_comparison.ipynb) | Analog-holdout split approximating the real blind-set construction | Diagnostic — negative result (gap 2.3–9.3x larger than CV gap, opposite of hoped-for outcome) |
+
+**On the three "Flagged — ambiguous" rows:** these don't cleanly fit one status without a judgment
+call the project hasn't explicitly made, so they're flagged here rather than guessed.
+- **06** and **07** found real, adopted-at-the-time CV improvements (CYP2D6 outlier exclusion;
+  `chemeleon__rf` tuning), but both fed only into notebook 08's ensembles, which are now
+  superseded — 11b's candidate pool deliberately excludes 06's residual-excluded and 07's tuned
+  configs (an isolation test, not an oversight), so neither notebook's specific output is part of
+  the currently active recipe. Whether they should be relabeled "superseded" or kept as
+  standalone diagnostics is an open call.
+- **10** was a real, deliberate live submission (not a dry run), which argues for "core pipeline"
+  the way 04b/10c/12 are treated here — but its recipe (08's simple-average ensembles) has since
+  been replaced by 11b/12's Caruana selection, which argues for "superseded" the way 08 is
+  treated. Kept out of both buckets rather than forced into either.
+
 ## Notebooks
 
 Run in order; each loads only the frozen artifacts the previous ones wrote.
