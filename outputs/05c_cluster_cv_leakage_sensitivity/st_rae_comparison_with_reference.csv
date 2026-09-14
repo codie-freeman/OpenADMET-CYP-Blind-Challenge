@@ -1,0 +1,15 @@
+config,isoform,metric,original_cv,cluster_cv,shift_abs,shift_rel_pct,abs_shift_rel_pct
+mordred_pca__lightgbm,CYP1A2,ST-RAE,0.9271,0.9405,0.0134,1.44,1.44
+chemeleon__rf,CYP1A2,ST-RAE,0.8718,0.8794,0.0076,0.87,0.87
+chemprop_randominit,CYP1A2,ST-RAE,0.9282,0.9357,0.0076,0.81,0.81
+chemeleon__lightgbm,CYP1A2,ST-RAE,0.9028,0.8963,-0.0065,-0.72,0.72
+ecfp4_narrow__lightgbm,CYP1A2,ST-RAE,0.8751,0.8785,0.0034,0.38,0.38
+ecfp4_narrow__rf,CYP1A2,ST-RAE,0.8685,0.8662,-0.0023,-0.26,0.26
+chemprop_chemeleoninit [05b reference],CYP1A2,ST-RAE,0.8685,0.867,-0.0015,-0.17,0.17
+ecfp4_narrow__lightgbm,CYP3A4,ST-RAE,0.5706,0.6173,0.0467,8.19,8.19
+chemeleon__lightgbm,CYP3A4,ST-RAE,0.6123,0.6472,0.0349,5.7,5.7
+chemeleon__rf,CYP3A4,ST-RAE,0.6521,0.6849,0.0328,5.03,5.03
+ecfp4_narrow__rf,CYP3A4,ST-RAE,0.5978,0.6257,0.0278,4.66,4.66
+mordred_pca__lightgbm,CYP3A4,ST-RAE,0.6883,0.7171,0.0287,4.17,4.17
+chemprop_randominit,CYP3A4,ST-RAE,0.6358,0.6505,0.0147,2.31,2.31
+chemprop_chemeleoninit [05b reference],CYP3A4,ST-RAE,0.5461,0.5586,0.0125,2.29,2.29

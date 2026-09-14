@@ -1,0 +1,13 @@
+isoform,config,abs_shift_rel_pct,chemeleoninit_reference_pct,more_sensitive_than_chemeleoninit,shift_direction_consistent_with_leakage
+CYP1A2,mordred_pca__lightgbm,1.44,0.17,True,True
+CYP1A2,chemeleon__rf,0.87,0.17,True,True
+CYP1A2,chemprop_randominit,0.81,0.17,True,True
+CYP1A2,chemeleon__lightgbm,0.72,0.17,True,False
+CYP1A2,ecfp4_narrow__lightgbm,0.38,0.17,True,True
+CYP1A2,ecfp4_narrow__rf,0.26,0.17,True,False
+CYP3A4,ecfp4_narrow__lightgbm,8.19,2.29,True,True
+CYP3A4,chemeleon__lightgbm,5.7,2.29,True,True
+CYP3A4,chemeleon__rf,5.03,2.29,True,True
+CYP3A4,ecfp4_narrow__rf,4.66,2.29,True,True
+CYP3A4,mordred_pca__lightgbm,4.17,2.29,True,True
+CYP3A4,chemprop_randominit,2.31,2.29,True,True
