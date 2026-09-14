@@ -111,3 +111,44 @@ outputs/11b_caruana_selection/scores/
 # stay tracked.
 outputs/12_caruana_retrain_predict/chemprop_runs/
 outputs/12_caruana_retrain_predict/tabular_mordred_pca_blind_test.csv
+
+# 05b_cluster_cv_comparison (Butina cluster-aware CV split, scripts/05b_run_cluster_cv.py):
+# same treatment as 05_cv_comparison above, for the same reason -- chemprop_runs/ (6.1GB,
+# 250 files across 25 folds, checked directly) is Chemprop checkpoints/logs; predictions/
+# (2.9MB, 25 files) and scores/ (19MB, 25 files) are bulk per-fold raw output, individually
+# small but not worth tracking -- excluded to match 05's own predictions/scores precedent.
+# All three are fully regeneratable by re-running the script (deterministic: reuses 05's
+# own manifest.csv seeds, cross-checked at script startup). cluster_cv_folds.csv (the frozen
+# cluster-aware fold assignment 05c reuses read-only), cluster_cv_summary_table.csv,
+# comparison_vs_10c.csv, and clustering/ (the cluster-construction audit trail) stay
+# tracked -- small, and what this notebook (and 05c) actually read/report from.
+outputs/05b_cluster_cv_comparison/chemprop_runs/
+outputs/05b_cluster_cv_comparison/predictions/
+outputs/05b_cluster_cv_comparison/scores/
+
+# 05c_cluster_cv_leakage_sensitivity (leakage-sensitivity check on 05b's cluster split,
+# scripts/05c_run_cluster_cv_randominit.py): same treatment as 05b above, for the same
+# reason -- chemprop_runs/ (227MB, 250 files: chemprop_randominit across 25 folds),
+# predictions/ (12MB, 150 files), and scores/ (47MB, 150 files) are bulk per-fold raw
+# output for the 5 tabular configs + chemprop_randominit, individually small but not worth
+# tracking -- checked directly, not assumed. Fully regeneratable by re-running the notebook
+# and script (deterministic: reuses 05's own manifest.csv seeds and 05b's frozen
+# cluster_cv_folds.csv, read-only). cluster_cv_summary_table.csv, comparison_by_config.csv,
+# leakage_sensitivity_verdict.csv, and st_rae_comparison_with_reference.csv stay tracked --
+# small, and what this notebook reports from.
+outputs/05c_cluster_cv_leakage_sensitivity/chemprop_runs/
+outputs/05c_cluster_cv_leakage_sensitivity/predictions/
+outputs/05c_cluster_cv_leakage_sensitivity/scores/
+
+# 15_analog_holdout_comparison (analog-holdout split, scripts/15_run_analog_holdout.py):
+# chemprop_runs/ (250MB, checked directly -- the one chemprop_chemeleoninit training run
+# this step needed) is excluded, same reasoning as 10/12 above -- fully regeneratable by
+# re-running the script (deterministic: fixed SEED=42 throughout). predictions/ and scores/
+# (single small files each, but the same per-fold-style intermediate raw output category as
+# 05b/05c/08 above, not the notebook's own reported deliverable) are excluded for
+# consistency with that category-based reasoning, not size. seed_neighbor_similarity_
+# distribution.png and analog_vs_cv_vs_blind_comparison.csv (the actual comparison table
+# this notebook reports from) stay tracked.
+outputs/15_analog_holdout_comparison/chemprop_runs/
+outputs/15_analog_holdout_comparison/predictions/
+outputs/15_analog_holdout_comparison/scores/
