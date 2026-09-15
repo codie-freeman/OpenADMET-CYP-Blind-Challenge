@@ -182,3 +182,17 @@ outputs/18_charge_augmented_chemprop_screen/scores/
 outputs/20_residual_exclusion_screen/chemprop_runs/
 outputs/20_residual_exclusion_screen/predictions/
 outputs/20_residual_exclusion_screen/scores/
+
+# 22_auxiliary_heads_screen (TDI/Emax auxiliary-head screen, notebook-only): same
+# treatment as 18/20 above, for the same reason -- chemprop_runs/ (2.2GB raw, checked
+# directly, almost entirely *.pt/*.ckpt checkpoints already covered by this file's own
+# blanket rule above), predictions/ (1.4MB, 9 files), and scores/ (6.1MB, 9 files) are
+# bulk per-arm-per-seed intermediate raw output, excluded for consistency with the same
+# category-based reasoning as every notebook above. Fully regeneratable by re-running
+# the notebook (deterministic: reuses 05's own manifest seeds, cache-skipped via the
+# same `PRED_DIR/{tag}.csv` is_done() convention). prereg.json, metrics_summary.csv,
+# run_scores.csv, cross_arm_correlation.csv, baseline_seed_vs_seed_reference.csv,
+# verdict.json, and figures/ stay tracked -- small, and what this notebook reports from.
+outputs/22_auxiliary_heads_screen/chemprop_runs/
+outputs/22_auxiliary_heads_screen/predictions/
+outputs/22_auxiliary_heads_screen/scores/

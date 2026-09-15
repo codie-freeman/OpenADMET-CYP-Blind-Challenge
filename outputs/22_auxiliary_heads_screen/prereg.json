@@ -1,0 +1,76 @@
+{
+  "notebook": "22_auxiliary_heads_screen",
+  "frozen_before": "any training or scoring in this notebook",
+  "fold": {
+    "repeat_col": "repeat_0",
+    "test_fold": 0
+  },
+  "seeds": [
+    2684470948,
+    4091952314,
+    233227757
+  ],
+  "arms": {
+    "baseline": "chemprop_chemeleoninit, 4 heads: CYP{iso}_pIC50_direct_inhibition",
+    "tdi": "BASELINE + 4 heads: CYP{iso}_pIC50_TDI_condition (8 heads total)",
+    "tdi_emax": "TDI + 4 heads: CYP{iso}_EmaxVsPosCtrl_direct_inhibition (12 heads total)"
+  },
+  "background": "Every prior modelling change screened in this project rearranged existing information (ensembling, charge descriptors, interval-aware objectives, residual exclusion); none added information. TRAIN_TDI.csv contains 1,240 compounds absent from train_inhibition_curated.csv, contributing nothing to the current model -- as auxiliary-head training rows they expand the encoder's compound pool by ~25% without external data. A comparable entrant on the prior OpenADMET PXR challenge tested auxiliary prediction targets and found they HURT -- this is not a safe bet, reported against that precedent either way.",
+  "interpretation_rules": {
+    "IMPROVES": "an isoform's ST-RAE improves against BASELINE by more than BASELINE's own 3-seed spread (std, ddof=1) on that isoform.",
+    "TIES": "difference smaller than BASELINE's own 3-seed spread -- called unresolved, not small, per notebooks 18 and 20's own precedent for this exact distinction.",
+    "HURTS": "regression beyond BASELINE's own 3-seed spread, consistent with the PXR auxiliary-target negative precedent."
+  },
+  "predicted_ranking_by_pool_expansion_ratio": [
+    "CYP3A4",
+    "CYP2D6",
+    "CYP1A2",
+    "CYP2C9"
+  ],
+  "predicted_isoform_ratios": [
+    {
+      "isoform": "CYP1A2",
+      "n_scored": 1135,
+      "n_tdi_condition_total": 1136,
+      "n_emax_total": 1135,
+      "n_extra_pool_contribution": 0,
+      "ratio_extra_pool_to_scored": 0.0,
+      "ratio_total_tdi_to_scored": 1.0008810572687226,
+      "ratio_total_tdi_plus_emax_to_scored": 2.0008810572687223
+    },
+    {
+      "isoform": "CYP2C9",
+      "n_scored": 1021,
+      "n_tdi_condition_total": 1021,
+      "n_emax_total": 1021,
+      "n_extra_pool_contribution": 0,
+      "ratio_extra_pool_to_scored": 0.0,
+      "ratio_total_tdi_to_scored": 1.0,
+      "ratio_total_tdi_plus_emax_to_scored": 2.0
+    },
+    {
+      "isoform": "CYP2D6",
+      "n_scored": 1198,
+      "n_tdi_condition_total": 1201,
+      "n_emax_total": 1198,
+      "n_extra_pool_contribution": 2,
+      "ratio_extra_pool_to_scored": 0.001669449081803005,
+      "ratio_total_tdi_to_scored": 1.0025041736227045,
+      "ratio_total_tdi_plus_emax_to_scored": 2.0025041736227047
+    },
+    {
+      "isoform": "CYP3A4",
+      "n_scored": 1885,
+      "n_tdi_condition_total": 3131,
+      "n_emax_total": 1885,
+      "n_extra_pool_contribution": 1238,
+      "ratio_extra_pool_to_scored": 0.656763925729443,
+      "ratio_total_tdi_to_scored": 1.6610079575596817,
+      "ratio_total_tdi_plus_emax_to_scored": 2.661007957559682
+    }
+  ],
+  "predicted_statement": "CYP3A4 is predicted to benefit most, since it is the only isoform where the TDI-only extra-compound pool contributes a non-trivial number of new auxiliary labels relative to its existing scored-label count. The other three isoforms are predicted to show essentially no pool-expansion benefit (near-zero or zero new compounds contributed), so any movement there is more likely a head-count/optimisation side effect than the tested mechanism.",
+  "dose_response_expectation": "if auxiliary heads help by adding information, TDI+EMAX should be at least as good as TDI (per isoform, against BASELINE's own resolution rule above). If TDI+EMAX is WORSE than TDI beyond the combined seed spread, that is evidence the benefit is not monotonic in head count and that head dilution is real -- reported as such, the two arms are never averaged together to force one verdict.",
+  "macro_caveat": "the macro ST-RAE is a mean of four isoforms and can mask opposing per-isoform movements -- reported, but never used in place of the per-isoform verdicts above.",
+  "cyp2d6_caveat": "notebook 21 established that OOF ST-RAE is not a reliable selection metric for CYP2D6 specifically -- the deployed blind-targeted shift that improved the real board from 1.1673 to 0.8299 lands at ST-RAE 3.08 on the OOF curve (~3x the raw OOF baseline), because the OOF and blind CYP2D6 populations have genuinely different centres. Any CYP2D6 movement in this screen is read with that caveat attached, not taken at face value."
+}

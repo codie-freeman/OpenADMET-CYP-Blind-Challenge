@@ -1,0 +1,178 @@
+{
+  "notebook": "22_auxiliary_heads_screen",
+  "per_isoform_verdicts": {
+    "CYP1A2": {
+      "tdi": "TIES",
+      "tdi_emax": "HURTS"
+    },
+    "CYP2C9": {
+      "tdi": "IMPROVES",
+      "tdi_emax": "TIES"
+    },
+    "CYP2D6": {
+      "tdi": "TIES",
+      "tdi_emax": "TIES"
+    },
+    "CYP3A4": {
+      "tdi": "IMPROVES",
+      "tdi_emax": "IMPROVES"
+    }
+  },
+  "per_isoform_verdict_detail": {
+    "CYP1A2": {
+      "tdi": {
+        "isoform": "CYP1A2",
+        "arm": "tdi",
+        "baseline_mean": 0.7995457008431005,
+        "baseline_std": 0.01445108938802095,
+        "arm_mean": 0.797877554431189,
+        "arm_std": 0.02056211112768167,
+        "diff": -0.0016681464119114864,
+        "baseline_seed_spread": 0.01445108938802095,
+        "label": "TIES"
+      },
+      "tdi_emax": {
+        "isoform": "CYP1A2",
+        "arm": "tdi_emax",
+        "baseline_mean": 0.7995457008431005,
+        "baseline_std": 0.01445108938802095,
+        "arm_mean": 0.8494393687506635,
+        "arm_std": 0.05098499856773715,
+        "diff": 0.049893667907563,
+        "baseline_seed_spread": 0.01445108938802095,
+        "label": "HURTS"
+      }
+    },
+    "CYP2C9": {
+      "tdi": {
+        "isoform": "CYP2C9",
+        "arm": "tdi",
+        "baseline_mean": 0.7141788645508806,
+        "baseline_std": 0.015770246206870876,
+        "arm_mean": 0.6895512912102953,
+        "arm_std": 0.01912265638421908,
+        "diff": -0.024627573340585296,
+        "baseline_seed_spread": 0.015770246206870876,
+        "label": "IMPROVES"
+      },
+      "tdi_emax": {
+        "isoform": "CYP2C9",
+        "arm": "tdi_emax",
+        "baseline_mean": 0.7141788645508806,
+        "baseline_std": 0.015770246206870876,
+        "arm_mean": 0.7222015056241639,
+        "arm_std": 0.06399959905599968,
+        "diff": 0.00802264107328321,
+        "baseline_seed_spread": 0.015770246206870876,
+        "label": "TIES"
+      }
+    },
+    "CYP2D6": {
+      "tdi": {
+        "isoform": "CYP2D6",
+        "arm": "tdi",
+        "baseline_mean": 0.9599414271513655,
+        "baseline_std": 0.06258157739443537,
+        "arm_mean": 1.003489605536921,
+        "arm_std": 0.10202551032615724,
+        "diff": 0.04354817838555536,
+        "baseline_seed_spread": 0.06258157739443537,
+        "label": "TIES"
+      },
+      "tdi_emax": {
+        "isoform": "CYP2D6",
+        "arm": "tdi_emax",
+        "baseline_mean": 0.9599414271513655,
+        "baseline_std": 0.06258157739443537,
+        "arm_mean": 0.9522727610440486,
+        "arm_std": 0.03239909645659307,
+        "diff": -0.007668666107316979,
+        "baseline_seed_spread": 0.06258157739443537,
+        "label": "TIES"
+      }
+    },
+    "CYP3A4": {
+      "tdi": {
+        "isoform": "CYP3A4",
+        "arm": "tdi",
+        "baseline_mean": 0.52232121427226,
+        "baseline_std": 0.03127736217487023,
+        "arm_mean": 0.4809429912427179,
+        "arm_std": 0.03291783784748833,
+        "diff": -0.04137822302954208,
+        "baseline_seed_spread": 0.03127736217487023,
+        "label": "IMPROVES"
+      },
+      "tdi_emax": {
+        "isoform": "CYP3A4",
+        "arm": "tdi_emax",
+        "baseline_mean": 0.52232121427226,
+        "baseline_std": 0.03127736217487023,
+        "arm_mean": 0.45654112841622124,
+        "arm_std": 0.02648201397626331,
+        "diff": -0.06578008585603873,
+        "baseline_seed_spread": 0.03127736217487023,
+        "label": "IMPROVES"
+      }
+    }
+  },
+  "dose_response": [
+    {
+      "isoform": "CYP1A2",
+      "tdi_mean": 0.797877554431189,
+      "tdi_emax_mean": 0.8494393687506635,
+      "diff_emax_minus_tdi": 0.051561814319474486,
+      "combined_spread": 0.05098499856773715,
+      "resolved": true,
+      "verdict": "VIOLATED -- TDI+EMAX is a resolved regression vs. TDI (head dilution)"
+    },
+    {
+      "isoform": "CYP2C9",
+      "tdi_mean": 0.6895512912102953,
+      "tdi_emax_mean": 0.7222015056241639,
+      "diff_emax_minus_tdi": 0.032650214413868506,
+      "combined_spread": 0.06399959905599968,
+      "resolved": false,
+      "verdict": "TIE -- no resolved difference between TDI and TDI+EMAX"
+    },
+    {
+      "isoform": "CYP2D6",
+      "tdi_mean": 1.003489605536921,
+      "tdi_emax_mean": 0.9522727610440486,
+      "diff_emax_minus_tdi": -0.05121684449287234,
+      "combined_spread": 0.10202551032615724,
+      "resolved": false,
+      "verdict": "TIE -- no resolved difference between TDI and TDI+EMAX"
+    },
+    {
+      "isoform": "CYP3A4",
+      "tdi_mean": 0.4809429912427179,
+      "tdi_emax_mean": 0.45654112841622124,
+      "diff_emax_minus_tdi": -0.024401862826496645,
+      "combined_spread": 0.03291783784748833,
+      "resolved": false,
+      "verdict": "TIE -- no resolved difference between TDI and TDI+EMAX"
+    }
+  ],
+  "any_dose_response_violation": true,
+  "predicted_ranking": [
+    "CYP3A4",
+    "CYP2D6",
+    "CYP1A2",
+    "CYP2C9"
+  ],
+  "observed_tdi_ranking": [
+    "CYP3A4",
+    "CYP2C9",
+    "CYP1A2",
+    "CYP2D6"
+  ],
+  "top_prediction_matched_observed_top": true,
+  "pxr_precedent_comparison": "MIXED -- at least one isoform improves and at least one hurts. Neither the PXR precedent nor a clean positive story describes this result; reported literally per isoform above rather than forced into one verdict.",
+  "full_25_fold_cv_candidates": [
+    "CYP2C9",
+    "CYP3A4"
+  ],
+  "single_concentration_followup_note": "the single-concentration screen (long-format, needs a pivot + a replicate-aggregation judgement call, explicitly out of scope for this task) would only be worth the added complexity if this cheap, clean test showed a real signal worth chasing further. At least one isoform did (see above) -- a follow-up MAY be worth considering, pending the full-25-fold result on ['CYP2C9', 'CYP3A4'] first.",
+  "submission_recommendation": "none -- this notebook is a report-only screen"
+}
