@@ -1,0 +1,13 @@
+file,isoform,n_compounds_with_log2fc,n_already_scored_same_isoform,n_curated_unscored_same_isoform,n_new_compound,existing_scored_pool,pct_expansion_of_scored_pool
+single_concentration,CYP1A2,4375,1412,2963,0,1412,0.0
+single_concentration,CYP2C9,4375,1285,3090,0,1285,0.0
+single_concentration,CYP2D6,4375,1493,2882,0,1493,0.0
+single_concentration,CYP3A4,4375,1805,2570,0,2335,0.0
+TDI,CYP1A2,1413,1412,1,0,1412,0.0
+TDI,CYP2C9,1285,1285,0,0,1285,0.0
+TDI,CYP2D6,1497,1493,2,2,1493,0.134
+TDI,CYP3A4,3583,2334,11,1238,2335,53.019
+Emax,CYP1A2,1413,1412,0,1,1412,0.071
+Emax,CYP2C9,1285,1285,0,0,1285,0.0
+Emax,CYP2D6,1494,1493,0,1,1493,0.067
+Emax,CYP3A4,2335,2335,0,0,2335,0.0
