@@ -1,0 +1,33 @@
+{
+  "threshold_reused_from_part3": 0.1,
+  "per_isoform": {
+    "CYP1A2": {
+      "part3_pass": true,
+      "label": "SURVIVES",
+      "note": "partial |rho| stays >= threshold, same sign -- independent of logP",
+      "rho_charge_unconditional": -0.20473421541795905,
+      "rho_charge_partial": -0.19310365586335682
+    },
+    "CYP2C9": {
+      "part3_pass": true,
+      "label": "SURVIVES",
+      "note": "partial |rho| stays >= threshold, same sign -- independent of logP",
+      "rho_charge_unconditional": -0.15353109333256595,
+      "rho_charge_partial": -0.12040965525765711
+    },
+    "CYP2D6": {
+      "part3_pass": true,
+      "label": "SURVIVES",
+      "note": "partial |rho| stays >= threshold, same sign -- independent of logP",
+      "rho_charge_unconditional": 0.16911114766063765,
+      "rho_charge_partial": 0.17722312581191255
+    },
+    "CYP3A4": {
+      "part3_pass": false,
+      "label": "not_applicable",
+      "note": "already FAILED Part 3's unconditional bar -- reported for completeness only",
+      "rho_charge_unconditional": -0.0711777056071573,
+      "rho_charge_partial": -0.0029059039542863856
+    }
+  }
+}

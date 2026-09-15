@@ -1,0 +1,10 @@
+{
+  "per_isoform_pass": {
+    "CYP1A2": true,
+    "CYP2C9": true,
+    "CYP2D6": true,
+    "CYP3A4": false
+  },
+  "overall_pass": true,
+  "mechanism_confirmed": true
+}

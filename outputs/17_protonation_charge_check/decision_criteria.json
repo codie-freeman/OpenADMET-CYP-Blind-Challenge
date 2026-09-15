@@ -1,0 +1,31 @@
+{
+  "notebook": "17_protonation_charge_check",
+  "frozen_before": "Part 3 per-isoform Spearman / group-mean results",
+  "pass_rule": {
+    "spearman_abs_threshold": 0.1,
+    "median_diff_charge1_vs_0_threshold": 0.3,
+    "median_diff_min_group_n": 100,
+    "logic": "PASS if EITHER condition holds on at least one isoform"
+  },
+  "mechanism_confirmed_rule": "CYP2D6 Spearman rho positive AND CYP2C9 Spearman rho negative, BOTH independently meeting the PASS spearman_abs_threshold",
+  "fail_rule": "neither pass_rule condition holds on any isoform",
+  "isoforms_evaluated_independently": true,
+  "no_cross_isoform_averaging": true,
+  "partial_correlation_confound_check": {
+    "notebook": "17_protonation_charge_check (addendum, appended same day)",
+    "frozen_before": "any partial-correlation computation in this section",
+    "purpose": "quantify, via Spearman partial correlation controlling for crippen_logp, whether each Part-3-PASS isoform's charge-pIC50 correlation is attributable to the charge/logP anti-correlation Part 3 identified qualitatively, rather than an independent effect",
+    "threshold_reused_from_part3": 0.1,
+    "labels": {
+      "CONFOUND_DRIVEN": "partial |rho| drops below the Part-3 threshold, having cleared it unconditionally -- charge signal attributable to lipophilicity, no case for a charge descriptor on that isoform",
+      "SURVIVES": "partial |rho| stays >= the Part-3 threshold, same sign as the unconditional value -- charge signal independent of lipophilicity on that isoform",
+      "not_applicable": "isoform already FAILED Part 3's unconditional bar -- reported for completeness only, not re-adjudicated with either label"
+    },
+    "a_priori_expectation_stated_before_computing": {
+      "CYP2D6": "SURVIVES -- logP correlation is null, nothing for the confound to act through",
+      "CYP1A2": "genuinely uncertain, could go either way",
+      "CYP2C9": "genuinely uncertain, could go either way",
+      "CYP3A4": "not_applicable -- already FAILED Part 3, reported for completeness only"
+    }
+  }
+}

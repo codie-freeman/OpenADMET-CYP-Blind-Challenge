@@ -439,34 +439,6 @@ dependencies:
       # cleanly. Not exercised beyond import/install in this task (out of
       # scope -- see report).
       - tabpfn==8.5.0
-      # dimorphite-dl: new addition for notebook 17's physiological-pH protonation/net-
-      # formal-charge diagnostic. NOT INSTALLABLE via a single `pip install -r` pass
-      # alongside this file's own `rdkit==2026.3.3` pin -- confirmed live (`pip install
-      # --dry-run`): dimorphite-dl 2.0.2 hard-requires `rdkit<2026,>=2020.3.3`, which
-      # directly conflicts with the rdkit pin chemprop's dependency chain requires
-      # (see the rdkit/cuik-molmaker-pin comment blocks above) and pip's resolver
-      # raises ResolutionImpossible rather than silently picking one. A plain
-      # `pip install dimorphite-dl` (no version pin, matching the task instruction that
-      # approved this install) reproduces the same conflict in the other direction: it
-      # silently DOWNGRADES the already-installed rdkit to 2025.9.6 to satisfy its own
-      # pin, which this environment's chemprop/cuik-molmaker-pin chain then cannot use
-      # (confirmed live: `cuik-molmaker-pin 2026.3.3.post2 requires rdkit==2026.03.3,
-      # but you have rdkit 2025.9.6 -- incompatible`). Actual resolution used on the
-      # live `cyp-admet-v2` env: `pip install dimorphite-dl` (as instructed) followed
-      # immediately by `pip install --no-deps --force-reinstall rdkit==2026.3.3` to
-      # restore the pinned rdkit. Verified afterward, not assumed: `import dimorphite_dl`
-      # succeeds and its `protonate_smiles` call runs correctly against rdkit 2026.3.3
-      # despite the `<2026` pin (pip does not re-check package pins at import time), AND
-      # chemprop still featurizes a real molecule via `cuik_molmaker` end-to-end with no
-      # error. `pip check` afterward reports only this one expected dimorphite-dl/rdkit
-      # mismatch (informational -- the package works despite it) plus two pre-existing,
-      # unrelated warnings (reportlab/freetype-py, Pillow platform notice) that predate
-      # this change. THIS PIN IS THEREFORE DOCUMENTATION, NOT A REPRODUCIBLE RECIPE: a
-      # fresh `conda env create -f environment.yml` would need the same two-step manual
-      # sequence above (plain install, then `--no-deps --force-reinstall` the rdkit
-      # pin) run by hand afterward -- do not add this as a normal one-line pip list
-      # entry above, it would make a fresh single-pass build fail outright.
-      # - dimorphite-dl==2.0.2  (install manually post-build; see note above)
 # note: no `prefix:` key -- the old export had an absolute /opt/anaconda3/envs/...
 # path here, which is meaningless across machines/architectures. Omitted entirely
 # (rather than set to null/empty) since that's the portable way to write this key.
