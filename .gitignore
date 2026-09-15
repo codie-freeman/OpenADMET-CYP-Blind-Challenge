@@ -17,7 +17,7 @@ __pycache__/
 # of Chemprop checkpoints/logs across 50 chemprop_runs/ subdirs -- a much larger scale
 # than 04a's own 10 subdirs, which is why this gets full-directory exclusion instead
 # of 04a's per-file-extension approach) is excluded.
-logs/*.log
+logs/**/*.log
 outputs/05_cv_comparison/chemprop_runs/
 outputs/05_cv_comparison/predictions/
 outputs/05_cv_comparison/scores/
@@ -152,3 +152,33 @@ outputs/05c_cluster_cv_leakage_sensitivity/scores/
 outputs/15_analog_holdout_comparison/chemprop_runs/
 outputs/15_analog_holdout_comparison/predictions/
 outputs/15_analog_holdout_comparison/scores/
+
+# 18_charge_augmented_chemprop_screen (single-fold charge-descriptor screen, notebook-only):
+# chemprop_runs/ (1.5GB raw, checked directly -- almost entirely *.pt/*.ckpt checkpoints
+# already covered by this file's own blanket rule above; the ~3MB of csv/json/toml/yaml left
+# after that exclusion is still bulk per-run raw output, same category as every notebook
+# above, not this notebook's own reported deliverable) is excluded for consistency with that
+# category-based reasoning, not size. predictions/ (720KB) and scores/ (4.1MB) are the same
+# per-arm-per-seed intermediate category. All three are fully regeneratable by re-running the
+# notebook (deterministic: reuses this project's own established seeds, cache-skipped via the
+# `PRED_DIR/{tag}.csv` is_done() convention). prereg.json, st_rae_summary.csv,
+# decorrelation_summary.csv, correlation_matrix_*.csv, point_estimates.csv, and verdict.json
+# stay tracked -- small, and what this notebook reports from.
+outputs/18_charge_augmented_chemprop_screen/chemprop_runs/
+outputs/18_charge_augmented_chemprop_screen/predictions/
+outputs/18_charge_augmented_chemprop_screen/scores/
+
+# 20_residual_exclusion_screen (CYP2D6 residual-exclusion screen with a random-masking
+# control, notebook-only): same treatment as 18 above, for the same reason -- chemprop_runs/
+# (2.4GB raw, checked directly, almost entirely *.pt/*.ckpt already covered above; ~4.4MB of
+# csv/json/toml/yaml left), predictions/ (1.1MB), and scores/ (6.2MB) are bulk per-arm-per-seed
+# intermediate raw output, excluded for consistency with the same category-based reasoning as
+# every notebook above. Fully regeneratable by re-running the notebook (deterministic: reuses
+# 05's own manifest seeds plus one fixed, stated seed for the random-masking draw, cache-skipped
+# via the same `PRED_DIR/{tag}.csv` is_done() convention). prereg.json, metrics_summary.csv,
+# point_estimates.csv, cross_isoform_divergence_vs_baseline.csv,
+# baseline_seed_vs_seed_reference.csv, cross_isoform_summary.csv, and verdict.json stay
+# tracked -- small, and what this notebook reports from.
+outputs/20_residual_exclusion_screen/chemprop_runs/
+outputs/20_residual_exclusion_screen/predictions/
+outputs/20_residual_exclusion_screen/scores/
