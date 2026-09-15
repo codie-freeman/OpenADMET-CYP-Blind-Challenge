@@ -1,0 +1,53 @@
+{
+  "final_call": "NULL",
+  "final_reasoning": "Neither arm is a resolved improvement on CYP2D6 -- notebook 06's CV effect does not reproduce on this fold under this protocol.",
+  "residual_verdict": {
+    "isoform": "CYP2D6",
+    "arm": "residual",
+    "baseline_mean": 0.9599414271513655,
+    "baseline_std": 0.06258157739443537,
+    "arm_mean": 0.9361760574211191,
+    "arm_std": 0.02486920838658675,
+    "diff": -0.023765369730246455,
+    "combined_seed_spread": 0.06258157739443537,
+    "resolved": false,
+    "verdict": "unresolved (diff smaller than within-arm seed spread)"
+  },
+  "random_verdict": {
+    "isoform": "CYP2D6",
+    "arm": "random",
+    "baseline_mean": 0.9599414271513655,
+    "baseline_std": 0.06258157739443537,
+    "arm_mean": 0.9639183196860325,
+    "arm_std": 0.0600603927378899,
+    "diff": 0.0039768925346669315,
+    "combined_seed_spread": 0.06258157739443537,
+    "resolved": false,
+    "verdict": "unresolved (diff smaller than within-arm seed spread)"
+  },
+  "cross_isoform_summary": [
+    {
+      "isoform": "CYP1A2",
+      "baseline_seed_floor_r": 0.871512421200452,
+      "residual_vs_baseline_mean_r": 0.9511289897887751,
+      "random_vs_baseline_mean_r": 0.9543224470870891,
+      "residual_minus_random_r": -0.0031934572983139953
+    },
+    {
+      "isoform": "CYP2C9",
+      "baseline_seed_floor_r": 0.9097960354402638,
+      "residual_vs_baseline_mean_r": 0.9678989235225078,
+      "random_vs_baseline_mean_r": 0.969855007963253,
+      "residual_minus_random_r": -0.0019560844407451317
+    },
+    {
+      "isoform": "CYP3A4",
+      "baseline_seed_floor_r": 0.9102142925118493,
+      "residual_vs_baseline_mean_r": 0.9685933831376422,
+      "random_vs_baseline_mean_r": 0.9679757331850546,
+      "residual_minus_random_r": 0.0006176499525876178
+    }
+  ],
+  "full_25_fold_cv_candidate": false,
+  "submission_recommendation": "none -- this notebook is a report-only screen"
+}

@@ -1,0 +1,29 @@
+{
+  "notebook": "20_residual_exclusion_screen",
+  "frozen_before": "any training or scoring in this notebook",
+  "fold": {
+    "repeat_col": "repeat_0",
+    "test_fold": 0
+  },
+  "seeds": [
+    2684470948,
+    4091952314,
+    233227757
+  ],
+  "random_mask_seed": 20260914,
+  "arms": {
+    "baseline": "chemprop_chemeleoninit, no exclusion",
+    "residual": "identical, with notebook 06's residual-flagged CYP2D6 labels (criterion1_residual_flagged.csv) masked to NaN, restricted to this fold's training portion",
+    "random": "identical, with the SAME NUMBER of CYP2D6 labels masked to NaN, drawn uniformly at random from this fold's training CYP2D6 rows, excluding every compound on the residual list -- disjoint from the residual arm's masked set by construction, same draw reused across all three training seeds"
+  },
+  "background": "Notebook 06 found residual-based CYP2D6 exclusion significantly improved CV ST-RAE for chemprop_chemeleoninit (0.937 -> 0.897, p=1.6e-05) alongside 2 tabular configs, with a real CI-width control showing a different pattern -- but never isolated whether the CYP2D6 gain is a genuine data-quality effect or an artifact of chemprop's multitask loss reweighting by valid-label count (06's own leading, never-verified hypothesis for why masking CYP2D6 labels shifted CYP1A2/CYP2C9/CYP3A4 predictions by r=0.92-0.95 against the 05 baseline, even though those isoforms' own labels were never touched). This notebook's RANDOM arm is designed to separate the two: it reduces CYP2D6's label count by the same amount as RESIDUAL, without removing the specific compounds RESIDUAL removes.",
+  "interpretation_rules": {
+    "DATA_QUALITY": "RESIDUAL improves CYP2D6 ST-RAE beyond the 3-seed spread AND RANDOM does not. The gain is attributable to which compounds were removed.",
+    "REWEIGHTING_ARTIFACT": "RANDOM improves CYP2D6 by a similar margin to RESIDUAL. The gain comes from reducing CYP2D6's label count, not from the identity of the removed compounds -- a real finding about multitask training in its own right, meaning notebook 06's causal story needs rewriting.",
+    "NULL": "Neither arm improves CYP2D6 beyond the 3-seed spread. Notebook 06's CV effect does not reproduce on this fold under this protocol; report plainly, recommend no further investment without new evidence.",
+    "MIXED": "RANDOM improves but by materially less than RESIDUAL -- both mechanisms are contributing and cannot be cleanly separated by this design. State this rather than picking the more flattering reading."
+  },
+  "resolution_rule": "a between-arm ST-RAE difference on CYP2D6 is 'resolved' only if it exceeds the larger of the two arms' own 3-seed standard deviation (ddof=1) -- otherwise call it unresolved, matching notebook 18's own precedent for this exact distinction.",
+  "reweighting_vs_mixed_magnitude_threshold": "when both RESIDUAL and RANDOM are resolved-improve: RANDOM's improvement magnitude >= 70% of RESIDUAL's improvement magnitude -> REWEIGHTING_ARTIFACT; below 70% -> MIXED. 70% is an arbitrary, round, stated threshold, frozen here before running anything -- not derived from any result.",
+  "cross_isoform_expectation": "Both masked arms (RESIDUAL and RANDOM) are expected to shift CYP1A2/CYP2C9/CYP3A4 predictions relative to BASELINE (notebook 06 observed r=0.92-0.95 for RESIDUAL vs. the 05 baseline, using the SAME seed per fold that comparison had available -- this notebook's own BASELINE arm, not 05's stored predictions, is the reference here, matched by training seed). If RANDOM produces a SIMILAR cross-isoform shift to RESIDUAL, that is direct evidence for the reweighting mechanism independent of any CYP2D6 score movement -- reported as such regardless of what the CYP2D6 result shows."
+}
