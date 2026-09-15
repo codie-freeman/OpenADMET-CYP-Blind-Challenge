@@ -1,0 +1,30 @@
+{
+  "CYP1A2": {
+    "solo_verdict": "tie (unresolved -- diff smaller than within-arm seed spread)",
+    "decorrelated": false,
+    "charge_vs_pool_mean_correlation": 0.6666160647373838,
+    "outcome": "(c) solo ties AND correlated at pool-typical levels -> charge signal not reaching the output in a way that matters",
+    "full_25_fold_cv_candidate": false
+  },
+  "CYP2C9": {
+    "solo_verdict": "tie (unresolved -- diff smaller than within-arm seed spread)",
+    "decorrelated": false,
+    "charge_vs_pool_mean_correlation": 0.6932797702626042,
+    "outcome": "(c) solo ties AND correlated at pool-typical levels -> charge signal not reaching the output in a way that matters",
+    "full_25_fold_cv_candidate": false
+  },
+  "CYP2D6": {
+    "solo_verdict": "tie (unresolved -- diff smaller than within-arm seed spread)",
+    "decorrelated": false,
+    "charge_vs_pool_mean_correlation": 0.6315548789644503,
+    "outcome": "(c) solo ties AND correlated at pool-typical levels -> charge signal not reaching the output in a way that matters",
+    "full_25_fold_cv_candidate": false
+  },
+  "CYP3A4": {
+    "solo_verdict": "tie (unresolved -- diff smaller than within-arm seed spread)",
+    "decorrelated": false,
+    "charge_vs_pool_mean_correlation": 0.8144278099733143,
+    "outcome": "(c) solo ties AND correlated at pool-typical levels -> charge signal not reaching the output in a way that matters",
+    "full_25_fold_cv_candidate": false
+  }
+}

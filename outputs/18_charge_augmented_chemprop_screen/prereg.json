@@ -1,0 +1,32 @@
+{
+  "notebook": "18_charge_augmented_chemprop_screen",
+  "frozen_before": "any training or scoring in this notebook",
+  "fold": {
+    "repeat_col": "repeat_0",
+    "test_fold": 0
+  },
+  "seeds": [
+    2684470948,
+    4091952314,
+    233227757
+  ],
+  "expected_pattern": {
+    "gains_plausible": [
+      "CYP1A2",
+      "CYP2C9",
+      "CYP2D6"
+    ],
+    "gains_plausible_reason": "these three isoforms' charge-pIC50 correlation survived notebook 17's lipophilicity confound control (partial |rho| >= 0.10, same sign as unconditional)",
+    "null_control_isoform": "CYP3A4",
+    "null_control_reason": "CYP3A4's charge-pIC50 correlation collapsed to -0.0029 (p=0.89) under notebook 17's confound control -- there is nothing for this model to learn from the charge column on this isoform",
+    "null_control_interpretation_rule": "if CYP3A4 moves materially in EITHER direction, treat that as a signal that something is wrong with the plumbing (feature misalignment, row-order mismatch, leakage) rather than as a chemistry finding, and investigate before interpreting any other isoform's result"
+  },
+  "decorrelation_reference_point": {
+    "existing_pool_pairwise_oof_correlation_range": [
+      0.88,
+      0.93
+    ],
+    "interpretation": "existing pool members sit around 0.88-0.93 pairwise OOF correlation with each other, a range where averaging is known to buy little; meaningfully below that is the outcome of interest for Question B"
+  },
+  "effect_size_note": "notebook 17 found small effect sizes -- no isoform cleared the median-pIC50-difference arm, every PASS was carried by the Spearman arm alone (partial rho ~0.12-0.18). This screen is read against that scale, not as a search for a large effect."
+}
