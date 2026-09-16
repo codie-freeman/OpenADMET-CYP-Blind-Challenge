@@ -1,0 +1,12 @@
+{
+  "hard_quantile": 0.9,
+  "easy_quantile": 0.1,
+  "disagreement_quantile": 0.9,
+  "disagreement_quantile_note": "not specified in the task brief for this set; adopted here for consistency with the consensus-hard/easy decile convention -- this notebook's own choice",
+  "consensus_hard_measure": "mean absolute error across all 11 configs, repeat-averaged per config first",
+  "consensus_easy_measure": "same measure as consensus-hard, best decile instead of worst",
+  "disagreement_measure": "standard deviation of signed error across the 11 configs, repeat-averaged per config first",
+  "soft_threshold_measure": "vendored per-point clipped-error formula (unnormalized), repeat-averaged per config, then averaged across the 11 configs",
+  "multiple_comparison_correction": "Benjamini-Hochberg FDR (statsmodels fdr_bh), applied once per isoform across every test performed for that isoform",
+  "scaffold_min_members_for_enrichment_check": 5
+}
