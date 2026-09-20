@@ -1,0 +1,26 @@
+{
+  "per_isoform_verdict": {
+    "CYP1A2": "IMPROVES",
+    "CYP2C9": "IMPROVES",
+    "CYP2D6": "IMPROVES",
+    "CYP3A4": "IMPROVES"
+  },
+  "n_improves": 4,
+  "n_hurts": 0,
+  "submission_bar_met": true,
+  "arm3_dropped": false,
+  "mae_only_per_isoform_verdict_diagnostic": {
+    "CYP1A2": "IMPROVES",
+    "CYP2C9": "TIES (UNRESOLVED)",
+    "CYP2D6": "IMPROVES",
+    "CYP3A4": "TIES (UNRESOLVED)"
+  },
+  "confound_decomposition_summary": {
+    "CYP1A2": 24.4,
+    "CYP2C9": -4.9,
+    "CYP2D6": 74.0,
+    "CYP3A4": 29.5,
+    "MACRO": 31.8
+  },
+  "decided_at_utc": "2026-09-19T12:41:45.639849+00:00"
+}

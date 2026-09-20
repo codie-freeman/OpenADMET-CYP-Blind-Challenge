@@ -1,0 +1,53 @@
+{
+  "notebook": "31_deadzone",
+  "frozen_at_utc": "2026-09-19T12:12:39.278947+00:00",
+  "frozen_before": "any chemprop train call in this notebook",
+  "mechanism": "Replace the training TARGET with clip(oof_prediction, conf_low, conf_high) under absolute-error loss ('mae' in chemprop's LossFunctionRegistry, confirmed against the installed chemprop 2.3.1 API to compute |pred - target| exactly -- see the loss-function verification cell below). A prediction already inside its own band gets zero gradient; a prediction outside gets pulled toward the nearest edge, not the point estimate.",
+  "interpretation_rules": {
+    "resolved_against": "BASELINE's own 3-seed ST-RAE standard deviation (ddof=1) on that isoform",
+    "IMPROVES": "an arm's mean ST-RAE is lower than BASELINE's by MORE than BASELINE's own 3-seed spread",
+    "TIES": "absolute difference smaller than that spread. Per notebooks 18, 20, 26 and 29 this MUST be reported as UNRESOLVED, never as 'a small gain' or 'a small loss'.",
+    "HURTS": "an arm's mean ST-RAE is higher than BASELINE's by more than that spread"
+  },
+  "part0_headroom_predictions": {
+    "hit_rate_ordering_most_to_least_headroom": [
+      "CYP2D6",
+      "CYP1A2",
+      "CYP3A4",
+      "CYP2C9"
+    ],
+    "hit_rates": {
+      "CYP1A2": 0.2258,
+      "CYP2C9": 0.4173,
+      "CYP2D6": 0.1802,
+      "CYP3A4": 0.377
+    },
+    "note": "All four hit rates (18.0-41.7%) sit well below the external entrant's own reported CYP3A4 saturation point (73.9%) -- a null result here would be a cleaner negative than the external CYP3A4 case, not explained by 'nothing left to win'. CYP2D6 and CYP1A2 have the most headroom on this project's own numbers; CYP2C9 has the least, in some tension with the external entrant's own per-isoform gain ordering, which puts CYP2C9 second-largest -- flagged now, checked against the real result in Part 3.",
+    "cyp2d6_caveat": "Notebook 21 established OOF ST-RAE is not a valid selection metric for CYP2D6, and the board has contradicted OOF evidence for that isoform twice. Any CYP2D6 movement here, in either direction, carries this caveat undiminished."
+  },
+  "submission_bar": {
+    "rule": "A full-data retrain and submission candidate (Part 4) is built ONLY IF the DEADZONE arm IMPROVES on at least two isoforms AND does not HURT on any isoform. DEADZONE+AID (arm 3) is diagnostic only and is NEVER itself a submission candidate under any result -- see 'arm3_scope' below.",
+    "frozen_before_any_training": true,
+    "may_not_be_adjusted_after_results": true
+  },
+  "decorrelation_secondary_outcome": {
+    "context": "Notebook 24 established this project's 11-config pool sits at error correlation 0.79-0.91 (prediction-minus-truth, not raw prediction, per Dietterich 2000 -- this project's CLAUDE.md rule). Notebook 29 found the AID auxiliary-head model at 0.850-0.933 against the same baseline -- also not decorrelated. A dead-zone model optimises a genuinely different objective (absolute error against a clipped, non-affine-transformed target), which is the kind of difference the working external entrants report using.",
+    "rule": "Report error correlation (prediction - truth) between each arm and BASELINE, per isoform, with baseline-seed-vs-baseline-seed as the floor (notebook 29's method). This is its OWN verdict, separate from the ST-RAE IMPROVES/TIES/HURTS call -- a TIE on ST-RAE with genuine decorrelation (below the 0.79-0.91 pool band and below the baseline-seed floor) would still be an informative, reportable result."
+  },
+  "arm3_scope": "DEADZONE+AID (notebook 28/29's 21,364-row, 8-head AID-augmented table, dead-zone target applied to the 4 scored heads only) answers whether the dead-zone and AID-auxiliary-head mechanisms compose. It is diagnostic only. It is NOT a submission candidate under any result in this task, and no full-data AID retrain is performed under any result.",
+  "loss_function": {
+    "baseline": "mse (chemprop default for task-type regression, set explicitly)",
+    "deadzone": "mae (confirmed via chemprop.nn.LossFunctionRegistry['mae'] source: (preds-targets).abs())",
+    "deadzone_aid": "mae, applied to all 8 heads uniformly -- chemprop's --loss-function is one criterion per run, not per head",
+    "mae_only": "mae, on the RAW point-estimate target (no OOF clipping) -- added as a diagnostic arm AFTER the initial 3-arm result was seen (not pre-registered blind), at the user's explicit direction, specifically to decompose the loss-function-vs-target confound: DEADZONE changes both the loss (mse->mae) and the target (point estimate -> OOF-clipped) relative to BASELINE simultaneously, so the initial screen alone cannot say how much of its gain is attributable to each. mae_only isolates the loss-function effect alone. Stated explicitly, not hidden: this arm's own verdict is NOT blind to DEADZONE's result."
+  },
+  "seeds": [
+    2684470948,
+    4091952314,
+    233227757
+  ],
+  "epochs": 50,
+  "patience": 5,
+  "honest_prior": "Eight prior modelling screens on this project came back flat, reversed at full CV, or reversed on the real board. A null result here is a legitimate and likely outcome.",
+  "scope": "Report on the screen (Part 0-3). Part 4 (full-data retrain + submission candidate, DEADZONE arm only, never sent) executes ONLY if the submission_bar above is met. No 25-fold CV, no ensemble, no AID full-data retrain, no submission sent, under any result."
+}

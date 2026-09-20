@@ -1,0 +1,5 @@
+isoform,y_true_always_inside_own_band,frac_clipped_differs_from_raw_label,mean_abs_dist_label_vs_clipped_where_differ,hit_rate_inside_band
+CYP1A2,True,1.0,0.24499099262535412,0.22577903682719547
+CYP2C9,True,1.0,0.2530405261229572,0.4172762645914397
+CYP2D6,True,1.0,0.2093967913667783,0.18017414601473544
+CYP3A4,True,1.0,0.26738358739905776,0.3769593147751606
