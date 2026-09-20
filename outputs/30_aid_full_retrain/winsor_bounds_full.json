@@ -1,0 +1,22 @@
+{
+  "CYP1A2_AID1851_max_inhibition": {
+    "low": -13.201096000000001,
+    "high": 116.28543999999997,
+    "n_nonnull": 16557
+  },
+  "CYP2C9_AID1851_max_inhibition": {
+    "low": -184.27924000000002,
+    "high": 121.17884,
+    "n_nonnull": 16557
+  },
+  "CYP2D6_AID1851_max_inhibition": {
+    "low": -29.327624,
+    "high": 100.3290399999999,
+    "n_nonnull": 16557
+  },
+  "CYP3A4_AID1851_max_inhibition": {
+    "low": -75.015344,
+    "high": 108.10995999999993,
+    "n_nonnull": 16557
+  }
+}

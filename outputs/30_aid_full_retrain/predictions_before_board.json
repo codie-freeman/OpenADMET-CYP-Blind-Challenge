@@ -1,0 +1,44 @@
+{
+  "recorded_at_utc": "2026-09-18T11:39:02.861533+00:00",
+  "prediction_1": {
+    "claim": "scores worse than NB19 (real current best, macro 0.6265) because NB19 carries a correction and this submission carries none",
+    "real_current_best": {
+      "label": "NB19",
+      "macro_st_rae": 0.6265
+    },
+    "corrected_comparison_target": "the task brief's original premise, 'NB27-widened, macro 0.6155', does not exist -- see the header correction",
+    "primary_comparison": {
+      "label": "10c (raw)",
+      "macro_st_rae": 0.7138
+    }
+  },
+  "prediction_2_per_isoform_vs_10c_raw": {
+    "CYP1A2": {
+      "10c_raw": 0.6954,
+      "nb29_predicts": "improves"
+    },
+    "CYP2C9": {
+      "10c_raw": 0.5489,
+      "nb29_predicts": "roughly unchanged"
+    },
+    "CYP2D6": {
+      "10c_raw": 1.1673,
+      "nb29_predicts": "improves"
+    },
+    "CYP3A4": {
+      "10c_raw": 0.4434,
+      "nb29_predicts": "roughly unchanged"
+    }
+  },
+  "prediction_3": {
+    "claim": "a confirmed CV gain is not a guaranteed board gain",
+    "precedent": "notebook 08's ensembles: CV win, 10c(0.7138) -> NB10/NB12(0.8299), a 0.1161 macro REGRESSION on the real board",
+    "this_submissions_position": "passed a properly-powered 25-fold confirmation (notebook 29), unlike NB08's single ensemble-selection pass -- a meaningfully different starting position, but not immunity to the same failure mode"
+  },
+  "nb29_source_verdict": {
+    "CYP1A2": "SIGNIFICANTLY BETTER",
+    "CYP2C9": "NOT DIFFERENT",
+    "CYP2D6": "SIGNIFICANTLY BETTER",
+    "CYP3A4": "NOT DIFFERENT"
+  }
+}

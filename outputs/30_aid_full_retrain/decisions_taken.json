@@ -1,0 +1,8 @@
+[
+  {
+    "decision": "Corrected the task brief's 'current best' comparator from the non-existent 'NB27-widened, macro 0.6155' to the real current best, NB19 (macro 0.6265)",
+    "reason": "NB27's own Section 2 closing cell is titled 'summary, no action taken' and its submission cell is fully commented out -- it was never sent and has no board score. 0.6155 does not appear anywhere in this repository tied to that candidate. docs/leaderboard_submissions.md, this project's own canonical record, lists NB19 (0.6265) as the last real submission.",
+    "alternatives": "Use the brief's figure uncritically (would misrepresent the leaderboard record in a permanent notebook); silently substitute NB19 without noting the discrepancy (would hide a real error worth recording, against this project's own verification convention).",
+    "authority": "this project's standing rule to verify every quoted figure against its source before use, and to flag rather than silently absorb a caught error"
+  }
+]

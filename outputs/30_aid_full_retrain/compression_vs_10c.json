@@ -1,0 +1,21 @@
+{
+  "this_model_ratio": {
+    "CYP1A2": 0.6850735196856915,
+    "CYP2C9": 0.7255277949490471,
+    "CYP2D6": 0.4149502717117324,
+    "CYP3A4": 0.7984900365741395
+  },
+  "10c_ratio": {
+    "CYP1A2": 0.8361405849071823,
+    "CYP2C9": 0.995027620788354,
+    "CYP2D6": 0.7004831446509556,
+    "CYP3A4": 0.9327158833673928
+  },
+  "n_more_compressed_of_4": 4,
+  "nb27_pooled_spearman": -0.822,
+  "nb27_pooled_ci": [
+    -0.888,
+    -0.662
+  ],
+  "caveat": "observational association from NB27, confounded with ensembling/calibration differences across those 7 submissions -- not causal, reported as a competing consideration to Part 7's CV-based predictions, not a resolution of them."
+}
