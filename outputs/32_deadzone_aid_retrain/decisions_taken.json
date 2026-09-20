@@ -1,0 +1,20 @@
+[
+  {
+    "decision": "Corrected the task brief's 'current best is 27b at macro 0.5982/CYP2D6 0.7165' premise to the real current best, NB27-widened (macro 0.6155)",
+    "reason": "0.5982 and 0.7165 appear nowhere in this repository. Notebook 27b (the standalone mixed-model candidate) was never submitted, confirmed directly in docs/leaderboard_submissions.md ('It has not been submitted'). The brief's premise appears to conflate notebook 27b (unsent) with NB27-widened (notebook 27's own Section 2, which WAS submitted 2026-09-16 and scored 0.6155, the real best on record).",
+    "alternatives": "Use the brief's figures uncritically (would misrepresent the leaderboard record in a permanent notebook, and there is no source for them to even use); silently substitute without noting the discrepancy (would hide a real error, against this project's own verification convention -- see notebook 30's own identical-in-kind correction).",
+    "authority": "this project's standing rule to verify every quoted figure before use"
+  },
+  {
+    "decision": "Used notebook 16's board-validated CYP2D6 target (mean=3.155762, sd=1.511412), not notebook 27b's own close alternate solve (mean=3.161439, sd=1.512121), for this model's CYP2D6 placement correction",
+    "reason": "NB16's target has been applied in a real, sent, scored submission (NB27 Section 2, 0.8299 -> 0.7858) -- 27b's own solve has never itself been tested against the real board (27b was never submitted). The two solves agree to <0.2%/<0.1%, so this choice has little practical effect, but is recorded as deliberate.",
+    "alternatives": "Use 27b's NB30-derived solve instead (defensible, since NB30 is also an AID-family model, closer in kind to this one than 10c/04b/NB10/NB12 are); average the two (would obscure which target was actually applied).",
+    "authority": "reasoned choice given the task did not specify which of the two agreeing targets to prefer, documented per this project's own convention for such calls"
+  },
+  {
+    "decision": "Averaged this compound's out-of-fold prediction across all 5 CV repeats (rather than using one arbitrary repeat) to build the dead-zone target for the full-data fit",
+    "reason": "No single repeat is privileged for a full-data retrain (unlike notebook 31's screen, which used repeat_0 because the screen itself was built on repeat_0's fold structure). Averaging uses more of the available pooled OOF information and reduces single-fold-model noise, without using any information a single repeat didn't already legitimately have.",
+    "alternatives": "Use repeat_0 only, matching notebook 31's own construction exactly (simpler, more directly comparable to the screen, but arbitrary for a full-data fit with no repeat_0-specific reason to prefer it); pick a different single repeat (no more principled).",
+    "authority": "explicitly flagged in this task's own scope boundary as a choice needing to be stated rather than picked silently; stated and reasoned here"
+  }
+]
