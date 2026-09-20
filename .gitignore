@@ -196,3 +196,84 @@ outputs/20_residual_exclusion_screen/scores/
 outputs/22_auxiliary_heads_screen/chemprop_runs/
 outputs/22_auxiliary_heads_screen/predictions/
 outputs/22_auxiliary_heads_screen/scores/
+
+# 28_external_data (AID 1851 gate-then-screen, notebook-only): same treatment as
+# 18/20/22 above, for the same reason -- chemprop_runs/ (1.5GB, checked directly,
+# almost entirely *.pt/*.ckpt checkpoints already covered by this file's own blanket
+# rule above), predictions/ (828KB, 6 files), and scores/ (4.1MB, 6 files) are bulk
+# per-arm-per-seed intermediate raw output, excluded for consistency with the same
+# category-based reasoning as every notebook above. Fully regeneratable by re-running
+# the notebook (deterministic: reuses 05's own manifest seeds, cache-skipped via the
+# same `PRED_DIR/{tag}.csv` is_done() convention). gate_criteria.json, gate_verdict.json,
+# metrics_summary.csv, run_scores.csv, run_timings.csv, overlap_counts.csv,
+# pool_expansion.csv, readout_comparison.csv, readout_coverage.csv,
+# potency_fit_only_sensitivity.csv, seed_separation.csv, signal_check.csv,
+# error_correlation.csv, verdict.json, aid1851_max_response.csv, and figures/ stay
+# tracked -- small, and what this notebook reports from.
+outputs/28_external_data/chemprop_runs/
+outputs/28_external_data/predictions/
+outputs/28_external_data/scores/
+
+# 29_cv_confirmation (full 5x5 repeated-CV confirmation of 28's AID auxiliary-head
+# screen, notebook-only): same treatment as 05_cv_comparison above, for the same
+# reason -- chemprop_runs/ (12GB, 50 real Chemprop runs' checkpoints/logs, checked
+# directly), predictions/ (6.7MB, 50 files), and scores/ (30MB, 50 files) are bulk
+# per-fold raw output, individually small but not worth tracking -- excluded to match
+# 05's own predictions/scores precedent. All three are fully regeneratable by
+# re-running the notebook (deterministic: reuses 05's own manifest.csv seeds, cross-
+# checked at notebook startup). autonomous_decisions.json, design.json,
+# error_correlation.csv, macro_result.json, paired_tests_strae.csv,
+# paired_tests_mae.csv, run_scores.csv, run_timings.csv, verdict.json,
+# winsor_bounds_by_fold.csv, and figures/ stay tracked -- small, and what this
+# notebook reports from.
+outputs/29_cv_confirmation/chemprop_runs/
+outputs/29_cv_confirmation/predictions/
+outputs/29_cv_confirmation/scores/
+
+# 30_aid_full_retrain (full-data retrain of 29's confirmed AID recipe, notebook-only):
+# chemprop_runs/ (249MB, checked directly -- the one full-data Chemprop training run
+# this step needed) is excluded, same reasoning as 10_final_retrain_predict above --
+# fully regeneratable by re-running the notebook (deterministic: fixed
+# SEED=2684470948, stated as a deliberate deviation from scripts/10's own SEED=42).
+# No separate predictions/scores bulk directories exist here (a full-data retrain, not
+# a per-fold CV run) -- predict_input.csv, raw_predictions.csv, train_input.csv,
+# submission_candidate.csv, prediction_diagnostics.csv, compression_vs_10c.json,
+# decisions_taken.json, predictions_before_board.json, winsor_bounds_full.json, and
+# figures/ are all small and stay tracked, matching 10's own blind_predictions/
+# treatment.
+outputs/30_aid_full_retrain/chemprop_runs/
+
+# 31_deadzone (dead-zone training-target screen, notebook-only): same treatment as
+# 18/20/22/28 above, for the same reason -- chemprop_runs/ (3.1GB, checked directly,
+# almost entirely *.pt/*.ckpt checkpoints already covered by this file's own blanket
+# rule above), predictions/ (1.5MB, 12 files), and scores/ (8.3MB, 12 files) are bulk
+# per-arm-per-seed intermediate raw output, excluded for consistency with the same
+# category-based reasoning as every notebook above. run_scores.csv (8.3MB, 60,001
+# rows) is the same bulk per-bootstrap-sample raw output as scores/ -- checked
+# directly, not assumed -- rather than a small per-run summary table like 22's own
+# same-named file (46 rows, 6.3KB), so it is excluded here too rather than kept
+# tracked by name-based precedent alone. All are fully regeneratable by re-running the
+# notebook (deterministic: reuses this project's own established seeds, cache-skipped
+# via the same `PRED_DIR/{tag}.csv` is_done() convention). results_summary.csv (the
+# actual small aggregated table this notebook reports from), prereg.json,
+# headroom_summary.csv, intervention_size.csv, confound_decomposition.csv,
+# error_correlation.csv, verdict_deadzone.csv, verdict_deadzone_aid.csv,
+# verdict_mae_only.csv, verdict_final.json, curated_deadzone_target.csv, and figures/
+# stay tracked -- small, and what this notebook reports from.
+outputs/31_deadzone/chemprop_runs/
+outputs/31_deadzone/predictions/
+outputs/31_deadzone/scores/
+outputs/31_deadzone/run_scores.csv
+
+# 32_deadzone_aid_retrain (full-data retrain combining 29's AID architecture with
+# 31's screened dead-zone target, notebook-only): chemprop_runs/ (249MB, checked
+# directly -- the one full-data Chemprop training run this step needed) is excluded,
+# same reasoning as 30_aid_full_retrain above -- fully regeneratable by re-running the
+# notebook (deterministic: fixed SEED=2684470948). No separate predictions/scores
+# bulk directories exist here either. predict_input.csv, raw_predictions.csv,
+# train_input.csv, submission_candidate_A_allfour.csv,
+# submission_candidate_B_cyp2d6only.csv, candidate_b_byte_identical_checks.csv,
+# cyp2d6_correction_chain.csv, prediction_diagnostics.csv, decisions_taken.json,
+# predictions_before_board.json, winsor_bounds_full.json, and figures/ are all small
+# and stay tracked.
+outputs/32_deadzone_aid_retrain/chemprop_runs/
