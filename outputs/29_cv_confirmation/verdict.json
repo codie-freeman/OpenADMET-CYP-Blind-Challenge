@@ -1,0 +1,261 @@
+{
+  "notebook": "29_cv_confirmation",
+  "completed_at_utc": "2026-09-18T03:33:06.775479+00:00",
+  "design": "5x5 (25 folds, 50 runs)",
+  "n_complete_folds": 25,
+  "folds": [
+    [
+      0,
+      0
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      2
+    ],
+    [
+      0,
+      3
+    ],
+    [
+      0,
+      4
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      1,
+      3
+    ],
+    [
+      1,
+      4
+    ],
+    [
+      2,
+      0
+    ],
+    [
+      2,
+      1
+    ],
+    [
+      2,
+      2
+    ],
+    [
+      2,
+      3
+    ],
+    [
+      2,
+      4
+    ],
+    [
+      3,
+      0
+    ],
+    [
+      3,
+      1
+    ],
+    [
+      3,
+      2
+    ],
+    [
+      3,
+      3
+    ],
+    [
+      3,
+      4
+    ],
+    [
+      4,
+      0
+    ],
+    [
+      4,
+      1
+    ],
+    [
+      4,
+      2
+    ],
+    [
+      4,
+      3
+    ],
+    [
+      4,
+      4
+    ]
+  ],
+  "per_isoform_verdict": {
+    "CYP1A2": "SIGNIFICANTLY BETTER",
+    "CYP2C9": "NOT DIFFERENT",
+    "CYP2D6": "SIGNIFICANTLY BETTER",
+    "CYP3A4": "NOT DIFFERENT"
+  },
+  "nb28_verdict": {
+    "CYP1A2": "IMPROVES",
+    "CYP2C9": "IMPROVES",
+    "CYP2D6": "UNRESOLVED",
+    "CYP3A4": "UNRESOLVED"
+  },
+  "nb28_reproduced": {
+    "CYP1A2": true,
+    "CYP2C9": false,
+    "CYP2D6": false,
+    "CYP3A4": true
+  },
+  "strae_table": [
+    {
+      "n_folds": 25,
+      "mean_baseline": 0.8684589730531901,
+      "mean_aid": 0.8222432327227942,
+      "mean_diff": -0.04621574033039586,
+      "median_diff": -0.05215402239332467,
+      "test": "paired t-test",
+      "stat": -3.8062478630452374,
+      "p": 0.0008584708169509773,
+      "ci_low": -0.07127574782979307,
+      "ci_high": -0.02115573283099865,
+      "effect_name": "Cohen's dz",
+      "effect": -0.7612495726090476,
+      "metric": "ST-RAE",
+      "isoform": "CYP1A2",
+      "p_bh": 0.0017169416339019546,
+      "significant_bh_0.05": true
+    },
+    {
+      "n_folds": 25,
+      "mean_baseline": 0.67869131237916,
+      "mean_aid": 0.6678097727626349,
+      "mean_diff": -0.010881539616525125,
+      "median_diff": -0.02139197785389746,
+      "test": "paired t-test",
+      "stat": -0.6739509724447037,
+      "p": 0.5067822287748329,
+      "ci_low": -0.04420502289807382,
+      "ci_high": 0.02244194366502357,
+      "effect_name": "Cohen's dz",
+      "effect": -0.13479019448894072,
+      "metric": "ST-RAE",
+      "isoform": "CYP2C9",
+      "p_bh": 0.5067822287748329,
+      "significant_bh_0.05": false
+    },
+    {
+      "n_folds": 25,
+      "mean_baseline": 1.0039073561002367,
+      "mean_aid": 0.9368959086617202,
+      "mean_diff": -0.06701144743851645,
+      "median_diff": -0.07249592372452673,
+      "test": "paired t-test",
+      "stat": -5.071137886941644,
+      "p": 3.471523814889934e-05,
+      "ci_low": -0.09428438559646041,
+      "ci_high": -0.039738509280572494,
+      "effect_name": "Cohen's dz",
+      "effect": -1.014227577388329,
+      "metric": "ST-RAE",
+      "isoform": "CYP2D6",
+      "p_bh": 0.00013886095259559736,
+      "significant_bh_0.05": true
+    },
+    {
+      "n_folds": 25,
+      "mean_baseline": 0.5460557792815692,
+      "mean_aid": 0.5319735662336914,
+      "mean_diff": -0.014082213047877807,
+      "median_diff": -0.007121398564232662,
+      "test": "paired t-test",
+      "stat": -1.5509397667425036,
+      "p": 0.1340039849966389,
+      "ci_low": -0.03282198610502183,
+      "ci_high": 0.004657560009266213,
+      "effect_name": "Cohen's dz",
+      "effect": -0.31018795334850074,
+      "metric": "ST-RAE",
+      "isoform": "CYP3A4",
+      "p_bh": 0.17867197999551854,
+      "significant_bh_0.05": false
+    }
+  ],
+  "macro": {
+    "n_folds": 25,
+    "mean_baseline": 0.774278355203539,
+    "mean_aid": 0.7397306200952103,
+    "mean_diff": -0.03454773510832884,
+    "median_diff": -0.033331496634490754,
+    "test": "paired t-test",
+    "stat": -5.267874450655558,
+    "p": 2.1121088781406705e-05,
+    "ci_low": -0.04808317933075381,
+    "ci_high": -0.021012290885903874,
+    "effect_name": "Cohen's dz",
+    "effect": -1.0535748901311117
+  },
+  "error_correlation": [
+    {
+      "isoform": "CYP1A2",
+      "n_folds": 25,
+      "aid_vs_baseline_mean": 0.9022390014877998,
+      "aid_vs_baseline_std": 0.022825170613523755,
+      "baseline_fold_floor_mean": 0.9043786601203975,
+      "baseline_fold_floor_std": 0.009535571201594123,
+      "n_floor_pairs": 10
+    },
+    {
+      "isoform": "CYP2C9",
+      "n_folds": 25,
+      "aid_vs_baseline_mean": 0.8805804868115054,
+      "aid_vs_baseline_std": 0.023846883549146037,
+      "baseline_fold_floor_mean": 0.8913272383650348,
+      "baseline_fold_floor_std": 0.008112765800050556,
+      "n_floor_pairs": 10
+    },
+    {
+      "isoform": "CYP2D6",
+      "n_folds": 25,
+      "aid_vs_baseline_mean": 0.9333710888464728,
+      "aid_vs_baseline_std": 0.02440311891241104,
+      "baseline_fold_floor_mean": 0.9194729426410071,
+      "baseline_fold_floor_std": 0.0093137768131761,
+      "n_floor_pairs": 10
+    },
+    {
+      "isoform": "CYP3A4",
+      "n_folds": 25,
+      "aid_vs_baseline_mean": 0.8498323055377998,
+      "aid_vs_baseline_std": 0.02475538260484604,
+      "baseline_fold_floor_mean": 0.8666541556597094,
+      "baseline_fold_floor_std": 0.0072209498601329344,
+      "n_floor_pairs": 10
+    }
+  ],
+  "ensemble_candidate_isoforms": [],
+  "n_significantly_better": 2,
+  "n_significantly_worse": 0,
+  "submission_recommendation": "none -- report-only confirmation run; no submission built",
+  "aborted": {
+    "aborted": false,
+    "reason": null,
+    "where": null
+  }
+}
