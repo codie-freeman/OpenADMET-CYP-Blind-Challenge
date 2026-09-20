@@ -43,15 +43,15 @@ below, or in any file this README points to, is a final result.
 
 ## Current best result
 
-The best real submission to date is **NB19** (`notebooks/19_cyp2c9_revert_submission_candidate.ipynb`),
-submitted 2026-09-15:
+The best real submission to date is **27b** (`notebooks/27b_aid_cyp2d6_corrected.ipynb`),
+submitted 2026-09-19:
 
 | | Macro | CYP1A2 | CYP2C9 | CYP2D6 | CYP3A4 |
 |---|---:|---:|---:|---:|---:|
-| **ST-RAE** | **0.6265** | 0.6954 | 0.5375 | 0.8299 | 0.4434 |
+| **ST-RAE** | **0.5982** | 0.6954 | 0.5375 | 0.7165 | 0.4434 |
 
 `docs/leaderboard_submissions.md` is the single canonical, full-precision record of every real
-submission (all metrics, all isoforms, all seven submissions to date) — read it rather than
+submission (all metrics, all isoforms, all eleven submissions to date) — read it rather than
 reconstructing scores from notebook prose.
 
 ## Repository map
@@ -118,8 +118,12 @@ hand in the background, not from a notebook) — see `scripts/README.md`.
 
 ## Key findings
 
-- **NB19 is the best submission to date** (macro ST-RAE 0.6265) — a CYP2C9 revert on top of NB16's
-  blind-population recentring. See `docs/leaderboard_submissions.md`.
+- **27b is the best submission to date** (macro ST-RAE 0.5982) — the AID 1851 auxiliary-head
+  model's blind predictions with CYP2D6 placement-corrected and widened the same way NB27-widened's
+  CYP2D6 column was; Spearman and Kendall held exactly (the third confirmation of this
+  rank-preservation prediction on this project). NB27-widened (macro ST-RAE 0.6155) remains the
+  best submission built on the plain `chemprop_chemeleoninit` model. See
+  `docs/leaderboard_submissions.md`.
 - **Blind-population recentring earns its place only where placement is genuinely broken.** It
   fixed CYP2D6 (R² −0.59 → +0.27) but cost CYP2C9 performance, which NB19 then reverted. See
   `docs/leaderboard_submissions.md`'s NB16/NB19 sections.
@@ -144,9 +148,20 @@ hand in the background, not from a notebook) — see `scripts/README.md`.
   hypothesis for why excluding CYP2D6 outlier labels shifts predictions on the other, untouched
   isoforms too. See `notebooks/README.md` (`06`, `20`).
 - **Adding new information (auxiliary prediction heads from this project's own unused challenge
-  files) shows a real, isoform-specific gain for CYP3A4 and CYP2C9** — unlike every prior screen,
-  which only rearranged existing information. Not yet run at full 25-fold CV. See
-  `notebooks/README.md` (`22`, `23`).
+  files) is the only mechanism tested so far that isn't just a rearrangement of existing
+  information** — a real, single-fold, isoform-specific gain (TDI heads: CYP3A4/CYP2C9; not yet run
+  at full 25-fold CV). See `notebooks/README.md` (`22`, `23`).
+- **A different auxiliary-head source (PubChem AID 1851) was confirmed at full 5×5 CV and still
+  failed to transfer to the real blind board — the third CV-to-blind transfer failure on this
+  project, and the most rigorously confirmed.** Notebook 29's honest, paired, BH-corrected 5×5 CV
+  run found CYP1A2 and CYP2D6 significantly better; the resulting full-data submission (NB30, macro
+  ST-RAE 0.8160) scored worse than the `10c` baseline on all four isoforms — the largest
+  single-step blind-score regression in this project's history. A prediction-spread-compression
+  signal, not the CV result, correctly anticipated this outcome. **The raw board reading was a
+  calibration artefact, not a model verdict**: a mixed-recipe correction built in response (27b)
+  was sent and became the best submission to date (macro ST-RAE 0.5982) — see
+  `docs/leaderboard_submissions.md`'s NB30 and 27b sections and `notebooks/README.md` (`28`, `29`,
+  `30`, `27b`).
 
 ## Status
 

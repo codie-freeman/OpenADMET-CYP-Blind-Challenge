@@ -237,3 +237,125 @@ compounds to any isoform (a strict subset of the curated pool); a small correcti
 `22`'s Emax count is found and reported (1 compound, immaterial). Compound-pool expansion from this
 project's own released files is, on this evidence, largely exhausted outside `22`'s existing
 CYP3A4/TDI finding.
+
+## Ensemble and calibration diagnostics (24–27, 27b)
+
+**[`24_nonnegative_stacking.ipynb`](24_nonnegative_stacking.ipynb)** — COMPLETE, report only.
+Refits the ensemble stacker on the same 11-config pooled OOF predictions (`11`'s pool) with
+non-negative combiners (NNLS, non-negative ridge), using a genuine nested outer-fold design —
+unlike `11b`'s in-sample Caruana fit. Finds no coefficient-cancellation problem in this project's
+own pool (unlike a cited real entrant's diagnosed failure mode on their own pool); every fitted
+combiner beats the best single config, and non-negative combiners are never worse than unconstrained
+ones. No adoption recommendation made.
+
+**[`25_hard_compound_analysis.ipynb`](25_hard_compound_analysis.ipynb)** — COMPLETE, diagnostic
+only. Characterizes the compounds every one of the 11 pooled configs gets wrong, to test whether a
+planned retrieved-neighbour-corpus pretraining step targets the right population. Finding: consensus
+-hard compounds are structurally *ordinary* relative to training — nearest-neighbour similarity does
+NOT separate hard from easy on any isoform — so a retrieved corpus for "unseen chemistry" is aimed
+at the wrong problem as currently conceived; the real, isoform-dependent hard population is instead
+potent, narrow-interval, and lipophilic/rigid compounds.
+
+**[`26_spread_sweep.ipynb`](26_spread_sweep.ipynb)** — COMPLETE, report only. Two analyses:
+confirms consensus-hard compounds (from `25`) are systematically under-predicted (a clean
+regression-to-the-mean signature), and sweeps a pure spread multiplier against OOF predictions,
+finding the ST-RAE-optimal multiplier sits between the theoretical rho-shrinkage value and 1.0 on
+every isoform — rho-shrinkage over-shrinks relative to what ST-RAE itself rewards. A separate
+CYP2D6-only sweep against the deployed, blind-targeted column disagrees with the raw-OOF sweep and
+is reported side by side, not reconciled. No correction applied to any submission.
+
+**[`27_calibration.ipynb`](27_calibration.ipynb)** — ONGOING, the project's standing calibration
+notebook: future placement/spread/board-metric work appends new sections here rather than spawning
+new numbered notebooks, **unless a real submission already lives in this notebook** — see `27b`'s
+entry below for why that carve-out now exists. **Section 1**: tests an external entrant's claim that
+board ST-RAE is rank-ordered by submitted-column spread compression; finds a robust pooled
+association across this project's own submission history (Spearman −0.82), though confounded with
+ensembling/calibration differences across those submissions. **Section 2** (2026-09-16): widens
+CYP2D6's spread to 0.85× of its training-label SD on top of `19`'s submitted file — sent as
+**NB27-widened**, the eighth live submission (macro ST-RAE 0.6155, since superseded by `27b`'s
+0.5982 as the best result to date); a
+post-hoc note appended after the fact corrects the section's own "no action taken" closing text once
+the real board result came back. A third section (solving NB30's CYP2D6 population and building a
+corrected candidate) was briefly appended here on 2026-09-18 and then moved out the same day into
+its own notebook, `27b`, after appending to and re-executing this notebook caused real problems —
+see `27b`'s entry immediately below.
+
+**[`27b_aid_cyp2d6_corrected.ipynb`](27b_aid_cyp2d6_corrected.ipynb)** — COMPLETE, standalone. **Not
+a further section of `27`**, deliberately: `27` already carries a real, already-scored submission
+(`NB27-widened`, Section 2), and appending further work there and re-executing top-to-bottom caused
+real problems, so this notebook is fully self-contained instead — it reads nothing from `27`, only
+files already on disk. Solves the blind CYP2D6 population from `30`'s own published board metrics
+(reusing `16`'s solve verbatim, not reimplementing it), cross-checks the result against `16`'s
+independent solve from four earlier submissions (close agreement, 0.18%/0.05% apart — real
+convergence evidence), then applies both a placement correction (using the AID model's own OOF rho,
+computed from `29`) and the same 0.85× widening `27` Section 2 used to `30`'s CYP2D6 column.
+Assembles a mixed-recipe candidate (`10c`'s CYP1A2/CYP3A4 + `19`'s CYP2C9 + the corrected CYP2D6
+column), validated PASS, and **sent 2026-09-19 12:11 UTC** — the best submission to date (macro
+ST-RAE 0.5982). See `docs/leaderboard_submissions.md` for the full NB27-widened, NB30, and 27b
+figures.
+
+## AID 1851 as training signal (28–30)
+
+**[`28_external_data.ipynb`](28_external_data.ipynb)** — COMPLETE, single-fold screen. Gate-then-
+screen test of PubChem AID 1851 (already fetched by `13`) used as **training signal via auxiliary
+Chemprop heads** — a different role from `13`/`14`'s calibration-target use. A pre-registered gate
+found the potency readout's apparent signal was mostly a censoring-floor artifact; the efficacy
+readout (`max_inhibition`) was chosen instead, user-confirmed after the notebook's own frozen rule
+required stopping to ask. Result on this one fold: CYP1A2 and CYP2C9 improve; CYP2D6 and CYP3A4 tie.
+CYP1A2 (much the stronger) and CYP2C9 flagged as candidates for a full 25-fold CV confirmation.
+
+**[`29_cv_confirmation.ipynb`](29_cv_confirmation.ipynb)** — COMPLETE. Full, honest 5×5 repeated-CV
+confirmation of `28`'s screen (50 real Chemprop runs, paired significance tests, Benjamini-Hochberg
+corrected), run fully autonomously. `28`'s single-fold verdict reproduces for only 2 of 4 isoforms:
+CYP1A2 and CYP2D6 are significantly better (p_BH = 0.0017, 0.00014); CYP2C9 and CYP3A4 are not
+different from baseline — CYP2C9's earlier single-fold gain is identified as a selection artifact of
+that one fold. Ensemble-diversity check: still no, error correlation sits at each isoform's own
+fold-to-fold noise floor, not below it.
+
+**[`30_aid_full_retrain.ipynb`](30_aid_full_retrain.ipynb)** — COMPLETE. Full-data retrain of `29`'s
+confirmed recipe; submission candidate validated and, per the user's own review, submitted as
+**NB30**, the ninth live submission. Flagged before submission that this model's raw predictions are
+more compressed than `10c`'s on all four isoforms. **Scored worse than `10c` on all four isoforms**
+(macro ST-RAE 0.8160) — the third instance on this project of a CV result failing to transfer to the
+real blind board, and the most rigorously confirmed of the three. See
+`docs/leaderboard_submissions.md`'s NB30 section for the full comparison and the resulting
+mixed-recipe correction built in `27b`.
+
+## Dead-zone training target (31–32)
+
+**[`31_deadzone.ipynb`](31_deadzone.ipynb)** — COMPLETE, single-fold screen. Tests fitting to
+`clip(oof_prediction, conf_low, conf_high)` under absolute-error loss instead of the point estimate
+under squared error — the training target sits inside the credible band whenever the model's own
+out-of-fold prediction already does, removing the incentive to chase noise within it. Built the
+clipped target from `chemprop_chemeleoninit`'s pooled out-of-fold predictions only (never a model's
+own in-fold prediction — two guards confirm this, including a hit-rate ceiling check). **The first
+unanimous, clean win in this project's screening history**: the DEADZONE arm improves ST-RAE on all
+four isoforms (4.5–6× each isoform's own baseline seed spread) and Spearman rises on all four too —
+the finding that matters most, since an affine placement/spread correction provably cannot move
+rank order. A post-hoc MAE_ONLY diagnostic arm decomposes the gain into a loss-function-alone
+component and a clipping-on-top component: clipping does real, independent work on three of four
+isoforms; CYP2D6's gain is mostly loss-function-alone, carrying `21`'s standing OOF-unreliability
+caveat for that isoform. A stated fold-crosstalk caveat means the screen's *magnitude* is plausibly
+optimistic (every training target came from an OOF donor model that had itself seen this screen's
+held-out fold) but does not apply to a future blind submission and does not affect the *direction*
+of the result. Combined with the AID architecture in a DEADZONE+AID diagnostic arm, the gain
+extends further still — never itself proposed as an adoption candidate at this stage.
+
+**[`32_deadzone_aid_retrain.ipynb`](32_deadzone_aid_retrain.ipynb)** — COMPLETE, two candidates
+prepared and validated. Full-data retrain combining `29`'s CV-confirmed AID auxiliary-head
+architecture with `31`'s screened dead-zone target — explicitly **not** itself confirmed at 25-fold
+CV for this specific combination, a deliberate, reasoned deviation (cost, `31`'s own
+fold-crosstalk caveat, and this project's own two-for-two prior record of CV-confirmed results
+reversing on the board). CYP2D6 corrected using this model's own OOF rho, placed onto `16`'s
+board-validated blind-population target, then widened to 0.85× the CYP2D6 training-label SD — the
+same recipe `27` Section 2 and `27b` used. Two candidates built: **Candidate A** (all four columns
+from this model, CYP2D6 corrected) and **Candidate B** (`10c`'s CYP1A2/CYP3A4 + NB19's CYP2C9 +
+this model's corrected CYP2D6, the conservative single-variable change from `27b`). Both validated
+PASS; both `gradio_client` cells fully commented out. **Candidate A was submitted as NB32-A, the
+eleventh live submission** — worse than the appropriate per-isoform reference on all four isoforms
+(macro ST-RAE 0.6488 vs. 27b's 0.5982), a fourth instance of a CV-favorable result failing to
+transfer to the board. Candidate B was never submitted; its board value is nonetheless computable
+because it shares Candidate A's CYP2D6 column byte-for-byte — worked out at macro ST-RAE 0.6066,
+still worse than 27b, confirming the submission slot was correctly not spent on it. See
+`docs/leaderboard_submissions.md`'s NB32-A section for the full comparison, the Spearman
+decomposition, and the Candidate B deduction.

@@ -26,7 +26,7 @@ individual files.
 | `15_analog_holdout_comparison/` | `15` (+`scripts/15_run_analog_holdout.py`) | Analog-holdout split results. |
 | `17_protonation_charge_check/` | `17` | Charge/logP features, decision criteria, partial-correlation verdict. |
 | `18_charge_augmented_chemprop_screen/` | `18` | Charge-augmented Chemprop screen results and decorrelation summary. |
-| `19_cyp2c9_revert/` | `19` | Seventh live submission (NB19, current best) build artifacts. |
+| `19_cyp2c9_revert/` | `19` | Seventh live submission (NB19) build artifacts — see `docs/leaderboard_submissions.md` for the current best. |
 | `20_residual_exclusion_screen/` | `20` | Residual-exclusion screen with random-masking control. |
 | `21_strae_offset_curve/` | `21` | ST-RAE-optimal offset sweep and figures. |
 | `22_auxiliary_heads_screen/` | `22` | TDI/Emax auxiliary-head screen results, prereg, figures. |
