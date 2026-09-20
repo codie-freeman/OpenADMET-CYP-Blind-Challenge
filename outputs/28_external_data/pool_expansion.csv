@@ -1,0 +1,5 @@
+isoform,n_scored_train_portion,n_new_compounds_from_aid,ratio_new_to_scored,pct_growth
+CYP1A2,1135,16459,14.501,1450.1
+CYP2C9,1021,16459,16.12,1612.0
+CYP2D6,1198,16459,13.739,1373.9
+CYP3A4,1885,16459,8.732,873.2

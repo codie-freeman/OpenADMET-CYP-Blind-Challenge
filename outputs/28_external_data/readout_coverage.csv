@@ -1,0 +1,5 @@
+isoform,n_compounds,n_potency_nonnull,n_potency_real_fit,n_potency_floored,pct_potency_floored,n_efficacy_nonnull,pct_efficacy_coverage
+CYP1A2,16558,16558,9543,7015,42.4,16558,100.0
+CYP2C9,16558,16558,8145,8413,50.8,16558,100.0
+CYP2D6,16558,16558,5667,10891,65.8,16558,100.0
+CYP3A4,16558,16558,9094,7464,45.1,16558,100.0

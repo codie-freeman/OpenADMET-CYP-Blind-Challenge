@@ -1,0 +1,123 @@
+{
+  "overall_verdict": "PASS",
+  "per_readout": [
+    {
+      "readout": "potency",
+      "verdict": "PASS",
+      "pass_isoforms": [
+        "CYP1A2",
+        "CYP2D6",
+        "CYP3A4"
+      ],
+      "marginal_isoforms": [
+        "CYP2C9"
+      ]
+    },
+    {
+      "readout": "efficacy",
+      "verdict": "FAIL",
+      "pass_isoforms": [
+        "CYP2D6"
+      ],
+      "marginal_isoforms": []
+    }
+  ],
+  "signal_check": [
+    {
+      "readout": "potency",
+      "isoform": "CYP1A2",
+      "n": 35,
+      "spearman": 0.7931245646362551,
+      "spearman_p": 1.3389782227884182e-08,
+      "pearson": 0.7767556584031996,
+      "pearson_p": 4.121146566024187e-08,
+      "ci_low": 0.5688322097807762,
+      "ci_high": 0.9285525557822651,
+      "n_boot_valid": 2000
+    },
+    {
+      "readout": "potency",
+      "isoform": "CYP2C9",
+      "n": 20,
+      "spearman": 0.34615340002042505,
+      "spearman_p": 0.1349047990838231,
+      "pearson": 0.3680110057946793,
+      "pearson_p": 0.11039110998319082,
+      "ci_low": -0.07877309562620985,
+      "ci_high": 0.671432925421771,
+      "n_boot_valid": 2000
+    },
+    {
+      "readout": "potency",
+      "isoform": "CYP2D6",
+      "n": 49,
+      "spearman": 0.6809620124434024,
+      "spearman_p": 7.271725770887476e-08,
+      "pearson": 0.7194127782916316,
+      "pearson_p": 5.750633630968297e-09,
+      "ci_low": 0.4277536612020521,
+      "ci_high": 0.8290384212805834,
+      "n_boot_valid": 2000
+    },
+    {
+      "readout": "potency",
+      "isoform": "CYP3A4",
+      "n": 30,
+      "spearman": 0.656098049232948,
+      "spearman_p": 8.266254553924757e-05,
+      "pearson": 0.6795120017366784,
+      "pearson_p": 3.636208028108427e-05,
+      "ci_low": 0.3780074824502053,
+      "ci_high": 0.8331019468128789,
+      "n_boot_valid": 2000
+    },
+    {
+      "readout": "efficacy",
+      "isoform": "CYP1A2",
+      "n": 35,
+      "spearman": 0.5417366946778711,
+      "spearman_p": 0.0007763602075880683,
+      "pearson": 0.6773539818966091,
+      "pearson_p": 7.856776940926326e-06,
+      "ci_low": 0.20811507154167905,
+      "ci_high": 0.7869893682855945,
+      "n_boot_valid": 2000
+    },
+    {
+      "readout": "efficacy",
+      "isoform": "CYP2C9",
+      "n": 20,
+      "spearman": 0.5804511278195488,
+      "spearman_p": 0.0072900732244842075,
+      "pearson": 0.48621233307557815,
+      "pearson_p": 0.02972810274861218,
+      "ci_low": 0.20545919315857983,
+      "ci_high": 0.79428895612708,
+      "n_boot_valid": 2000
+    },
+    {
+      "readout": "efficacy",
+      "isoform": "CYP2D6",
+      "n": 49,
+      "spearman": 0.6428571428571428,
+      "spearman_p": 6.339232976868228e-07,
+      "pearson": 0.5623423684799702,
+      "pearson_p": 2.609243684037288e-05,
+      "ci_low": 0.39145042006805175,
+      "ci_high": 0.8064186695245196,
+      "n_boot_valid": 2000
+    },
+    {
+      "readout": "efficacy",
+      "isoform": "CYP3A4",
+      "n": 30,
+      "spearman": 0.4794215795328142,
+      "spearman_p": 0.007347373069298466,
+      "pearson": 0.42158878963208846,
+      "pearson_p": 0.020321089519809668,
+      "ci_low": 0.07593440297263644,
+      "ci_high": 0.7451628166018216,
+      "n_boot_valid": 2000
+    }
+  ]
+}

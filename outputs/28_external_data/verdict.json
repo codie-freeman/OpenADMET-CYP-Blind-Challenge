@@ -1,0 +1,95 @@
+{
+  "notebook": "28_external_data",
+  "completed_at_utc": "2026-09-17T03:38:31.668004+00:00",
+  "gate_verdict": "PASS",
+  "readout_used": "max_inhibition = -Max_Response (AID 1851 efficacy, winsorised 1st/99th pct)",
+  "per_isoform": {
+    "CYP1A2": {
+      "diff": -0.06896555887310729,
+      "baseline_spread": 0.01445108938802095,
+      "label": "IMPROVES",
+      "baseline_mean": 0.7995457008431005,
+      "aid_mean": 0.7305801419699932
+    },
+    "CYP2C9": {
+      "diff": -0.030737342637956577,
+      "baseline_spread": 0.015770246206870876,
+      "label": "IMPROVES",
+      "baseline_mean": 0.7141788645508806,
+      "aid_mean": 0.6834415219129241
+    },
+    "CYP2D6": {
+      "diff": -0.04493017791608833,
+      "baseline_spread": 0.06258157739443537,
+      "label": "TIES (UNRESOLVED)",
+      "baseline_mean": 0.9599414271513655,
+      "aid_mean": 0.9150112492352772
+    },
+    "CYP3A4": {
+      "diff": -0.005294703843724546,
+      "baseline_spread": 0.03127736217487023,
+      "label": "TIES (UNRESOLVED)",
+      "baseline_mean": 0.52232121427226,
+      "aid_mean": 0.5170265104285354
+    }
+  },
+  "n_resolved": 2,
+  "observed_order": [
+    "CYP1A2",
+    "CYP2D6",
+    "CYP2C9",
+    "CYP3A4"
+  ],
+  "predicted_order_compound_count": [
+    "CYP2C9",
+    "CYP1A2",
+    "CYP2D6",
+    "CYP3A4"
+  ],
+  "predicted_order_weak_baseline": [
+    "CYP2D6",
+    "CYP1A2",
+    "CYP2C9",
+    "CYP3A4"
+  ],
+  "error_correlation": [
+    {
+      "isoform": "CYP1A2",
+      "n_compounds": 277,
+      "aid_vs_baseline_mean": 0.9093302607199881,
+      "aid_vs_baseline_std": 0.02279103662245192,
+      "baseline_seed_floor_mean": 0.9223535604713792,
+      "baseline_seed_floor_std": 0.025588431818198806
+    },
+    {
+      "isoform": "CYP2C9",
+      "n_compounds": 264,
+      "aid_vs_baseline_mean": 0.9103769541698932,
+      "aid_vs_baseline_std": 0.018362875202721323,
+      "baseline_seed_floor_mean": 0.9316409220478682,
+      "baseline_seed_floor_std": 0.007586262626830538
+    },
+    {
+      "isoform": "CYP2D6",
+      "n_compounds": 295,
+      "aid_vs_baseline_mean": 0.9268488714981452,
+      "aid_vs_baseline_std": 0.043564429053926566,
+      "baseline_seed_floor_mean": 0.9266556288764924,
+      "baseline_seed_floor_std": 0.027108775420438044
+    },
+    {
+      "isoform": "CYP3A4",
+      "n_compounds": 450,
+      "aid_vs_baseline_mean": 0.8437120730275228,
+      "aid_vs_baseline_std": 0.03348507872781978,
+      "baseline_seed_floor_mean": 0.8698531067186313,
+      "baseline_seed_floor_std": 0.0061260286395434845
+    }
+  ],
+  "cyp2d6_caveat": "Notebook 21 established that OOF ST-RAE is not a valid selection metric for CYP2D6, and the board has contradicted OOF evidence for that isoform twice. Any CYP2D6 movement here carries that caveat and must not be read at face value.",
+  "submission_recommendation": "none -- this notebook is a report-only screen",
+  "full_25_fold_cv_candidates": [
+    "CYP1A2",
+    "CYP2C9"
+  ]
+}

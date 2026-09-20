@@ -1,0 +1,132 @@
+{
+  "notebook": "28_external_data",
+  "frozen_at_utc": "2026-09-17T03:38:14.133006+00:00",
+  "frozen_before": "any training run in this notebook",
+  "gate_verdict": "PASS",
+  "readout_chosen": {
+    "column": "max_inhibition = -Max_Response",
+    "why": "Uniform signal across all four isoforms (rho 0.48-0.64, spread 0.16, 4/4 above the 0.40 bar) on 100% real measured values with no censoring floors. The mechanism under test is notebook 22's -- benefit tracks NEW compounds entering the encoder's pool -- and the 16,459 new compounds AID 1851 contributes are overwhelmingly inactive, arriving with graded efficacy values rather than one of five repeated potency floors.",
+    "competing_option_rejected": "Potency (pIC50_equivalent) had the higher peak correlation and was the readout that cleared the frozen gate, but 42-66% of its values are censoring floors and its correlation flips sign on CYP2C9 and becomes non-significant on CYP3A4 once floors are removed.",
+    "confirmed_with_user": true
+  },
+  "fold": {
+    "repeat_col": "repeat_0",
+    "test_fold": 0,
+    "val_fraction": 0.15
+  },
+  "seeds": [
+    2684470948,
+    4091952314,
+    233227757
+  ],
+  "epochs": 50,
+  "patience": 5,
+  "arms": {
+    "baseline": "4 heads -- the four scored pIC50 endpoints only, curated population (4,905 compounds)",
+    "aid": "8 heads -- the four scored endpoints plus four AID 1851 max_inhibition heads, augmented population"
+  },
+  "winsorisation": {
+    "rule": "clip each auxiliary column to its 1st and 99th percentile",
+    "computed_on": "training-portion rows only (every row not in screen_test); seed-independent",
+    "why": "max_inhibition reaches -1330 against a 1st-99th percentile range of roughly -59 to +115. Left raw, a single ~28-sigma value would dominate chemprop's internal target scaler and compress the auxiliary head's useful range.",
+    "bounds": {
+      "CYP1A2_AID1851_max_inhibition": {
+        "low": -13.205548,
+        "high": 116.29271999999997,
+        "n_train_portion_nonnull": 16529,
+        "raw_min": -187.795,
+        "raw_max": 126.7
+      },
+      "CYP2C9_AID1851_max_inhibition": {
+        "low": -184.32712,
+        "high": 121.18191999999999,
+        "n_train_portion_nonnull": 16529,
+        "raw_min": -1330.32,
+        "raw_max": 142.095
+      },
+      "CYP2D6_AID1851_max_inhibition": {
+        "low": -29.330312,
+        "high": 100.34751999999996,
+        "n_train_portion_nonnull": 16529,
+        "raw_min": -105.9,
+        "raw_max": 125.943
+      },
+      "CYP3A4_AID1851_max_inhibition": {
+        "low": -74.892104,
+        "high": 108.12647999999996,
+        "n_train_portion_nonnull": 16529,
+        "raw_min": -668.91,
+        "raw_max": 129.968
+      }
+    },
+    "confirmed_with_user": true
+  },
+  "scaling_note": "No manual standardisation. Chemprop 2.3.1 normalises each target head internally, fitting on the train split of the training CSV, and build_training_csv never writes screen_test rows -- so training-fold-only statistics are guaranteed structurally.",
+  "interpretation_rules": {
+    "resolved_against": "BASELINE's own 3-seed ST-RAE standard deviation (ddof=1) on that isoform",
+    "IMPROVES": "AID arm's mean ST-RAE is lower than BASELINE's by MORE than BASELINE's own 3-seed spread",
+    "TIES": "absolute difference smaller than that spread. Per notebooks 18, 20 and 26 this is the expected outcome for most changes on this dataset and MUST be called UNRESOLVED, never 'a small gain'.",
+    "HURTS": "AID arm's mean ST-RAE is higher than BASELINE's by more than that spread"
+  },
+  "mechanism_predictions": {
+    "compound_count_rule": {
+      "source": "notebook 22 -- benefit tracks how many new compounds an isoform gains",
+      "predicted_order": [
+        "CYP2C9",
+        "CYP1A2",
+        "CYP2D6",
+        "CYP3A4"
+      ],
+      "ratios": [
+        {
+          "isoform": "CYP1A2",
+          "n_scored_train_portion": 1135,
+          "n_new_compounds_from_aid": 16459,
+          "ratio_new_to_scored": 14.501,
+          "pct_growth": 1450.1
+        },
+        {
+          "isoform": "CYP2C9",
+          "n_scored_train_portion": 1021,
+          "n_new_compounds_from_aid": 16459,
+          "ratio_new_to_scored": 16.12,
+          "pct_growth": 1612.0
+        },
+        {
+          "isoform": "CYP2D6",
+          "n_scored_train_portion": 1198,
+          "n_new_compounds_from_aid": 16459,
+          "ratio_new_to_scored": 13.739,
+          "pct_growth": 1373.9
+        },
+        {
+          "isoform": "CYP3A4",
+          "n_scored_train_portion": 1885,
+          "n_new_compounds_from_aid": 16459,
+          "ratio_new_to_scored": 8.732,
+          "pct_growth": 873.2
+        }
+      ],
+      "note": "Unlike the TDI case, AID 1851 contributes the SAME 16,459 new compounds to all four isoforms, so this ordering is driven entirely by inverse existing-pool size. CYP3A4 has the largest existing pool and therefore the smallest relative expansion."
+    },
+    "weak_baseline_rule": {
+      "source": "independent reimplementation study -- pre-training helps where the baseline is WEAK and hurts where it is strong (Spearman -0.65 against baseline R2)",
+      "predicted_order": [
+        "CYP2D6",
+        "CYP1A2",
+        "CYP2C9",
+        "CYP3A4"
+      ],
+      "baseline_st_rae": {
+        "CYP1A2": 0.7995457008431005,
+        "CYP2C9": 0.7141788645508806,
+        "CYP2D6": 0.9599414271513655,
+        "CYP3A4": 0.52232121427226
+      }
+    },
+    "discriminating_comparison": "Both rules agree CYP3A4 benefits LEAST, so the bottom of the ordering cannot separate them. The discriminator is the TOP: the compound-count rule puts CYP2C9 first, the weak-baseline rule puts CYP2D6 first."
+  },
+  "cyp2d6_caveat": "Notebook 21 established that OOF ST-RAE is not a valid selection metric for CYP2D6, and the board has contradicted OOF evidence for that isoform twice. Any CYP2D6 movement here carries that caveat and must not be read at face value.",
+  "honest_prior": "Five of six modelling screens on this project have come back flat or below seed-to-seed noise. A null result is the most likely single outcome and is a legitimate finding.",
+  "scope": "Report only. No submission, no full-data retrain, no ensemble, no 25-fold CV."
+}

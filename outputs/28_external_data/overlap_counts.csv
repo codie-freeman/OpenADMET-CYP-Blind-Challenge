@@ -1,0 +1,5 @@
+isoform,n_train_labelled,n_aid_overlap_labelled,n_overlap_real_fit,n_overlap_floored,n_aid_new_compounds
+CYP1A2,1412,35,33,2,16459
+CYP2C9,1285,20,7,13,16459
+CYP2D6,1493,49,41,8,16459
+CYP3A4,2335,30,8,22,16459

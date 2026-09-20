@@ -1,0 +1,51 @@
+{
+  "notebook": "28_external_data",
+  "frozen_at_utc": "2026-09-17T03:38:11.476702+00:00",
+  "frozen_before": "any correlation, fingerprint or scatter between an AID 1851 readout and this project's measured pIC50. No such quantity is computed anywhere above this cell.",
+  "purpose": "Decide whether AID 1851 carries signal that tracks this project's own measured pIC50 well enough to justify building and training an auxiliary-head arm.",
+  "candidate_readouts": {
+    "potency": {
+      "column": "pIC50_equivalent",
+      "source": "data/processed/aid1851_curated.csv (notebook 13)",
+      "note": "100% non-null but 49.7% of values are per-row censoring floors, not measurements"
+    },
+    "efficacy": {
+      "column": "max_inhibition = -Max_Response",
+      "source": "data/raw/aid1851/batch_*.csv, re-derived here (notebook 13 dropped it)",
+      "note": "100% real measured values, graded on compounds that did nothing"
+    }
+  },
+  "rejected_candidates": {
+    "Activity Score": "exactly 0 on all 42,460 inactive rows -- no gradation on the population of interest",
+    "Fit_InfiniteActivity": "fit-only (0% coverage on no-fit rows), not a full-coverage efficacy column"
+  },
+  "amendment_to_brief": {
+    "original_clause": "n >= 200 overlapping compounds on the qualifying isoforms",
+    "problem": "Arithmetically unsatisfiable. Max available n is 49 (CYP2D6); CYP2C9 has 20. The binding constraint is this project's own sparse per-isoform labelling (26-48% populated), not AID 1851. Freezing it unamended guarantees a FAIL on sample size regardless of correlation strength, which is a procedural artifact rather than evidence about the assay.",
+    "replacement": "n >= 20 AND the lower bound of the 95% percentile bootstrap CI on Spearman rho must exceed 0.25 -- preserving the clause's intent (signal must be distinguishable from noise) while being achievable on the real overlap.",
+    "agreed_with_user_before_computation": true
+  },
+  "criteria": {
+    "PASS": {
+      "rule": "abs(Spearman) >= 0.40 on at least two isoforms for at least one candidate readout, AND n >= 20 on those isoforms, AND the 95% bootstrap CI lower bound on abs(Spearman) exceeds 0.25 on those isoforms.",
+      "action": "Proceed to Part 2."
+    },
+    "MARGINAL": {
+      "rule": "abs(Spearman) between 0.25 and 0.40 on two or more isoforms for at least one readout.",
+      "action": "Proceed to Part 2, but state prominently that the signal is weak and that a null result downstream is the expected outcome."
+    },
+    "FAIL": {
+      "rule": "Below both of the above.",
+      "action": "HARD STOP. Do not build the training table, do not train anything. Report the negative plainly: it would mean the qHTS panel measures something materially different from this challenge's dose-response assay, which is worth stating given that a leading entrant uses it as training signal."
+    }
+  },
+  "bootstrap": {
+    "method": "percentile",
+    "n_resamples": 2000,
+    "ci": 0.95,
+    "seed": 20260916,
+    "seed_note": "single fixed seed, logged; this is a one-off resampling, not a per-fold procedure"
+  },
+  "sensitivity_reported_but_not_gating": "Potency correlation is additionally reported on real-fit-only subsets. On CYP2C9 only 7 of 20 and on CYP3A4 only 8 of 30 overlapping compounds have a real curve fit, so a potency correlation computed across mostly-constant floored values would be artifactual and must not be read at face value.",
+  "readout_decision_rule": "If the gate passes, choose the readout with the better combination of coverage and correlation, stating the reasoning. Potency correlates more directly with the target but exists only where a curve fitted, inheriting the same activity-enriched selection this project's own training set has. Efficacy is recorded at full coverage and therefore includes compounds that did nothing -- precisely the population this project's training set lacks by construction. If the two readouts point to different choices, report both and STOP AND ASK rather than picking."
+}

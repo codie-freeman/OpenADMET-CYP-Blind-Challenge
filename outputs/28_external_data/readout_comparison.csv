@@ -1,0 +1,5 @@
+isoform,n,potency_rho,potency_rho_fits_only,potency_n_fits,potency_pct_floored_pool,efficacy_rho,efficacy_pct_coverage
+CYP1A2,35,0.793,0.765,33,42.4,0.542,100.0
+CYP2C9,20,0.346,-0.255,7,50.8,0.58,100.0
+CYP2D6,49,0.681,0.724,41,65.8,0.643,100.0
+CYP3A4,30,0.656,0.586,8,45.1,0.479,100.0
