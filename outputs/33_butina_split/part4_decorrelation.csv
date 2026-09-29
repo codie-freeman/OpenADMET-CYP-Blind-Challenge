@@ -1,0 +1,9 @@
+partition,isoform,best_feature_set,best_head,n,error_correlation_vs_chemprop,below_nb24_band
+BUTINA,CYP1A2,embed_concat,ridge,1412,0.9226714458525624,False
+BUTINA,CYP2C9,embed_concat,ridge,1285,0.8603739175479906,False
+BUTINA,CYP2D6,embed_concat,ridge,1493,0.9375894862819106,False
+BUTINA,CYP3A4,embed_concat,ridge,2335,0.8136274734907658,False
+RANDOM,CYP1A2,embed_concat,ridge,1412,0.922746582874062,False
+RANDOM,CYP2C9,embed_concat,ridge,1285,0.8733618393966931,False
+RANDOM,CYP2D6,embed_concat,ridge,1493,0.9376779550686538,False
+RANDOM,CYP3A4,embed_concat,ridge,2335,0.8058921436543159,False

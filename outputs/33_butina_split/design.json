@@ -1,0 +1,10 @@
+{
+  "baseline_fold0_min": 0.0406572302182515,
+  "aid_fold0_min": 0.0405921498934427,
+  "projected_5fold_h": 0.006770781675974517,
+  "active_arms": [
+    "baseline",
+    "aid"
+  ],
+  "decided_at_utc": "2026-09-25T19:53:04.130686+00:00"
+}
