@@ -1,0 +1,19 @@
+{
+  "n_repeats_active": 2,
+  "band": "projected over 30 h",
+  "measured_min_per_fold_by_arm": {
+    "plain": 8.54400487502416,
+    "trees": 1.1505896298090617,
+    "single": 11.162591482798259,
+    "aid": 46.65563990275065,
+    "deadzone": 8.54400487502416
+  },
+  "per_fold_total_min": 76.05683076540629,
+  "per_repeat_h": 6.338069230450524,
+  "projected_5repeat_h": 31.690346152252623,
+  "projected_2repeat_h": 12.676138460901049,
+  "nb29_plain_mean_min": 7.29788,
+  "nb29_aid_mean_min": 34.02459999999999,
+  "wall_deadline_h": 22.0,
+  "decided_at_utc": "2026-09-26T04:17:58.045849+00:00"
+}

@@ -1,0 +1,5 @@
+isoform,n_arms_compared,spearman_rho,p,butina_best,random_best
+CYP1A2,9,0.9833333333333333,1.936196303745927e-06,deadzone,deadzone
+CYP2C9,9,0.9833333333333333,1.936196303745927e-06,deadzone,deadzone
+CYP2D6,9,0.8499999999999999,0.0037047773275858125,deadzone,deadzone
+CYP3A4,9,0.9833333333333333,1.936196303745927e-06,deadzone,deadzone

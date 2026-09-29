@@ -1,0 +1,10 @@
+arm,corr_min,corr_max,n_below_bar,n_isoforms,n_below_floor,n_below_nb24_band,verdict
+ecfp4_narrow__rf,0.7490091241124129,0.8771027001506817,2,4,4,1,PARTIALLY decorrelated -- below the 0.85 bar on 2/4 isoforms; below PLAIN's own re-seed floor on 4/4
+ecfp4_narrow__xgboost,0.7456681766481239,0.8652063197242976,3,4,4,2,PARTIALLY decorrelated -- below the 0.85 bar on 3/4 isoforms; below PLAIN's own re-seed floor on 4/4
+ecfp4_narrow__lightgbm,0.7689401617166112,0.8854194834165175,2,4,4,2,PARTIALLY decorrelated -- below the 0.85 bar on 2/4 isoforms; below PLAIN's own re-seed floor on 4/4
+mordred_pca__rf,0.7177805148511147,0.8813072965192998,3,4,4,2,PARTIALLY decorrelated -- below the 0.85 bar on 3/4 isoforms; below PLAIN's own re-seed floor on 4/4
+mordred_pca__xgboost,0.6960014853311246,0.8423328872887631,4,4,4,2,DECORRELATED from PLAIN on every isoform -- below the 0.85 bar on 4/4 isoforms; below PLAIN's own re-seed floor on 4/4
+mordred_pca__lightgbm,0.744141618405923,0.8693518919687202,3,4,4,2,PARTIALLY decorrelated -- below the 0.85 bar on 3/4 isoforms; below PLAIN's own re-seed floor on 4/4
+single,0.9014445162075413,0.9435100696288994,0,4,1,0,"NOT decorrelated, pool-typical or above on every isoform -- below the 0.85 bar on 0/4 isoforms; below PLAIN's own re-seed floor on 1/4"
+aid,0.8418060002314334,0.9240870619426438,1,4,3,0,PARTIALLY decorrelated -- below the 0.85 bar on 1/4 isoforms; below PLAIN's own re-seed floor on 3/4
+deadzone,0.9122683168660655,0.949937345895184,0,4,0,0,"NOT decorrelated, pool-typical or above on every isoform -- below the 0.85 bar on 0/4 isoforms; below PLAIN's own re-seed floor on 0/4"

@@ -1,0 +1,51 @@
+[
+  {
+    "decision": "Carried on with five seeded cluster-to-fold assignments although repeat 0 does not reproduce notebook 33's partition label-for-label",
+    "reason": "Repeat 0 does not reproduce notebook 33's own partition (best-case agreement 22.4%). Notebook 33 broke both ties deterministically by lowest index (stable argsort, then np.argmin over fold counts); the brief specifies the tie be broken by that repeat's seed, which makes nb33's draw one particular member of the family rather than seed 0's member. Carrying on with the five seeded assignments, per the brief's own instruction -- notebook 33's results therefore sit on a partition that is NOT in this notebook's set of five.",
+    "alternatives": "Force repeat 0 to be notebook 33's own deterministic assignment and seed only repeats 1-4 (would make the five repeats non-exchangeable, so the across-repeat spread would no longer estimate one thing); or abandon the repeated design.",
+    "authority": "the brief's own instruction for this exact outcome: 'report the difference and carry on using the new assignments for all five repeats'",
+    "at_utc": "2026-09-26T13:01:44.804466+00:00"
+  },
+  {
+    "decision": "Left the timing gate's 2-repeat reduction in place although the realised per-fold costs would have supported 3 repeats",
+    "reason": "The gate fired mechanically after repeat 0's AID fold 0, per the brief, and that fold (46.66 min) proved to be the AID arm's slowest of ten; its eventual mean was 34.82 min. The five-repeat projection came to 31.69 h against the brief's 30 h threshold, so the rule selected 2 repeats where the realised means give 26.77 h and would have selected 3.",
+    "alternatives": "Re-run the gate on the realised means and extend to a third repeat (would be re-deciding a pre-specified rule after seeing its outcome, which is the selection behaviour this project's CLAUDE.md explicitly warns against); restart the whole design under a revised gate (cost already sunk).",
+    "authority": "autonomy rule: record, do not improvise around, a consequence of a pre-specified rule",
+    "at_utc": "2026-09-26T13:06:41.117627+00:00"
+  },
+  {
+    "decision": "Removed OMP_NUM_THREADS=1 / KMP_DUPLICATE_LIB_OK=TRUE from the setup cell after the sanity check failed on the first execution, and asserted them unset",
+    "reason": "The first execution copied notebook 33's setup cell verbatim, including OMP_NUM_THREADS=1, and the Part 3 sanity check failed at 0.0378 max abs ST-RAE difference against notebook 05's stored repeat0_fold0 scores (threshold 0.03), aborting cleanly before any design run started. The training input CSV was byte-identical to notebook 05's own and the chemprop argv identical to notebook 31's, and val_loss was bit-identical for epochs 0-1 before diverging at epoch 2, so the fault was arithmetic, not data. Re-running with those two variables unset and nothing else changed reproduced notebook 05 exactly (0.00000000, bit-identical val_loss trajectory); notebooks 29 and 31, the two that reproduce notebook 05 to 0.0000, do not set them. Restricting BLAS/OMP to one thread changes floating-point reduction order and so the training trajectory.",
+    "alternatives": "Raise the sanity threshold to admit the 0.0378 difference (would have silently accepted a pipeline that does not reproduce this project's own stored numbers, the exact failure the check exists to catch); keep the variable and abandon the sanity comparison.",
+    "authority": "the brief's own HARD FAILURE rule for a sanity mismatch, plus the requirement to diagnose rather than improvise around a failure",
+    "at_utc": "2026-09-26T13:06:41.134136+00:00"
+  },
+  {
+    "decision": "Treated TREES as six separate arms (ecfp4_narrow and mordred_pca x rf/xgboost/lightgbm) rather than one averaged arm",
+    "reason": "The brief names three algorithms on 'descriptor and fingerprint features' without saying whether to report them individually or pooled. Reporting them individually is the option that changes least from notebook 33, which reported each tabular config separately, and it is strictly more informative for the decorrelation question -- a pooled average could hide one genuinely decorrelated member behind five correlated ones.",
+    "alternatives": "Average the six into a single TREES arm (fewer rows in every table, but loses per-config decorrelation).",
+    "authority": "autonomy rule: take the most conservative option and record it",
+    "at_utc": "2026-09-26T13:06:41.134438+00:00"
+  },
+  {
+    "decision": "Added a 22.0h wall-clock guard that skips further runs (recording each skip) once exceeded",
+    "reason": "The brief caps the run at 24 hours with no human available. The timing gate reduces the DESIGN up front but cannot react to notebook 28's documented 10.6x mid-run per-epoch degradation, so without a deadline an unlucky slowdown could leave Parts 4/5 never reached and the run with no analysis at all. Because the order is by repeat, stopping at the guard still leaves a complete design at whatever repeat count finished.",
+    "alternatives": "No guard (risks producing training output with no analysis); a shorter guard (wastes available budget).",
+    "authority": "autonomy rule: take the most conservative option and record it",
+    "at_utc": "2026-09-26T13:06:41.134635+00:00"
+  },
+  {
+    "decision": "Mapped notebook 05's manifest (repeat, fold) seeds onto the Butina (repeat, fold) cells by index",
+    "reason": "The two partitions' fold indices carry no shared meaning, so this is a convention, not a correspondence, and it is stated as such in Part 2. It reuses this project's own 25-seed table rather than inventing a new one, and because the seed is held constant across arms within a fold it cancels out of every arm-vs-arm comparison.",
+    "alternatives": "Generate fresh seeds (a new, unjustified seed table); reuse one seed everywhere (loses the per-fold seed variation this project logs).",
+    "authority": "autonomy rule: take the most conservative option and record it",
+    "at_utc": "2026-09-26T13:06:41.134800+00:00"
+  },
+  {
+    "decision": "Applied Benjamini-Hochberg correction across ARMS within each isoform (not across isoforms within an arm)",
+    "reason": "The brief says to apply BH without naming the family. Within-isoform across-arms is the family a reader actually forms when asking which arm beats PLAIN on a given isoform, and it is the more conservative choice here because there are more arms (9) than isoforms (4).",
+    "alternatives": "BH across isoforms within each arm, as notebook 29 used for its single two-arm comparison (a smaller family, so weaker correction).",
+    "authority": "autonomy rule: take the most conservative option and record it",
+    "at_utc": "2026-09-26T13:06:41.134953+00:00"
+  }
+]
