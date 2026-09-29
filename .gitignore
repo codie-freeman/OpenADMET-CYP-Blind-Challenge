@@ -277,3 +277,52 @@ outputs/31_deadzone/run_scores.csv
 # predictions_before_board.json, winsor_bounds_full.json, and figures/ are all small
 # and stay tracked.
 outputs/32_deadzone_aid_retrain/chemprop_runs/
+
+# 33_butina_split (Butina cluster-disjoint CV comparison, notebook-only): same treatment
+# as 05b/05c/29 above, for the same reason -- chemprop_runs/ (2.4GB, 10 real Chemprop
+# runs' checkpoints/logs across 2 arms x 5 folds, checked directly, almost entirely
+# *.pt/*.ckpt already covered by this file's own blanket rule above), predictions/ (1.3MB,
+# 10 files) and scores/ (6.0MB, 10 files) are bulk per-fold raw output, individually small
+# but not worth tracking -- excluded to match 05's own predictions/scores precedent.
+# part4_embedding_head_predictions.csv (13MB) is the same category: per-compound raw
+# predictions for the frozen-embedding heads, not this notebook's own reported deliverable.
+# All are fully regeneratable by re-running the notebook (deterministic: reuses 05's own
+# manifest.csv repeat_0 fold seeds, cache-skipped via the same `PRED_DIR/{tag}.csv`
+# is_done() convention). oof_long/ (752KB, 8 per-isoform-per-arm files) stays tracked --
+# small, and the long-format table downstream blending consumes. cluster_size_distribution.csv,
+# design.json, pairing_check.csv, nn_similarity_summary.csv, part3_paired_tests.csv,
+# part4_scores.csv, part4_fit_diagnostics.csv, part4_decorrelation.csv,
+# partition_comparison.csv, ordering_agreement.csv, chemprop_oof_scores_for_comparison.csv,
+# run_scores.csv, run_timings.csv, winsor_bounds_by_fold.csv, fold_isoform_label_*.csv,
+# sims_*.npy, cv_folds_butina_sha256.txt and figures/ stay tracked -- small, and what this
+# notebook reports from.
+outputs/33_butina_split/chemprop_runs/
+outputs/33_butina_split/predictions/
+outputs/33_butina_split/scores/
+outputs/33_butina_split/part4_embedding_head_predictions.csv
+
+# 34_butina_5x5 (repeated cluster-disjoint CV, 5 arms x 2 repeats x 5 folds, notebook-only):
+# same treatment as 29/33 above, for the same reason -- chemprop_runs/ (17GB, checked
+# directly: 70 Chemprop runs, 10 folds x (plain + aid + deadzone + 4 single-task models),
+# almost entirely *.pt/*.ckpt already covered by this file's own blanket rule above),
+# predictions/ (11MB, 101 files) and scores/ (60MB, 101 files) are bulk per-(repeat, fold,
+# arm) raw output -- excluded to match 05's own predictions/scores precedent. All are fully
+# regeneratable by re-running the notebook (deterministic: reuses 05's own manifest.csv
+# seeds, cache-skipped via the `PRED_DIR/{arm}__r{r}f{f}.csv` is_done() convention).
+#
+# oof_long/ is split rather than excluded wholesale, checked directly not assumed: the 100
+# per-run intermediate files (`{arm}__r{r}f{f}.csv`, 25MB combined) are the same bulk
+# category as predictions/, while the 4 ASSEMBLED per-isoform wide tables
+# (`oof_long_CYP*.csv`, 2.6MB combined) are this notebook's stated downstream deliverable
+# and stay tracked -- matching outputs/11_caruana_prep/oof_long_*.csv, whose own
+# same-shaped tables are already tracked and which several later notebooks read read-only.
+#
+# run_scores.csv (76KB, per-(repeat, fold, arm, endpoint) means) stays tracked -- unlike
+# 31's same-named 8.3MB per-bootstrap-sample file, this is the small aggregated summary the
+# notebook reports from, matching 22's and 29's own treatment. curated_deadzone_target_r*.csv
+# (1.0MB each, the frozen per-repeat clipped targets the DEADZONE arm trained against) stay
+# tracked as the audit trail for that arm, matching 31's own curated_deadzone_target.csv.
+outputs/34_butina_5x5/chemprop_runs/
+outputs/34_butina_5x5/predictions/
+outputs/34_butina_5x5/scores/
+outputs/34_butina_5x5/oof_long/*__r*f*.csv
