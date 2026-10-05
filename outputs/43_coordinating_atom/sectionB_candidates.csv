@@ -1,0 +1,4 @@
+candidate,description,smarts
+C1,conservative: aliphatic basic N only,"[NX3;H0,H1,H2;!+;!$(N[C,S,P]=[O,N,S]);!$(N[S,P]=O);!$(N#*);!$(N=*);!$(N[a]);!$(NC=[!#6]);!$([nX3])]"
+C2,faithful: + aromatic/heteroaromatic N,"[$([NX3;H0,H1,H2;!+;!$(N[C,S,P]=[O,N,S]);!$(N[S,P]=O);!$(N#*);!$(N=*);!$(N[a]);!$(NC=[!#6]);!$([nX3])]),$([nX2;H0])]"
+C3,inclusive: + divalent S and hydroxyl O,"[$([NX3;H0,H1,H2;!+;!$(N[C,S,P]=[O,N,S]);!$(N[S,P]=O);!$(N#*);!$(N=*);!$(N[a]);!$(NC=[!#6]);!$([nX3])]),$([nX2;H0]),$([SX2]),$([OX2H])]"

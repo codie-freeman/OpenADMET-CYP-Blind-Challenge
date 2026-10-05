@@ -1,0 +1,4 @@
+table,rows,cols,expected_rows,matches
+qm_atoms.csv,252237,18,252237,True
+qm_bonds.csv,269256,7,269256,True
+qm_molecular_raw.csv,5655,23,5655,True

@@ -1,0 +1,123 @@
+{
+  "decision_1_which_pattern": {
+    "resolved": false,
+    "the_bind": "C1 selects (2.84x CYP2D6 enrichment) but is empty for 82.1% of the library and 88.4% of the scored blind set. C2 is the faithful reading of Correia & Hollenberg -- who put aliphatic and aromatic N on equal footing and specify no substitution class -- but at 79% coverage its per-isoform spread is flat, so it selects nothing. C3 adds mostly hydroxyl oxygen, the one donor class the chapter itself calls 'generally weak'.",
+    "per_candidate": {
+      "C1": {
+        "coverage": 0.1791335101679929,
+        "empty_fraction_all": 0.820866489832007,
+        "empty_fraction_blind": 0.884,
+        "cyp2d6_enrichment": 2.8381221851793343,
+        "per_isoform_coverage": {
+          "CYP1A2": 0.1303116147308781,
+          "CYP2C9": 0.1268482490272373,
+          "CYP2D6": 0.3737441393168118,
+          "CYP3A4": 0.1379014989293361
+        }
+      },
+      "C2": {
+        "coverage": 0.7897435897435897,
+        "empty_fraction_all": 0.2102564102564102,
+        "empty_fraction_blind": 0.2306666666666666,
+        "cyp2d6_enrichment": 1.087462648871239,
+        "per_isoform_coverage": {
+          "CYP1A2": 0.8512747875354107,
+          "CYP2C9": 0.7828793774319066,
+          "CYP2D6": 0.8640321500334897,
+          "CYP3A4": 0.7494646680942184
+        }
+      },
+      "C3": {
+        "coverage": 0.8458001768346596,
+        "empty_fraction_all": 0.1541998231653404,
+        "empty_fraction_blind": 0.1826666666666666,
+        "cyp2d6_enrichment": 1.0543823988769085,
+        "per_isoform_coverage": {
+          "CYP1A2": 0.8852691218130312,
+          "CYP2C9": 0.8482490272373541,
+          "CYP2D6": 0.898861352980576,
+          "CYP3A4": 0.823982869379015
+        }
+      }
+    }
+  },
+  "decision_2_tiebreak": {
+    "resolved": false,
+    "note": "The two proposed rules are close to independent of each other where a tie-break is needed, and the choice of charge SCHEME is a third axis the brief did not anticipate, disagreeing nearly as often as the choice of rule. Panel D3 shows the disagreeing cases so the choice can be made chemically.",
+    "per_candidate": {
+      "C1": {
+        "frac_needing_tiebreak": 0.0118479221927497,
+        "n_needing_tiebreak": 67,
+        "max_competing_atoms": 2,
+        "charge_vs_p_disagree": 0.4626865671641791,
+        "hirshfeld_vs_mulliken_disagree": 0.4776119402985075
+      },
+      "C2": {
+        "frac_needing_tiebreak": 0.4404951370468611,
+        "n_needing_tiebreak": 2491,
+        "max_competing_atoms": 6,
+        "charge_vs_p_disagree": 0.4761140104375753,
+        "hirshfeld_vs_mulliken_disagree": 0.5359293456443196
+      },
+      "C3": {
+        "frac_needing_tiebreak": 0.517948717948718,
+        "n_needing_tiebreak": 2929,
+        "max_competing_atoms": 7,
+        "charge_vs_p_disagree": 0.43393649709798565,
+        "hirshfeld_vs_mulliken_disagree": 0.45100716968248544
+      }
+    }
+  },
+  "decision_3_null_handling": {
+    "resolved": false,
+    "empty_fraction_all_C1": 0.820866489832007,
+    "empty_fraction_blind_C1": 0.884,
+    "empty_fraction_per_isoform_C1": {
+      "CYP1A2": 0.8696883852691218,
+      "CYP2C9": 0.8731517509727627,
+      "CYP2D6": 0.6262558606831882,
+      "CYP3A4": 0.8620985010706638
+    },
+    "no_match_group_contains_nitrogen": 0.9851357173632055,
+    "no_match_group_is_chemically_distinctive": false,
+    "presence_flag_signal_C1": {
+      "CYP1A2": {
+        "rank_biserial": -0.1686995468064013,
+        "p_bh": 0.0002199919455558
+      },
+      "CYP2C9": {
+        "rank_biserial": -0.3272202355565762,
+        "p_bh": 2.7846772307167947e-11
+      },
+      "CYP2D6": {
+        "rank_biserial": 0.3549652118912081,
+        "p_bh": 5.976132291987843e-30
+      },
+      "CYP3A4": {
+        "rank_biserial": -0.1966966272026856,
+        "p_bh": 1.8489460412936713e-08
+      }
+    },
+    "implication": "The presence flag alone is significant on all four isoforms and reproduces notebook 17's sign pattern, so a one-bit feature may already carry much of what the charge column would add. This is evidence about whether the arm is worth building, not only about null handling."
+  },
+  "recommendation": {
+    "is_a_recommendation_not_a_choice": true,
+    "text": "If the arm is built at all, C1 is the only candidate that selects anything, and its tie-break is nearly free (1.2% of compounds). Its cost is a column empty for 88.4% of the scored blind set, and the honest reading of Part C.6 is that a presence flag may capture most of the available signal for one bit instead of a QM pipeline. C2 is what the cited chemistry actually says and is measurably useless as a feature at 79% coverage with no isoform spread. That tension is the finding; it is not resolved here.",
+    "what_would_settle_it": "An OOF ST-RAE comparison on this project's frozen folds -- the same bar notebook 41 set for CYP1A2/CYP2C9's charge signal, and the bar notebook 18's clean tie failed to clear."
+  },
+  "meta": {
+    "notebook": "43_coordinating_atom_candidates",
+    "n_train": 4905,
+    "n_blind": 750,
+    "n_total": 5655,
+    "rdkit": "2026.03.3",
+    "quotations_verified": "18/18",
+    "written_at_utc": "2026-10-05T23:19:13.305251+00:00",
+    "nothing_computed": [
+      "model training",
+      "feature file for modelling",
+      "pattern selection",
+      "submission"
+    ]
+  }
+}

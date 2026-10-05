@@ -1,0 +1,13 @@
+quantity,n,max_abs_diff,tolerance,verdict
+homo_ev vs descriptors.csv::dft_homo_ev,5655,0.0,0.0e+00,PASS
+lumo_ev vs descriptors.csv::dft_lumo_ev,5655,0.0,0.0e+00,PASS
+gap_ev vs descriptors.csv::dft_gap_ev,5655,0.0,1.0e-09,PASS
+total_energy_eh vs descriptors.csv::dft_energy_eh,5655,9.095e-13,1.0e-09,PASS
+n_basis vs descriptors.csv::n_basis,5655,0.0,0.0e+00,PASS
+scf_cycles vs descriptors.csv::dft_scf_cycles,5655,0.0,0.0e+00,PASS
+dispersion_eh vs descriptors.csv::dft_dispersion_eh,5655,4.999e-10,1.0e-09,PASS
+dipole_debye vs descriptors.csv::dft_dipole_debye,5655,0.0005908,2.0e-03,PASS
+n_atoms vs descriptors.csv::total_atoms_with_h,5655,0.0,0.0e+00,PASS
+formal_charge vs descriptors.csv::formal_charge,5655,0.0,0.0e+00,PASS
+q_hirshfeld vs hirshfeld_charges.csv::charge,252237,0.0,5.0e-07,PASS
+element vs hirshfeld_charges.csv::element,252237,0.0,0.0e+00,PASS

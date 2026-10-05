@@ -1,0 +1,19 @@
+source,location,claim,found_verbatim,quote
+CH5,p.178,donor set at the sixth coordination site,True,Amino-side chains or nitrogenous heterocyclic moieties in some substrates
+CH5,p.178,binds the sixth coordination site directly,True,directly bind tightly to the sixth coordination site
+CH5,p.182,"N: aliphatic OR aromatic, equally, no substitution class",True,nitrogen-containing aliphatic or aromatic functions that bind the heme iron tightly
+CH5,p.183,named heterocyclic scaffolds,True,"pyridine, imidazole, and triazole"
+CH5,p.180,S: thiols and sulfides at the sixth site,True,bind sulfur ligands such as thiols
+CH5,p.182,O donors named,True,"organic alcohols, ethers, ketones, lactones, and other structures in which an oxygen atom of the ligand coordinates to the heme iron"
+CH5,p.182,O donors are WEAK,True,generally weak P450 inhibitors
+CH5,p.182,dual tethering beats either mode alone,True,Such dual tethering of the P450 active site confers much greater inhibitory capacity
+CH5,p.183,determinant (a): the nitrogen lone pair,True,the intrinsic affinity of their nitrogen electron pair for the heme iron
+CH5,p.179,lipophilic site deters ionic ligands [fragment A of 2],True,ligand of ferric myoglobin [46]. The lipophilic
+CH5,p.179,lipophilic site deters ionic ligands [fragment B of 2],True,nature of the P450 active site is an additional deterrent to its interactions with ionic ligands
+CH5,p.179,"'neutral' qualifies the ENZYME, not the ligand",True,the negatively charged cyanide ion favors the neutral ferric P450 species over the more negatively charged ferrous species
+CH5,p.185,a 2D match cannot tell whether coordination happens,True,water-bridged low-spin complexes that were metabolically competent
+Beck,abstract,the authors' own blanket caveat,True,these descriptors alone are insufficient to predict major cytochrome inhibition probability and affinity
+Beck,p.7,CYP2D6 inhibitors carry a POSITIVE charge,True,capable of procuring a positive charge
+Beck,p.5,CYP3A4: tertiary amine or imidazole,True,tertiary amine or imidazole nitrogen frequently coordinate
+Beck,p.11,CYP1A2: secondary amines,True,the coordination of secondary amines and aromatic moieties
+Beck,p.10,"CYP2C9: heterocycles, aromatic N, primary amines",True,"Heterocycles, aromatic nitrogens, and primary amines coordinate to the iron"

@@ -1,0 +1,44 @@
+[
+  {
+    "decision": "Corrected the brief's claim that Correia & Hollenberg support computing on the neutral species, and re-attributed that choice to this project rather than to the source.",
+    "reason": "The brief read 'the neutral ferric P450 species' as licensing the neutral LIGAND microspecies. Verified verbatim against the PDF (sha256 e69527f273955630...), 'neutral' qualifies the enzyme's redox state -- ferric vs ferrous -- and the passage concerns anions (cyanide). Beck et al. say the opposite for CYP2D6: inhibitors 'capable of procuring a positive charge', with 'a predilection for basic substrates'. Leaving the attribution as briefed would have put a citation behind a claim neither source makes, in a notebook whose whole purpose is to ground a pattern in cited chemistry. This is the fifth brief-premise error caught in this project, after notebooks 30, 32, 36 and 38.",
+    "alternatives": "Repeat the brief's attribution (a false citation in the one place it would most mislead); or treat the QM run's neutral-species choice as invalidated (it is not -- the choice is reasonable, only its justification was misattributed).",
+    "authority": "none -- the brief asserted it; the source was checked and does not support it",
+    "at_utc": "2026-10-05T23:19:06.274853+00:00"
+  },
+  {
+    "decision": "Reframed the candidate ladder: C2, not C1, is the faithful reading of the chemistry.",
+    "reason": "The brief presented the conservative end as 'aliphatic amine only', implying that is what the sources support. Verified verbatim, Correia & Hollenberg name the donor set as 'Amino-side chains or nitrogenous heterocyclic moieties' (p.178) and restate it as 'nitrogen-containing aliphatic or aromatic functions that bind the heme iron tightly' (p.182) -- aliphatic and aromatic on equal footing, and no substitution class anywhere. Presenting C1 as the chemistry-grounded option would have inverted the actual relationship between the three candidates, which is the substance of decision 1.",
+    "alternatives": "Present C1 as grounded and C2/C3 as speculative widenings (would have hidden that the selective candidate is the unprincipled one, and made the central bind invisible).",
+    "authority": "the brief's own instruction to read both sources before writing the patterns",
+    "at_utc": "2026-10-05T23:19:13.328672+00:00"
+  },
+  {
+    "decision": "Used Draw.MolsToGridImage as the primary renderer for Part D, with mols2grid alongside for browsing only.",
+    "reason": "The brief expected mols2grid to be absent and RDKit grids to be the fallback. Measured: mols2grid 2.2.0 IS installed and is this repo's only grid precedent (notebook 02), but it cannot highlight a chosen atom per molecule -- highlighting is driven by an interactive SMARTS box, prerender=True is explicitly incompatible with it, and a supplied image column is ignored (a custom highlight colour does not appear in the output). Showing WHICH atom was selected is Part D's entire purpose, so the brief's fallback had to become the primary tool despite having no precedent here.",
+    "alternatives": "mols2grid alone, following the repo precedent (would have shown which compounds matched but never which atom, so decision 2 could not be judged visually at all); RDKit grids alone (loses interactive browsing).",
+    "authority": "user-confirmed before building, after the limitation was measured",
+    "at_utc": "2026-10-05T23:19:13.328924+00:00"
+  },
+  {
+    "decision": "Read the raw SMILES column everywhere, deviating from notebook 02's grid pattern.",
+    "reason": "Notebook 02 passes canonical_smiles to mols2grid. Measured over all 5,655 compounds: the raw column reproduces ORCA's atom order 5,655/5,655 and canonical_smiles only 4,212/5,655, failing on 1,443 (25.5%). Among C1-matched compounds the matched atom INDEX differs between the two on 89 of 1013 (8.8%). Since every tie-break and every panel joins a SMARTS atom index into qm_atoms.csv, canonical_smiles would have returned the charge on the wrong atom about one time in eleven -- silently, with no error raised.",
+    "alternatives": "Follow notebook 02 and use canonical_smiles (silently wrong on ~9% of matched compounds, with no error raised).",
+    "authority": "measured; the hazard is specific to atom-index-dependent work",
+    "at_utc": "2026-10-05T23:19:13.329121+00:00"
+  },
+  {
+    "decision": "Added the presence-flag signal test (C.6b), which the brief did not ask for.",
+    "reason": "The brief frames null handling as 'zero, imputation, or a presence flag plus the value'. Measuring whether the flag ALONE carries signal turns that from a data-hygiene question into evidence about the arm itself -- and it does, on all four isoforms, reproducing notebook 17's own sign pattern from a different instrument. Leaving it out would have presented decision 3 as narrower than it is.",
+    "alternatives": "Report only the null fractions as briefed (would have omitted the strongest evidence bearing on whether to build the arm at all).",
+    "authority": "none -- added because it materially changes decision 3",
+    "at_utc": "2026-10-05T23:19:13.330658+00:00"
+  },
+  {
+    "decision": "Verified book quotations against the union of three pdftotext geometries.",
+    "reason": "The book is a two-column scan. Tested: a full-page extract interleaves the columns and corrupts sentences spanning a column break, while a hard x=240 split clips text on the boundary. No single geometry yields all 13 quotations. The p.179 lipophilicity sentence is split across a column break with figure text interleaved and cannot be recovered contiguously at all, so it is verified as two fragments and labelled as such.",
+    "alternatives": "Use one geometry and silently drop the quotes it misses; or paraphrase rather than quote (which is how the premise error in Part 0.3 arose in the first place).",
+    "authority": "measured; notebook 37's quote-verification convention adapted to a scanned source",
+    "at_utc": "2026-10-05T23:19:13.331247+00:00"
+  }
+]

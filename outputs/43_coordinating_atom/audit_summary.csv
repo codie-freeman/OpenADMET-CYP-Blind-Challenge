@@ -1,0 +1,10 @@
+section,headline,file
+0,18/18 quotations verified verbatim; the brief's 'neutral species' premise corrected,quote_verification.json
+A,"252,237 atom / 269,256 bond / 5,655 molecular rows recomputed; 924 Cl/Br atoms across 815 compounds, matching notebook 41's independent count",sectionA_trap_acceptance.csv
+B,"C1 reproduces notebook 41's strict pattern on 5,655/5,655; the cited chemistry actually favours C2, not C1",sectionB_candidates.csv
+C,C1 17.9% coverage with 2.84x CYP2D6 enrichment; C2 79.0% with none,sectionC_coverage.csv
+C.4,the two tie-break rules disagree on 48% of multi-match compounds,sectionC_tiebreak_agreement.csv
+C.5,"0/6 of Beck's isoform assignments appear as top-enriched here (a composition result, not a refutation)",sectionC_beck_isoform_check.csv
+C.6,the presence flag alone is significant on all four isoforms and reproduces notebook 17's sign pattern,sectionC_presence_flag_signal.csv
+D,mols2grid cannot mark a chosen atom; RDKit grids used as primary,figures/panels/
+E,"all three decisions left open, with the evidence assembled",verdict.json

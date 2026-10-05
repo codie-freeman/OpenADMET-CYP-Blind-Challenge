@@ -1,0 +1,149 @@
+{
+  "status": "VERIFIED",
+  "verifiable_by_hash": true,
+  "reproducible_by_a_third_party": false,
+  "why_not": "Neither source is in the repository -- it contains zero PDFs. Both are in the user's Zotero library at absolute paths outside it, so the sha256 below pins what was read on this machine but a reader without that library cannot re-extract the text. Same limitation notebook 42 recorded for its Discord source, and deliberately not dressed up as more than it is.",
+  "ocr_caveat": "The book is a scanned two-column copy with an OCR text layer, not born-digital. A full-page extract interleaves the columns and corrupts sentences spanning a column break; a hard x=240 split clips text on the boundary. The union of three geometries is searched. The p.179 lipophilicity sentence is split across a column break with figure text interleaved and is verified as two fragments, never contiguously.",
+  "sources": [
+    {
+      "tag": "CH5",
+      "citation": "Correia, M. A. & Hollenberg, P. F., 'Inhibition of Cytochrome P450 Enzymes', ch. 5 in Ortiz de Montellano et al. (eds), Cytochrome P450: Structure, Mechanism, and Biochemistry, 4th edn, Springer 2015, pp. 177-259. DOI 10.1007/978-3-319-12108-6_5",
+      "path": "/Users/codiefreeman/Zotero/storage/WIEQQHR7/Cytochrome P450  structure, mechanism, and biochemistry.pdf",
+      "sha256": "e69527f273955630f54528fb80b8761737fa14246247d810f5fd90b6b4152781"
+    },
+    {
+      "tag": "Beck",
+      "citation": "Beck, T. C., Beck, K. R., Morningstar, J., Benjamin, M. M. & Norris, R. A., 'Descriptors of Cytochrome Inhibitors and Useful Machine Learning Based Methods for the Design of Safer Drugs', Pharmaceuticals 2021, 14, 472. DOI 10.3390/ph14050472",
+      "path": "/Users/codiefreeman/Zotero/storage/6NUWGCBM/Beck et al. - 2021 - Descriptors of Cytochrome Inhibitors and Useful Machine Learning Based Methods for the Design of Saf.pdf",
+      "sha256": "21f6af9308fe8eee85b312703af475e29880ea077ac7e650aaf1393d242dfa6d"
+    }
+  ],
+  "quotes": [
+    {
+      "source": "CH5",
+      "location": "p.178",
+      "claim": "donor set at the sixth coordination site",
+      "found_verbatim": true,
+      "quote": "Amino-side chains or nitrogenous heterocyclic moieties in some substrates"
+    },
+    {
+      "source": "CH5",
+      "location": "p.178",
+      "claim": "binds the sixth coordination site directly",
+      "found_verbatim": true,
+      "quote": "directly bind tightly to the sixth coordination site"
+    },
+    {
+      "source": "CH5",
+      "location": "p.182",
+      "claim": "N: aliphatic OR aromatic, equally, no substitution class",
+      "found_verbatim": true,
+      "quote": "nitrogen-containing aliphatic or aromatic functions that bind the heme iron tightly"
+    },
+    {
+      "source": "CH5",
+      "location": "p.183",
+      "claim": "named heterocyclic scaffolds",
+      "found_verbatim": true,
+      "quote": "pyridine, imidazole, and triazole"
+    },
+    {
+      "source": "CH5",
+      "location": "p.180",
+      "claim": "S: thiols and sulfides at the sixth site",
+      "found_verbatim": true,
+      "quote": "bind sulfur ligands such as thiols"
+    },
+    {
+      "source": "CH5",
+      "location": "p.182",
+      "claim": "O donors named",
+      "found_verbatim": true,
+      "quote": "organic alcohols, ethers, ketones, lactones, and other structures in which an oxygen atom of the ligand coordinates to the heme iron"
+    },
+    {
+      "source": "CH5",
+      "location": "p.182",
+      "claim": "O donors are WEAK",
+      "found_verbatim": true,
+      "quote": "generally weak P450 inhibitors"
+    },
+    {
+      "source": "CH5",
+      "location": "p.182",
+      "claim": "dual tethering beats either mode alone",
+      "found_verbatim": true,
+      "quote": "Such dual tethering of the P450 active site confers much greater inhibitory capacity"
+    },
+    {
+      "source": "CH5",
+      "location": "p.183",
+      "claim": "determinant (a): the nitrogen lone pair",
+      "found_verbatim": true,
+      "quote": "the intrinsic affinity of their nitrogen electron pair for the heme iron"
+    },
+    {
+      "source": "CH5",
+      "location": "p.179",
+      "claim": "lipophilic site deters ionic ligands [fragment A of 2]",
+      "found_verbatim": true,
+      "quote": "ligand of ferric myoglobin [46]. The lipophilic"
+    },
+    {
+      "source": "CH5",
+      "location": "p.179",
+      "claim": "lipophilic site deters ionic ligands [fragment B of 2]",
+      "found_verbatim": true,
+      "quote": "nature of the P450 active site is an additional deterrent to its interactions with ionic ligands"
+    },
+    {
+      "source": "CH5",
+      "location": "p.179",
+      "claim": "'neutral' qualifies the ENZYME, not the ligand",
+      "found_verbatim": true,
+      "quote": "the negatively charged cyanide ion favors the neutral ferric P450 species over the more negatively charged ferrous species"
+    },
+    {
+      "source": "CH5",
+      "location": "p.185",
+      "claim": "a 2D match cannot tell whether coordination happens",
+      "found_verbatim": true,
+      "quote": "water-bridged low-spin complexes that were metabolically competent"
+    },
+    {
+      "source": "Beck",
+      "location": "abstract",
+      "claim": "the authors' own blanket caveat",
+      "found_verbatim": true,
+      "quote": "these descriptors alone are insufficient to predict major cytochrome inhibition probability and affinity"
+    },
+    {
+      "source": "Beck",
+      "location": "p.7",
+      "claim": "CYP2D6 inhibitors carry a POSITIVE charge",
+      "found_verbatim": true,
+      "quote": "capable of procuring a positive charge"
+    },
+    {
+      "source": "Beck",
+      "location": "p.5",
+      "claim": "CYP3A4: tertiary amine or imidazole",
+      "found_verbatim": true,
+      "quote": "tertiary amine or imidazole nitrogen frequently coordinate"
+    },
+    {
+      "source": "Beck",
+      "location": "p.11",
+      "claim": "CYP1A2: secondary amines",
+      "found_verbatim": true,
+      "quote": "the coordination of secondary amines and aromatic moieties"
+    },
+    {
+      "source": "Beck",
+      "location": "p.10",
+      "claim": "CYP2C9: heterocycles, aromatic N, primary amines",
+      "found_verbatim": true,
+      "quote": "Heterocycles, aromatic nitrogens, and primary amines coordinate to the iron"
+    }
+  ]
+}

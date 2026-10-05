@@ -1,0 +1,20 @@
+quantity,source,section_or_field
+Mulliken atomic charge,B .property.txt,$SCF_Mulliken_Population_Analysis &AtomicCharges
+Loewdin atomic charge,B .property.txt,$SCF_Loewdin_Population_Analysis &AtomicCharges
+Hirshfeld atomic charge,B .property.txt,$SCF_Hirshfeld_Population_Analysis &AtomicCharges
+"Mayer NA, VA",B .property.txt,"$SCF_Mayer_Population_Analysis &NA, &VA"
+Mayer bond orders + indices,B .property.txt,"&BondOrders, &components"
+atomic numbers (validation),B .property.txt,&ATNO in each population section
+total energy,B .property.txt,$Single_Point_Data &FinalEnergy
+dipole magnitude,B .property.txt,$SCF_Dipole_Moment &dipoleMagnitude (a.u.)
+D3 dispersion,B .property.txt,$VdW_Correction &vdW
+basis count,B .property.txt,$Calculation_Info &NumOfBasisFuncts
+GFN2 opt cycles,A .property.txt,"count of $Geometry blocks, minus 1"
+GFN2 final gradient norm,A .property.txt,last $SCF_Nuc_Gradient &gradNorm
+GFN2 relaxation strain,A .property.txt,first vs last $SCF_Energy &totalEnergy
+Mulliken s/p/d aggregates,B .out  (FIXED COLUMNS),MULLIKEN REDUCED ORBITAL CHARGES
+Loewdin s/p/d aggregates,B .out  (FIXED COLUMNS),LOEWDIN REDUCED ORBITAL CHARGES
+"HOMO/-1/-2, LUMO/+1",B .out,ORBITAL ENERGIES (virtuals truncated by ORCA)
+rotational constants,B .out,Rotational constants in cm-1
+SCF cycles,B .out,SCF CONVERGED AFTER
+optimised geometry,A .xyz,"read_orca_xyz(), reused from the generating run"

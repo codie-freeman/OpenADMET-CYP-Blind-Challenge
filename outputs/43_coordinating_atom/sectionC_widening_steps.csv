@@ -1,0 +1,4 @@
+step,atom_type,atoms_added
+C1 -> C2,N (aromatic),7280
+C2 -> C3,O,1023
+C2 -> C3,S,142
