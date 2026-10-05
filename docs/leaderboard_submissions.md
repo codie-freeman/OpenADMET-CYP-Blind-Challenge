@@ -6,8 +6,8 @@ stated elsewhere (notebook markdown, CLAUDE.md prose, the root `README.md`) — 
 here rather than repeat these numbers. Real per-isoform scores exist here for 04b and notebook 10
 already (originally cross-checked against `README.md`'s own "Leaderboard result" tables before
 those tables were retired in favor of a pointer to this file — see "Provenance" below); 10c,
-notebook 12, NB13-calib's, NB16's, NB19's, NB27-widened's, NB30's, 27b's, and NB32-A's full metric
-breakdowns are recorded here as well.
+notebook 12, NB13-calib's, NB16's, NB19's, NB27-widened's, NB30's, 27b's, NB32-A's and
+NB36-widened's full metric breakdowns are recorded here as well.
 
 No blind-set labels are held anywhere in this repo — all scores below came from OpenADMET's own
 leaderboard after real submissions, not from anything computed locally.
@@ -17,38 +17,74 @@ of the blind test set (split by chemical series) as submissions come in — the 
 only at the intermediate reveal and at the competition's close. This applies to every row below;
 none of these numbers are the final, full-set result, and later reveals could move any of them.
 
-## All eleven submissions to date
+## All twelve submissions to date
 
-| Isoform | Metric | 04b | 10c | NB10 | NB12 | NB13-calib | NB16 | NB19 | NB27-widened | NB30 | 27b | NB32-A |
-|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| **MA (Overall)** | ST-RAE | 0.7179 | 0.7138 | 0.8299 | 0.8299 | 0.8811 | 0.6364 | 0.6265 | 0.6155 | 0.8160 | 0.5982 | 0.6488 |
-| | MAE | 0.8952 | 0.8927 | 0.9690 | 0.9674 | 1.0260 | 0.7679 | 0.7599 | 0.7488 | 0.9580 | 0.7206 | 0.7670 |
-| | R² | 0.2191 | 0.2278 | 0.1054 | 0.1159 | 0.0203 | 0.4407 | 0.4482 | 0.4557 | 0.1356 | 0.4835 | 0.4329 |
-| | Spearman | 0.6739 | 0.6735 | 0.6748 | 0.6613 | 0.6785 | 0.6735 | 0.6785 | 0.6785 | 0.6831 | 0.7002 | 0.6894 |
-| | Kendall | 0.5008 | 0.4987 | 0.4977 | 0.4877 | 0.5045 | 0.4987 | 0.5045 | 0.5045 | 0.4999 | 0.5212 | 0.5118 |
-| **CYP1A2** | ST-RAE | 0.7114 | 0.6954 | 0.7850 | 0.7633 | 0.8197 | 0.6954 | 0.6954 | 0.6954 | 0.7630 | 0.6954 | 0.7906 |
-| | MAE | 0.9589 | 0.9385 | 1.0214 | 1.0035 | 1.0549 | 0.9385 | 0.9385 | 0.9385 | 1.0027 | 0.9385 | 1.0287 |
-| | R² | 0.2824 | 0.3073 | 0.2051 | 0.2275 | 0.1537 | 0.3073 | 0.3073 | 0.3073 | 0.2588 | 0.3073 | 0.2125 |
-| | Spearman | 0.7430 | 0.7375 | 0.7246 | 0.7389 | 0.7375 | 0.7375 | 0.7375 | 0.7375 | 0.7466 | 0.7375 | 0.7565 |
-| | Kendall | 0.5473 | 0.5425 | 0.5297 | 0.5422 | 0.5425 | 0.5425 | 0.5425 | 0.5425 | 0.5468 | 0.5425 | 0.5611 |
-| **CYP2C9** | ST-RAE | 0.5408 | 0.5489 | 0.5489 | 0.5375 | 0.6036 | 0.5770 | 0.5375 | 0.5375 | 0.5922 | 0.5375 | 0.5635 |
-| | MAE | 0.5399 | 0.5444 | 0.5444 | 0.5280 | 0.5934 | 0.5603 | 0.5280 | 0.5280 | 0.5607 | 0.5280 | 0.5568 |
-| | R² | 0.5263 | 0.5272 | 0.5272 | 0.5432 | 0.4237 | 0.5133 | 0.5432 | 0.5432 | 0.4789 | 0.5432 | 0.5016 |
-| | Spearman | 0.7428 | 0.7389 | 0.7389 | 0.7585 | 0.7585 | 0.7389 | 0.7585 | 0.7585 | 0.7333 | 0.7585 | 0.7554 |
-| | Kendall | 0.5490 | 0.5462 | 0.5462 | 0.5692 | 0.5692 | 0.5462 | 0.5692 | 0.5692 | 0.5369 | 0.5692 | 0.5652 |
-| **CYP2D6** | ST-RAE | 1.1903 | 1.1673 | 1.4603 | 1.4092 | 1.3570 | 0.8299 | 0.8299 | 0.7858 | 1.3168 | 0.7165 | 0.7502 |
-| | MAE | 1.5842 | 1.5694 | 1.7489 | 1.7209 | 1.6904 | 1.0546 | 1.0546 | 1.0104 | 1.6688 | 0.8975 | 0.9319 |
-| | R² | −0.6220 | −0.5941 | −0.9392 | −0.8726 | −0.7903 | 0.2713 | 0.2713 | 0.3012 | −0.7660 | 0.4124 | 0.3768 |
-| | Spearman | 0.3769 | 0.4000 | 0.4401 | 0.3771 | 0.4000 | 0.4000 | 0.4000 | 0.4000 | 0.4872 | 0.4872 | 0.4438 |
-| | Kendall | 0.2606 | 0.2747 | 0.3081 | 0.2587 | 0.2747 | 0.2747 | 0.2747 | 0.2747 | 0.3415 | 0.3415 | 0.3076 |
-| **CYP3A4** | ST-RAE | 0.4291 | 0.4434 | 0.5253 | 0.6095 | 0.7443 | 0.4434 | 0.4434 | 0.4434 | 0.5920 | 0.4434 | 0.4907 |
-| | MAE | 0.4976 | 0.5183 | 0.5614 | 0.6173 | 0.7654 | 0.5183 | 0.5183 | 0.5183 | 0.5996 | 0.5183 | 0.5506 |
-| | R² | 0.6898 | 0.6709 | 0.6285 | 0.5655 | 0.2941 | 0.6709 | 0.6709 | 0.6709 | 0.5708 | 0.6709 | 0.6405 |
-| | Spearman | 0.8329 | 0.8177 | 0.7955 | 0.7706 | 0.8177 | 0.8177 | 0.8177 | 0.8177 | 0.7651 | 0.8177 | 0.8020 |
-| | Kendall | 0.6463 | 0.6316 | 0.6065 | 0.5809 | 0.6316 | 0.6316 | 0.6316 | 0.6316 | 0.5743 | 0.6316 | 0.6132 |
+| Isoform | Metric | 04b | 10c | NB10 | NB12 | NB13-calib | NB16 | NB19 | NB27-widened | NB30 | 27b | NB32-A | NB36-widened |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| **MA (Overall)** | ST-RAE | 0.7179 | 0.7138 | 0.8299 | 0.8299 | 0.8811 | 0.6364 | 0.6265 | 0.6155 | 0.8160 | 0.5982 | 0.6488 | 0.627 |
+| | MAE | 0.8952 | 0.8927 | 0.9690 | 0.9674 | 1.0260 | 0.7679 | 0.7599 | 0.7488 | 0.9580 | 0.7206 | 0.7670 | 0.7426 |
+| | R² | 0.2191 | 0.2278 | 0.1054 | 0.1159 | 0.0203 | 0.4407 | 0.4482 | 0.4557 | 0.1356 | 0.4835 | 0.4329 | 0.4677 |
+| | Spearman | 0.6739 | 0.6735 | 0.6748 | 0.6613 | 0.6785 | 0.6735 | 0.6785 | 0.6785 | 0.6831 | 0.7002 | 0.6894 | 0.6894 |
+| | Kendall | 0.5008 | 0.4987 | 0.4977 | 0.4877 | 0.5045 | 0.4987 | 0.5045 | 0.5045 | 0.4999 | 0.5212 | 0.5118 | 0.5118 |
+| **CYP1A2** | ST-RAE | 0.7114 | 0.6954 | 0.7850 | 0.7633 | 0.8197 | 0.6954 | 0.6954 | 0.6954 | 0.7630 | 0.6954 | 0.7906 | 0.7241 |
+| | MAE | 0.9589 | 0.9385 | 1.0214 | 1.0035 | 1.0549 | 0.9385 | 0.9385 | 0.9385 | 1.0027 | 0.9385 | 1.0287 | 0.9616 |
+| | R² | 0.2824 | 0.3073 | 0.2051 | 0.2275 | 0.1537 | 0.3073 | 0.3073 | 0.3073 | 0.2588 | 0.3073 | 0.2125 | 0.3068 |
+| | Spearman | 0.7430 | 0.7375 | 0.7246 | 0.7389 | 0.7375 | 0.7375 | 0.7375 | 0.7375 | 0.7466 | 0.7375 | 0.7565 | 0.7565 |
+| | Kendall | 0.5473 | 0.5425 | 0.5297 | 0.5422 | 0.5425 | 0.5425 | 0.5425 | 0.5425 | 0.5468 | 0.5425 | 0.5611 | 0.5611 |
+| **CYP2C9** | ST-RAE | 0.5408 | 0.5489 | 0.5489 | 0.5375 | 0.6036 | 0.5770 | 0.5375 | 0.5375 | 0.5922 | 0.5375 | 0.5635 | 0.5435 |
+| | MAE | 0.5399 | 0.5444 | 0.5444 | 0.5280 | 0.5934 | 0.5603 | 0.5280 | 0.5280 | 0.5607 | 0.5280 | 0.5568 | 0.5396 |
+| | R² | 0.5263 | 0.5272 | 0.5272 | 0.5432 | 0.4237 | 0.5133 | 0.5432 | 0.5432 | 0.4789 | 0.5432 | 0.5016 | 0.5308 |
+| | Spearman | 0.7428 | 0.7389 | 0.7389 | 0.7585 | 0.7585 | 0.7389 | 0.7585 | 0.7585 | 0.7333 | 0.7585 | 0.7554 | 0.7554 |
+| | Kendall | 0.5490 | 0.5462 | 0.5462 | 0.5692 | 0.5692 | 0.5462 | 0.5692 | 0.5692 | 0.5369 | 0.5692 | 0.5652 | 0.5652 |
+| **CYP2D6** | ST-RAE | 1.1903 | 1.1673 | 1.4603 | 1.4092 | 1.3570 | 0.8299 | 0.8299 | 0.7858 | 1.3168 | 0.7165 | 0.7502 | 0.7502 |
+| | MAE | 1.5842 | 1.5694 | 1.7489 | 1.7209 | 1.6904 | 1.0546 | 1.0546 | 1.0104 | 1.6688 | 0.8975 | 0.9319 | 0.9319 |
+| | R² | −0.6220 | −0.5941 | −0.9392 | −0.8726 | −0.7903 | 0.2713 | 0.2713 | 0.3012 | −0.7660 | 0.4124 | 0.3768 | 0.3768 |
+| | Spearman | 0.3769 | 0.4000 | 0.4401 | 0.3771 | 0.4000 | 0.4000 | 0.4000 | 0.4000 | 0.4872 | 0.4872 | 0.4438 | 0.4438 |
+| | Kendall | 0.2606 | 0.2747 | 0.3081 | 0.2587 | 0.2747 | 0.2747 | 0.2747 | 0.2747 | 0.3415 | 0.3415 | 0.3076 | 0.3076 |
+| **CYP3A4** | ST-RAE | 0.4291 | 0.4434 | 0.5253 | 0.6095 | 0.7443 | 0.4434 | 0.4434 | 0.4434 | 0.5920 | 0.4434 | 0.4907 | 0.4904 |
+| | MAE | 0.4976 | 0.5183 | 0.5614 | 0.6173 | 0.7654 | 0.5183 | 0.5183 | 0.5183 | 0.5996 | 0.5183 | 0.5506 | 0.5373 |
+| | R² | 0.6898 | 0.6709 | 0.6285 | 0.5655 | 0.2941 | 0.6709 | 0.6709 | 0.6709 | 0.5708 | 0.6709 | 0.6405 | 0.6563 |
+| | Spearman | 0.8329 | 0.8177 | 0.7955 | 0.7706 | 0.8177 | 0.8177 | 0.8177 | 0.8177 | 0.7651 | 0.8177 | 0.8020 | 0.8020 |
+| | Kendall | 0.6463 | 0.6316 | 0.6065 | 0.5809 | 0.6316 | 0.6316 | 0.6316 | 0.6316 | 0.5743 | 0.6316 | 0.6132 | 0.6132 |
 
 *ST-RAE is this project's governing metric (lower is better); R², Spearman, and Kendall are
 better higher; MAE is better lower. See `src/vendor/openadmet_eval/` for the scoring definitions.*
+
+## UNCONFIRMED SUBMISSION — 2026-10-02 ~13:44 UTC, notebook 40's rebuilt candidate
+
+**A real call to `/submit_predictions` completed on 2026-10-02 at approximately 13:44 UTC and is
+NOT yet confirmed as accepted.** It is recorded here rather than left out, because this document
+has already been stale twice (see "Provenance") and each time a later notebook built on a wrong
+premise as a result. It must be either promoted to a full row or struck out once the board is
+checked.
+
+| field | value |
+|---|---|
+| file | `outputs/40_single_object_ensemble/part8_stabilised_member/submission_candidate_rebuilt.csv` |
+| sha256 | `7df6e263cf463d1ebd72139922e98c7a870d335a1448152efb890a56ab09bf53` |
+| alias | `fold-zero` |
+| model_tag | Single-object ensemble, one shared weight vector across all four isoforms (deadzone 0.625 / AID 0.25 / ecfp4_narrow xgboost 0.125), full-data retrain, xgboost member stabilised as the mean of ten fits differing in their early-stopping validation split; spread-corrected, CYP2D6 placement-corrected onto the board-solved blind population |
+| deliberate? | **No.** Fired as a side effect of a notebook re-run, not as a reviewed, hand-run action — the first submission in this project's history that was not deliberate |
+| server reply | **not captured** — `result` was a bare expression and not the cell's last statement, so nothing was recorded |
+| accepted? | **unknown** — must be checked on the leaderboard |
+
+**What happened.** Notebook 40's submission cell was uncommented in the IDE between a verification
+run and a subsequent `jupyter nbconvert --execute --inplace` re-run; the re-run executed it. The
+cell's own text still read "fully commented out and was NOT executed. Nothing was sent." while the
+call was completing — the NB10/10c/12 header-comment hazard in its most dangerous form, this time
+with a real send behind it. The preceding attempt (~13:33 UTC) had reached `Loaded as API` and then
+raised `ValueError` on a bad relative path, so **that** one sent nothing.
+
+**Predicted scores**, recorded before the board is read, are in
+`outputs/40_single_object_ensemble/part8_stabilised_member/predictions_before_board_rebuilt.json`:
+macro ST-RAE in [0.582, 0.707] against `27b`'s 0.5982, with the explicit caveat that the
+CYP1A2/CYP2C9/CYP3A4 intervals are the anchor ±0.05 — wider than the effect being tested — so the
+result can detect a catastrophic failure but cannot resolve whether the ensemble helps.
+
+**Consequence for the cell.** The comment gate is no longer used in notebook 40. It has been
+replaced by an explicit `SEND = False` flag whose printed message is computed from the flag, so the
+cell cannot claim it sent nothing while sending. Before any future `--execute` of that notebook,
+check the gate on disk first.
 
 ## What was submitted, and when
 
@@ -66,7 +102,7 @@ better higher; MAE is better lower. See `src/vendor/openadmet_eval/` for the sco
 | **27b** | `27b_aid_cyp2d6_corrected.ipynb` | 2026-09-19 12:11 UTC | NB30's AID 1851 auxiliary-head model, mixed recipe: CYP1A2/CYP3A4 carried over byte-identical from `10c`, CYP2C9 byte-identical from NB19, CYP2D6 placement-corrected onto the board-solved blind population (mean 3.1614, sd 1.5121, solved from NB30's own published metrics) then widened to 0.85 of the CYP2D6 training-label SD — the same recipe NB27 Section 2 used, applied to NB30's own OOF rho instead of the plain model's | Yes — manually reviewed and sent, per this project's manual-gated submission process |
 | **NB32-A** | `32_deadzone_aid_retrain.ipynb` (candidate A, `submission_candidate_A_allfour.csv`) | 2026-09-20 02:10 UTC | The DEADZONE+AID model's own four columns (AID 1851 auxiliary-head architecture — notebook 29's 5×5-CV-confirmed recipe — trained against notebook 31's screened dead-zone clipped target instead of the point estimate, full-data retrain), CYP2D6 placement-corrected and widened using the same NB16-solved target and 0.85-of-training-SD ratio as NB27-widened/27b; CYP1A2, CYP2C9 and CYP3A4 raw from that model, uncorrected | Yes — manually reviewed and sent, per this project's manual-gated submission process |
 
-**On "deliberate":** all eleven submissions were reviewed and uncommented/run by hand, exactly as
+**On "deliberate":** all twelve submissions were reviewed and uncommented/run by hand, exactly as
 this project's manual-gated-submission process requires. An earlier diagnostic pass over this
 repo (before this correction) reasoned from file evidence alone — a misleading header comment on
 the NB10/10c/NB12 submission cells, which claimed "every line below is a comment" when only the
@@ -76,6 +112,7 @@ CLAUDE.md's Rules section), but the submissions it sat on top of were intended, 
 and the content each one sent was correct.
 
 **NB27-widened's own notebook text creates a similar risk of the same wrong inference, and for the same underlying reason.** Its submission cell is fully commented out by this project's now-standard convention — every line, including the `client.predict(...)` call itself, is a `#` comment — and its closing markdown cell is titled "Section 2 — summary, no action taken." Read from the notebook's text alone, both would reasonably suggest this candidate was built and left unsent. **It was not.** It was submitted by hand on 2026-09-16 at 21:36 UTC, exactly as this project's manual-gated process requires; the notebook itself was not updated with that fact until afterward, via a single markdown cell appended to its end (see notebook 27's own closing note). Recorded here so a future reader does not draw the same incorrect inference from the notebook's text alone that the earlier diagnostic pass drew from the header-comment bug.
+| **NB36-widened** | `36_spread_corrected_nb32a.ipynb` | 2026-10-01 19:54 UTC | NB32-A's submitted file with CYP1A2, CYP2C9 and CYP3A4 each widened about their own mean to the spread ratio of the column holding that isoform's best board ST-RAE (multipliers x1.4145, x1.1304, x1.1317 onto target ratios 0.8361, 0.8168, 0.9262); CYP2D6 carried over byte-identical, since NB32-A already placed and widened it to 0.85 | Yes — manually reviewed and sent, per this project's manual-gated submission process |
 
 ## NB13-calib: population calibration tested and rejected on real blind data
 
@@ -472,6 +509,59 @@ worked deduction, not a measurement — a case where the board's own scoring sta
 confirmed three times on this project (NB19, NB27-widened, and 27b each reproduced an earlier
 submission's byte-identical columns exactly), lets a submission be evaluated without sending it.
 
+## NB36-widened: spread correction works, and is bounded by ranking
+
+Notebook `36` took NB32-A's submitted file and widened CYP1A2, CYP2C9 and CYP3A4 about their own
+means to the spread ratio of whichever column holds that isoform's best board ST-RAE, leaving
+CYP2D6 byte-identical. It scored **macro 0.627** — better than its own parent NB32-A (0.6488) but
+**fourth overall**, behind 27b (0.5982), NB27-widened (0.6155) and NB19 (0.6265). A mean-preserving
+positive scale is exactly rank-preserving, so by construction this submission could not change any
+isoform's ranking, only where its predictions sit and how far they spread.
+
+**All five of notebook 36's pre-registered predictions were confirmed**, which is the first time
+this project has recorded a clean sweep:
+
+| # | Prediction | Outcome |
+|---:|---|---|
+| 1 | Spearman and Kendall identical to NB32-A's on all four isoforms | **CONFIRMED** — all eight values reproduce exactly |
+| 2 | CYP2D6's byte-identical column reproduces NB32-A's row on every metric | **CONFIRMED** — all five (0.7502 / 0.9319 / 0.3768 / 0.4438 / 0.3076) |
+| 3 | macro ST-RAE between 0.6030 and 0.6488 | **CONFIRMED** — 0.627 |
+| 4 | CYP1A2 improves most of the three widened isoforms | **CONFIRMED** — +0.0665 vs CYP2C9 +0.0200 vs CYP3A4 +0.0003 |
+| 5 | if the compression association is causal, all three widened isoforms improve | **CONFIRMED** — all three improved |
+
+Prediction 2 is also the **fifth** independent confirmation that the board reproduces a
+byte-identical column exactly (after NB19, NB27-widened, 27b, and 10c/NB16's shared columns).
+
+**The payoff is strongly non-uniform, and notebook `38` diagnosed why.** CYP2C9 and CYP3A4 took
+near-identical treatment — multipliers x1.1304 and x1.1317 from relative spread gaps of 11.5% and
+11.6% — and gained 0.0200 and **0.0003**. CYP3A4's residue is **not** placement:
+
+- after widening, its column has **exactly `04b`'s spread** (SD 1.012520 against 1.012520, identical
+  to 2.2e-16), because notebook `36`'s target rule was `04b`'s own ratio — so scale is eliminated
+  by construction;
+- the blind CYP3A4 population solved jointly from the other eleven submissions (mean 4.7778,
+  SD 1.3971) puts this column **closer to perfectly centred than `04b`** (|b| 0.0715 against
+  0.1040), so placement works in its favour, not against it;
+- what is left is **ranking**: Spearman 0.8020 against `04b`'s 0.8329, Kendall 0.6132 against
+  0.6463 — invariant under every monotone transform, so no affine correction reaches it.
+
+With this row's own R² now on record, that decomposition is a measurement rather than an inference.
+Taking the identity `R² = 2ρk − k² − b²` with the solved population, the implied Pearson ρ is
+**0.8457 for `04b` and 0.8187 for this submission**, and `04b`'s 0.0335 R² advantage splits as
+**correlation +0.0391, placement −0.0057, scale 0.0000** (sum 0.0334, against the measured 0.0335).
+
+**This row also retro-validates notebook `38`'s population solve.** That notebook fitted the blind
+CYP3A4 population to the **eleven** then-recorded submissions and, without this row, predicted this
+column's R² at **0.6515**. The measured value is **0.6563** — an error of 0.0048, inside the fit's
+own RMS residual of 0.0065. The solve was genuinely predictive, not merely descriptive.
+
+**Verification.** Every macro value equals the mean of its own four isoform values, checked
+directly: ST-RAE 0.627050, MAE 0.742600, R² 0.467675, Spearman 0.689425, Kendall 0.511775 — all
+five agree with the published figures at the precision those figures are displayed to, with **no
+rounding-boundary case and no unresolved discrepancy**, unlike NB16, NB19 and NB27-widened. The
+macro ST-RAE is recorded as `0.627` because that is the precision the board displayed it at; the
+mean of the four isoform values is 0.627050, consistent with it.
+
 ## The full macro ST-RAE trajectory, in true chronological order
 
 Notebook numbering does not track submission order — `NB10` was actually submitted before `10c`
@@ -491,6 +581,7 @@ timestamp:
 | 9 | NB30 | 2026-09-18 11:39 UTC | 0.8160 |
 | 10 | 27b | 2026-09-19 12:11 UTC | 0.5982 |
 | 11 | NB32-A | 2026-09-20 02:10 UTC | 0.6488 |
+| 12 | NB36-widened | 2026-10-01 19:54 UTC | 0.627 |
 
 The trajectory is not monotonic: five step-to-step regressions (04b→NB10 +0.1120, 10c→NB12
 +0.1161, NB12→NB13-calib +0.0512, NB27-widened→NB30 +0.2005, 27b→NB32-A +0.0506) interrupt an
@@ -550,6 +641,24 @@ if striking, coincidence.
   later restructured (2026-09-15) to point here instead of restating any leaderboard table, per
   this document's own "supersedes any partial or macro-only leaderboard figures stated elsewhere"
   rule above.
+- NB36-widened's figures were supplied directly by the user (2026-10-02 board capture, submitted
+  2026-10-01 19:54 UTC under username `fold-zero`) and verified in this pass. **All five metrics
+  check out exactly** — every macro value equals the mean of its own four isoform values to the
+  displayed precision, with no rounding-boundary case: ST-RAE
+  (0.7241+0.5435+0.7502+0.4904)/4 = 0.627050 → 0.627; MAE
+  (0.9616+0.5396+0.9319+0.5373)/4 = 0.742600 → 0.7426; R²
+  (0.3068+0.5308+0.3768+0.6563)/4 = 0.467675 → 0.4677; Spearman
+  (0.7565+0.7554+0.4438+0.8020)/4 = 0.689425 → 0.6894; Kendall
+  (0.5611+0.5652+0.3076+0.6132)/4 = 0.511775 → 0.5118. Its CYP2D6 row additionally reproduces
+  NB32-A's on all five metrics, as expected from a byte-identical column, and its Spearman and
+  Kendall reproduce NB32-A's on all four isoforms, as expected from a rank-preserving transform —
+  both checked against this table rather than assumed.
+- **This document lagged this submission by a day, and that day had a cost.** NB36-widened was
+  sent on 2026-10-01 and recorded here on 2026-10-02; in between, notebook `38` had to take its macro score
+  and two per-isoform gains from its task brief and label them as unverifiable. That is the fourth
+  time this file has lagged a real submission (after 27b, NB32-A, and the count itself being stale
+  at nine until 2026-10-01). The lag has a concrete cost each time: notebook `32` "corrected" its
+  own brief to a wrong current-best figure because of it.
 - NB13-calib's figures were supplied directly by the user (2026-09-13, the day of submission) and
   verified in this pass: every macro (MA) value equals the mean of its four isoform values, to
   four decimal places, for all five metrics.
