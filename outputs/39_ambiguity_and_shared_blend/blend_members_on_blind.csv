@@ -1,0 +1,5 @@
+isoform,n_members,n_with_blind_preds,weight_available,weight_missing,members_kept,members_dropped
+CYP1A2,3,2,0.5,0.5,aid;ecfp4_narrow__rf,deadzone
+CYP2C9,3,2,0.375,0.625,aid;ecfp4_narrow__rf,deadzone
+CYP2D6,1,0,0.0,1.0,(none),deadzone
+CYP3A4,3,2,0.4,0.6,aid;ecfp4_narrow__lightgbm,deadzone

@@ -1,0 +1,5 @@
+isoform,n_members,A_oof_mean,A_oof_sd,A_blind,ratio_blind_over_oof,note
+CYP1A2,4,0.06273773339285563,0.004117645633882648,0.10422253073481381,1.6612415702394876,chemprop_chemeleoninit+ecfp4_narrow__rf+chemeleon__rf+ecfp4_narrow__lightgbm
+CYP2C9,1,,,,,"no ensemble adopted -- singleton winner, ambiguity undefined"
+CYP2D6,2,0.031640015310719666,0.005382352812143613,0.035033722433868805,1.1072599709520161,chemeleon__rf+chemprop_chemeleoninit
+CYP3A4,2,0.060599709722527886,0.0022059692844512914,0.10848805770443443,1.7902405506755108,chemprop_chemeleoninit+ecfp4_narrow__lightgbm

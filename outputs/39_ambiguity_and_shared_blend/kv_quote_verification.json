@@ -1,0 +1,18 @@
+{
+  "checked_at_utc": "2026-10-02T11:15:54.019857+00:00",
+  "quotes": {
+    "ambiguity_defined_on_unlabeled_data": "The ambiguity is defined as the variation of the output of ensemble members averaged over unlabeled data, so it quantifies the disagreement among the networks.",
+    "only_useful_if_they_disagree": "A combination of the output of several networks (or other predictors) is only useful if they disagree on some inputs.",
+    "variance_about_the_weighted_mean": "It is simply the variance of the weighted ensemble around the weighed mean, and it measures the disagreement among the networks on input x.",
+    "constraint_on_the_sum_is_crucial": "constrain the weights to be positive and sum to one. The constraint on the sum is crucial for some of the following results."
+  },
+  "citation": "Krogh & Vedelsby, NIPS 1994, Neural Network Ensembles, Cross Validation, and Active Learning",
+  "sha256": "88de32e9c1d3384970036baf59c7fbcdc8918a9f6a86fbf42bcb9500d83cb372",
+  "quote_found": {
+    "ambiguity_defined_on_unlabeled_data": true,
+    "only_useful_if_they_disagree": true,
+    "variance_about_the_weighted_mean": true,
+    "constraint_on_the_sum_is_crucial": true
+  },
+  "status": "VERIFIED"
+}

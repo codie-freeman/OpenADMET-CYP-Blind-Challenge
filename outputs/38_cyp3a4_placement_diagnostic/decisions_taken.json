@@ -1,0 +1,44 @@
+[
+  {
+    "decision": "Treated the brief's three live-board figures as unverifiable inputs, labelled `brief` wherever used",
+    "reason": "docs/leaderboard_submissions.md records eleven submissions and does not contain notebook 36's -- the document is stale for the third time in this project's history. The brief's macro 0.627 and the CYP2C9/CYP3A4 gains of 0.0200/0.0003 therefore exist only on the live board. Every figure derivable FROM them was checked for consistency with saved files and all five checks passed exactly (NB32-A's CYP3A4 0.4907 minus the 0.0003 gain gives 0.4904, and 0.4904 minus 04b's 0.4291 gives the brief's own stated 0.0613), which is strong circumstantial support but is not verification. The twelfth row's MAE and R2 are not derivable at all and are left as NaN rather than invented.",
+    "alternatives": "Refuse to proceed until the document is updated (the analysis does not actually depend on the twelfth row -- the population solve uses the eleven on-record submissions and the twelfth is then a held-out point); or silently adopt the brief's numbers as if verified.",
+    "authority": "the brief's own instruction that board figures be verified against saved files, applied honestly where that is impossible",
+    "at_utc": "2026-10-02T10:43:20.171188+00:00"
+  },
+  {
+    "decision": "Converted Spearman to Pearson via the bivariate-normal relation rho = 2*sin(pi*rho_S/6) rather than substituting Spearman directly",
+    "reason": "Notebook 16 substituted Spearman for Pearson and found CYP3A4 ALGEBRAICALLY INFEASIBLE -- rho_S^2 < published R2 for 04b and 10c, impossible for a real Pearson-based R2. That is reproduced here on 5 of 11 rows. The bivariate-normal conversion is the standard relation between the two coefficients, removes the infeasibility on every row, and fits the eleven published R2 values better (RMS residual 0.0065 against 0.0100). It assumes approximate bivariate normality of (prediction, truth), which is an assumption and is flagged in Part 3 as the single largest soft spot in the decomposition.",
+    "alternatives": "Keep notebook 16's raw substitution (leaves 5 rows algebraically impossible and fits worse); or drop the R2 route entirely and reason only from ST-RAE (loses the scale/placement/correlation split the brief asks for).",
+    "authority": "autonomy rule: where a reused procedure is demonstrably broken on this isoform, fix it explicitly and record the fix",
+    "at_utc": "2026-10-02T10:43:20.171567+00:00"
+  },
+  {
+    "decision": "Solved the blind CYP3A4 population jointly across all eleven on-record submissions by least squares, instead of notebook 16's per-submission R2+MAE solve",
+    "reason": "Notebook 16's own method returned CYP3A4 with only one usable solve of four -- 04b and 10c infeasible, NB10 sign-ambiguous -- which is precisely the isoform in question here. The joint fit uses only R2 and Spearman (no MAE, so no Normality assumption on the residual) and is overdetermined at eleven equations in two unknowns, so its residuals report whether the model holds rather than being assumed. The sign ambiguity notebook 16 hit does not arise because the eleven submissions span a wide range of prediction means, which pins the quadratic in b.",
+    "alternatives": "Reuse notebook 16's solve_population() verbatim (returns an unusable answer for this isoform, as 16 itself recorded).",
+    "authority": "autonomy rule: prefer the method that the prior notebook's own documented failure mode rules out being reused",
+    "at_utc": "2026-10-02T10:43:20.171696+00:00"
+  },
+  {
+    "decision": "Used notebook 37's `aid`, `deadzone` and `plain` arms as OOF proxies, reporting all three rather than picking one",
+    "reason": "The submitted model is the AID auxiliary-head architecture trained against the dead-zone clipped target. Notebook 37's design has an arm for each ingredient but none combining both -- that combination exists only as notebook 32's full-data retrain, which has no out-of-fold predictions by construction. Presenting any single arm as 'the model's own OOF' would overstate the correspondence, so all three are reported and the gap is stated in Part 4.",
+    "alternatives": "Pick the nearest single arm and call it the model's own (overstates correspondence); or skip Part 4 (discards the cross-check the brief asks for).",
+    "authority": "autonomy rule: state the approximation rather than hide it behind a single number",
+    "at_utc": "2026-10-02T10:43:20.171801+00:00"
+  },
+  {
+    "decision": "Identified outputs/submissions/activity_submission_v1.csv as 04b's sent file by matching its recomputed spread ratio, not by filename",
+    "reason": "04b predates this project's per-notebook output convention and its submission file is not under an outputs/04b*/ directory. Its CYP3A4 spread ratio recomputed from that file (0.926182) matches notebook 36's own recorded value for 04b to under 1e-9, as do all eleven submissions' ratios, which identifies the file positively rather than by assumption.",
+    "alternatives": "Assume the filename, or exclude 04b (it is the comparison the whole brief is about).",
+    "authority": "the brief's instruction to verify every figure against the submitted CSV",
+    "at_utc": "2026-10-02T10:43:20.171947+00:00"
+  },
+  {
+    "decision": "Answered Part 6 with a falsifiable prediction that placement correction will NOT help, rather than omitting it",
+    "reason": "The brief asks for a predicted score 'if the evidence points at a placement offset'. It does not -- placement already favours the submitted column. Omitting the step would leave the conclusion untestable, so the same falsifiable form is used for the negative: a stated interval the corrected column is predicted to land in, and the conditions that would falsify it. No column is built, per the brief's constraint.",
+    "alternatives": "Omit Part 6 entirely (leaves a clean negative result with no way to be wrong about it).",
+    "authority": "the brief's own stated purpose for Part 6 -- making a future submission a test rather than a guess",
+    "at_utc": "2026-10-02T10:43:20.172090+00:00"
+  }
+]

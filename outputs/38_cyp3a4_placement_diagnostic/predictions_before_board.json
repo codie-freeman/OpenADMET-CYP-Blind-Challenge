@@ -1,0 +1,20 @@
+{
+  "recorded_utc": "2026-10-02T10:43:19.358442+00:00",
+  "subject": "a CYP3A4 column identical to NB36-widened except for a uniform mean offset",
+  "claim_1": "Spearman and Kendall must be EXACTLY 0.8020 and 0.6132 -- a uniform offset is rank-preserving. If they move, the column was not a pure offset.",
+  "claim_2": "CYP3A4 ST-RAE will land in [0.4804, 0.5004], i.e. within +/-0.010 of the uncorrected 0.4904, and will NOT approach 04b's 0.4291.",
+  "claim_3": "the residual gap to 04b will remain at least 0.045 of the present 0.0613, because 117% of 04b's modelled R2 advantage is correlation, which no affine change can move.",
+  "falsified_if": "CYP3A4 ST-RAE improves by more than 0.010, or lands within 0.02 of 0.4291, or Spearman/Kendall change.",
+  "basis": {
+    "board_implied_offset_pIC50": -0.0999,
+    "placement_term_b_squared": 0.0051,
+    "oof_best_offset_gain_strae": 0.0076,
+    "oof_delta_at_board_offset": 0.0301
+  },
+  "caveats": [
+    "board figures are half-set measurements",
+    "the twelfth submission's own MAE/R2 are not on record; its ST-RAE is taken from the brief",
+    "notebook 21: OOF optima need not transfer; the OOF and board offsets here disagree in sign",
+    "Pearson-from-Spearman assumes approximate bivariate normality"
+  ]
+}

@@ -1,0 +1,60 @@
+[
+  {
+    "decision": "Excluded `deadzone`, `mae_only` and `single` from the blind-side ambiguity and reported what that leaves, rather than substituting notebook 32's dead-zone+AID model for `deadzone`",
+    "reason": "The brief requires a member with no full-data blind predictions to be excluded and named. `deadzone` in notebook 37's design is the dead-zone target on the PLAIN architecture; the only full-data model carrying a dead-zone target is notebook 32's, which combines it with the AID ARCHITECTURE and is therefore a different model. Substituting it would silently answer a different question. The consequence is stated rather than worked around: `deadzone` holds 0.50-1.00 of the weight on every isoform, so Track 1 covers at most two of three members, and CYP2D6 -- whose blend is `deadzone` alone -- has no computable blind ambiguity at all.",
+    "alternatives": "Substitute notebook 32's dead-zone+AID predictions (answers a different question under the same name); or report Track 1 alone and call the question unanswerable (discards an answer that the pool in A.3 can actually give).",
+    "authority": "the brief's own exclusion rule, applied literally",
+    "at_utc": "2026-10-02T11:16:01.161748+00:00"
+  },
+  {
+    "decision": "Added Track 2 -- the eleven-config pool -- which the brief did not ask for",
+    "reason": "Track 1 as specified cannot answer the question it was set, because its dominant member has no blind predictions. Every config in notebook 05's eleven-config pool has BOTH out-of-fold and full-data blind predictions, with nothing missing and nothing substituted, so the A_oof-against-A_blind comparison can be made honestly there. It is also the pool notebook 24 characterised and the one notebook 08 selected from, so the brief's own step 5 follows from it directly rather than needing separate scaffolding.",
+    "alternatives": "Report only the crippled Track 1 and leave the question open.",
+    "authority": "autonomy rule: when the specified route cannot answer the question, find one that can and say why",
+    "at_utc": "2026-10-02T11:16:01.161965+00:00"
+  },
+  {
+    "decision": "Used the RANDOM-partition out-of-fold predictions for Track 2 and A.4, and the cluster-disjoint ones for Track 1 and all of Part B",
+    "reason": "Track 2's blind counterparts (outputs/12_caruana_retrain_predict/blind_predictions/) come from models selected and fitted on the random partition, and notebook 08 chose its ensembles on exactly that partition -- so the random-partition OOF is the like-for-like side for both. Part B is a re-run of notebook 37's own selection and must sit on notebook 37's cluster-disjoint folds to be comparable to it, which is asserted by reproducing 37's published weights and nested figures exactly.",
+    "alternatives": "Force one partition throughout (would either break comparability with notebook 37 or compare notebook 08's ensembles against folds it never saw).",
+    "authority": "autonomy rule: match each comparison to the data it was actually made on, and state the split",
+    "at_utc": "2026-10-02T11:16:01.162065+00:00"
+  },
+  {
+    "decision": "Chose the shared member set by FORWARD selection rather than exhaustively over all 2,048 subsets",
+    "reason": "The nested protocol re-selects the set inside each of the 25 folds, so an exhaustive search would be 25 x 2,048 x 4 isoform weight-fits. Forward selection is also the same mechanic notebook 37's own greedy uses, which keeps the constrained and unconstrained searches of a kind. It is a heuristic and can miss the global optimum, so the cost figures in Part B are upper bounds on the true cost of the constraint, not exact -- stated here rather than implied.",
+    "alternatives": "Exhaustive subset search (tractable in principle but changes the search mechanic between the two arms being compared, confounding the cost being measured).",
+    "authority": "autonomy rule: record the heuristic and the direction of its error",
+    "at_utc": "2026-10-02T11:16:01.162154+00:00"
+  },
+  {
+    "decision": "Scored the macro objective as the unweighted mean of the four isoform ST-RAEs",
+    "reason": "That is how the leaderboard's own MA row is computed -- verified in docs/leaderboard_submissions.md's provenance section, where every published macro equals the mean of its four isoform values across all twelve submissions. Using anything else would optimise a target the board does not score.",
+    "alternatives": "Weight isoforms by label count or by headroom (neither is what the board does).",
+    "authority": "the leaderboard document's own verified convention",
+    "at_utc": "2026-10-02T11:16:01.162238+00:00"
+  },
+  {
+    "decision": "Reported A per repeat on the out-of-fold side, as mean +/- SD over the five repeats, against a single blind value",
+    "reason": "The blind set yields one ambiguity value; the out-of-fold side yields five independent ones, one per repeat. Reporting the spread gives the comparison a noise band, so 'collapse' can be judged against repeat-to-repeat variation rather than against a point estimate. The asymmetry that remains -- fold models versus full-data models -- cannot be removed and is stated in A.2 instead, including the direction of its expected effect.",
+    "alternatives": "Pool all five repeats into one A (loses the noise band and double-counts each compound five times).",
+    "authority": "autonomy rule: give a comparison its uncertainty where the data allows",
+    "at_utc": "2026-10-02T11:16:01.162363+00:00"
+  },
+  {
+    "decision": "Appended Part D by executing its cells in isolation and splicing them in, rather than re-running notebook 39",
+    "reason": "The brief requires that nothing above Part D be re-executed. Notebook 39 is deterministic and would have reproduced itself, but re-running it would still have rewritten every output cell above, which is exactly what was ruled out. Part D's cells were therefore written to be self-contained -- they re-import, re-read this notebook's own saved CSVs, and re-verify both new Krogh & Vedelsby quotations against the same sha256-pinned PDF -- executed as a standalone notebook, and spliced on with their outputs. Parts A-C's outputs are byte-for-byte as originally produced.",
+    "alternatives": "Re-run the whole notebook (contradicts the brief); or append markdown only (leaves every Part D figure unverified at source).",
+    "authority": "the brief's own instruction not to re-execute anything above",
+    "at_utc": "2026-10-02T11:35:37.704872+00:00",
+    "part": "D"
+  },
+  {
+    "decision": "Recorded D.1 as closing the collapse hypothesis rather than as a caveat on Part A's result",
+    "reason": "Part A's headline -- ambiguity rising 1.28-1.50x on the blind set -- reads as support for blending unless the one-directionality is stated as a finding in its own right. Notebook 08's ensembles make it empirical rather than theoretical: ratios 1.66/1.11/1.79, not collapsed, and NB10 still lost 0.116 macro. Krogh & Vedelsby's own lower-bound relation (A <= Ebar, quoted verbatim) supplies the mechanism. Filing this as a caveat would leave the ratios citable as transfer evidence, which they are not.",
+    "alternatives": "Note it as a limitation inside Part A (weaker, and leaves the misreading available).",
+    "authority": "the brief's item 1, which asks for exactly this framing",
+    "at_utc": "2026-10-02T11:35:37.704875+00:00",
+    "part": "D"
+  }
+]

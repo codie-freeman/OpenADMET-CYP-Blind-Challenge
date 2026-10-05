@@ -1,0 +1,12 @@
+arm,blind_predictions,source
+plain,True,notebook 12's full-data retrain of chemprop_chemeleoninit
+ecfp4_narrow__rf,True,notebook 12
+ecfp4_narrow__xgboost,True,notebook 12
+ecfp4_narrow__lightgbm,True,notebook 12
+mordred_pca__rf,True,notebook 12
+mordred_pca__xgboost,True,notebook 12
+mordred_pca__lightgbm,True,notebook 12
+single,False,NONE -- never retrained full-data on its own
+aid,True,"NB30 -- the AID auxiliary-head model's full-data retrain, raw and uncorrected"
+deadzone,False,NONE -- never retrained full-data on its own
+mae_only,False,NONE -- never retrained full-data on its own
