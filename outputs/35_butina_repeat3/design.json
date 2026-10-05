@@ -1,0 +1,10 @@
+{
+  "target_repeat": 2,
+  "mae_only_repeats": [
+    0,
+    1,
+    2
+  ],
+  "n_folds": 5,
+  "started_at_utc": "2026-09-30T22:01:34.619317+00:00"
+}

@@ -1,0 +1,23 @@
+[
+  {
+    "decision": "Ran a third cluster-disjoint repeat after notebook 34's timing gate had settled on two",
+    "reason": "Notebook 34's gate fired mechanically on AID's fold 0 (46.66 min), which proved that arm's slowest of ten against an eventual 34.82 min mean, projecting 31.69 h against a 30 h threshold -- 5.6% over. The realised per-fold means give 26.77 h, which the same rule answers with three repeats. Adding a repeat is NOT re-deciding the gate: the fold assignment for repeat 2 was frozen in cv_folds_butina_5x5.csv before any result was seen (sha256 asserted identical here), and the extra folds are added UNIFORMLY to every arm, so no arm can be advantaged and there is no outcome being selected for. Re-running the gate itself on realised costs would be choosing a rule's input after seeing its output, which is the selection behaviour CLAUDE.md warns against and is deliberately not done. To make the distinction checkable rather than asserted, every analysis table reports the 10-fold and 15-fold results side by side, plus a dedicated figure and a verdict-change count.",
+    "alternatives": "Leave the design at 2 repeats (loses statistical power that was already paid for and leaves the PLAIN re-seed floor resting on a single repeat-pair); or re-run the gate on realised costs and let it authorise the third repeat (indistinguishable in result, but is the selection behaviour being avoided).",
+    "authority": "explicit instruction in this notebook's task brief, with the reasoning recorded here as it requires",
+    "at_utc": "2026-10-01T05:51:17.226505+00:00"
+  },
+  {
+    "decision": "Reused notebook 34's own assembled wide OOF tables for repeats 0/1 rather than re-deriving them from its per-run files",
+    "reason": "outputs/34_butina_5x5/oof_long/oof_long_{iso}.csv is tracked in git and is what notebook 34 actually reported from. Re-deriving the same table from its 100 per-run files could only reproduce it or silently differ; reusing it keeps this side of the 15-fold join byte-identical to 34's published result. Repeat 2 and the MAE_ONLY columns are joined onto it, and the join is asserted not to change 34's row count.",
+    "alternatives": "Re-derive everything from per-run files (more code, no benefit, and a new way to disagree with 34).",
+    "authority": "autonomy rule: take the most conservative option and record it",
+    "at_utc": "2026-10-01T05:51:17.226838+00:00"
+  },
+  {
+    "decision": "Set the wall-clock guard to 12.0 h measured from this campaign's own start",
+    "reason": "Specified in the task brief. The guard measures from this notebook's own campaign.json, never notebook 34's -- 34's timestamp is from 26 Sep and inheriting it would put every unit past the deadline and skip the entire run. Ordering puts repeat 2's main design before MAE_ONLY so that, if the guard bites, it costs the decomposition arm rather than leaving the third repeat half-finished.",
+    "alternatives": "No guard (an unlucky slowdown could leave the analysis sections never reached).",
+    "authority": "task brief, plus the campaign-freshness constraint it states",
+    "at_utc": "2026-10-01T05:51:17.227047+00:00"
+  }
+]

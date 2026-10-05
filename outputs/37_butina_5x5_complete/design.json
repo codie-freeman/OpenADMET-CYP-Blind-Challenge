@@ -1,0 +1,36 @@
+{
+  "target_repeats": [
+    3,
+    4
+  ],
+  "prior_repeats": [
+    0,
+    1,
+    2
+  ],
+  "n_folds": 5,
+  "arms": [
+    "plain",
+    "ecfp4_narrow__rf",
+    "ecfp4_narrow__xgboost",
+    "ecfp4_narrow__lightgbm",
+    "mordred_pca__rf",
+    "mordred_pca__xgboost",
+    "mordred_pca__lightgbm",
+    "single",
+    "aid",
+    "deadzone",
+    "mae_only"
+  ],
+  "n_new_units": 110,
+  "projected_hours": 12.200752447719928,
+  "per_fold_min": {
+    "aid": 36.902233169714606,
+    "deadzone": 8.786201780637105,
+    "plain": 7.004109707752864,
+    "single": 10.924817787885665,
+    "trees": 1.0666275146802267,
+    "mae_only": 8.520524725649091
+  },
+  "started_at_utc": "2026-10-01T20:26:36.560158+00:00"
+}

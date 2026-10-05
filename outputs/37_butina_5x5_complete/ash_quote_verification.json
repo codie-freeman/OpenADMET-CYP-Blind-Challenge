@@ -1,0 +1,26 @@
+{
+  "checked_at_utc": "2026-10-02T08:38:41.690341+00:00",
+  "sha256_at_build": "7c2caa48c19daff58a768f7893cc4521e1f29fc7f3d19d44d57a0cb3ea6e4d2a",
+  "quotes": {
+    "guidelines_1_5x5_and_size_range": "we recommend using a 5 x 5 repeated cross-validation procedure to sample the performance distribution. This procedure suits typical data set sizes used in small molecule property modeling (e.g., 500-100,000), and generates 25 sufficiently independent samples, meeting the sample size requirements for statistical testing.",
+    "25_samples_meet_the_minimum": "The 25 samples are sufficiently independent to meet the minimum sample size required by the statistical testing procedure",
+    "at_least_25_is_the_minimum": "If different fold sizes are used, we recommend ensuring at least 25 samples are collected in total, as this is the minimum sample size required for our recommended testing procedure."
+  },
+  "doi": "10.1021/acs.jcim.5c01609",
+  "journal_ref": "J. Chem. Inf. Model. 2025, 65, 9398-9411",
+  "pdf_path": "/Users/codiefreeman/Zotero/storage/E2WF2WWG/Ash et al. - 2025 - Practically Significant Method Comparison Protocols for Machine Learning in Small Molecule Drug Disc.pdf",
+  "sha256_found": "7c2caa48c19daff58a768f7893cc4521e1f29fc7f3d19d44d57a0cb3ea6e4d2a",
+  "sha256_matches_build": true,
+  "quote_found": {
+    "guidelines_1_5x5_and_size_range": true,
+    "25_samples_meet_the_minimum": true,
+    "at_least_25_is_the_minimum": true
+  },
+  "status": "VERIFIED",
+  "samples": {
+    "notebook 34": 10,
+    "notebook 35": 15,
+    "this notebook": 25
+  },
+  "curated_n": 4905
+}

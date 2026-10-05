@@ -1,0 +1,5 @@
+isoform,n_members_15f,weights_15f,nested_15f,n_members_25f,weights_25f,nested_25f,members_15f,members_25f,member_set_unchanged,collapsed_15f,collapsed_25f,nested_per_fold_same_members_25f
+CYP1A2,3,"{""deadzone"": 0.5, ""aid"": 0.3333, ""ecfp4_narrow__xgboost"": 0.1667}",0.7378805937631374,3,"{""deadzone"": 0.5, ""aid"": 0.3333, ""ecfp4_narrow__rf"": 0.1667}",0.7398526069894282,aid;deadzone;ecfp4_narrow__xgboost,aid;deadzone;ecfp4_narrow__rf,False,False,False,25/25
+CYP2C9,2,"{""deadzone"": 0.6667, ""aid"": 0.3333}",0.5484597016805018,3,"{""deadzone"": 0.625, ""aid"": 0.25, ""ecfp4_narrow__rf"": 0.125}",0.5438482254445152,aid;deadzone,aid;deadzone;ecfp4_narrow__rf,False,False,False,24/25
+CYP2D6,1,"{""deadzone"": 1.0}",0.8740064505320005,1,"{""deadzone"": 1.0}",0.8717024096499756,deadzone,deadzone,True,True,True,25/25
+CYP3A4,3,"{""deadzone"": 0.6, ""aid"": 0.2, ""ecfp4_narrow__lightgbm"": 0.2}",0.4594449240459818,3,"{""deadzone"": 0.6, ""aid"": 0.2, ""ecfp4_narrow__lightgbm"": 0.2}",0.4561203558734694,aid;deadzone;ecfp4_narrow__lightgbm,aid;deadzone;ecfp4_narrow__lightgbm,True,False,False,25/25

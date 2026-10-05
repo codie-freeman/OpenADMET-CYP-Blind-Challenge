@@ -1,0 +1,44 @@
+[
+  {
+    "decision": "Ran repeats 3 and 4, completing the 5x5, after notebook 34's timing gate had settled on two repeats and notebook 35 had added a third",
+    "reason": "Ash et al. (2025) state a minimum of 25 performance samples for their recommended testing procedure and recommend 5x5 repeated CV for data sets of 500-100,000 molecules; both quotations are verified verbatim against the PDF in Part 0, and this project's curated set (4,905) is inside that band. Notebooks 34 and 35 collected 10 and 15 samples respectively, both below that floor. Adding repeats is NOT re-deciding notebook 34's gate: the fold assignments for repeats 3 and 4 were frozen in cv_folds_butina_5x5.csv before any result existed (sha256 asserted here against notebook 34's own saved record), and the extra folds are added UNIFORMLY to every arm, so no arm can be advantaged and no outcome is being selected for. Re-running the gate itself on realised costs would be choosing a rule's input after seeing its output, which is the selection behaviour CLAUDE.md warns against, and is deliberately not done. To make the distinction checkable rather than asserted, every analysis table reports the 15-fold and 25-fold results side by side, the rebuilt 15-fold tables are asserted to reproduce notebook 35's published ones exactly, and a dedicated figure plus a verdict-change count accompany them.",
+    "alternatives": "Leave the design at 15 folds (stays below the floor Ash states, and leaves the two called-out comparisons -- AID's oscillating verdicts and CYP2D6's collapsed blend -- unresolved); or re-run notebook 34's gate on realised costs and let it authorise the extra repeats (indistinguishable in result, but is exactly the selection behaviour being avoided).",
+    "authority": "explicit instruction in this notebook's task brief, with the reasoning recorded here as it requires",
+    "at_utc": "2026-10-02T08:43:24.632669+00:00"
+  },
+  {
+    "decision": "Reused notebook 34's and notebook 35's own assembled tables for repeats 0-2 rather than re-deriving them from per-run files",
+    "reason": "outputs/35_butina_repeat3/oof_long/oof_long_{iso}_15fold.csv already holds all eleven arms for repeats 0/1/2 in the required shape and is what notebook 35 reported from; re-deriving it could only reproduce it or silently differ. Reusing it keeps this side of the 25-fold join byte-identical to 35's published result, and the rebuilt 15-fold score summary and paired tests are asserted to reproduce 35's own saved files to 1e-8 before anything is read off them. Repeats 3 and 4 are joined on, and the join is asserted not to change the prior row count or introduce a NaN -- the exact bug notebook 35 found in its own first attempt at this join.",
+    "alternatives": "Re-derive everything from per-run files (more code, no benefit, and a new way to disagree with 34/35).",
+    "authority": "autonomy rule: take the most conservative option and record it",
+    "at_utc": "2026-10-02T08:43:24.632977+00:00"
+  },
+  {
+    "decision": "Set the wall-clock guard to 20.0 h measured from this campaign's own start, and ordered the run by repeat rather than by arm",
+    "reason": "Both specified in the task brief. The guard measures from this notebook's own campaign.json, never notebook 34's or 35's -- their timestamps are from late September and inheriting one would put every unit past the deadline and skip the entire run. Ordering by repeat means an interruption leaves a complete 4x5 design (20 samples) rather than two half-finished repeats.",
+    "alternatives": "Order by arm (an interruption would leave both new repeats incomplete and the design unbalanced); no guard (an unlucky slowdown could leave the analysis sections never reached).",
+    "authority": "task brief, plus the campaign-freshness constraint it states",
+    "at_utc": "2026-10-02T08:43:24.633145+00:00"
+  },
+  {
+    "decision": "Turned notebook 05's by-eye parametric/nonparametric branch decision into an explicit rule, rather than inheriting its PARAMETRIC_METRICS = {'MAE'} finding",
+    "reason": "Notebook 05 chose each comparison's branch by reading Levene's test AND inspecting QQ plots, and concluded that on its data only MAE was parametric. Notebook 29 later measured ST-RAE as variance-homogeneous on this project's own paired comparison, so 05's conclusion is a finding about its data, not a property to carry over. This notebook runs unattended and cannot make a by-eye call, so 05's own two stated criteria are applied as a rule: homogeneous iff Levene's p exceeds alpha AND the max/min variance ratio is within Ash SI Section C.1's 9x tolerance for equally-sized groups. The resulting branch is printed per (comparison, metric) and the QQ figures are produced so the normality half can still be inspected.",
+    "alternatives": "Hard-code 05's PARAMETRIC_METRICS (imports a finding about different data as if it were a rule); or route everything nonparametric (discards power where homogeneity genuinely holds).",
+    "authority": "autonomy rule: where a reused procedure needs a judgement this notebook cannot make by eye, state the rule explicitly and record it",
+    "at_utc": "2026-10-02T08:43:24.633253+00:00"
+  },
+  {
+    "decision": "Adapted two of notebook 05's plotting conventions: PLAIN replaces naive_mean as the forest plot's reference line, and only the full-arm version of the forest/CLD-grid figures is produced",
+    "reason": "This design has no naive_mean arm -- it was never one of the eleven -- so 05's dashed naive-floor line has no referent here; PLAIN is the arm every comparison in this notebook is made against, so it takes that role and the legend says so. Likewise 05 produced a main-text 'curated 6-config subset' figure and a full 12-config appendix version; this design has no family structure to curate down to, so only the full-arm version exists, which is 05's own appendix form. Both are convention adaptations, not new figure types: no figure type appears here that is absent from notebook 05 or notebooks 34/35. Set B is also drawn inside an rc_context restoring matplotlib's defaults, because 05 predates this project's current house style and the brief asks for its conventions where they differ.",
+    "alternatives": "Invent a naive baseline arm purely to draw the line (a new, untested arm added for a figure); or restyle 05's figure types into the current house style (loses the comparability the brief asks for).",
+    "authority": "task brief's instruction to match notebook 05's conventions where they differ and not to invent figure types",
+    "at_utc": "2026-10-02T08:43:24.633379+00:00"
+  },
+  {
+    "decision": "Included the MA macro pseudo-endpoint in the omnibus/QQ/forest figures and excluded it from the CLD grid, fold-distribution and heatmap figures",
+    "reason": "Exactly the split notebook 05 made. MA is a macro-average of the four isoform endpoints, scored alongside them in every bootstrap sample, so it is a legitimate fifth comparison for an omnibus test and a forest panel but would double-count the four isoforms if placed beside them in a grid or a pairwise heatmap. Stated here rather than left as an unexplained asymmetry between figures.",
+    "alternatives": "Include MA everywhere (double-counts the isoforms in the grid and heatmaps); or drop it entirely (discards a comparison 05 reports and this design already computed).",
+    "authority": "notebook 05's own figure scope, reproduced",
+    "at_utc": "2026-10-02T08:43:24.633494+00:00"
+  }
+]
