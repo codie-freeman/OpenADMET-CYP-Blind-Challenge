@@ -18,10 +18,16 @@ else. Notebook `43` Part A puts this on record in reader-facing form.
 | `parse_report.md` | — | Source used per quantity, the validation set, the cross-checks, and every failed compound (there are none). |
 | `parse_status.json`, `decisions_taken.json`, `run_meta.json` | — | Run state, the four decisions taken, and the run-start timestamp. |
 
-`parts/` holds one shard per compound per table and is **gitignored** — it exists only so the parse
-is restartable per compound, and the three tables are concatenated from it at the end. The three
-tables are tracked because the 8.8 GB ORCA tree they derive from is not, which makes them the only
-durable form of this data.
+`parts/` holds one shard per compound per table (16,965 files) and is **gitignored** — it exists
+only so the parse is restartable per compound, and the three tables are concatenated from it at the
+end. **It is safe to delete once the tables are built, and was deleted after this run**: it is pure
+intermediate, and a fresh parse rebuilds it in under a minute. Deleting it is worth knowing about
+because 16,965 files is enough to make an editor's file watcher visibly unhappy even though git
+ignores them. The script recreates the directory on its next run and simply re-parses every
+compound.
+
+The three tables are tracked because the 8.8 GB ORCA tree they derive from is not, which makes them
+the only durable form of this data.
 
 Atom indices are **0-based and are RDKit's own**, which is what makes it valid to join a
 SMARTS-derived atom index straight into `qm_atoms.csv` — see Validation below.
