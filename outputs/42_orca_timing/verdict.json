@@ -1,0 +1,36 @@
+{
+  "decided_at_utc": "2026-10-03T14:06:53.167349+00:00",
+  "verdict": "FULL-SET DFT",
+  "detail": "The DFT single point averages 0.57 min at 6 cores across the population, under the 2-minute bar. Full-set DFT on all 5655 compounds is viable and no semi-empirical production route is needed.",
+  "thresholds_min": [
+    2.0,
+    5.0
+  ],
+  "nprocs": 6,
+  "dft_keywords": "B3LYP D3 def2-SV(P) NORI Hirshfeld",
+  "jobB_population_mean_min": 0.5701266264773598,
+  "jobB_median_of_15_min": 1.3777833333333334,
+  "statistics_agree_on_side": true,
+  "jobA_mean_min": 1.1667377777777779,
+  "stage1_mean_min": 0.03277666666666663,
+  "full_set_hours": 166.78867093438006,
+  "full_set_days_at_24h": 6.949527955599169,
+  "speedup_at_production_nprocs": 4.327869468777022,
+  "best_throughput_nprocs": 1,
+  "scf_trouble_compounds": 0,
+  "predictor_winner_resolved": false,
+  "predictor_win_fractions": {
+    "n_basis": 0.6990000000000001,
+    "heavy_atoms": 0.297,
+    "total_atoms_with_h": 0.004
+  },
+  "frontier_first_look_n": 15,
+  "stereo_ge2_unspecified": {
+    "train": 393,
+    "blind": 64
+  },
+  "stereo_shape_relevant": {
+    "train": 465,
+    "blind": 77
+  }
+}

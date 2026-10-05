@@ -1,0 +1,4 @@
+label,path,rows,sha256
+curated train,data/processed/train_inhibition_curated.csv,4905,9209ecd45ea8945b435c11f33140b6a38e4c26ae288bb4532eccb7ed1173bcaf
+blind test,data/processed/test_blinded_curated.csv,750,ba5e6ee298485c5d082cc5db21cf982c23bdf07b262bf47bb437aa7402dc1ac4
+notebook 41 audit table,outputs/41_dataset_audit_3d/per_compound_audit.csv,5655,9ef4427dc3ac67043f1d5ae17c65cda5e39ee24f0b430ec6737fc7c3342dc411

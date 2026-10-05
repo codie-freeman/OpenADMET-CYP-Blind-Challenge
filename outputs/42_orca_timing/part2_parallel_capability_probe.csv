@@ -1,0 +1,4 @@
+configuration,keywords,nprocs,succeeded,wall_s,ri_on,rijcosx_on,error,orca_wall_s,n_basis,energy_Eh,HOMO_eV,LUMO_eV,gap_eV
+"brief keywords, parallel",B3LYP D3 def2-SV(P) Hirshfeld,6,False,2.6,False,False,MPI_ERR_ARG,,,,,,
+"brief keywords, serial",B3LYP D3 def2-SV(P) Hirshfeld,1,True,,True,True,,112.542,400.0,-1077.04148095,-6.4201,0.0958,6.5159
+"NORI, parallel",B3LYP D3 def2-SV(P) NORI Hirshfeld,6,True,,False,False,,34.647,400.0,-1077.04050218,-6.4182,0.0961,6.5143

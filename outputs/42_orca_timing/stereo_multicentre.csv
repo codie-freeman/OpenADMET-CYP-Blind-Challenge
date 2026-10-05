@@ -1,0 +1,3 @@
+population,n,n_ge1_unspecified,n_ge2_unspecified_BRIEFED,pct_ge2_unspecified_BRIEFED,n_shape_relevant_REFINED,pct_shape_relevant_REFINED,n_extra_caught_by_refinement,n_enantiomer_only_shape_free,max_unspecified
+curated train,4905,1999,393,8.01223241590214,465,9.480122324159021,72,1534,5
+blind test,750,248,64,8.533333333333333,77,10.266666666666667,13,171,6

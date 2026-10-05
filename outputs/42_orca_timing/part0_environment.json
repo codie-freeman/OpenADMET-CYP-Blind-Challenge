@@ -1,0 +1,21 @@
+{
+  "checked_at_utc": "2026-10-03T14:06:36.088161+00:00",
+  "rdkit": "2026.03.3",
+  "python": "3.11.13",
+  "orca_on_path": "/Users/codiefreeman/.local/bin/orca",
+  "orca_launcher": "/Users/codiefreeman/.local/bin/orca",
+  "orca_launcher_is_wrapper": true,
+  "orca_real_dir": "/Users/codiefreeman/orca",
+  "orca_real_binary": "/Users/codiefreeman/orca/orca",
+  "orca_version": "6.1.1",
+  "orca_release": "RELEASE",
+  "orca_arch": "Mach-O 64-bit executable arm64",
+  "mpi_dir": "/Users/codiefreeman/opt/openmpi-4.1.6",
+  "mpirun_present": true,
+  "mpi_version": "mpirun (Open MPI) 4.1.6",
+  "physical_cores": 11,
+  "logical_cores": 11,
+  "memory_gb": 36.0,
+  "standalone_xtb_on_path": null,
+  "otool_xtb_shipped": false
+}

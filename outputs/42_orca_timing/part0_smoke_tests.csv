@@ -1,0 +1,5 @@
+test,succeeded,wall_s,note
+XTB2 (legacy external driver),False,0.27,ORCA: 'otool_xtb not available. Trying xtb instead ... failed!'
+NATIVE-GFN2-XTB Opt,True,1.85,ORCA's own native GFN2-xTB; no external binary
+"B3LYP D3 def2-SV(P) Hirshfeld, nprocs=1",True,0.78,
+"B3LYP D3 def2-SV(P) Hirshfeld, nprocs=6",True,3.12,

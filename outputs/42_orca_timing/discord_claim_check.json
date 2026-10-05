@@ -1,0 +1,12 @@
+{
+  "checked_at_utc": "2026-10-03T14:06:52.069510+00:00",
+  "source": "OpenADMET community Discord, Scott Simpkins, posted 01/10/2026 19:57",
+  "capture": "pasted verbatim into a Claude Code session by the repository owner, 2026-10-03",
+  "verifiable_by_hash": false,
+  "why_not": "a Discord message has no DOI, no stable citable URL and no sha256-pinnable artefact, so this repo's *_quote_verification.json convention does not apply and is deliberately not imitated",
+  "n_claims": 6,
+  "n_agreeing": 6,
+  "constitutional_pairs": 3,
+  "pairing_confirmed_two_ways": true,
+  "status": "CONSISTENT_WITH_LOCAL_DATA"
+}

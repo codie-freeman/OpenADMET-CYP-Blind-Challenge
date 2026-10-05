@@ -1,0 +1,128 @@
+[
+  {
+    "decision": "Widened the upper-half bucket from 6 compounds to 7 to resolve the brief's own bucket overlap",
+    "reason": "The cyanine dye OCNT-2328510 (53 HA) is also one of the three largest compounds, so the four buckets as literally written select 14 distinct compounds, not 15. Widening the upper half keeps the brief's top-end weighting intact.",
+    "alternatives": "Accept 14; or drop the cyanine from largest-3 and take the 4th largest instead, which would reduce top-end coverage -- the opposite of the brief's intent.",
+    "authority": "the brief's '15 ... weighted to the top end', which the overlap made internally inconsistent",
+    "at_utc": "2026-10-03T14:06:42.798568+00:00"
+  },
+  {
+    "decision": "Selected all 15 by a deterministic rule off notebook 41's saved audit table rather than hand-picking",
+    "reason": "Makes the selection reproducible from one file. Ties on heavy atoms are broken by the largest total_atoms_with_h, because notebook 41 found total atoms (not heavy atoms) drives cost -- so the tiebreak stresses the variable the cost model is being fitted against.",
+    "alternatives": "Pick by eye to span the range (not reproducible, and invites unconscious selection toward easy compounds).",
+    "authority": "none -- added for reproducibility",
+    "at_utc": "2026-10-03T14:06:42.798822+00:00"
+  },
+  {
+    "decision": "Added NORI to job B's keyword line and ran it at 6 cores",
+    "reason": "The brief's exact keyword line enables RIJCOSX by default and fails at every nprocs>=2 on this machine with MPI_ERR_ARG inside the RI/J Cholesky decomposition (measured, not inferred). NORI removes the RI approximation, avoids the broken code path, and is 3.2x faster than the serial RI route. It shifts HOMO/LUMO/gap by at most 0.0019 eV.",
+    "alternatives": "Run job B serially at the brief's exact keywords (works, but discards the parallelism the whole timing question is phrased around); or install a different MPI build (outside this notebook's scope and unverifiable here).",
+    "authority": "none -- forced by a measured failure of the briefed configuration",
+    "at_utc": "2026-10-03T14:06:45.417367+00:00"
+  },
+  {
+    "decision": "Added a throughput metric, floor(cores/nprocs)/t(nprocs), beyond the briefed speedup",
+    "reason": "The production route is chosen by molecules per hour on this machine, not by single-job wall time, and the two need not be maximised at the same core count. Reported, not recommended -- a concurrent topology's memory footprint has not been measured here.",
+    "alternatives": "Report speedup alone (answers which nprocs is fastest for one job, which is not the production question).",
+    "authority": "none -- added because it is the quantity the verdict actually depends on",
+    "at_utc": "2026-10-03T14:06:48.673068+00:00"
+  },
+  {
+    "decision": "Applied the 2-min / 5-min decision rule to the population-weighted predicted mean job B time, not the median of the 15 measured compounds",
+    "reason": "The 15 were selected weighted to the top end, as the brief specifies, so their median systematically overstates the cost of the 5,655-compound population. Both numbers are reported and their difference explained.",
+    "alternatives": "Apply the rule to the median of the 15 (simpler, systematically pessimistic, and could wrongly rule out full-set DFT).",
+    "authority": "none -- the brief does not say which statistic, and the choice changes the verdict",
+    "at_utc": "2026-10-03T14:06:52.044676+00:00"
+  },
+  {
+    "decision": "Floored the extrapolation at the smallest measured job B time rather than extrapolating the fit below its own range",
+    "reason": "The population reaches down to 5 heavy atoms while the fit's lower edge is 24. A power law continued below its range predicts implausibly small times for the thousands of compounds at or below the median. The floor is measured (0.33 min), not assumed.",
+    "alternatives": "Extrapolate the fit unbounded (understates the small end, which is most of the population); or add small compounds to the selection (contradicts the brief's top-end weighting).",
+    "authority": "none -- forced by the gap between the selection's range and the population's",
+    "at_utc": "2026-10-03T14:06:52.044851+00:00"
+  },
+  {
+    "decision": "Reported the refined shape-relevant stereocentre count alongside the briefed 'two or more unspecified' count, and used mirror-image dedup for the enumeration cost",
+    "reason": "Two refinements, both following from the brief's own stated rationale. (1) A compound with one unspecified centre AND an assigned centre elsewhere also faces a diastereomer choice -- the assigned centre breaks the mirror symmetry -- so the briefed criterion undercounts by 13 blind compounds. (2) Since the scalar shape descriptors the brief names are mirror-invariant, only 2^(k-1) of the 2^k stereoisomers are distinguishable, so the naive multiplier overstates the cost of the policy the brief is pointing at by about half.",
+    "alternatives": "Report the briefed criterion and the naive 2^k multiplier alone (answers the question as asked, and overstates both the affected population's boundary and the cost of fixing it).",
+    "authority": "the brief's own mirror-invariance argument, applied consistently",
+    "at_utc": "2026-10-03T14:06:52.057482+00:00"
+  },
+  {
+    "decision": "Included the racemate-vs-enantiomer potency comparison, which the brief did not ask for",
+    "reason": "The three matched pairs surfaced by the Discord cross-check are the only places in this dataset where the same constitution appears as both a racemate and a single enantiomer, so they are the only direct internal evidence bearing on whether stereochemistry matters for these targets. Reported with credible intervals and an explicit n=3 caveat, and left uninterpreted.",
+    "alternatives": "Omit it (discards the only directly relevant evidence the cross-check turned up).",
+    "authority": "none -- added because the cross-check produced it for free",
+    "at_utc": "2026-10-03T14:06:52.086663+00:00"
+  },
+  {
+    "decision": "Created docs/stereochemistry_provenance.md as a general Discord register and used the status CONSISTENT_WITH_LOCAL_DATA rather than imitating the repo's VERIFIED convention",
+    "reason": "This repo's *_quote_verification.json pattern pins a PDF by sha256 and emits VERIFIED. A Discord message has no hashable artefact, so that status would be a fabricated guarantee. The file states the limitation up front and records the weaker, accurate claim. It is written as a register rather than a one-off because two earlier Discord facts (Sean Colby, Pat Walters) already live only as prose attribution.",
+    "alternatives": "Imitate the VERIFIED convention by hashing the pasted text (which would only verify that the paste was not edited afterwards, not that it is faithful); or leave it as prose attribution like the two prior facts.",
+    "authority": "the brief's instruction to log the exchange in docs/ as a primary source",
+    "at_utc": "2026-10-03T14:06:52.093153+00:00"
+  },
+  {
+    "decision": "Used NATIVE-GFN2-XTB rather than the brief's XTB2 for every job A",
+    "reason": "The brief states ORCA 6 ships a native XTB so the geometry step runs as '! XTB2 Opt' with no external dependency. The intent is right and is achieved, but XTB2 is the legacy external-driver keyword: it shells out to otool_xtb or a standalone xtb, neither of which is present in this installation, and the run aborts (exit 52). NATIVE-GFN2-XTB invokes ORCA's own implementation. Part 0's smoke test demonstrates both outcomes rather than asserting them. No xtb was installed and no dependency added, exactly as the brief requires.",
+    "alternatives": "Install xtb (explicitly forbidden by the brief); or run the geometry step in a separate program (abandons the one-program, one-parser design the brief asks for).",
+    "authority": "forced by a measured failure of the briefed keyword",
+    "at_utc": "2026-10-03T14:06:53.173628+00:00"
+  },
+  {
+    "decision": "Treated ORCA's exit code as meaningless and gated every job on '****ORCA TERMINATED NORMALLY****' in the output instead",
+    "reason": "A failed parallel run observed while building this notebook returned exit status 0 with its output ending in 'aborting the run'. A resume keyed on exit status, or on the .out merely existing, would silently treat that job as finished. The cache-skip therefore validates content, not existence.",
+    "alternatives": "Trust the exit code, or check only that the .out exists (the literal reading of the brief's resume requirement, with a silent data-loss mode).",
+    "authority": "forced by a measured behaviour of the tool",
+    "at_utc": "2026-10-03T14:06:53.173913+00:00"
+  },
+  {
+    "decision": "Read the stage-1 mean from the persisted timing file rather than from the in-memory result of this execution",
+    "reason": "On a re-run every conformer is a cache hit with a wall time of zero, so computing the mean from this execution's own variable reported stage 1 as free. The timing FILE is protected from exactly this by the cache-hit guard inherited from notebook 37; the same mistake had simply been made one level up, in the analysis rather than the record. Caught because the printed verdict said 0.00 s.",
+    "alternatives": "Force stage 1 to re-run every time (wasteful and makes the notebook non-idempotent).",
+    "authority": "none -- a bug found by reading the notebook's own output",
+    "at_utc": "2026-10-03T14:06:53.174062+00:00"
+  },
+  {
+    "decision": "Made TEST 1 of the scope check subtract the set of tracked paths already modified before the run started",
+    "reason": "TEST 1 as inherited answers 'is this path dirty?' rather than 'did this run dirty it?'. It fired on docs/leaderboard_submissions.md, which carried a pre-existing uncommitted change this notebook never touched -- confirmed by TEST 2, the mtime check, reporting 0. This is the third form of the same bug: notebook 29 mistook an untracked directory for a modification, notebook 38 inferred the run's start time from a file mtime. The pre-existing dirty set is now recorded in run_meta.json at the top of the run, alongside the start timestamp, and subtracted.",
+    "alternatives": "Drop docs/leaderboard_submissions.md from PROTECTED (removes the guard on the one docs/ file that must never be touched); or suppress TEST 1 (removes a real check for a false positive).",
+    "authority": "none -- a fix to this project's own scope-check pattern, forced by a false positive",
+    "at_utc": "2026-10-03T14:06:53.174200+00:00"
+  },
+  {
+    "decision": "Added an automatic serial fallback when a parallel job fails, and excluded fallen-back compounds from the cost fit",
+    "reason": "A SECOND, distinct MPI failure mode appeared during the run: the largest compound failed at 6 cores in the overlap-matrix diagonalisation (MPI_ERR_ARG again, but a different collective from the RI/J Cholesky that NORI already removed). Serial is unaffected. Falling back automatically keeps the dataset complete and converts the failure into a measured size ceiling rather than a missing row. The fallen-back compound is excluded from the cost fit because that fit predicts cost at the production core count and a serial time is a different quantity; it is reported separately instead.",
+    "alternatives": "Leave the compound as a failure (loses the largest data point, which is the one the extrapolation most depends on); or run everything serially (discards the parallelism the timing question is phrased around for the other 14).",
+    "authority": "none -- forced by a failure discovered during the run",
+    "at_utc": "2026-10-03T14:06:53.174330+00:00"
+  },
+  {
+    "decision": "Set a per-job timeout of 3 h and continued past a failure rather than aborting the notebook",
+    "reason": "A non-converging SCF would otherwise hang the run indefinitely. A failed job keeps its partial .out for inspection, is recorded in the timing table with status FAILED, and is excluded from the fits with the exclusion named rather than silently dropped.",
+    "alternatives": "No timeout (one pathological compound ends the notebook); or abort on first failure (loses every subsequent measurement over one compound).",
+    "authority": "the brief's robustness requirement",
+    "at_utc": "2026-10-03T14:06:53.174476+00:00"
+  },
+  {
+    "decision": "Kept every .out in full and deleted ORCA's bulky scratch (.gbw, .densities, .tmp, .bas*) after a successful parse",
+    "reason": "The brief requires SCF convergence behaviour be inspectable afterwards, which the .out provides. The wavefunction files do not serve that and are tens of MB each at this basis size -- roughly 100 GB if the same policy were applied across 5,655 compounds. Pruning runs only after the parse succeeds, so a failure leaves everything in place.",
+    "alternatives": "Keep everything (a real production constraint, and nothing in the brief needs it); delete more aggressively (loses the optimised geometries).",
+    "authority": "none -- a storage judgement the brief does not pin down",
+    "at_utc": "2026-10-03T14:06:53.174593+00:00"
+  },
+  {
+    "decision": "Wrote all logs under outputs/42_orca_timing/logs/ rather than the repo's usual logs/<NN>_<slug>/",
+    "reason": "The brief says everything written goes under outputs/42_*/ apart from the docs/ record. That conflicts with this repo's own convention of a top-level logs/ subdirectory per notebook. The brief's explicit instruction wins, and the deviation is recorded here so a future reader does not look for logs/42_* and conclude they are missing.",
+    "alternatives": "Follow the repo convention (contradicts an explicit instruction in the brief).",
+    "authority": "the brief's scope constraint, which overrides the repo default",
+    "at_utc": "2026-10-03T14:06:53.174708+00:00"
+  },
+  {
+    "decision": "Used ORCA's default SCF and geometry convergence thresholds, and recorded which ones it used",
+    "reason": "The brief specifies the keyword lines and does not ask for TightSCF, TightOpt or a denser grid. Tightening them would change the measured cost without being asked. The thresholds ORCA printed are in the saved .out files so the timings remain attributable to a known convergence standard.",
+    "alternatives": "Tighten them (changes the cost being measured); leave them unrecorded (makes the timings unattributable).",
+    "authority": "none -- the brief is silent and the choice affects the number",
+    "at_utc": "2026-10-03T14:06:53.174823+00:00"
+  }
+]

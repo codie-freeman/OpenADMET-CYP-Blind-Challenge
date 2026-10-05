@@ -1,0 +1,6 @@
+{
+  "n_parallel_ok": 14,
+  "n_fell_back": 1,
+  "largest_basis_parallel_ok": 936,
+  "smallest_basis_failed_parallel": 1018
+}

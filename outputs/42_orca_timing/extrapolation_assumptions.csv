@@ -1,0 +1,11 @@
+assumption,value
+predictor and fit,"heavy atoms, power, LOO-MAPE 27.6%"
+time floor,"0.33 min, the smallest job B measured -- 243 compounds sit below the fit's lower edge and are floored, not extrapolated"
+job A,flat mean 1.17 min/compound (GFN2 cost is far less size-dependent)
+stage 1,flat mean 1.97 s/compound
+conformers,one per compound; no stereoisomer enumeration (Part 6 costs that separately)
+parallelism,"nprocs=6, one job at a time, %maxcore 3000 MB"
+integrals,! B3LYP D3 def2-SV(P) NORI Hirshfeld
+SCF failures,measured rate 0% on the 15; retries not costed separately
+thermal/contention,"none assumed over sustained multi-day load -- UNQUANTIFIED RISK, measured only over hours here"
+human latency,none; back-to-back execution
