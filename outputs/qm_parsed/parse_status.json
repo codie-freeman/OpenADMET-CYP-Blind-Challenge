@@ -1,0 +1,11 @@
+{
+  "updated_at_utc": "2026-10-05T19:18:00.975400+00:00",
+  "total_compounds": 5655,
+  "done": 5655,
+  "remaining": 0,
+  "failed": 0,
+  "pct_done": 100.0,
+  "mean_seconds_per_compound": null,
+  "session_elapsed_s": 9.7,
+  "failed_compounds": []
+}

@@ -362,3 +362,12 @@ outputs/37_butina_5x5_complete/oof_long/*__r*f*.csv
 # in ~91 s (notebook 40 Part 8). Its derived summaries, the seed-averaged full-data predictions and
 # every submission candidate ARE tracked.
 outputs/40_single_object_ensemble/part8_stabilised_member/xgboost_oof_10seeds.csv
+
+# ORCA output parse (scripts/parse_orca_output.py): the per-compound shard directory is purely an
+# intermediate -- it exists so the parse is restartable per compound, and the three concatenated
+# tables are built from it at the end (16,965 files, ~88 MB). Regenerable in under a minute from
+# the ORCA tree, which is itself gitignored above. qm_atoms.csv, qm_bonds.csv,
+# qm_molecular_raw.csv, parse_report.md and the status/decision JSONs ARE tracked -- the
+# concatenated tables are the only durable form of this data, since the 8.8 GB tree they come
+# from is not tracked.
+outputs/qm_parsed/parts/

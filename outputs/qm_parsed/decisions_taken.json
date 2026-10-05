@@ -1,0 +1,30 @@
+[
+  {
+    "decision": "Shard per compound rather than reuse the generating run's append_rows().",
+    "reason": "append_rows is read-modify-rewrite-whole-file; measured at 0.275 s per call once the atom table reaches 252k rows, i.e. ~26 min of pure rewriting across the population against a parse budget of a few minutes. A shard write is 0.0002 s. Sharding the molecular table too (rather than appending it) closes a restart hole: an interruption between an atom shard and a buffered molecular flush would leave a compound that looks done but has no molecular row.",
+    "alternatives": "Reuse append_rows for all three (26 min of rewriting, and the restart hole); or stream true appends to open handles (fast, but a kill mid-write leaves a partial line).",
+    "authority": "measured; deviates from the plan, which said to reuse append_rows for the molecular table",
+    "recorded_at_utc": "2026-10-05T19:17:51.311068+00:00"
+  },
+  {
+    "decision": "Assert RDKit bonds are a SUBSET of the Mayer pair list, not equal to it.",
+    "reason": "Measured on 400 compounds: subset holds 400/400, equality only 212/400, because ORCA's 0.1 bond-order threshold also admits weak intramolecular contacts (mean 0.64 extra pairs, max 4). Asserting equality would fail 47% of compounds for a reason that is not an error, while the subset form still validates the bond graph at every atom index.",
+    "alternatives": "Assert equality (fails ~47%); or drop the connectivity check and rely on element sequence alone, which cannot catch a permutation of two same-element atoms.",
+    "authority": "measured",
+    "recorded_at_utc": "2026-10-05T19:17:51.311159+00:00"
+  },
+  {
+    "decision": "Cross-check energies at 1e-9 absolute, not at exact equality.",
+    "reason": "The plan predicted exact agreement with descriptors.csv on dft_energy_eh, and the first run measured 9.095e-13 instead -- enough to fail a zero tolerance. The cause is not a disagreement: the .out prints ~12 significant figures and .property.txt 17, so the same double round-trips through two decimal forms to values differing by machine epsilon scaled to the magnitude (~1790 Eh). 1e-9 keeps ~2000x headroom over the measured residual while remaining far tighter than any difference a real bug could produce. The same applies to dispersion_eh (measured 5.0e-10).",
+    "alternatives": "Keep a zero tolerance and report a permanent FAIL on a difference that is not an error; or take the energy from the .out so both sides share one decimal form, which would mean preferring the less precise source purely to make a check pass.",
+    "authority": "measured; corrects an expectation stated in the plan",
+    "recorded_at_utc": "2026-10-05T19:17:51.311388+00:00"
+  },
+  {
+    "decision": "ProcessPoolExecutor, not the generating run's ThreadPoolExecutor.",
+    "reason": "That run's workers blocked on ORCA subprocesses, so threads were right. This work is CPU-bound regex in Python and threads would be serialised by the GIL. Per-compound shards mean there is no shared mutable state, so no lock is needed either.",
+    "alternatives": "ThreadPoolExecutor (no speedup here); or single process (a few minutes, also fine).",
+    "authority": "reasoned",
+    "recorded_at_utc": "2026-10-05T19:17:51.311460+00:00"
+  }
+]
