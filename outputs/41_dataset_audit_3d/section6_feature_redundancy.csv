@@ -1,0 +1,4 @@
+feature_set,contains_3D_content,evidence
+ecfp4_narrow,NO,all 9 non-fingerprint descriptors are 0D/2D RDKit calls; none takes a conformer. ECFP4 is a topological fingerprint.
+mordred_pca,NO,saved source block is exactly the 1613-descriptor ignore_3D=True set; 0 of Mordred's 213 3D-exclusive descriptors present.
+chemeleon,NO,a graph-based learned embedding over 2D molecular graphs (chemprop/CheMeleon); no coordinates enter it.

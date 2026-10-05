@@ -1,0 +1,77 @@
+{
+  "q1_chirality": {
+    "answer": "SPLIT: 3D shape is alive; chirality specifically is NOT, because the data does not state configuration for almost every compound that has a centre",
+    "train_pct_ge1_centre": 50.1,
+    "train_pct_fully_specified": 9.4,
+    "blind_n_fully_specified": 18,
+    "blind_n": 750,
+    "blind_pct_of_centred_unassigned": 93.2,
+    "double_bond_stereo_defined_train": 19,
+    "double_bond_stereo_defined_blind": 0
+  },
+  "q2_size_tail": {
+    "answer": "There is essentially no cost-dominating tail. The library is tightly drug-like and a flat per-compound budget is close to adequate; only a named handful needs special handling.",
+    "heavy_atoms_median": 24.0,
+    "heavy_atoms_p99": 34.0,
+    "heavy_atoms_max": 65.0,
+    "n_gt_50_HA_both_sets": 3,
+    "n_gt_50_HA_blind": 0,
+    "top1pct_cost_share_exp2.5": 0.0298,
+    "top10pct_cost_share_exp2.5": 0.1799,
+    "largest_compound": "OCNT-2328942",
+    "largest_compound_heavy_atoms": 65,
+    "isoform_with_largest_p99": "CYP2C9",
+    "isoform_with_largest_max": "CYP2D6"
+  },
+  "q3_basic_nitrogen": {
+    "answer": "NOT as a whole-library block -- it is empty for 4 compounds in 5. YES as a CYP2D6-specific block, where coverage is ~3x higher and the mechanism is independently supported.",
+    "train_pct_ge1_strict": 18.9,
+    "train_pct_ge1_loose": 36.2,
+    "blind_pct_ge1_strict": 11.6,
+    "blind_pct_ge1_loose": 19.5,
+    "cyp2d6_pct_ge1_strict": 37.4,
+    "other_isoforms_pct_ge1_strict_range": [
+      12.7,
+      13.8
+    ],
+    "cyp2d6_enrichment_strict": 2.84,
+    "cyp2d6_enrichment_loose": 1.83,
+    "cyp2d6_n_covered_strict": 558,
+    "smarts_reference_validation": "10/10 PASS"
+  },
+  "q4_redundancy": {
+    "answer": "NO. No conformer-dependent descriptor exists in any of the three feature sets, so a 3D block would be new information rather than a re-encoding.",
+    "mordred_source_descriptors": 1613,
+    "mordred_3d_exclusive_available": 213,
+    "mordred_3d_exclusive_present": 0,
+    "mordred_block_is_exactly_the_2d_set": true,
+    "ecfp4_narrow_descriptor_columns": [
+      "mol_wt",
+      "hba",
+      "hbd",
+      "ring_count",
+      "stereocenter_count",
+      "formal_charge",
+      "logp",
+      "logd_proxy",
+      "vsa_acc_proxy"
+    ],
+    "ecfp4_narrow_distinct_values": 8,
+    "ecfp4_narrow_3d_columns": 0,
+    "partial_exception": "ecfp4_narrow's stereocenter_count is a count of POTENTIAL centres (CalcNumAtomStereoCenters merges specified and unspecified, confirmed by direct test in Part 0) -- it carries no configuration and no geometry",
+    "duplicate_column": "logd_proxy is bit-identical to logp on all rows"
+  },
+  "meta": {
+    "notebook": "41_dataset_audit_3d",
+    "n_train": 4905,
+    "n_blind": 750,
+    "rdkit": "2026.03.3",
+    "written_at_utc": "2026-10-03T11:50:24.428990+00:00",
+    "nothing_computed": [
+      "quantum chemistry",
+      "conformer generation",
+      "model training",
+      "submission"
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+population,n,n_neutral,n_nonneutral,pct_nonneutral,n_cationic,n_anionic,min_charge,max_charge
+train (all),4905,4884,21,0.42813455657492355,11,10,-1,1
+blind (all),750,750,0,0.0,0,0,0,0
+both sets,5655,5634,21,0.3713527851458886,11,10,-1,1
+train / CYP1A2,1412,1403,9,0.6373937677053825,6,3,-1,1
+train / CYP2C9,1285,1281,4,0.311284046692607,0,4,-1,0
+train / CYP2D6,1493,1483,10,0.6697923643670463,9,1,-1,1
+train / CYP3A4,2335,2327,8,0.3426124197002141,3,5,-1,1

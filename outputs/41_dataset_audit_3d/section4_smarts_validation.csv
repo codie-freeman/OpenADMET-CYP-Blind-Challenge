@@ -1,0 +1,11 @@
+compound,expect_ge1_basic_N,n_basic_N_strict,n_basic_N_loose,PASS,what it tests
+propranolol,1,1,1,True,secondary aliphatic amine
+quinidine,1,1,1,True,bridged tertiary amine; the quinoline N is aromatic and must NOT count
+desipramine,1,1,2,True,one secondary amine; the ring N is aniline-type and must NOT count under the strict rule
+metoprolol,1,1,1,True,secondary aliphatic amine
+diclofenac,0,0,1,True,acid; its N is a diarylamine
+warfarin,0,0,0,True,"acid, no nitrogen at all"
+nicotine,1,1,1,True,pyrrolidine N counts; the pyridine N is aromatic and must NOT
+lidocaine,1,1,1,True,tertiary amine counts; the anilide N is an amide and must NOT
+acetanilide,0,0,0,True,amide only -- tests the amide exclusion
+caffeine,0,0,0,True,all nitrogens aromatic or amide -- tests both exclusions at once

@@ -1,0 +1,7 @@
+set,compared_against,n,compounds_differing_in_any_count,n_centres,n_unassigned,n_assigned,n_db_potential,n_db_defined
+train,raw source file,4905,0,0,0,0,0,0
+train,curated canonical_smiles,4905,0,0,0,0,0,0
+train,canonicalised live via src/features.py,4905,0,0,0,0,0,0
+blind,raw source file,750,0,0,0,0,0,0
+blind,curated canonical_smiles,750,0,0,0,0,0,0
+blind,canonicalised live via src/features.py,750,0,0,0,0,0,0

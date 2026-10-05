@@ -1,0 +1,5 @@
+label,path,rows,sha256
+curated train,data/processed/train_inhibition_curated.csv,4905,9209ecd45ea8945b435c11f33140b6a38e4c26ae288bb4532eccb7ed1173bcaf
+blind test,data/processed/test_blinded_curated.csv,750,ba5e6ee298485c5d082cc5db21cf982c23bdf07b262bf47bb437aa7402dc1ac4
+raw train (source),data/raw/cyp-challenge-TRAIN_inhibition.csv,4905,b8f79addd266fb6f9f4c222c5e4e73d926362328b6a8d2841871a54e46bd2278
+raw blind (source),data/raw/cyp-challenge-TEST-BLINDED.csv,750,a342f8444a8dcb531ca12f3685293f0bd6c36ae9073f491e44a9bc1cc4b741f9

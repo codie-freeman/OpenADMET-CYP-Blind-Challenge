@@ -1,0 +1,10 @@
+column,rdkit_call,dimensionality,requires_a_conformer
+mol_wt,Descriptors.MolWt,0D (formula only),no
+hba,rdMolDescriptors.CalcNumHBA,2D (topology),no
+hbd,rdMolDescriptors.CalcNumHBD,2D (topology),no
+ring_count,rdMolDescriptors.CalcNumRings,2D (topology),no
+stereocenter_count,rdMolDescriptors.CalcNumAtomStereoCenters,2D (graph + parity),"no -- a COUNT of potential centres, see note"
+formal_charge,Chem.GetFormalCharge,0D,no
+logp,Crippen.MolLogP,2D (atom-contribution sum),no
+logd_proxy,Crippen.MolLogP (same value as logp),2D,no
+vsa_acc_proxy,Descriptors.PEOE_VSA1 + PEOE_VSA2,2D (topological VSA),no

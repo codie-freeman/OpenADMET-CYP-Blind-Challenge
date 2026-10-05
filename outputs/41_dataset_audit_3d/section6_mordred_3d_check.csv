@@ -1,0 +1,9 @@
+check,value
+source descriptor names recovered from the saved NaN report,1613
+PCA components in the saved feature file,132
+Mordred descriptors available with ignore_3D=True,1613
+Mordred descriptors available with ignore_3D=False,1826
+Mordred descriptors that are 3D-exclusive,213
+3D-exclusive descriptors found in the saved block,0
+saved block identical to the ignore_3D=True set,1
+all-NaN (structurally undefined) descriptors in the saved block,82

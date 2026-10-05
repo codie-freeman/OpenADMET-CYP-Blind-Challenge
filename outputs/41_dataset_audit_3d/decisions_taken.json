@@ -1,0 +1,51 @@
+[
+  {
+    "decision": "Defined basic nitrogen as a specific SMARTS, validated on ten reference compounds, and carried a looser variant through every table as a sensitivity band",
+    "reason": "The brief specifies basic nitrogen in prose -- 'aliphatic N, not amide, not aromatic, with a lone pair available' -- which does not determine a single pattern. The strict SMARTS is written out clause by clause and validated 10/10 before being applied to any real compound (four of the references are notebook 17's own CYP2D6 amines, reused verbatim). The genuinely contestable clause is whether aniline-type nitrogen counts, so the loose variant differs in exactly that clause and nothing else, and both are reported everywhere. Q3's CYP2D6 enrichment holds under both, which is the point of carrying them.",
+    "alternatives": "Pick one SMARTS and report a single number (hides that the absolute level is definition-dependent by about a factor of two); or use an external pKa tool (outside the brief's pure-RDKit constraint, and notebook 17 already did it -- its output is cross-checked against instead).",
+    "authority": "the brief's prose definition, which needed an operational form",
+    "at_utc": "2026-10-03T11:50:24.434066+00:00"
+  },
+  {
+    "decision": "Counted stereocentres with Chem.FindPotentialStereo rather than rdMolDescriptors.CalcNumAtomStereoCenters",
+    "reason": "Part 0 established by direct test that in RDKit 2026.3.3 CalcNumAtomStereoCenters counts specified AND unspecified centres together, so it cannot answer the brief's assigned-versus-unassigned question -- which is the question Section 3 exists to settle. FindPotentialStereo reports the two separately. This also changed Section 6: ecfp4_narrow's stereocenter_count column is built from that same merged call, so it is a potential-centre count and is described as one.",
+    "alternatives": "Use CalcNumAtomStereoCenters plus CalcNumUnspecifiedAtomStereoCenters and subtract (gives the same answer, but silently depends on the semantic rather than testing it).",
+    "authority": "the brief's requirement to report assigned and unassigned counts separately",
+    "at_utc": "2026-10-03T11:50:24.434258+00:00"
+  },
+  {
+    "decision": "Cross-checked the basic-nitrogen count against notebook 17's saved pH 7.4 protonation states, which the brief did not ask for",
+    "reason": "A SMARTS count with no external reference is unfalsifiable. Notebook 17's charge_logp_features.csv is an independent instrument (Dimorphite-DL's pKa model) over the same 5,655 compounds and is read-only, so the check was free. It found a real asymmetric disagreement -- 1433 compounds carry no basic nitrogen by this SMARTS yet protonate to +1 -- which is reported plainly and characterised structurally rather than averaged away, with the strict count framed as a lower bound.",
+    "alternatives": "Report the SMARTS count alone (leaves a 28-point disagreement with this project's own prior measurement undiscovered and uncited).",
+    "authority": "none -- added because it strengthens a result the brief does rely on",
+    "at_utc": "2026-10-03T11:50:24.434401+00:00"
+  },
+  {
+    "decision": "Reported rotatable bonds under RDKit's strict=True default as primary, with the non-strict count beside it",
+    "reason": "The brief asks for a rotatable-bond distribution without naming a definition, and the two differ by about one bond per compound -- which enters a conformer budget as a multiplicative factor, not an additive one. Both are in the audit table and the summary so the budget can be re-derived under either.",
+    "alternatives": "Report only the default (hides a real factor-level choice).",
+    "authority": "the brief's conformer-protocol framing, which makes the choice consequential",
+    "at_utc": "2026-10-03T11:50:24.434488+00:00"
+  },
+  {
+    "decision": "Added Section 1.3, a cost model, and Section 5's conformer-count table -- neither requested as such",
+    "reason": "The brief asks what the size tail implies for a QM budget and says the conformer protocol cost is conformers x compounds. Answering either needs an explicit scaling assumption, so one is stated (heavy atoms to the power 2.5) and checked at 2.0, 3.0 and 4.0 so the conclusion does not rest on it. Both tables are counts under a stated assumption, not timings -- no job was run.",
+    "alternatives": "Answer the budget question from percentiles alone (leaves 'does the tail dominate' as an impression rather than a number).",
+    "authority": "the brief's questions 2 and 5, which ask for budget implications",
+    "at_utc": "2026-10-03T11:50:24.434570+00:00"
+  },
+  {
+    "decision": "Split the non-neutral compounds into permanent cations and carboxylates written deprotonated",
+    "reason": "The brief asks how many compounds are not neutral as written. The raw count (21 training, 0 blind) mixes two different setup problems: a quaternary ammonium or cyanine has no neutral form and must be run as an ion, whereas a [O-] carboxylate is a drawing convention and the same compound could have been written neutral. Reporting one number would make the second look like the first.",
+    "alternatives": "Report the bare count (accurate, and misleading about what it implies for a job script).",
+    "authority": "none -- the distinction is what makes the count actionable",
+    "at_utc": "2026-10-03T11:50:24.434695+00:00"
+  },
+  {
+    "decision": "Named the eleven iodine-containing compounds although iodine is inside the brief's own allowed element set",
+    "reason": "The brief asks for anything outside C/N/O/S/P/F/Cl/Br/I, and nothing is -- so that flag is empty. Iodine is nonetheless the heaviest element present and the one where an all-electron basis set stops being chooseable by default (a relativistic ECP is needed), which is the brief's own stated reason for caring about the element inventory. The compounds are named as context, explicitly not as a flag.",
+    "alternatives": "Report the empty flag only (satisfies the letter of the brief and drops the one element-driven setup consideration that actually applies here).",
+    "authority": "none -- a deliberate addition in the spirit of the brief's stated reason",
+    "at_utc": "2026-10-03T11:50:24.434811+00:00"
+  }
+]

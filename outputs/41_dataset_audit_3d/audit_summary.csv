@@ -1,0 +1,7 @@
+section,headline,file
+1 size,"median 24 HA, p99 34, max 65; 3 of 5655 compounds above 50 HA",section1_size_summary.csv
+2 elements,"9 elements, 0 compounds outside C/N/O/S/P/F/Cl/Br/I, 0 radicals, 21 non-neutral as written",section2_element_inventory.csv
+3 stereo,"50% of train / 35% of blind have a centre, but only 18 of 750 blind compounds have every centre specified; canonicalisation preserves stereo exactly",section3_stereo_summary.csv
+4 basic N,19% of train carries a basic N; CYP2D6 37% against 13-14% for the others,section4_basic_nitrogen_summary.csv
+5 flexibility,80% have <=5 rotatable bonds; 21 of 5655 exceed 10; median 4,section5_flexibility_summary.csv
+6 redundancy,0 conformer-dependent descriptors in any of the three feature sets; 213 Mordred 3D descriptors available and none used,section6_feature_redundancy.csv
