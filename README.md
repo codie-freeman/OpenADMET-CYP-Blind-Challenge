@@ -162,6 +162,26 @@ hand in the background, not from a notebook) — see `scripts/README.md`.
   was sent and became the best submission to date (macro ST-RAE 0.5982) — see
   `docs/leaderboard_submissions.md`'s NB30 and 27b sections and `notebooks/README.md` (`28`, `29`,
   `30`, `27b`).
+- **Fitting to the credible interval rather than the point estimate is the one unanimous win in
+  this project's screening history.** Training against `clip(oof_prediction, conf_low, conf_high)`
+  under absolute-error loss improved ST-RAE on all four isoforms *and* raised Spearman on all four
+  — the part that matters, since an affine placement or spread correction provably cannot move rank
+  order. Confirmed at 25 cluster-disjoint folds. See `notebooks/README.md` (`31`, `37`).
+- **Cluster-disjoint splitting does not change this project's conclusions, and the claim that it
+  would was testable and failed.** Across a completed 5×5 cluster-disjoint design, **0 of 25
+  sign-resolved arm-by-isoform comparisons flip** against the frozen random partition. The
+  exercise was not wasted: it produced this project's first genuinely *decorrelated* ensemble
+  candidate (tree models on raw fingerprint features), and it showed the AID auxiliary-head result
+  is more fragile to split choice than its 25-fold random-CV confirmation alone suggested. See
+  `notebooks/README.md` (`33`–`35`, `37`).
+- **Quantum-chemistry descriptors now exist for the whole library** — 5,655 compounds through
+  GFN2-xTB geometry optimisation and a B3LYP/def2-SV(P) single point, 11,310 ORCA jobs, **zero
+  failures**, parsed into per-atom, per-bond and molecule-level tables. Whether they carry signal
+  is a separate, open question: identifying *which* atom coordinates the haem iron turns out to be
+  a bind, because the SMARTS definition faithful to the cited chemistry matches 79% of compounds
+  and selects nothing, while the one that selects is empty for 88% of the scored blind set. See
+  `outputs/qm_descriptors/README.md`, `outputs/qm_parsed/README.md` and `notebooks/README.md`
+  (`41`–`43`).
 
 ## Status
 

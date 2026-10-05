@@ -69,5 +69,31 @@ background. Notebooks read these scripts' saved output from disk; they never inv
   partition notebook `15` builds (`data/folds/analog_holdout_split.csv`), structurally like one
   fold of `05b_run_cluster_cv.py`.
 
+## Quantum-chemistry descriptors (notebooks `41`–`43`)
+
+- **`run_qm_descriptors.py`** — the production QM run: all 5,655 compounds through notebook `42`'s
+  measured pipeline (RDKit ETKDGv3+MMFF conformer → GFN2-xTB optimisation → `B3LYP D3 def2-SV(P)
+  NORI Hirshfeld` single point), 11,310 ORCA jobs, **zero failures**. 281.6 core-hours in 47 h of
+  wall time across four stop-start sessions at ~100% parallel efficiency on six single-core
+  workers. Restartable per job on a content-based done-check (ORCA exits 0 on error, so the exit
+  code is trusted nowhere); SIGTERM drains cleanly. Writes `outputs/qm_descriptors/`. See that
+  directory's own README for the three corrections it makes to notebook `42`'s projections.
+- **`qm_supervisor.sh`** — a polling supervisor that relaunches `run_qm_descriptors.py` if it dies
+  or hits an `--hours` cap, stops itself on completion, and caps relaunches so a crash-loop cannot
+  churn. Off-switch is the sentinel file `outputs/qm_descriptors/KEEP_RUNNING`. Added beyond the
+  original brief and tested by deliberately stopping a healthy run rather than trusted on first
+  use.
+- **`parse_orca_output.py`** — extracts per-atom, per-bond and molecule-level quantities from the
+  completed run into three tidy tables (`outputs/qm_parsed/`). Prefers each job's `.property.txt`
+  over its `.out` wherever a quantity exists in both — typed indexed arrays rather than
+  fixed-width text — which confines the one real parser trap to a single block; that block is then
+  read by fixed character position, because a two-character element symbol runs into the shell
+  label (`7 Cls       :`) and whitespace splitting silently drops those atoms on 815 compounds.
+  Eight hard assertions per compound, including an atom-order check against RDKit and a
+  bond-subset check that catches same-element permutations the element check cannot see. Parses
+  the full set in well under a minute; restartable per compound via sharded writes.
+
 All scripts import `src/features.py`, `src/scoring.py`, and (where relevant) `src/chemprop_screen.py`
 or `src/cv_bootstrap.py` rather than reimplementing any of that logic locally — see `src/README.md`.
+`parse_orca_output.py` additionally reuses `run_qm_descriptors.py`'s own `read_orca_xyz()` rather
+than writing a second reader for the same file.

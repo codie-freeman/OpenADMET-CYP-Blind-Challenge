@@ -359,3 +359,167 @@ because it shares Candidate A's CYP2D6 column byte-for-byte — worked out at ma
 still worse than 27b, confirming the submission slot was correctly not spent on it. See
 `docs/leaderboard_submissions.md`'s NB32-A section for the full comparison, the Spearman
 decomposition, and the Candidate B deduction.
+
+## Cluster-disjoint cross-validation (33–35, 37)
+
+**[`33_butina_cluster_split.ipynb`](33_butina_cluster_split.ipynb)** — COMPLETE, comparison only.
+Builds a cluster-disjoint Butina partition (2048-bit Morgan r=3, Tanimoto distance 0.65 — Pat
+Walters' Discord-confirmed CYP3A4 recipe) and compares it against the frozen random partition,
+motivated by entrants placed above this project claiming random splits flatter every model. **The
+honest prior did not hold**: this recipe gives only 56.0% singleton clusters on this data, not the
+93–96% that `02`'s scaffold analysis and an external entrant's figure implied. Two findings cut
+against the motivating hypothesis: Butina held-out sets are *less* similar to their training
+portion (median 0.365) than random ones are (0.438), both further from the blind set's own profile
+(0.587) — so "Butina looks more like the blind set" is ruled out as the mechanism; and a
+5,000-shuffle Monte Carlo pairing check finds the deliberate activity-contrast signature on
+CYP1A2/CYP2C9/CYP3A4 (p≈0 each) but **a clean null on CYP2D6 (p=0.995)** — independent, internal
+confirmation that CYP2D6 was not built by the same hit-expansion recipe. The consequential result
+is that the AID-vs-PLAIN verdict flips sign on three of four isoforms between partitions. Three
+implementation bugs were hit and documented rather than silently patched.
+
+**[`34_butina_5x5_repeated_cv.ipynb`](34_butina_5x5_repeated_cv.ipynb)** — COMPLETE, evidence
+only. Raises `33` to a repeated design: 2 repeats × 5 folds × 10 arms = 100 units, 10.71 h. **The
+sanity check failed on first execution and was right to** — a real environment bug, not noise:
+copying `33`'s `OMP_NUM_THREADS=1` changed BLAS/OMP floating-point reduction order and put the
+retrained baseline 0.0378 ST-RAE off `05`'s stored scores, with bit-identical val_loss for two
+epochs before diverging. Unset, it reproduces `05` exactly. The consequence for `33` is stated
+rather than left implicit: its runs were produced under that setting, so its *absolute* Butina
+numbers are not on the same footing as `05`/`29`/`31`'s. **`33`'s AID sign-flip does not survive a
+repeated design** — 1 of 25 sign-resolved cells flips, 24 agree. The question TREES and SINGLE
+existed to answer is answered cleanly: tree models on raw fingerprint/descriptor features sit
+below their isoform's own re-seed floor on all 24 cells, this project's **first genuinely
+decorrelated ensemble candidate**, while single-task models decorrelate not at all. A unit error in
+`33`'s own prose is corrected (44% is the fraction of *clusters* that are non-singleton; the
+compound share is 70.1%). The timing gate's 2-repeat reduction is reported as a limitation of the
+rule — recomputed from realised costs it would have allowed 3.
+
+**[`35_butina_repeat3.ipynb`](35_butina_repeat3.ipynb)** — COMPLETE, evidence only. Adds repeat 2
+plus a new MAE_ONLY decomposition arm (65 units, 7.56 h), taking the design to 15 folds. Adding a
+repeat is not re-deciding `34`'s gate, and the notebook makes that checkable: the fold assignment
+was frozen before any result existed and the extra folds are added uniformly to every arm. **The
+third repeat changed nothing directional** — 6 of 40 cells changed verdict, none a reversal, the
+largest shift in any arm's mean 0.0126. One of `34`'s headline findings does weaken: CYP2D6/`aid`
+is no longer resolved against BH. MAE_ONLY separates the dead-zone gain into a loss-function
+component and a clipping-on-top component, and the split is isoform-specific (CYP2C9 82%
+clipping; CYP2D6 71% loss-alone). Two real bugs found and recorded, one of which — a join that
+silently emptied the blend pool — had passed a mid-run smoke test only because the arm it was
+written for had not finished yet.
+
+**[`37_butina_5x5_complete.ipynb`](37_butina_5x5_complete.ipynb)** — COMPLETE, evidence only.
+Completes the design (repeats 3–4, 110 units, 12.15 h) to the **25 samples Ash et al. specify**,
+with all three quoted sentences verified verbatim against the PDF at runtime. The caveat is stated
+prominently: reaching 25 satisfies Ash's *count*, not their independence argument, since a repeat
+here re-randomises cluster-to-fold assignment over one fixed clustering. **Completing the 5×5 moved
+almost nothing** — 1 of 40 verdict cells changed, 0 sign reversals. The consequential result is
+that **AID resolves on only one of four isoforms (CYP1A2), and CYP2D6 — the isoform `29` found
+strongest — does not reproduce on cluster-disjoint folds**, the first matched 25-against-25
+comparison this project has had. DEADZONE is significantly better than PLAIN on all four and
+uniquely best under `05`'s own CLD protocol. The split question is now unanimous: **0 of 25
+sign-resolved cells flip between partitions**. Its finding that CYP2D6's blend collapses to a
+single member is **superseded by `39`** — see that entry.
+
+## Spread correction and placement diagnostics (36, 38)
+
+**[`36_spread_corrected_nb32a.ipynb`](36_spread_corrected_nb32a.ipynb)** — COMPLETE, submitted.
+Applies a mean-preserving spread correction to `32`'s candidate A. **The brief's central premise
+was wrong and is corrected in Part 0**: that candidate was not awaiting a check — it had already
+been sent as NB32-A and scored 0.6488. The correction improved the work, turning the compression
+question from a forecast into something answerable from NB32-A's own per-isoform board scores. Two
+real discrepancies in `32`'s saved diagnostics are reported (a mixed `ddof` convention, and a
+CYP2D6 row that describes the raw model rather than the candidate's column). Targets are each
+isoform's best-scoring board column; all three judged isoforms clear the frozen 10% bar. **An
+unprompted finding is the most consequential thing in it**: this candidate *cannot* beat `27b` even
+if the widening worked perfectly, because its CYP2D6 column passes through unchanged and that gap
+is a ranking decline no affine correction reaches. Five defects in its own verification code were
+found in review and fixed. **Submitted as NB36-widened, macro ST-RAE 0.627** — it confirmed all
+five pre-registered predictions, the first clean sweep on this project.
+
+**[`38_cyp3a4_placement_diagnostic.ipynb`](38_cyp3a4_placement_diagnostic.ipynb)** — COMPLETE,
+diagnosis only. Asks whether CYP3A4's residual gap after `36` is a placement offset. **Answer: no
+— it is predominantly ranking, which no affine correction can reach.** The discriminating
+comparison needs no model: after `36`'s widening this column's CYP3A4 SD is identical to `04b`'s to
+2.2e-16, because `36`'s target rule selected `04b`'s own ratio, so **scale is eliminated by
+construction** and what remains is Spearman 0.8020 against 0.8329. A joint R² decomposition across
+all on-record submissions — using the bivariate-normal relation rather than `16`'s Spearman-as-
+Pearson substitution, which removes an infeasibility that affected 5 of 11 rows — attributes
+`04b`'s advantage to correlation (+0.0427) with placement working slightly in the *submitted*
+column's favour (−0.0057). The OOF cross-check **disagrees in sign**, reproducing `21`'s
+OOF-versus-blind population mismatch on a second isoform. When the missing board row was later
+supplied, the population solve passed a genuine held-out test: it had predicted this column's R² at
+0.6515 before the value existed in the repo, against a measured 0.6563 — inside the fit's own RMS
+residual.
+
+## Ensemble diversity and the single-object blend (39–40)
+
+**[`39_ambiguity_and_shared_blend.ipynb`](39_ambiguity_and_shared_blend.ipynb)** — COMPLETE,
+analysis only. Implements Krogh & Vedelsby's ambiguity decomposition (quotations verified against
+the PDF; the identity `E = Ē − A` checked to 4.4e-16) to ask whether a blend's diversity survives
+into the blind set. **It does not collapse — it grows**: `A_blind/A_oof` is 1.28–1.50 across
+isoforms. Retrospectively, `08`'s ensembles — the ones NB10 lost 0.116 macro with — were *also* not
+collapsed (1.11–1.79), so **vanished diversity is not the mechanism behind that failure** and it
+still needs its explanation elsewhere. Part B finds a single shared member set costs +0.0003 macro,
+and **one shared weight vector is 0.0027 macro *better* than the unconstrained per-isoform blend**,
+driven almost entirely by CYP2D6 — the per-isoform search was overfitting its own folds, which
+supersedes `37`'s reading of CYP2D6's collapsed blend. A later-appended Part D records the sharpest
+limitation: the ambiguity check is **one-directional**, able to close a route but not to open one.
+
+**[`40_single_object_ensemble.ipynb`](40_single_object_ensemble.ipynb)** — COMPLETE,
+prepare-and-validate. Builds `39`'s shared-weight object on full data (`deadzone` 0.625 / `aid`
+0.25 / `ecfp4_narrow__xgboost` 0.125, re-derived rather than quoted) and prepares submission
+candidates. CYP3A4's widening is *predicted* rather than asserted, from the R² identity: it helps
+iff ρ > 0.676, which every plausible value exceeds. Part 8 corrects its own earlier diagnosis —
+the xgboost member is **not** seed-unstable; at these hyperparameters XGBoost is deterministic
+given its data, and the entire instability is the 15% early-stopping split draw. The one piece of
+genuinely adverse evidence is reported as such: the blind ambiguity ratio came back **mixed and
+partly adverse** for this specific three-member object, below 1.0 on three of four isoforms under a
+scale-free normalisation. **An unintended submission fired from this notebook on 2026-10-02** — the
+first non-deliberate submission in this project's history, caused by the comment-gate convention
+being unsafe against an editor. The notebook now uses an explicit `SEND = False` flag with the
+printed message computed from it, so the cell cannot contradict itself.
+
+## Quantum-chemistry descriptors (41–43)
+
+**[`41_dataset_audit_3d.ipynb`](41_dataset_audit_3d.ipynb)** — COMPLETE, audit only. Replaces the
+assumptions behind a 3D/QM descriptor plan with measurements over all 5,655 compounds. **The size
+tail is not the problem it was expected to be**: only 3 compounds exceed 50 heavy atoms and none of
+them is in the blind set, so cost is dominated by about ten named compounds rather than by an
+isoform. Nine elements are present and nothing exotic, so GFN2's parameterisation covers
+everything. **Chirality splits the verdict**: canonicalisation preserves stereochemistry exactly
+(0 differing compounds across four sources), but only 9.4% of training and **2.4% of blind**
+compounds have every centre specified, and no blind compound has defined double-bond
+stereochemistry — so a descriptor claiming to separate enantiomers would have to invent a
+configuration for most scored compounds. A basic-nitrogen SMARTS, validated 10/10 against
+reference compounds, covers 18.9%/11.6% of train/blind but reaches **37.4% on CYP2D6 against
+12.7–13.8% elsewhere**. Redundancy against existing feature sets is **nil**: `mordred_pca`'s block
+is exactly Mordred's `ignore_3D=True` set and contains 0 of its 213 3D-exclusive descriptors.
+
+**[`42_orca_timing_run.ipynb`](42_orca_timing_run.ipynb)** — COMPLETE, measurement only. The first
+notebook here to run real quantum chemistry: 43 ORCA jobs over 15 deliberately chosen compounds,
+to choose the production route on evidence. **Three of its own brief's environment premises were
+wrong and were corrected by measurement** — `! XTB2` invokes a legacy external driver that is not
+installed (the native keyword is `NATIVE-GFN2-XTB`); MPI-parallel DFT fails at every `nprocs ≥ 2`
+under the briefed keyword line, which turns RIJCOSX on, while adding `NORI` both avoids the broken
+path and runs 3.2× faster for ≤0.0019 eV of frontier-orbital difference; and **ORCA exits 0 on
+error termination**, so the exit code is trusted nowhere afterwards. Verdict: full-set DFT is
+affordable. Zero SCF convergence failures, including on all three chemotypes `41` flagged as
+risks. A Discord source is transcribed into `docs/stereochemistry_provenance.md` with its status
+recorded as `CONSISTENT_WITH_LOCAL_DATA` rather than `VERIFIED`, since a chat message has no
+hashable artefact — and the six compounds it names check out 6/6 against this project's own data.
+
+**[`43_coordinating_atom_candidates.ipynb`](43_coordinating_atom_candidates.ipynb)** — COMPLETE,
+candidate definitions and evidence only; no pattern chosen and no feature file written. Part A puts
+the ORCA parse on record (see `scripts/README.md` and `outputs/qm_parsed/README.md`). Parts B–E
+measure three SMARTS candidates for the atom coordinating the haem iron. **A premise in its own
+brief is corrected**: Correia & Hollenberg's "neutral ferric P450 species" qualifies the *enzyme's*
+redox state, not the ligand, and the passage concerns anions — so the QM run's neutral-species
+choice stands but is re-attributed to this project rather than to the source. The same sources
+force a reframing: the chapter specifies **no amine substitution class** and puts aliphatic and
+aromatic nitrogen on equal footing, so the *faithful* reading is the wider pattern, not the narrow
+one. **The central result is a bind**: the conservative candidate (identical to `41`'s strict
+pattern on all 5,655 compounds) reproduces its 2.84× CYP2D6 enrichment but is empty for 88.4% of
+the scored blind set, while the faithful candidate reaches 79% coverage with no isoform spread at
+all and whose presence flag stops separating labels on two isoforms. The tie-break is close to a
+coin flip (the two proposed rules disagree on 43–48% of multi-match compounds, and the choice of
+charge *scheme* is a third axis), and **the presence flag alone is significant on all four
+isoforms**, reproducing `17`'s sign pattern from one bit — evidence bearing on whether the arm is
+worth building at all. All three decisions are left open.
