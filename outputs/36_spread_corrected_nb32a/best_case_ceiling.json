@@ -1,0 +1,16 @@
+{
+  "best_case_macro_strae_doc_basis": 0.606625,
+  "best_case_per_isoform_strae": {
+    "CYP1A2": 0.6954,
+    "CYP2C9": 0.5375,
+    "CYP2D6": 0.7502,
+    "CYP3A4": 0.4291
+  },
+  "best_case_macro_strae": 0.60305,
+  "nb32a_actual_macro_strae": 0.6488,
+  "best_macro_on_record": 0.5982,
+  "best_macro_held_by": "27b",
+  "can_beat_best_even_in_best_case": false,
+  "can_beat_best_on_doc_basis": false,
+  "binding_constraint": "CYP2D6, byte-identical to NB32-A, whose gap to 27b is a ranking decline (Spearman 0.4438 vs 0.4872) unreachable by any affine correction"
+}

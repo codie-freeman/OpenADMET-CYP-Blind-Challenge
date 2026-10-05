@@ -1,0 +1,42 @@
+{
+  "recorded_utc": "2026-10-01T19:54:24.339388+00:00",
+  "candidate_file": "outputs/36_spread_corrected_nb32a/submission_candidate_spread_corrected.csv",
+  "candidate_sha256": "6bcb254b62c4656a32ac3f6fa73d606602a4fc15154137c3c82c5c2ec380118e",
+  "baseline": {
+    "submission": "NB32-A",
+    "macro_strae": 0.6488,
+    "per_isoform_strae": {
+      "CYP1A2": 0.7906,
+      "CYP2C9": 0.5635,
+      "CYP2D6": 0.7502,
+      "CYP3A4": 0.4907
+    }
+  },
+  "predictions": [
+    {
+      "id": 1,
+      "claim": "Spearman and Kendall must be IDENTICAL to NB32-A's on all four isoforms (0.7565 / 0.7554 / 0.4438 / 0.8020 and 0.5611 / 0.5652 / 0.3076 / 0.6132). A mean-preserving positive scale is exactly rank-preserving, verified locally to <1e-12.",
+      "falsified_if": "any isoform's Spearman or Kendall differs from NB32-A's"
+    },
+    {
+      "id": 2,
+      "claim": "CYP2D6 must reproduce NB32-A's row EXACTLY on every metric -- the column is byte-identical. The board has reproduced byte-identical columns exactly on four prior occasions (NB19, NB27-widened, 27b, and 10c/NB16's shared columns).",
+      "falsified_if": "CYP2D6's ST-RAE differs from 0.7502"
+    },
+    {
+      "id": 3,
+      "claim": "macro ST-RAE should land between 0.6030 (the best case computed in Part 7) and 0.6488 (NB32-A's actual score) -- better than NB32-A, worse than 27b (0.5982).",
+      "falsified_if": "macro ST-RAE < 0.6030 or > 0.6488"
+    },
+    {
+      "id": 4,
+      "claim": "CYP1A2 should improve the most of the three widened isoforms (gap 29.3%, ranking already improved over the reference), CYP3A4 the least relative to its gap (part of its loss is a genuine ranking decline).",
+      "falsified_if": "CYP1A2's improvement is smaller than CYP2C9's or CYP3A4's"
+    },
+    {
+      "id": 5,
+      "claim": "if notebook 27 Section 1's compression association is causal rather than merely observational, all three widened isoforms improve. If none improves, that is real evidence against the mechanism on this project's own data.",
+      "falsified_if": "zero of the three widened isoforms improves on NB32-A"
+    }
+  ]
+}

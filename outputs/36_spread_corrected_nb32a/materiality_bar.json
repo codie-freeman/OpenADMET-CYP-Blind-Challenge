@@ -1,0 +1,24 @@
+{
+  "bar": "relative gap in spread ratio >= 10% of the target ratio",
+  "bar_rel_gap": 0.1,
+  "target_rule": "per isoform, the spread ratio of the submitted column holding that isoform's best real board ST-RAE across all eleven submissions",
+  "sd_convention": "ddof=1 for both prediction and training-label SD",
+  "anchor": {
+    "pair": "NB19 -> NB27-widened, CYP2D6",
+    "why": "the only spread-only change in this project's board record: identical board Spearman (0.4000) on both, so ranking is held fixed",
+    "ratio_before": 0.6084,
+    "ratio_after": 0.85,
+    "strae_before": 0.8299,
+    "strae_after": 0.7858,
+    "implied_linear_payoff_per_10pct_widening_strae": 0.011,
+    "smallest_macro_gap_between_submissions_on_record": 0.011,
+    "caveat": "single pair; linear extrapolation is crude and notebook 26 found the ST-RAE-vs-spread curve has an interior optimum, so linearity overstates the payoff near it. Used only to set the bar's order of magnitude."
+  },
+  "pre_registration_honesty": "NOT pre-registered in the strict sense: notebook 32 saved these ratios on 2026-09-19 and Part 1 of this notebook read them before this bar was defined. Sensitivity across the whole range of possible bars is reported instead, so the reader can see where the decision flips.",
+  "isoforms_judged": [
+    "CYP1A2",
+    "CYP2C9",
+    "CYP3A4"
+  ],
+  "cyp2d6_excluded_because": "already carries notebook 32's placement + widening to 0.85, confirmed in Part 3 against the submitted file"
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "decision": "Reported that the brief's central premise is wrong -- candidate A was NOT awaiting a final check; it was submitted 2026-09-20 02:10 UTC as NB32-A and scored macro ST-RAE 0.6488 -- and reframed this notebook as building a spread-corrected SUCCESSOR to it rather than a pre-submission check.",
+    "reason": "Established from docs/leaderboard_submissions.md's own parsed tables (Part 0), cross-checked against notebook 27's independent parse of the same document and against every macro-vs-isoform reconciliation. Proceeding on the brief's premise would have produced a notebook claiming to gate an unsent file that was in fact already scored, and would have discarded the per-isoform board evidence that makes the compression judgement measurable rather than speculative.",
+    "alternatives": "Follow the brief literally and treat candidate A as unsent (would state something false in a permanent notebook, and would have forced the Part 4 judgement back onto notebook 27's pooled, per-isoform-unreliable association); stop and ask before doing any work (the correction does not change what to build, only what to compare it against, so the work was completable under a stated correction).",
+    "authority": "this project's standing rule to verify every quoted figure before use"
+  },
+  {
+    "decision": "Used docs/leaderboard_submissions.md as the source of board scores, despite the brief instructing that figures be verified against saved files rather than that document, because no other file in this repo records them.",
+    "reason": "Board scores exist nowhere else: outputs/27_calibration/spread_ratio_table.csv carries a board_strae column for only the first 7 submissions, parsed from this same document. The document was therefore PARSED rather than retyped, and constrained by two independent checks -- exact agreement with notebook 27's own parse on all 28 overlapping cells, and macro = mean(4 isoforms) on every submission. For 27b and NB32-A only the second check applies, which is stated in Part 0 rather than glossed.",
+    "alternatives": "Refuse to use any board figure (would make the task impossible -- the whole judgement is 'a measured gap against a column with a known board score'); retype the figures by hand (strictly worse; this project has had three quoting errors already).",
+    "authority": "reasoned resolution of a genuine conflict in the brief's own constraints"
+  },
+  {
+    "decision": "Set the widening target per isoform to the spread ratio of the column holding that isoform's BEST real board ST-RAE, rather than uniformly to 10c's ratio or to a flat 0.85.",
+    "reason": "The brief's own bar is 'a measured gap against a column with a known board score', and the best-scoring column is the one whose spread profile the board has actually rewarded most on that isoform. This matters on CYP2C9, where 10c's ratio (0.9950) scored 0.5489 but NB12/NB19/27b's more compressed 0.8168 scored 0.5375 -- targeting 10c there would have widened PAST the best-known point in the wrong direction. The rule also independently selects 0.8500 for CYP2D6, the ratio candidate A already carries, which is a check on the rule rather than a coincidence engineered into it.",
+    "alternatives": "Target 10c on all four (contradicted by CYP2C9's own board history); target a flat 0.85 as notebook 27 Section 2 did for CYP2D6 (would have COMPRESSED CYP3A4 from 0.818 to 0.850's lower neighbourhood on no evidence, and 0.85 has no board standing on CYP1A2/CYP2C9/CYP3A4); target ratio 1.0 (no submission on record has ever scored well there except CYP2C9's 0.995).",
+    "authority": "not specified by the brief, which pins the recipe but not the target"
+  },
+  {
+    "decision": "Set the materiality bar at a relative spread-ratio gap of >= 10%.",
+    "reason": "Anchored on the only spread-only change in this project's board record (NB19 -> NB27-widened on CYP2D6, identical Spearman, +39.7% ratio for -0.0441 ST-RAE), scaled linearly to give ~0.011 ST-RAE per 10% widening -- the same order as the smallest macro gap that has ever separated two submissions here (0.0110). Full sensitivity is printed: the decision is 'all three' anywhere below 11.5% and 'CYP1A2 only' above 11.6%, and CYP2C9/CYP3A4's gaps are 0.11 percentage points apart so they always move together.",
+    "alternatives": "A stricter bar of ~15% (would widen CYP1A2 only, leaving two isoforms with real measured gaps and board evidence of a placement/spread loss untouched); no bar at all (would widen on a hunch, which the brief explicitly forbids).",
+    "authority": "CLAUDE.md's rule that adoption needs a pre-stated effect-size threshold -- satisfied only partially here, since notebook 32 had already saved these ratios before this notebook could define anything. Stated openly in Part 4 rather than presented as a true pre-registration."
+  },
+  {
+    "decision": "Widened CYP3A4 despite its board ranking having genuinely declined (Spearman 0.8177 -> 0.8020).",
+    "reason": "A mean-preserving scale is exactly rank-preserving, so widening cannot worsen the ranking component; it addresses only the spread component, which is real. But the expected gain is partial, and Part 4's verdict flags CYP3A4 as the weakest of the three cases rather than presenting all three as equivalent.",
+    "alternatives": "Leave CYP3A4 alone on the grounds that part of its loss is unreachable (would forgo a real, measured 11.6% spread gap for a reason that does not actually argue against widening).",
+    "authority": "judgement call on an isoform the brief asked to be judged"
+  },
+  {
+    "decision": "Wrote to a new directory, outputs/36_spread_corrected_nb32a/, rather than a new file inside outputs/32_deadzone_aid_retrain/.",
+    "reason": "The brief permits a new file in notebook 32's directory, but a separate directory leaves that directory byte-for-byte as built -- it holds a live, scored submission -- and matches what notebooks 19 and 27b each did. The scope check at the end verifies it was not touched.",
+    "alternatives": "A new filename inside notebook 32's own directory (permitted, but less safe).",
+    "authority": "brief says only 'a NEW path'"
+  },
+  {
+    "decision": "Adopted ddof=1 for every spread ratio, and reported that outputs/32_deadzone_aid_retrain/prediction_diagnostics.csv mixes conventions (ddof=0 numerator, ddof=1 denominator) rather than silently matching it.",
+    "reason": "ddof=1 is the only convention under which notebook 32's own CYP2D6 widening lands on its 0.85 target exactly (<1e-12), and it is what notebook 27's spread_ratio_table.csv uses on both sides -- so it is the footing on which the comparison the brief asked for is actually apples-to-apples. The mixed-convention bias is a constant sqrt(749/750), about 0.067%, far too small to move any judgement here; notebook 32's own conclusions are unaffected at the precision they are quoted to, and its file was not modified.",
+    "alternatives": "Reproduce the mixed convention for consistency with notebook 32's saved table (would carry a known error forward and would make CYP2D6 miss its own verified 0.85 target).",
+    "authority": "brief's instruction to verify every quoted figure against its saved file"
+  },
+  {
+    "decision": "Computed and reported the best-case macro ceiling (0.6066) showing this candidate cannot beat 27b even with a perfect spread correction -- not asked for by the brief.",
+    "reason": "It is decision-relevant and cheap: the brief's implicit purpose is to get this candidate into a sendable state, and the most useful thing to know before spending a submission slot is that the recipe is capped below the current best by CYP2D6's ranking decline alone. Omitting it would have handed over a validated file with its central limitation unstated.",
+    "alternatives": "Report only what the brief asked for (would leave the user to discover the ceiling from the board).",
+    "authority": "unprompted but directly relevant finding, reported per this project's convention"
+  }
+]

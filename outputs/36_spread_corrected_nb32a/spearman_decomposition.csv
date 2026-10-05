@@ -1,0 +1,5 @@
+isoform,strae_ref,ref_strae,nb32a_strae,d_strae,rank_ref,ref_spearman,nb32a_spearman,d_spearman,ranking_verdict
+CYP1A2,"10c, 27b, NB16, NB19, NB27-widened",0.6954,0.7906,0.09519999999999995,27b,0.7375,0.7565,0.018999999999999906,held or improved -- gap is placement/spread
+CYP2C9,"27b, NB12, NB19, NB27-widened",0.5375,0.5635,0.026000000000000023,27b,0.7585,0.7554,-0.0030999999999999917,held or improved -- gap is placement/spread
+CYP2D6,27b,0.7165,0.7502,0.03369999999999995,27b,0.4872,0.4438,-0.04340000000000005,real decline -- NOT reachable by any affine fix
+CYP3A4,04b,0.4291,0.4907,0.061600000000000044,27b,0.8177,0.802,-0.015699999999999936,small decline -- gap mostly placement/spread
