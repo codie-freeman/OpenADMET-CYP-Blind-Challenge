@@ -326,3 +326,39 @@ outputs/34_butina_5x5/chemprop_runs/
 outputs/34_butina_5x5/predictions/
 outputs/34_butina_5x5/scores/
 outputs/34_butina_5x5/oof_long/*__r*f*.csv
+
+# Notebook 42 (ORCA timing run): the raw ORCA job tree is bulk and regeneratable from the
+# notebook itself -- every .out is kept ON DISK so SCF convergence stays inspectable, but it is
+# far too large to track (hundreds of MB for 15 compounds). The small summary/analysis CSVs,
+# figures and the decision/verdict JSONs under outputs/42_orca_timing/ ARE tracked, same
+# convention as notebooks 05-07 above.
+outputs/42_orca_timing/orca/
+outputs/42_orca_timing/logs/
+
+# Production QM descriptor run (scripts/run_qm_descriptors.py): the per-compound ORCA job tree
+# is bulk and regeneratable from the script. ORCA's scratch (.gbw/.densities/.tmp) is pruned
+# after every compound's parse assertions pass, but each compound still retains its .inp, its
+# full .out reports (so SCF convergence stays inspectable) and its geometries -- about 5 MB for
+# the largest compounds in the library, projecting to ~29 GB as an upper bound over all 5,655.
+# The descriptor tables, status.json, the failures log and the decision JSONs ARE tracked, same
+# convention as notebook 42 above.
+outputs/qm_descriptors/orca/
+
+# 35_butina_repeat3 and 37_butina_5x5_complete (notebook 34's cluster-disjoint design extended to
+# 3 and then 5 repeats): same convention as 34 above. Per-run chemprop inputs/checkpoints, per-fold
+# predictions, the raw per-bootstrap-sample score files and the per-(repeat,fold,arm) OOF slices are
+# bulk and regeneratable from the notebooks (~190 MB combined). The AGGREGATED
+# oof_long_{iso}_{15,25}fold.csv tables are kept, as are every summary CSV, figure and JSON.
+outputs/35_butina_repeat3/chemprop_runs/
+outputs/35_butina_repeat3/predictions/
+outputs/35_butina_repeat3/scores/
+outputs/35_butina_repeat3/oof_long/*__r*f*.csv
+outputs/37_butina_5x5_complete/chemprop_runs/
+outputs/37_butina_5x5_complete/predictions/
+outputs/37_butina_5x5_complete/scores/
+outputs/37_butina_5x5_complete/oof_long/*__r*f*.csv
+
+# 40_single_object_ensemble: the seed-averaging OOF table is 22 MB of 250 fold-fits and regenerates
+# in ~91 s (notebook 40 Part 8). Its derived summaries, the seed-averaged full-data predictions and
+# every submission candidate ARE tracked.
+outputs/40_single_object_ensemble/part8_stabilised_member/xgboost_oof_10seeds.csv
