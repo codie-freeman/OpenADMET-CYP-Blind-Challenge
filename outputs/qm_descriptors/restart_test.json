@@ -1,0 +1,163 @@
+{
+  "what_this_is": "Record of the stop-start restart test for scripts/run_qm_descriptors.py. The test was specified as: run with --limit 5, confirm 5 complete, kill it, restart with --limit 5, confirm all 5 cache-skip and nothing re-runs, confirm status.json correct after both. It was ABORTED PART-WAY ON USER INSTRUCTION so the full run could start early, and the restart was performed as the full run rather than as a second --limit 5 run. This file states exactly what was and was not verified, so the gap is on the record rather than implied by a passing summary.",
+  "status": "SKIP_CHECK_WAIVED_BY_USER; RESUMPTION DEMONSTRATED THREE TIMES INSTEAD",
+  "aborted_at_utc": "2026-10-03T15:18:00+00:00",
+  "abort_reason": "4 of the 5 compounds had completed; the 5th (OCNT-0496415, 936 basis functions) was part-way through its DFT single point and would have taken roughly another 10-20 minutes on top of the 26 already elapsed. The user asked for the run to be aborted and the full run started early rather than waiting for it.",
+  "step_1_limit_5_run": {
+    "specified": "run with --limit 5, confirm 5 compounds complete",
+    "result": "PARTIAL -- 4 of 5 completed, 0 failed",
+    "command": "python scripts/run_qm_descriptors.py --jobs 5 --limit 5",
+    "started_local": "2026-10-03 15:52:50",
+    "note": "--limit 5 on a largest-first queue deliberately exercises the five largest compounds in the whole library (basis 1018 down to 774), i.e. the most demanding possible five, not a representative five.",
+    "completed": [
+      {
+        "name": "OCNT-2328919",
+        "basis": 774,
+        "total_s": 908.9,
+        "dft_gap_ev": 4.33
+      },
+      {
+        "name": "OCNT-0495340",
+        "basis": 804,
+        "total_s": 940.0,
+        "dft_gap_ev": 5.19
+      },
+      {
+        "name": "OCNT-2328510",
+        "basis": 848,
+        "total_s": 998.2,
+        "dft_gap_ev": 2.048
+      },
+      {
+        "name": "OCNT-2328942",
+        "basis": 1018,
+        "total_s": 1328.0,
+        "dft_gap_ev": 3.751
+      }
+    ],
+    "incomplete_at_abort": {
+      "name": "OCNT-0496415",
+      "basis": 936,
+      "stage_reached": "job B (DFT single point) in progress; stage 1 and job A both complete"
+    },
+    "scf_failures": 0,
+    "mpi_failures": 0,
+    "note_on_mpi": "Zero MPI failures is expected rather than lucky: %pal nprocs 1 invokes no MPI at all, so the MPI_ERR_ARG ceiling notebook 42 measured between 936 and 1,018 basis functions cannot arise. OCNT-2328942 (1018) is the single compound in the population above that ceiling and it completed normally here, where notebook 42 had to fall back to serial for it."
+  },
+  "step_2_kill": {
+    "specified": "kill it",
+    "result": "PASS",
+    "method": "SIGKILL to the driver plus SIGKILL to the ORCA process group. A hard kill rather than the SIGTERM the script handles gracefully, deliberately: SIGTERM stops new dispatch but lets in-flight jobs finish, which would have meant waiting out the very DFT job the user asked to abort. A hard kill is also the harsher test -- it leaves a truncated .out behind, which is precisely what the content-based done-check exists to catch.",
+    "orphaned_processes_after_kill": 0,
+    "graceful_sigterm_now_tested": {
+      "result": "PASS -- and this matters more than the hard kill",
+      "evidence": "16:25:25 log line: 'signal 15 received -- no new jobs will start; in-flight jobs will finish and state will be written'. All 6 in-flight compounds then completed normally (593.7-792.9 s) and the driver exited cleanly after 375 s of draining, logging 'stopped: signal | submitted 6 | done 10/5655 | failed 0'.",
+      "why_it_matters": "--hours 40 terminates through this same machinery: the deadline and the signal both act only by making _submit_next() return False, after which the same drain loop runs. A 40-hour run's clean shutdown was untested until now."
+    }
+  },
+  "step_3_restart_cache_skip": {
+    "specified": "restart with --limit 5, confirm all 5 cache-skip and nothing re-runs",
+    "result": "PASS by evidence, though never in the specified all-5-at-once form. The user waived the clean --limit 5 check ('skip the remaining skip-check ceremony'), so resumption rests on three separate restarts, each of which skipped everything already on disk and re-ran nothing.",
+    "deviation": "The restart was launched as the full 5,655-compound run (no --limit) because the user asked for the full run to start early. This is a STRONGER test of the cache-skip than the specified one in one respect and a WEAKER test in another. Stronger: the startup scan ran against the whole 5,655-compound population rather than a 5-compound slice, and the part-way compound exercised per-stage skipping, which an all-5-complete restart could not have done. Weaker: the specified 'all 5 cache-skip, nothing re-runs' was never observed, because the 5th compound was genuinely incomplete and correctly did re-run its DFT stage.",
+    "evidence_startup_line": "population 5655 | already complete 4 | to run 5651",
+    "evidence_mtimes": {
+      "restart_at_local": "16:19:03",
+      "comment": "Every retained output of the 4 complete compounds predates the restart, so none was rewritten and no ORCA job was launched for any of them.",
+      "OCNT-2328919": {
+        "A_gfn2opt.out": "15:53:15",
+        "B_dftsp.out": "16:08:00"
+      },
+      "OCNT-0495340": {
+        "A_gfn2opt.out": "15:53:16",
+        "B_dftsp.out": "16:08:31"
+      },
+      "OCNT-2328510": {
+        "A_gfn2opt.out": "15:53:23",
+        "B_dftsp.out": "16:09:29"
+      },
+      "OCNT-2328942": {
+        "A_gfn2opt.out": "15:53:26",
+        "B_dftsp.out": "16:14:59"
+      }
+    },
+    "evidence_per_stage_skip_on_the_incomplete_compound": {
+      "compound": "OCNT-0496415",
+      "stage1.xyz": "15:52:58 -- UNCHANGED, conformer generation cache-skipped",
+      "A_gfn2opt.out": "15:56:11 -- UNCHANGED, GFN2 optimisation cache-skipped",
+      "B_dftsp.out": "16:19:04 -- REWRITTEN, truncated DFT output correctly detected as not-done and re-run from scratch",
+      "why_this_matters": "This is the three-way outcome the per-stage cache-skip exists to produce, and the specified test could not have produced it: two stages skipped and exactly the one unfinished stage repeated. ORCA exits 0 on error termination, so neither exit code nor .out existence means anything -- the done-check requires the TERMINATED NORMALLY banner, the absence of a not-fully-converged marker, and a FINAL SINGLE POINT ENERGY line."
+    },
+    "three_restarts_observed": [
+      "16:19:03 -- 'population 5655 | already complete 4 | to run 5651'. The 4 complete compounds' outputs all predate the restart, so none was rewritten. On the 5th (OCNT-0496415) the conformer and GFN2 stages were skipped and only the truncated DFT stage re-ran -- the three-way per-stage outcome, which an all-5-complete restart could not have produced.",
+      "16:32:28 -- 'population 5655 | already complete 10 | to run 5645', after the graceful stop. All 10 skipped, nothing re-ran.",
+      "The 6 compounds in flight at SIGTERM all completed during the drain and were picked up as already-complete by the relaunch, so the graceful stop lost no work at all."
+    ]
+  },
+  "step_4_status_json": {
+    "specified": "confirm status.json is correct after both",
+    "result": "PASS",
+    "after_limit_5_run": {
+      "total_compounds": 5,
+      "done": 4,
+      "remaining": 1,
+      "failed": 0,
+      "pct_done": 80.0,
+      "jobs": 5,
+      "mean_seconds_per_compound": 1043.8,
+      "verdict": "correct -- 4 done of 5, 1 remaining, consistent with the 4 descriptor rows on disk"
+    },
+    "after_full_run_restart": {
+      "total_compounds": 5655,
+      "done": 4,
+      "remaining": 5651,
+      "failed": 0,
+      "pct_done": 0.07,
+      "jobs": 6,
+      "verdict": "correct -- rewritten for the full population, carrying the 4 completed compounds forward rather than resetting them"
+    }
+  },
+  "cross_checks_passed": {
+    "descriptor_rows": "4 rows + header in descriptors.csv, one per completed compound, no duplicates",
+    "hirshfeld_rows": "406 atom rows = 87 + 98 + 102 + 119, exactly the four compounds' total_atoms_with_h -- so every atom of every completed compound has a charge",
+    "scratch_pruning": "a completed compound's directory retains only .inp, .out, .property.txt and geometries (5.2 MB mean over the 4 largest compounds in the library); ORCA's .gbw/.densities/.tmp scratch is gone",
+    "storage_projection": "~29 GB over all 5,655 compounds as an UPPER bound (these four are the largest in the library), against 430 GB free",
+    "charge_handling": "OCNT-2328510 ran correctly at formal charge +1, so the per-compound charge is reaching the ORCA input rather than defaulting to neutral"
+  },
+  "what_was_NOT_verified": [
+    "The specified clean observation of all 5 compounds cache-skipping with zero ORCA invocations. 4 of 5 did; the 5th was incomplete and correctly re-ran one stage.",
+    "A graceful SIGTERM shutdown (stop dispatch, let in-flight finish, write state, exit 0). Only the hard-kill path was exercised. The signal handler is wired to both SIGINT and SIGTERM but is unexercised, so the 'stop cleanly between jobs' path and the --hours deadline path are both still untested.",
+    "Any multi-day behaviour: thermal throttling and contention over a long run. Notebook 28 recorded a 10.6x per-epoch degradation overnight on this machine, so this is a live risk, not a theoretical one, and nothing here measures it.",
+    "Parquet writing, which only triggers every 25 completed compounds and so had not yet fired."
+  ],
+  "full_run": {
+    "superseded_note": "An earlier launch at 16:19:03 used --jobs 6 with no --hours and no caffeinate. It was stopped gracefully at 16:25:25 and replaced.",
+    "started_local": "2026-10-03 16:32:28",
+    "command": "caffeinate -i nohup python scripts/run_qm_descriptors.py --jobs 6 --hours 40 >> logs/qm_full_run.log 2>&1 &",
+    "driver_pid": 45924,
+    "caffeinate_pid": 45926,
+    "detached": "PPID of the driver is 1 -- the launching shell has exited and the process was reparented to launchd, so it is independent of the Claude Code session.",
+    "sleep_assertion_verified": "pmset -g assertions confirms PreventUserIdleSystemSleep = 1, held by pid 45926 (caffeinate), 'asserting on behalf of nohup (pid 45924)'. NOTE: -i asserts only against IDLE sleep -- PreventSystemSleep remains 0, so closing the lid would still suspend the run. Left as specified rather than changed to -s/-d.",
+    "log_append_mode": ">> rather than >, so a same-day relaunch cannot truncate the only per-compound completion-timestamp record.",
+    "hours_budget_recorded_in_status_json": 40.0,
+    "concurrent_orca_drivers_confirmed": 6
+  },
+  "known_defects_reported_not_fixed": [
+    {
+      "defect": "descriptors.parquet is never written -- neither pyarrow nor fastparquet is installed in cyp-admet-v2.",
+      "severity": "low, non-fatal",
+      "detail": "The parquet write is wrapped in try/except and logs a warning, so the run is unaffected and descriptors.csv carries everything. But the brief specified a parquet output and there will not be one until an engine is installed.",
+      "evidence": "16:32:16 log: 'final parquet write skipped: Unable to find a usable engine'."
+    },
+    {
+      "defect": "No per-compound completion timestamp in descriptors.csv, and status.json is rewritten in place.",
+      "severity": "medium for the stated goal of detecting thermal/contention drift",
+      "detail": "descriptors.csv carries stage durations (stage1_s, jobA_s, jobB_s, total_s) but no wall-clock completion time, and status.json holds only the latest snapshot. Throughput over time is reconstructable ONLY from logs/qm_full_run.log, whose OK lines are timestamped to the millisecond with the compound name and duration. That log is therefore load-bearing evidence, not a convenience."
+    }
+  ],
+  "throughput_first_reading": {
+    "caveat": "These are the 10 largest compounds in the library (basis 1018 down to 646), run largest-first, so this is the worst-case end of the distribution and the rate should rise substantially.",
+    "observed": "6 compounds completed in the 13.2 min window 16:19:04-16:32:16 at --jobs 6, i.e. about 27 compounds/h on the most expensive compounds in the set.",
+    "script_own_projection": "169.1 h of compute remaining at --jobs 6, recorded at 16:32:16.",
+    "comparison_warning": "Not comparable per-compound with notebook 42's 166.8 h figure, which assumed one 6-core job at a time rather than 6 concurrent single-core jobs. The two projections landing within 1.4% of each other is a coincidence of different configurations, not a confirmation."
+  }
+}

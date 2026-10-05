@@ -1,0 +1,16 @@
+[
+  {
+    "decision": "Dispatched a pool of single-core ORCA jobs rather than one wide job at a time",
+    "reason": "Notebook 42 measured 6-core DFT at 72%% parallel efficiency and a throughput peak at nprocs=1. A free consequence is that %%pal nprocs 1 invokes no MPI at all, so the MPI_ERR_ARG ceiling it measured between 936 and 1,018 basis functions cannot arise -- exactly one of the 5,655 compounds sits above it.",
+    "alternatives": "One 6-core job at a time (2.54x slower by notebook 42's own measurement, and exposed to the MPI defect on the largest compounds).",
+    "authority": "the brief, which specifies the pool design",
+    "at_utc": "2026-10-04T21:03:03.551251+00:00"
+  },
+  {
+    "decision": "Estimated basis functions exactly from element composition for the largest-first queue, rather than regressing on atom count",
+    "reason": "Basis functions are exactly additive over atoms. The per-element table was solved by least squares against notebook 42's 15 measured counts (max residual 0.000000) and completed for Br and P by two dedicated single-point jobs, since neither element was determined by that selection. It reproduces all 15 exactly and covers every element in the population, so the queue order is exact rather than fitted.",
+    "alternatives": "Use notebook 42's basis-vs-atoms regression (R2 0.79, so it would mis-order the queue); or order by heavy atoms (ignores that iodine contributes 26 basis functions against carbon's 14).",
+    "authority": "none -- the brief asks for a basis-function estimate without specifying one",
+    "at_utc": "2026-10-04T21:03:03.552054+00:00"
+  }
+]

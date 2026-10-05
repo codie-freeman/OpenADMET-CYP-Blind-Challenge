@@ -1,0 +1,19 @@
+{
+  "updated_at_utc": "2026-10-05T16:21:50.042681+00:00",
+  "total_compounds": 5655,
+  "done": 5655,
+  "remaining": 0,
+  "failed": 0,
+  "pct_done": 100.0,
+  "jobs": 6,
+  "mean_seconds_per_compound": 136.4,
+  "completed_this_session": 3050,
+  "session_elapsed_h": 19.313,
+  "hours_budget": null,
+  "projected_completion_utc": null,
+  "projected_remaining_h": null,
+  "failed_compounds": [],
+  "dft_keywords": "B3LYP D3 def2-SV(P) NORI Hirshfeld",
+  "gfn2_keywords": "NATIVE-GFN2-XTB Opt",
+  "nprocs_per_job": 1
+}
