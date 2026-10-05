@@ -1,0 +1,23 @@
+[
+  {
+    "decision": "Reused notebook 12's full-data `ecfp4_narrow__xgboost` blind predictions as the member, and trained a fresh fit at this notebook's own seed purely as a sensitivity check rather than as the member",
+    "reason": "The brief says both to train this member and to reuse what already exists. Notebook 12's artefact is verified identical in hyperparameters to notebook 37's arm (same XGBRegressor call, early_stopping_rounds=10) and is the column notebook 39 used for this member on the blind set, so reusing it keeps Part 4's ambiguity figures continuous with notebook 39's. The seed is the only difference (42 against this notebook's 2684470948) and it is a free parameter for a one-off full-data fit, so the sensible treatment is to measure how much it matters and report it.",
+    "alternatives": "Use the fresh fit as the member (self-consistent within this campaign, but breaks continuity with notebook 39's blind-side figures for the same member); reuse only, with no sensitivity check (cheaper, but leaves the seed exposure unquantified).",
+    "authority": "reconciling two instructions in the brief that point different ways; recorded rather than silently resolved",
+    "at_utc": "2026-10-02T13:48:11.517756+00:00"
+  },
+  {
+    "decision": "Built the full-data dead-zone target from POOLED OUT-OF-FOLD predictions (notebook 37's `plain` arm, cluster-disjoint partition, averaged over its five repeats) and trained no full-data PLAIN donor at all",
+    "reason": "A full-data donor's predictions on the training compounds are in-sample: it has seen every one of those labels, so the clipped target collapses toward the label it is meant to replace, an exposure strictly worse than the out-of-fold version every screen used. The brief asks for the more conservative option where the two differ. Notebook 37's `plain` OOF is chosen over notebook 11's random-partition OOF because notebook 37's own `deadzone` arm -- the member that earned weight 0.625 -- was built from exactly that donor on exactly that partition; the notebook-11 alternative is computed and reported beside it so the choice's consequence is measured.",
+    "alternatives": "Train a full-data PLAIN model and use its in-sample predictions (what the brief's own note warns against); use notebook 11's random-partition OOF, matching notebook 32's precedent but not notebook 37's measured member.",
+    "authority": "the brief's explicit instruction to take the more conservative option and record it",
+    "at_utc": "2026-10-02T13:48:11.851299+00:00"
+  },
+  {
+    "decision": "Built a second candidate (B) identical to candidate A except that CYP2D6 receives the board-validated placement-then-widening chain, and prepared both",
+    "reason": "Candidate A, exactly as briefed, carries no CYP2D6 placement correction. The board record measures that defect directly: 10c's raw CYP2D6 scored 1.1673, the same predictions recentred onto the solved blind population scored 0.8299 with Spearman unchanged -- 0.085 of macro from one affine map, reproduced across three later submissions. Candidate A's macro would therefore be dominated by a known, already-solved placement defect, which would mask the single-object ensemble's actual effect on the other three isoforms -- the thing this notebook exists to test. Candidate B differs by exactly one affine transform on one isoform, applies no new method, and its three other columns are byte-identical to A's.",
+    "alternatives": "Build only candidate A as briefed (faithful, but prepares a candidate whose predicted macro is ~0.75 against a current best of 0.5982, and whose result would not inform the question asked); apply the correction inside candidate A (would silently change what the brief specified).",
+    "authority": "judgement call beyond the brief; notebook 32's own two-candidate precedent for preparing a conservative and a test variant side by side in one notebook",
+    "at_utc": "2026-10-02T13:48:13.965408+00:00"
+  }
+]

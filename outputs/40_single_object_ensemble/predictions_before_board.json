@@ -1,0 +1,245 @@
+{
+  "recorded_utc": "2026-10-02T13:48:14.016155+00:00",
+  "subject": "notebook 39's shared member set AND shared weight vector, built on full data and spread-corrected; candidate A as briefed, candidate B identical except CYP2D6 placement",
+  "weights": {
+    "deadzone": 0.625,
+    "aid": 0.25,
+    "ecfp4_narrow__xgboost": 0.125
+  },
+  "members": {
+    "deadzone": "trained here: PLAIN architecture (CheMeleon), dead-zone clipped target from notebook 37's pooled out-of-fold `plain` predictions, MAE loss, epochs=50, patience=5, seed 2684470948, full-data (assign_final_submission_split, val_fraction=0.15)",
+    "aid": "notebook 30's full-data retrain of the AID 1851 auxiliary-head model (notebook 29's 5x5-CV-confirmed recipe), raw and uncorrected",
+    "ecfp4_narrow__xgboost": "notebook 12's full-data retrain, XGBRegressor(early_stopping_rounds=10, random_state=42) on the ecfp4_narrow features"
+  },
+  "current_best_on_record": {
+    "submission": "27b",
+    "macro_strae": 0.5982
+  },
+  "anchor_submission": {
+    "name": "NB36-widened",
+    "macro_strae": 0.627,
+    "per_isoform": {
+      "CYP1A2": 0.7241,
+      "CYP2C9": 0.5435,
+      "CYP2D6": 0.7502,
+      "CYP3A4": 0.4904
+    }
+  },
+  "prediction_1_macro": {
+    "candidate_A_macro_strae_range": [
+      0.704,
+      0.839
+    ],
+    "candidate_B_macro_strae_range": [
+      0.582,
+      0.707
+    ],
+    "per_isoform_A": {
+      "CYP1A2": [
+        0.674,
+        0.774
+      ],
+      "CYP2C9": [
+        0.493,
+        0.594
+      ],
+      "CYP2D6": [
+        1.21,
+        1.45
+      ],
+      "CYP3A4": [
+        0.44,
+        0.54
+      ]
+    },
+    "per_isoform_B": {
+      "CYP1A2": [
+        0.674,
+        0.774
+      ],
+      "CYP2C9": [
+        0.493,
+        0.594
+      ],
+      "CYP2D6": [
+        0.72,
+        0.92
+      ],
+      "CYP3A4": [
+        0.44,
+        0.54
+      ]
+    },
+    "prediction_margin_on_anchor": 0.05,
+    "largest_oof_gain_admitted": 0.027565018698085142,
+    "basis": "CYP1A2/CYP2C9/CYP3A4: anchored on NB36-widened's own board scores (same spread rule, and its model -- the dead-zone target on the AID architecture, full-data -- is the closest thing on the board to this blend's dominant member), widened to admit the blend's out-of-fold gain over its best single member (0.01-0.04 ST-RAE per isoform) in one direction and this project's four CV-to-board transfer failures in the other. CYP2D6: derived from R2 = 2*rho*k - b^2 - k^2 against the board-solved blind population (mean 3.1558, SD 1.5114), with rho bracketed by this blend's own OOF rho and the median rho recovered from the twelve on-record CYP2D6 columns, then mapped to ST-RAE by a linear fit on this isoform's own board (R2, ST-RAE) pairs -- crude, and used only for an order of magnitude.",
+    "claim": "Candidate A will NOT beat 27b's 0.5982, and the reason is CYP2D6 alone: its column carries no placement correction, and the board has measured that defect at about 0.34 ST-RAE on this isoform (10c 1.1673 -> NB16 0.8299, same predictions, Spearman unchanged). Candidate B may or may not beat it; that is a genuine coin-flip on this evidence and is not predicted either way.",
+    "falsified_if": "candidate A's macro lands below 0.598 (it would then have beaten the current best despite the uncorrected CYP2D6 column), or either candidate's macro lands outside its stated range."
+  },
+  "prediction_2_cyp3a4_spearman": {
+    "claim": "CYP3A4's Spearman WILL move off NB32-A/NB36-widened's 0.8020. This is the first candidate that could: notebook 38 established that what separates the leading CYP3A4 columns is RANKING (0.8020 against 04b's 0.8329) and that no affine correction reaches it, and a blend is not an affine transform of any member -- it reorders. Direction predicted UP, because the blend's out-of-fold Spearman on CYP3A4 (0.8001) exceeds every member's and PLAIN's (0.7552). Magnitude predicted SMALL: inside [0.800, 0.830], and specifically NOT reaching 04b's 0.8329.",
+    "oof_evidence": {
+      "plain": 0.7551656763038849,
+      "deadzone": 0.7821232132352989,
+      "aid": 0.7663795831870887,
+      "ecfp4_narrow__xgboost": 0.6822623235210942
+    },
+    "oof_blend": 0.8000742964534361,
+    "counterexample_stated_up_front": "The out-of-fold-to-board Spearman mapping is NOT monotone on this isoform, and this project's own record contains the counterexample: the `aid` arm's OOF CYP3A4 Spearman (0.7664) is HIGHER than PLAIN's (0.7552), yet NB30's board CYP3A4 Spearman (0.7651) is LOWER than 10c's (0.8177). The `aid` member carries weight 0.25 here. So the direction above is the OOF evidence's direction, not a safe one.",
+    "falsified_if": "CYP3A4 Spearman comes back at exactly 0.8020 (a blend that reorders nothing would be a real surprise), or at or above 0.8329, or below 0.800."
+  },
+  "prediction_3_the_case_rests_entirely_on_ambiguity": {
+    "claim": "This candidate's case rests ENTIRELY on the ambiguity term. `ecfp4_narrow__xgboost` carries weight 0.125 -- a quarter of the non-`deadzone` weight -- and notebook 37's 25-fold paired tests find it SIGNIFICANTLY WORSE than PLAIN on three of four isoforms (CYP1A2 +0.0492 p_BH 0.0020, CYP2C9 +0.1176, CYP3A4 +0.0976; CYP2D6 not different). It improves on PLAIN on only 6 of 25 folds on CYP1A2 and 0 of 25 on CYP2C9 and CYP3A4. The ensemble therefore cannot gain through this member's own accuracy; it can only gain through its disagreement with the other two. That is Dietterich's accurate-and-diverse condition behaving exactly as described, and it is simultaneously this candidate's single largest exposure -- recorded here as a prediction, not discovered afterwards.",
+    "second_exposure_found_in_part_1_2_not_anticipated_by_the_brief": "The same member is also markedly SEED-UNSTABLE on the blind set, which Part 1.2's sensitivity check found and which was not anticipated. Two full-data fits differing only in random seed correlate at Pearson [0.745, 0.89, 0.711, 0.914] across the four isoforms, with mean |difference| [0.324, 0.235, 0.184, 0.289] pIC50 units and CYP2D6's prediction SD nearly halving between them (0.357 against 0.192). At weight 0.125 that is up to 0.040 pIC50 units of movement in the blended column from the seed alone. Since the member's contribution is diversity rather than accuracy, and its diversity is itself seed-dependent at this scale, the ambiguity term this candidate rests on is not a stable property of the member -- it is partly a property of one arbitrary fit.",
+    "xgboost_vs_plain_25fold": [
+      {
+        "isoform": "CYP1A2",
+        "mean_diff": 0.0491815335975368,
+        "p_BH": 0.0019743974532171,
+        "n_improving": 6,
+        "n": 25,
+        "verdict": "SIGNIFICANTLY WORSE"
+      },
+      {
+        "isoform": "CYP2C9",
+        "mean_diff": 0.1175555979989081,
+        "p_BH": 4.0230897082948544e-10,
+        "n_improving": 0,
+        "n": 25,
+        "verdict": "SIGNIFICANTLY WORSE"
+      },
+      {
+        "isoform": "CYP2D6",
+        "mean_diff": 0.0112707460237264,
+        "p_BH": 1.0,
+        "n_improving": 11,
+        "n": 25,
+        "verdict": "NOT DIFFERENT"
+      },
+      {
+        "isoform": "CYP3A4",
+        "mean_diff": 0.0976280066805517,
+        "p_BH": 6.67609215958014e-13,
+        "n_improving": 0,
+        "n": 25,
+        "verdict": "SIGNIFICANTLY WORSE"
+      }
+    ],
+    "xgboost_seed_sensitivity": [
+      {
+        "isoform": "CYP1A2",
+        "pearson": 0.7449118260716637,
+        "spearman": 0.7610836130247725,
+        "mean_abs_diff": 0.32359609386666666,
+        "sd_reused": 0.6104567340252635,
+        "sd_fresh": 0.598606764572842,
+        "mean_reused": 4.9641513602666665,
+        "mean_fresh": 4.8772027536
+      },
+      {
+        "isoform": "CYP2C9",
+        "pearson": 0.8897392605767919,
+        "spearman": 0.8909909879864677,
+        "mean_abs_diff": 0.23535619866666666,
+        "sd_reused": 0.6641192876016403,
+        "sd_fresh": 0.6544401069854127,
+        "mean_reused": 4.652265606266667,
+        "mean_fresh": 4.667275361733333
+      },
+      {
+        "isoform": "CYP2D6",
+        "pearson": 0.7105445789333367,
+        "spearman": 0.6318559913226898,
+        "mean_abs_diff": 0.18388753253333354,
+        "sd_reused": 0.3569862213122391,
+        "sd_fresh": 0.19207551875885762,
+        "mean_reused": 4.6889246484,
+        "mean_fresh": 4.735747462266667
+      },
+      {
+        "isoform": "CYP3A4",
+        "pearson": 0.9138493909635831,
+        "spearman": 0.9007261134199578,
+        "mean_abs_diff": 0.28931228493333333,
+        "sd_reused": 0.8958482515536461,
+        "sd_fresh": 0.9141264816275629,
+        "mean_reused": 4.48912566,
+        "mean_fresh": 4.551411045733333
+      }
+    ],
+    "falsified_if": "the board result is consistent with the blend having gained through this member's accuracy rather than its diversity -- which cannot be read off a board score directly, so this is recorded as the candidate's stated mechanism and exposure, not as a numerically falsifiable claim. It is reported as such rather than dressed up as testable."
+  },
+  "finding_4_blind_ambiguity_measured_not_predicted": {
+    "note": "The brief asks for this to be REPORTED, not forecast, so it is recorded here as a measurement taken before any submission decision rather than as a prediction. It is also a case where a claim written into this notebook's plan -- that the disagreement would not collapse, as notebook 39's eleven-config pool did not -- was CONTRADICTED by the measurement and has been replaced by it.",
+    "claim": "MIXED, and not what notebook 39's pool showed. Raw A on the blind set relative to out-of-fold: CYP1A2 0.81x, CYP2C9 1.56x, CYP2D6 0.73x, CYP3A4 1.06x. It FALLS BELOW its out-of-fold level on ['CYP1A2', 'CYP2D6'] and exceeds it on ['CYP2C9', 'CYP3A4']. Notebook 39's eleven-config pool ran 1.28x-1.50x and notebook 08's ensembles 1.11x-1.79x, so the partial collapse is specific to THIS three-member object -- which is the one being submitted, and the artefact notebook 39 was blocked on. On the scale-free version (A divided by the weighted mean of the members' own prediction variances, which removes the common-spread effect that a compressed blind column introduces) the ratios are CYP1A2 0.55x, CYP2C9 1.00x, CYP2D6 0.77x, CYP3A4 0.83x.",
+    "direction_this_cuts": "Notebook 39's Part D.1 established the check is one-directional: it can close a route, not open one. A ratio below 1.0 is therefore the informative direction, and it has appeared on two isoforms -- weakly adverse evidence for the blend's mechanism of gain on those two, not a refutation, since full-data training alone predicts some reduction and A bounds squared error rather than the scored ST-RAE.",
+    "ratios": {
+      "CYP1A2": 0.813261,
+      "CYP2C9": 1.557849,
+      "CYP2D6": 0.727825,
+      "CYP3A4": 1.057503
+    },
+    "ratios_scale_free": {
+      "CYP1A2": 0.546382,
+      "CYP2C9": 1.000845,
+      "CYP2D6": 0.77315,
+      "CYP3A4": 0.832896
+    },
+    "explicitly_not_a_gate": "Nothing in this notebook is gated on it, in either direction. Notebook 08's ensembles had healthy ratios of 1.66/1.11/1.79 and NB10 still lost 0.116 macro, so a high ratio licenses nothing; and A is a lower bound on the weighted average SQUARED error while the board scores ST-RAE, so a low one does not refute the candidate either."
+  },
+  "cyp3a4_widening_r2_prediction": [
+    {
+      "rho_basis": "blend's own OOF rho",
+      "rho": 0.7981315220216092,
+      "r2_before": 0.606870836864252,
+      "r2_after": 0.630534071084291,
+      "delta_r2": 0.02366323422003902,
+      "widening_helps_r2": true,
+      "r2_optimal_k": 0.7981315220216092,
+      "r2_optimal_multiplier_from_blend": 1.2715406745483384
+    },
+    {
+      "rho_basis": "lowest on-record board rho",
+      "rho": 0.7712139619535193,
+      "r2_before": 0.5730791483775522,
+      "r2_after": 0.5915180671354638,
+      "delta_r2": 0.018438918757911593,
+      "widening_helps_r2": true,
+      "r2_optimal_k": 0.7712139619535193,
+      "r2_optimal_multiplier_from_blend": 1.2286570500556226
+    },
+    {
+      "rho_basis": "highest on-record board rho",
+      "rho": 0.8457349109304202,
+      "r2_before": 0.6666310411639244,
+      "r2_after": 0.6995334159337341,
+      "delta_r2": 0.03290237476980973,
+      "widening_helps_r2": true,
+      "r2_optimal_k": 0.8457349109304202,
+      "r2_optimal_multiplier_from_blend": 1.347379860915241
+    },
+    {
+      "rho_basis": "rho of the best board column (04b)",
+      "rho": 0.8457349109304202,
+      "r2_before": 0.6666310411639244,
+      "r2_after": 0.6995334159337341,
+      "delta_r2": 0.03290237476980973,
+      "widening_helps_r2": true,
+      "r2_optimal_k": 0.8457349109304202,
+      "r2_optimal_multiplier_from_blend": 1.347379860915241
+    }
+  ],
+  "cyp3a4_widening_applied": {
+    "multiplier": 1.1546035636598622,
+    "k_before": 0.6276885498020832,
+    "k_after": 0.7247314364699762,
+    "improves_r2_iff_rho_exceeds": 0.6762099931360297
+  },
+  "caveats": [
+    "Every board figure this rests on is a half-set measurement, per the leaderboard document's own standing note.",
+    "All ensemble evidence is out-of-fold on the cluster-disjoint partition. Notebook 21 established out-of-fold optima need not transfer, and this project has four CV-to-board transfer failures on record (08's ensembles via NB10, NB12, and NB30 after a full 5x5 confirmation).",
+    "Notebook 37's own fold-crosstalk caveat on `deadzone` applies to the MAGNITUDE of its measured out-of-fold gain, not to the submission: no out-of-fold donor model has ever seen a blind compound, so this candidate carries none of that exposure.",
+    "CYP2D6's out-of-fold ST-RAE is not a reliable ranking signal (notebook 21); the recovered board rho values in Part 3.4a quantify how far apart the two populations are.",
+    "Notebook 39's shared member set was chosen by forward selection, not exhaustively, so its measured cost over the unconstrained blend is an upper bound rather than exact."
+  ]
+}

@@ -1,0 +1,165 @@
+{
+  "recorded_utc": "2026-10-02T13:48:16.129418+00:00",
+  "supersedes": "Part 3.4's predictions_before_board.json, FOR THE REBUILT CANDIDATE ONLY. Part 3.4's numbers still stand for the single-seed candidate they were recorded against, which is unmodified on disk.",
+  "subject": "outputs/40_single_object_ensemble/part8_stabilised_member/submission_candidate_rebuilt.csv",
+  "sha256": "7df6e263cf463d1ebd72139922e98c7a870d335a1448152efb890a56ab09bf53",
+  "weights": {
+    "deadzone": 0.625,
+    "aid": 0.25,
+    "ecfp4_narrow__xgboost": 0.125
+  },
+  "member_change": "ecfp4_narrow__xgboost replaced by the mean of ten full-data fits differing in their early-stopping validation split (8.1b: `random_state` alone is inert at these hyperparameters). deadzone and aid unchanged.",
+  "seeds": [
+    2684470948,
+    4091952314,
+    233227757,
+    3276785861,
+    3644269654,
+    1206282609,
+    3543069911,
+    3479688010,
+    877132087,
+    1244265337
+  ],
+  "current_best_on_record": {
+    "submission": "27b",
+    "macro_strae": 0.5982
+  },
+  "prediction_1_macro": {
+    "macro_strae_range": [
+      0.582,
+      0.707
+    ],
+    "per_isoform": {
+      "CYP1A2": [
+        0.674,
+        0.774
+      ],
+      "CYP2C9": [
+        0.493,
+        0.594
+      ],
+      "CYP2D6": [
+        0.72,
+        0.92
+      ],
+      "CYP3A4": [
+        0.44,
+        0.54
+      ]
+    },
+    "basis": "CYP1A2/CYP2C9/CYP3A4: NB36-widened's own board score +/- 0.05. CYP2D6: from R2 = 2*rho*k - b^2 - k^2 against the board-solved blind population (mean 3.1558, SD 1.5114) with b = 0 by construction, rho bracketed by this blend's own OOF rho (0.4496) and the median recovered from the twelve on-record CYP2D6 columns (0.5266), mapped to ST-RAE by a linear fit on that isoform's own board points -- crude, and used only for an order of magnitude.",
+    "interval_is_wider_than_the_effect": "STATED EXPLICITLY, as Part 3.4 did not: the CYP1A2/CYP2C9/CYP3A4 intervals are the anchor +/- 0.05, while the blend's out-of-fold gain over its best single member on those three is at most +0.0280. The interval is 1.8x the effect, so it contains both 'the ensemble helped by its full out-of-fold margin' and 'the ensemble did nothing'. THIS SUBMISSION CAN DETECT A CATASTROPHIC FAILURE; IT CANNOT RESOLVE WHETHER THE ENSEMBLE HELPS. Narrowing the interval would not change that -- the board returns one number per isoform with no error bar.",
+    "falsified_if": "any isoform's board ST-RAE lands outside its stated interval."
+  },
+  "prediction_2_cyp3a4_spearman": {
+    "claim": "CYP3A4's Spearman will move off NB32-A/NB36-widened's 0.8020 -- a blend reorders, which no affine correction this project has applied can. Direction up (the rebuilt blend's out-of-fold Spearman on CYP3A4 is 0.8012 against PLAIN's 0.7552), inside [0.800, 0.830], and NOT reaching 04b's 0.8329.",
+    "counterexample_stated_up_front": "The out-of-fold-to-board Spearman mapping is not monotone on this isoform: the `aid` arm's out-of-fold CYP3A4 Spearman exceeds PLAIN's, yet NB30's board Spearman (0.7651) is below 10c's (0.8177), and `aid` carries 0.25 of the weight here.",
+    "falsified_if": "CYP3A4 Spearman comes back at exactly 0.8020, or at/above 0.8329, or below 0.800."
+  },
+  "prediction_3_the_case_still_rests_on_ambiguity_and_is_now_measurably_thinner": {
+    "claim": "The candidate's case still rests entirely on the ambiguity term -- ecfp4_narrow__xgboost carries 0.125 of the weight and is significantly worse than PLAIN on 3 of 4 isoforms -- and stabilising it has made that case MEASURABLY THINNER, not stronger: residual correlation with `deadzone` rose on 4 of 4 isoforms (+0.0227 to +0.0322) and out-of-fold ambiguity fell on 4 of 4, clearing its own noise band on 3. The averaging buys attributability at a measured cost in the quantity the blend's gain is supposed to come from.",
+    "cost_table": [
+      {
+        "isoform": "CYP1A2",
+        "corr_deadzone_single": 0.8916245481393624,
+        "corr_deadzone_averaged": 0.9179710686303554,
+        "corr_increase": 0.026346520490992953,
+        "corr_bar": 0.005584280151123,
+        "corr_material": true,
+        "sd_blind_singleseed_mean": 0.5255685483807857,
+        "sd_blind_averaged": 0.46447017643057764,
+        "sd_ratio": 0.8837480436406537,
+        "A_oof_single": 0.052940032018112204,
+        "A_oof_averaged": 0.04719708504179258,
+        "A_oof_drop": 0.005742946976319621,
+        "A_bar": 0.0051684967655779,
+        "A_oof_material": true,
+        "Anorm_oof_single": 0.1731391326037534,
+        "Anorm_oof_averaged": 0.15721923172161212,
+        "A_blind_single": 0.0430540766487836,
+        "A_blind_averaged": 0.03768573360383952,
+        "A_blind_drop": 0.005368343044944081,
+        "Anorm_blind_single": 0.09500205210464488,
+        "Anorm_blind_averaged": 0.0869185220216189
+      },
+      {
+        "isoform": "CYP2C9",
+        "corr_deadzone_single": 0.8278187902372546,
+        "corr_deadzone_averaged": 0.858344705950423,
+        "corr_increase": 0.030525915713168428,
+        "corr_bar": 0.008417523901415036,
+        "corr_material": true,
+        "sd_blind_singleseed_mean": 0.6296986529173061,
+        "sd_blind_averaged": 0.5949522928970465,
+        "sd_ratio": 0.9448206537217692,
+        "A_oof_single": 0.03204830526535589,
+        "A_oof_averaged": 0.028845720647504156,
+        "A_oof_drop": 0.003202584617851733,
+        "A_bar": 0.002695661734724,
+        "A_oof_material": true,
+        "Anorm_oof_single": 0.12971964986707002,
+        "Anorm_oof_averaged": 0.11947513402364093,
+        "A_blind_single": 0.04992643409249604,
+        "A_blind_averaged": 0.0415580750724574,
+        "A_blind_drop": 0.008368359020038636,
+        "Anorm_blind_single": 0.12998586333935347,
+        "Anorm_blind_averaged": 0.11135440569367118
+      },
+      {
+        "isoform": "CYP2D6",
+        "corr_deadzone_single": 0.9140668996378257,
+        "corr_deadzone_averaged": 0.9367254974926218,
+        "corr_increase": 0.02265859785479607,
+        "corr_bar": 0.00463842112886792,
+        "corr_material": true,
+        "sd_blind_singleseed_mean": 0.3229431469856932,
+        "sd_blind_averaged": 0.27837425195408944,
+        "sd_ratio": 0.8619915132195753,
+        "A_oof_single": 0.034724474968944416,
+        "A_oof_averaged": 0.030603233484636453,
+        "A_oof_drop": 0.004121241484307963,
+        "A_bar": 0.0049983607486135,
+        "A_oof_material": false,
+        "Anorm_oof_single": 0.2135121347905015,
+        "Anorm_oof_averaged": 0.19432694172818643,
+        "A_blind_single": 0.025273325361383846,
+        "A_blind_averaged": 0.02159013014910134,
+        "A_blind_drop": 0.0036831952122825043,
+        "Anorm_blind_single": 0.16476845486064334,
+        "Anorm_blind_averaged": 0.14672834888776587
+      },
+      {
+        "isoform": "CYP3A4",
+        "corr_deadzone_single": 0.7777819905937515,
+        "corr_deadzone_averaged": 0.8100173174671871,
+        "corr_increase": 0.032235326873435555,
+        "corr_bar": 0.0043727872763570375,
+        "corr_material": true,
+        "sd_blind_singleseed_mean": 0.8867282338757168,
+        "sd_blind_averaged": 0.8530778401505876,
+        "sd_ratio": 0.9620510631785685,
+        "A_oof_single": 0.059510141321968815,
+        "A_oof_averaged": 0.05380399459909962,
+        "A_oof_drop": 0.005706146722869197,
+        "A_bar": 0.004043129894494,
+        "A_oof_material": true,
+        "Anorm_oof_single": 0.09171232703569383,
+        "Anorm_oof_averaged": 0.083681615400124,
+        "A_blind_single": 0.0629321236333181,
+        "A_blind_averaged": 0.05374089639438294,
+        "A_blind_drop": 0.00919122723893516,
+        "Anorm_blind_single": 0.07652756177247244,
+        "Anorm_blind_averaged": 0.06610232341674004
+      }
+    ],
+    "falsified_if": "not numerically falsifiable from a board score -- recorded as the candidate's stated mechanism and its measured debit, not as a testable claim, and said so rather than dressed up as one."
+  },
+  "caveats": [
+    "Every board figure is a half-set measurement, per the leaderboard document's standing note.",
+    "All ensemble evidence is out-of-fold on the cluster-disjoint partition; this project has four CV-to-board transfer failures on record.",
+    "The weight vector was selected by notebook 39 on fold-level single-seed members and has not been re-selected for a seed-averaged one -- see 8.8.",
+    "The out-of-fold comparison in 8.3b uses the same 25 folds the weight vector was selected on, so it is not independent evidence.",
+    "CYP2D6's out-of-fold ST-RAE is not a reliable ranking signal (notebook 21)."
+  ]
+}

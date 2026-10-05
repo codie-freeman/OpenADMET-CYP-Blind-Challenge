@@ -1,0 +1,10 @@
+{
+  "question": "Does KMP_DUPLICATE_LIB_OK change Chemprop's training trajectory? Part 0's setup cell asserted it must be unset, which made the notebook impossible to re-run in a warm kernel -- `import xgboost`, in that same cell, sets it.",
+  "method": "Two real `chemprop train` runs on this notebook's own train_input.csv, identical in everything (CheMeleon, mae loss, epochs=3, patience=5, data-seed = pytorch-seed = 2684470948, cpu) except the environment variable. Trainer metrics.csv compared byte for byte. 3 epochs rather than 2 because chemprop requires epochs > warmup_epochs.",
+  "sha256_KMP_unset": "a2cfd62f1a968f9b74a4a9f79c1be137d1dd541073a0eadc8fd3f6091302d7c4",
+  "sha256_KMP_set": "a2cfd62f1a968f9b74a4a9f79c1be137d1dd541073a0eadc8fd3f6091302d7c4",
+  "byte_identical": true,
+  "result": "BYTE-IDENTICAL. Every train_loss_step, train_loss_epoch, val/mse and val_loss value matches exactly across all three epochs. KMP_DUPLICATE_LIB_OK does not affect the training trajectory; it only suppresses the duplicate-OpenMP-runtime abort.",
+  "contrast": "OMP_NUM_THREADS is a different matter entirely -- notebook 34 diagnosed it changing BLAS/OMP reduction order and so the whole trajectory, and no import sets it. It remains asserted.",
+  "second_independent_reason": "Even if it did matter, the assertion could not have guaranteed it: it runs at line 8 of the setup cell, line 31 of that SAME cell imports xgboost and sets the variable, and Chemprop trains 13 cells later with it set either way."
+}

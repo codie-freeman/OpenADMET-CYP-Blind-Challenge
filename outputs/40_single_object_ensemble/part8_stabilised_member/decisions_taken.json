@@ -1,0 +1,26 @@
+[
+  {
+    "part": 8,
+    "decision": "Built the stabilised member by averaging over EARLY-STOPPING VALIDATION-SPLIT draws, having established that `random_state` alone is inert at these hyperparameters, and corrected Part 1.2's 'seed-unstable' framing accordingly",
+    "reason": "The brief asks for ten fits 'at 10 seeds'. Taken literally -- varying only `random_state` -- that produces ten bit-identical models, because XGBoost with subsample=colsample_bytree=1.0 is deterministic given its data; the first attempt at the out-of-fold counterpart returned exactly that null and it was a bug, not a result. The variation Part 1.2 actually measured is the 15% validation split that decides `best_iteration`, so that is what is varied and averaged over, in both the full-data fits and their out-of-fold counterpart.",
+    "alternatives": "Vary only `random_state` as the phrase implies (produces ten identical models and a vacuous cost check); turn on `subsample` to make `random_state` bite (changes the member's hyperparameters, so it would no longer be the config notebook 39 selected).",
+    "authority": "the brief's instruction to verify every figure against its source rather than its description; the literal reading is unimplementable and was found so by testing it",
+    "at_utc": "2026-10-02T13:48:15.430135+00:00"
+  },
+  {
+    "part": 8,
+    "decision": "Proceeded to build the rebuilt candidate while keeping Part 3.2's single-seed candidate standing, rather than replacing it",
+    "reason": "The frozen bars both fired: residual correlation with `deadzone` rises materially on 4 of 4 isoforms and out-of-fold ambiguity falls materially on 3 of 4. The brief's own instruction for that outcome is to report both candidates and leave the choice open, which is what is done -- the rebuilt candidate is written to a new path and Part 3.2's file is untouched.",
+    "alternatives": "Replace the single-seed candidate (would discard the more-diverse option on a cost whose sign cannot be settled without blind labels); abandon the averaging (would leave the member's early-stopping draw unattributable, which is the problem this section exists to fix).",
+    "authority": "the brief's explicit instruction for a material cost",
+    "at_utc": "2026-10-02T13:48:16.051852+00:00"
+  },
+  {
+    "part": 8,
+    "decision": "Carried notebook 39's weight vector over unchanged to a seed-averaged member without re-running the selection, and stated it as a limitation",
+    "reason": "The brief directs this explicitly. The selection ran on fold-level single-seed members; Part 1's full-data member was already a different draw from those, so the object had changed before this section touched it, and averaging makes it less arbitrary rather than more. Re-selecting would require seed-averaging every one of the eleven arms to keep the comparison like-for-like, which is out of scope.",
+    "alternatives": "Re-run notebook 39's forward selection with the averaged member in place (not like-for-like unless every arm is averaged); re-fit only the weights with the member set fixed (still fits on the folds the members were selected on).",
+    "authority": "the brief's instruction to state this as a limitation rather than repair it",
+    "at_utc": "2026-10-02T13:48:16.133193+00:00"
+  }
+]

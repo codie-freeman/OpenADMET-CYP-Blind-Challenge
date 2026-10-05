@@ -1,0 +1,18 @@
+{
+  "frozen_utc": "2026-10-02T13:48:16.011475+00:00",
+  "rule_correlation": "averaging MATERIALLY raises the member's residual correlation with `deadzone` if the increase over the single-seed arm exceeds the max-min spread of the ten single-seed members' own correlations with `deadzone` on that isoform",
+  "rule_ambiguity": "averaging MATERIALLY lowers the blend's ambiguity A if the drop exceeds A's own out-of-fold repeat-to-repeat SD, as Part 3.3 saved it",
+  "correlation_bar_per_isoform": {
+    "CYP1A2": 0.005584280151123,
+    "CYP2C9": 0.008417523901415036,
+    "CYP2D6": 0.00463842112886792,
+    "CYP3A4": 0.0043727872763570375
+  },
+  "ambiguity_bar_per_isoform": {
+    "CYP1A2": 0.0051684967655779,
+    "CYP2C9": 0.002695661734724,
+    "CYP2D6": 0.0049983607486135,
+    "CYP3A4": 0.004043129894494
+  },
+  "if_material": "report both candidates plainly and leave the choice open; do not proceed silently to the averaged member"
+}
