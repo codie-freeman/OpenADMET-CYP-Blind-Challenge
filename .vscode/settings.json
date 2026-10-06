@@ -1,0 +1,63 @@
+// Project editor configuration, tracked in git because it applies to anyone who clones the repo
+// and because it documents which trees are bulk.
+//
+// Five trees here are generated or downloaded rather than authored, and every one of them is
+// already gitignored. They fall into two different kinds of "big", which is why the three
+// settings below are not applied identically:
+//
+//   tree                             files    size   problem
+//   outputs/qm_descriptors/orca/    50,918   8.6 GB  file COUNT -- 11,310 ORCA jobs' raw output
+//   logs/                              302   330 MB  file count and size
+//   data/processed/                     13   105 MB  SIZE -- a few large CSV/npy artifacts
+//   data/raw/                           21    53 MB  size -- the HuggingFace release
+//   models/                              2    19 MB  size -- frozen checkpoints
+//
+// outputs/qm_parsed/ is deliberately NOT excluded anywhere: its three tables are tracked, total
+// 43 MB across 8 files, and are meant to stay searchable. Its parts/ subdirectory is the one
+// exception and is watcher-excluded only -- see the note in files.watcherExclude below.
+{
+  // ---- the file watcher. This is the setting that actually fixes editor sluggishness and the
+  // "10,000+ changes" count: VS Code otherwise watches all 50,918 files under orca/ for changes
+  // that will never come, since nothing writes there outside a deliberate scripts/ run.
+  "files.watcherExclude": {
+    "**/outputs/qm_descriptors/orca/**": true,
+    "**/logs/**": true,
+    "**/data/raw/**": true,
+    "**/data/processed/**": true,
+    "**/models/**": true,
+
+    // parts/ does not usually exist -- it is scripts/parse_orca_output.py's per-compound shard
+    // directory, deleted after the run that built outputs/qm_parsed/'s three tables. But a
+    // re-parse recreates all 16,965 files, which is what caused the problem this file fixes, so
+    // it is excluded here pre-emptively. Watcher only: the tables beside it stay searchable and
+    // visible, which is the whole point of leaving outputs/qm_parsed/ alone otherwise.
+    "**/outputs/qm_parsed/parts/**": true
+  },
+
+  // ---- search (Ctrl/Cmd+Shift+F). Keeps grep out of 8.6 GB of ORCA text and out of the large
+  // data artifacts. Note that search already inherits files.exclude below, so these entries are
+  // belt-and-braces -- they keep search correct if the explorer entries are ever relaxed.
+  "search.exclude": {
+    "outputs/qm_descriptors/orca": true,
+    "logs": true,
+    "data/raw": true,
+    "data/processed": true,
+    "models": true
+  },
+
+  // ---- the explorer tree (and Quick Open).
+  //
+  // NONE of the five bulk trees is hidden here, deliberately. The Source Control view is driven
+  // by `git status`, which respects .gitignore and nothing else -- it has never consulted this
+  // setting. So hiding a folder from the sidebar does nothing for the pending-changes count, and
+  // showing it again cannot bring that count back. The count problem is solved entirely by
+  // files.watcherExclude above; this setting only ever controlled whether you could SEE and
+  // Cmd+P-open the files, and hiding them cost that for no benefit.
+  //
+  // Only genuine noise is hidden: editor and interpreter droppings, not project data.
+  "files.exclude": {
+    "**/.DS_Store": true,
+    "**/__pycache__": true,
+    "**/.ipynb_checkpoints": true
+  }
+}
