@@ -1,0 +1,27 @@
+{
+  "status": "POST-HOC -- written after the pre-registered results were read",
+  "cannot_carry_a_claim": true,
+  "why": "the pre-registered qm_full_hmin sensitivity arm improved qm_full on 25/25 folds, from a column the frozen group (c) rule had excluded; this probes whether the rule tracks predictive value at all",
+  "arms": [
+    "PH_QMFULL_HIRSHFELD_MIN",
+    "PH_QMFULL_HIRSHFELD_MAX",
+    "PH_QMFULL_HIRSHFELD_ABS_MEAN",
+    "PH_QMFULL_HIRSHFELD_RANGE",
+    "PH_QMFULL_FORMAL_CHARGE",
+    "PH_QMFULL_DFT_ENERGY_EH",
+    "PH_QMFULL_ENERGY_PER_ATOM",
+    "PH_QMFULL_ALLC"
+  ],
+  "group_c_columns": [
+    "hirshfeld_min",
+    "hirshfeld_max",
+    "hirshfeld_abs_mean",
+    "hirshfeld_range",
+    "formal_charge",
+    "dft_energy_eh",
+    "energy_per_atom"
+  ],
+  "m_star": "ridge",
+  "prereg_untouched": true,
+  "at_utc": "2026-10-07T22:10:21.511702+00:00"
+}

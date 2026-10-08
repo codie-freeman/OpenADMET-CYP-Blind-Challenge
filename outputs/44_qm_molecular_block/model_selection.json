@@ -1,0 +1,17 @@
+{
+  "m_star": "ridge",
+  "rule": "lowest macro ST-RAE on the CONTROL block RDKIT2D at tier-1, chosen before any QM arm was read",
+  "control_macro_strae": {
+    "ridge": 0.7559150456794373,
+    "rf": 0.7898742643922834,
+    "lightgbm": 0.820230987857752,
+    "xgboost": 0.8626418412289342
+  },
+  "seeds": [
+    2684470948,
+    4091952314,
+    233227757
+  ],
+  "partition": "random repeat_0/fold 0",
+  "at_utc": "2026-10-07T20:38:57.936579+00:00"
+}

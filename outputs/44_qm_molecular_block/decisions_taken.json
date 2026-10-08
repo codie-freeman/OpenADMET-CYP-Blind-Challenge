@@ -1,0 +1,54 @@
+{
+  "notebook": "44_qm_molecular_block",
+  "written_at_utc": "2026-10-07T22:20:06.677096+00:00",
+  "decisions": [
+    {
+      "id": "D1",
+      "label": "PRE-REGISTERED",
+      "decision": "M* selected as `ridge` on the CONTROL block RDKIT2D at tier-1, before any QM arm was read.",
+      "reason": "the rule was frozen in prereg.json; ridge won at 0.7559 macro against rf 0.7899, lightgbm 0.8202, xgboost 0.8626. It also vindicates the plan's demotion of XGBoost as headline model: XGBoost is the WORST of the four on this data.",
+      "authority": "prereg.json model_selection_rule"
+    },
+    {
+      "id": "D2",
+      "label": "POST-HOC -- CARRIES NO CLAIM",
+      "decision": "Probed the other six group (c) columns (and all seven together) as additions to QM_FULL, after the pre-registered qm_full_hmin sensitivity arm came back improving on 25/25 folds.",
+      "reason": "the frozen rule excluded seven columns on one reproducibility threshold; whether that threshold tracks predictive value is answerable and was unanswered.",
+      "labelling": "run from scripts/44_posthoc_group_c_probe.py into outputs/44_qm_molecular_block/posthoc_group_c/ -- a separate directory, separate run_scores.csv, its own POSTHOC_README.json. Reported apart from the pre-registered results and barred from changing any verdict.",
+      "result": "the rule TRACKS predictive value well -- Spearman(cheap R^2, macro improvement) = +0.964 over the seven single-column arms, and formal_charge (an exact free duplicate, R^2 1.000) adds exactly 0.00000 on 8/25 folds. What is NOT calibrated is the threshold's POSITION: hirshfeld_abs_mean at R^2 0.951 gives the largest single-column effect (-0.0252), out of order with hirshfeld_min at 0.885 (-0.0131). This CORRECTS the brief's premise that the threshold 'does not track predictive value'.",
+      "authority": "none -- post-hoc, user-authorised as 'cheap and your call'"
+    },
+    {
+      "id": "D3",
+      "label": "POST-HOC -- CARRIES NO CLAIM",
+      "decision": "Extended D2 with one further arm, PH_RDKIT2DQM_ALLC, adding the same seven columns to the INCREMENT arm rather than the standalone block.",
+      "reason": "D2's interpretation -- that the (c) columns supply size/composition information the 18-column standalone block lacks and rdkit2d already has -- was an inference. This turns it into a measurement, and it is the check that decides whether the group (c) finding bears on the primary tests at all.",
+      "result": "standalone block -0.0546 (25/25 folds, p=4e-16); increment arm +0.0014 (9/25, p=0.035), i.e. slightly WORSE. So the exclusion was harmless for the primary tests. And qm_full+allC at 0.8935 remains far behind the rdkit2d comparator at 0.7720 -- nothing is rescued.",
+      "authority": "none -- post-hoc, my own extension of D2"
+    },
+    {
+      "id": "D4",
+      "label": "PROCESS ERROR -- recorded, not hidden",
+      "decision": "Re-ran scripts/44_build_qm_feature_blocks.py AFTER training had completed, in order to add the extreme-dynamic-range assertion. This REWROTE prereg.json.",
+      "why_it_matters": "prereg.json's whole value is that it was frozen before any training run. Rewriting it breaks that audit trail, and I should have added the assertion without re-running the writer, or written it to a separate file.",
+      "what_actually_changed": "ONLY `written_at_utc` (and with it the file's sha256, which was 5b3ba23ab8d386fb... on the original build). Every substantive field was verified unchanged against the values my own earlier analyses had already read out of the original file and printed: the four materiality bars, the four paired SEs, the 11-arm nested blend scores, the blend optimism, the required improvements, all three hand-picked control column lists, the 9-arm display subset, and the 20 draw seeds. All 35 feature-block CSVs reproduce byte-identically (0 of 35 sha mismatches), so the arms were trained on exactly these bytes.",
+      "what_is_NOT_recoverable": "the original file's own timestamp and sha256 as an independent artefact. The verification above rests on values printed in this session's earlier tool output, which is weaker than an untouched file.",
+      "authority": "none -- an error"
+    },
+    {
+      "id": "D5",
+      "label": "ATTRIBUTION CORRECTION",
+      "decision": "Corrected revision 2's R2.4, which opened 'Retracted: I wrote that notebook 05's precedent holds only because its subset was fixed in advance.' I did not write that.",
+      "evidence": "revision 1's only statement about notebook 05 is at its line 153 and makes no claim about WHEN the subset was fixed; the 'fixed in advance' wording came from revision 2's own brief, which asked me to check it.",
+      "consequence": "the finding stands in full (05 does pick 3 of 6 slots by argmin over computed means, post-hoc, per isoform), but it corrects the BRIEF's premise, not a claim of mine. Of revision 2's three retractions, two are mine (the HOMO headline, the '63-73% redundant' framing) and one is the brief's.",
+      "authority": "user-requested, verified against the file"
+    },
+    {
+      "id": "D6",
+      "label": "MEASURED, CORRECTS THE BRIEF",
+      "decision": "Checked the Ipc leverage concern in the modelling path before writing anything up.",
+      "result": "Ipc IS in RDKIT2D as used (range 9.65 to 5.064e+14, the widest of all 217 columns; runner-up BertzCT at 2.7e+03). The ridge pipeline's steps are ['clip','scale','ridge'] -- it already clips every column to its fit-portion p1/p99, taking Ipc's worst row from 62.6 sigma to 7.12 sigma. The brief's stated mechanism -- Ipc 'absorbing the scale and leaving the other 216 columns numerically negligible' -- is NOT how StandardScaler behaves: it divides each column by its OWN sd, so all non-constant columns emerge at sd exactly 1.0 either way. The real hazard was leverage, and it is handled. Direction of any residual effect is the OPPOSITE of the concern: refitting the comparator without the clip makes it WORSE on 4 of 4 isoforms (+0.0076/+0.0080/+0.0118/+0.0017), so the pipeline as run gives rdkit2d a STRONGER showing and cannot have biased the increment tests toward the QM arms.",
+      "authority": "user-requested blocking check"
+    }
+  ]
+}
