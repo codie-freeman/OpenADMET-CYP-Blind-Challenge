@@ -15,6 +15,7 @@ else. Notebook `43` Part A puts this on record in reader-facing form.
 | `qm_atoms.csv` | 252,237 | One row per atom: Mulliken/Loewdin/Hirshfeld charges, Mayer NA and VA, Mulliken and Loewdin s/p/d shell aggregates, and the optimised geometry (x, y, z in Angstrom). |
 | `qm_bonds.csv` | 269,256 | One row per printed Mayer pair: both atom indices, both elements, the bond order, and `is_rdkit_bond`. |
 | `qm_molecular_raw.csv` | 5,655 | Total energy, HOMO/−1/−2, LUMO/+1, gap, dipole, D3 dispersion, three rotational constants, basis count, SCF cycles, plus GFN2 optimisation cycles, final gradient norm and relaxation strain. |
+| `qm_atom_aggregates.csv` | 5,655 | One row per compound: 54 aggregated descriptors built from the two tables above by `src/features.py`'s `qm_atom_aggregates`. Written by notebook `45`, not by this script. Element-conditioned columns are NaN where the element is absent. |
 | `parse_report.md` | — | Source used per quantity, the validation set, the cross-checks, and every failed compound (there are none). |
 | `parse_status.json`, `decisions_taken.json`, `run_meta.json` | — | Run state, the four decisions taken, and the run-start timestamp. |
 

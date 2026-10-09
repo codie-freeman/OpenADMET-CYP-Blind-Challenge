@@ -477,7 +477,7 @@ first non-deliberate submission in this project's history, caused by the comment
 being unsafe against an editor. The notebook now uses an explicit `SEND = False` flag with the
 printed message computed from it, so the cell cannot contradict itself.
 
-## Quantum-chemistry descriptors (41–43)
+## Quantum-chemistry descriptors (41–45)
 
 **[`41_dataset_audit_3d.ipynb`](41_dataset_audit_3d.ipynb)** — COMPLETE, audit only. Replaces the
 assumptions behind a 3D/QM descriptor plan with measurements over all 5,655 compounds. **The size
@@ -523,3 +523,35 @@ coin flip (the two proposed rules disagree on 43–48% of multi-match compounds,
 charge *scheme* is a third axis), and **the presence flag alone is significant on all four
 isoforms**, reproducing `17`'s sign pattern from one bit — evidence bearing on whether the arm is
 worth building at all. All three decisions are left open.
+
+**[`44_qm_molecular_block.ipynb`](44_qm_molecular_block.ipynb)** — COMPLETE, pre-declared negative.
+Screens the **molecule-level** QM block against what the repo already computes for free, on the
+frozen cluster-disjoint 25-fold design. The block carries no pIC50-relevant information beyond free
+2D descriptors, on either ST-RAE or Spearman. See
+[`../docs/44_audit_report.md`](../docs/44_audit_report.md) for the audit of this notebook and its
+remediation.
+
+**[`45_atom_level_screen.ipynb`](45_atom_level_screen.ipynb)** — COMPLETE, screen only: no model
+trained against a label, no CV against a label, no submission. Asks whether **aggregated**
+atom-level QM descriptors (`qm_atoms.csv`, `qm_bonds.csv`, which `44` never touched) carry
+information not already free from 2D descriptors or captured by `44`'s 13 QM columns. **Part 0b
+corrects the premise it was briefed with**: `44`'s post-hoc probe, which appeared to show a
+cheaply-reproducible column carrying the largest gain, is an *internal* `qm_full`-plus-column
+comparison against a 0.948-ST-RAE ridge; against the free baseline those same seven columns are
+indistinguishable from `rdkit2d` and make `rdkit2d_qm` **worse** on 16 of 25 folds, so `44`'s
+negative stands and the 0.0252 figure never cleared a materiality bar. The ranking nonetheless
+survives — cheap R² rank-predicts measured in-block value at **Spearman +0.96** — so the cut moves
+from 0.90 to **0.96** rather than being discarded. **Result: 8 of 48 descriptors are strongly
+resistant (axis A < 0.80), and only 4 of those are defined on essentially the whole blind set**
+(`hirshfeld_C_min`, `bond_order_min`, `hirshfeld_H_min`, `mayer_va_min`). Three limits carried
+rather than buried: the two *most* resistant descriptors are the chlorine ones, defined on 11.3% of
+the blind 750, which is notebook `43`'s bind reappearing on this block's best members; axis B found
+**zero** redundancy against `44`'s 13 columns, so it never tested what it was included to test, and
+being unlike `44`'s block is not evidence of usefulness; and a label-free screen cannot establish
+predictive value, hence a pre-registered screen-*rejected* control (`hirshfeld_range`). The size
+check is only 2-of-3 calibrated and says so. The arm's pre-registration — ST-RAE and Spearman
+co-primary, bars built by `37`'s pooled-SE procedure printed verbatim, both BH families declared —
+is written **after** the screen and defends that ordering explicitly: every quantity is a function
+of the feature matrices alone, so nothing seen leaks outcome information, which is the inverse of
+`44`'s own prereg problem. The aggregation lives in [`../src/features.py`](../src/features.py) so a
+later arm reuses identical descriptors.

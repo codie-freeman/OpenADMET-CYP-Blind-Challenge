@@ -1,0 +1,137 @@
+{
+  "written_at_utc": "2026-10-09T23:22:36.103348+00:00",
+  "written_by": "notebooks/45_atom_level_screen.ipynb",
+  "status": "PRE-REGISTRATION for a future modelling arm. No arm has been run.",
+  "why_written_after_the_screen_is_legitimate": "Every quantity in notebook 45 is a function of the feature matrices alone -- recoverability, size correlation, collinearity, coverage. No pIC50 column was read at any point (asserted in the notebook). So the screen leaks no outcome information and this registration is blind in the only sense that affects the arm's validity. Contrast notebook 44, whose prereg.json was rewritten after training; its fields were verified unchanged but its provenance was not recoverable, and its audit downgraded it.",
+  "screen_inputs_sha256": {
+    "qm_atoms.csv": "3d333c41ed6e76531bc23dbf0507d6c5177e20c8d0e1f51d088f1f8b2f2652e5",
+    "qm_bonds.csv": "0bddb8a98f7402b3f05a14fe79f7551ec8a69eec58d603607609fce6e1f4c7c9",
+    "descriptors.csv": "9b86ecd07b32a6a2b5271c7d74446d8b7bb73d2e4aa0898a0386b3bda920d767"
+  },
+  "screen_survivors": {
+    "all_below_cut": [
+      "hirshfeld_Cl_min",
+      "hirshfeld_Cl_max",
+      "hirshfeld_C_min",
+      "bond_order_min",
+      "hirshfeld_F_max",
+      "hirshfeld_H_min",
+      "mayer_va_min",
+      "hirshfeld_F_min",
+      "hirshfeld_N_min",
+      "n_bonds_order_gt_1p5",
+      "hirshfeld_N_mean",
+      "mulliken_min",
+      "bond_order_CN_mean",
+      "hirshfeld_min",
+      "hirshfeld_N_max",
+      "bond_order_CH_mean",
+      "n_atoms_hirshfeld_lt_neg0p25",
+      "hirshfeld_H_max",
+      "hirshfeld_C_mean",
+      "mayer_va_std",
+      "hirshfeld_O_mean",
+      "bond_order_std",
+      "hirshfeld_H_mean",
+      "bond_order_max",
+      "loewdin_min",
+      "hirshfeld_O_max",
+      "bond_order_CC_mean",
+      "mulliken_d_mean",
+      "hirshfeld_abs_mean",
+      "loewdin_d_mean",
+      "mulliken_std"
+    ],
+    "tier_strong_axisA_lt_0p80": [
+      "hirshfeld_Cl_min",
+      "hirshfeld_Cl_max",
+      "hirshfeld_C_min",
+      "bond_order_min",
+      "hirshfeld_F_max",
+      "hirshfeld_H_min",
+      "mayer_va_min",
+      "hirshfeld_F_min"
+    ],
+    "tier_strong_AND_full_blind_coverage": [
+      "hirshfeld_C_min",
+      "bond_order_min",
+      "hirshfeld_H_min",
+      "mayer_va_min"
+    ],
+    "tier_counts": {
+      "marginal": 17,
+      "recoverable": 17,
+      "strong": 8,
+      "moderate": 6
+    },
+    "arm_should_prioritise": "the strong tier at full blind coverage. The flat survivor count is misleading: most descriptors below the 0.96 cut sit at 0.88-0.96, barely under it, and a binary verdict lumps them with descriptors at 0.41.",
+    "coverage_tension_unresolved": "the two MOST resistant descriptors in the block are hirshfeld_Cl_min/max, defined on 85 of 750 blind compounds (11.3%). The sigma-hole argument predicted chlorine would be the least 2D-encodable quantity here and it is, but an arm using it is undefined for 88.7% of the scored set -- notebook 43's exact bind, reappearing on this block's strongest members. Not resolved by this screen."
+  },
+  "screen_rejected_control": {
+    "descriptor": "hirshfeld_range",
+    "why": "highest-value rejected member of the pre-existing Hirshfeld family: notebook 44's post-hoc probe measured a real in-block ST-RAE gain for this family, so a screen that rejects it should be made to show its work against a label"
+  },
+  "axis_B_found_no_redundancy": "axis B (the free block plus notebook 44's 13 QM columns) raises recoverability over axis A by a median of under 0.01 and flags ZERO descriptors as captured. So the atom-level block is not a re-encoding of the molecule-level one -- but axis B therefore never tested what it was included to test, and this block being unlike notebook 44's is not evidence it is useful.",
+  "what_a_label_free_screen_cannot_establish": "predictive value. Notebook 44's post-hoc probe measured its largest in-block ST-RAE gain from a column at cheap R^2 0.9507, and the same seven columns bought nothing against the free baseline. Low recoverability is necessary for a descriptor to help and nowhere near sufficient. Hence the rejected control above.",
+  "selection_rule": {
+    "cut": 0.96,
+    "notebook_44_cut": 0.9,
+    "rule": "resists axis A AND axis B at max-of-two-models R^2 < 0.96, and |rho| < 0.8 vs size",
+    "why_the_cut_moved": "cheap R^2 rank-predicts measured in-block ST-RAE value at Spearman +0.9643 (n=7, the only columns where both exist), so the RANKING is kept; notebook 44's 0.9 cut fell between the two most useful of those seven, so the CUT POINT moved to 0.96.",
+    "recoverability_is_a_prior_not_a_gate": "hence the rejected control above. A label-free screen cannot establish predictive redundancy, only feature-level reproducibility."
+  },
+  "co_primary_metrics": [
+    "ST-RAE",
+    "Spearman"
+  ],
+  "why_spearman_is_co_primary_not_secondary": "notebook 44's remediation found 7 of 12 cells BH-significant on ranking against 2 of 12 on ST-RAE, so an ST-RAE-only registration discards most of the detectable signal. Spearman's board counterpart is also the one quantity no affine correction can move, and notebook 38 established that what separates the leading CYP3A4 columns is ranking, not placement or scale.",
+  "materiality_bars": {
+    "ST-RAE": {
+      "CYP1A2": 0.0234,
+      "CYP2C9": 0.0209,
+      "CYP2D6": 0.0277,
+      "CYP3A4": 0.016
+    },
+    "Spearman": {
+      "CYP1A2": 0.0183,
+      "CYP2C9": 0.016,
+      "CYP2D6": 0.0212,
+      "CYP3A4": 0.01
+    },
+    "construction": "bar(isoform) = 2 * mean_over_arms( se(arm, isoform) ), where se is the standard error of the 25-fold paired difference of that arm against `plain`, pooled across notebook 37's ten arms. Pooling across arms is the point: it estimates how well a 25-fold paired comparison on this partition can resolve ANY difference, independently of the one being tested.",
+    "explicitly_not": "2 x the SE of the comparison under test (circular)"
+  },
+  "bh_families_declared_in_advance": {
+    "primary": {
+      "members": "co-primary metric x isoform",
+      "size": 8,
+      "metrics": [
+        "ST-RAE",
+        "Spearman"
+      ],
+      "isoforms": [
+        "CYP1A2",
+        "CYP2C9",
+        "CYP2D6",
+        "CYP3A4"
+      ]
+    },
+    "secondary": {
+      "members": "secondary arm x isoform",
+      "arms": [
+        "screen_rejected_control",
+        "element_sentinel_policy_variant"
+      ],
+      "size": 8
+    },
+    "rule": "BH within family, never pooled across families; notebook 37's own p_BH values are read from its saved files and never recomputed, since folding new arms into a pooled BH would retroactively change already-published verdicts."
+  },
+  "statistical_protocol": "Ash et al.: Levene/Brown-Forsythe homogeneity check MEASURED per isoform, then paired t or Wilcoxon signed-rank as that check directs; BH within family; compact letter display. The parametric/nonparametric branch is measured, not inherited -- notebook 05 went nonparametric for ST-RAE, notebook 29 parametric, notebook 37 split by isoform.",
+  "cyp2d6_cannot_satisfy_the_criteria_alone": "notebook 21 established OOF ST-RAE is not a valid ranking signal for CYP2D6 -- the deployed recentring that took its board score from 1.1673 to 0.8299 scores 3.08 on this project's own OOF curve -- and notebook 38 reproduced the same OOF-vs-blind mismatch on CYP3A4.",
+  "element_conditioned_sentinel_policy": {
+    "in_the_screen": "present-subset only, never sentinel-filled; subset n reported throughout",
+    "in_the_arm": "UNDECIDED here by design. The arm must choose a sentinel value AND carry a presence flag per element-conditioned descriptor, or restrict that descriptor to a per-isoform subset model. Declared now as an open decision rather than silently defaulted to zero-fill.",
+    "blind_coverage_floor": 11.333333333333334
+  },
+  "not_a_submission_decision": "This is comparative evidence about information content. Four CV-to-board transfer failures are on record: notebook 08's ensembles, notebook 28's single-fold AID screen, notebook 29's full 5x5 BH-corrected AID confirmation, and NB32-A's dead-zone reversal on all four isoforms. No arm from this registration will be submitted on CV evidence alone."
+}

@@ -1,0 +1,19 @@
+{
+  "run_started_at_utc": "2026-10-09T22:19:39.926027+00:00",
+  "already_dirty_tracked_paths": [
+    "CLAUDE.md",
+    "notebooks/README.md",
+    "outputs/README.md",
+    "outputs/qm_parsed/README.md",
+    "src/README.md",
+    "src/features.py"
+  ],
+  "input_sha256": {
+    "qm_atoms.csv": "3d333c41ed6e76531bc23dbf0507d6c5177e20c8d0e1f51d088f1f8b2f2652e5",
+    "qm_bonds.csv": "0bddb8a98f7402b3f05a14fe79f7551ec8a69eec58d603607609fce6e1f4c7c9",
+    "descriptors.csv": "9b86ecd07b32a6a2b5271c7d74446d8b7bb73d2e4aa0898a0386b3bda920d767"
+  },
+  "python": "3.11.13",
+  "pandas": "2.3.3",
+  "numpy": "1.26.4"
+}

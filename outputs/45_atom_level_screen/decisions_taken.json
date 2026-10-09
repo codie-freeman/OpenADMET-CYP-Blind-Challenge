@@ -1,0 +1,38 @@
+[
+  {
+    "decision": "included mean|q| for all three charge schemes (3 of the 54 columns)",
+    "plan_said": "G1 was 12 columns: {min,max,range,std} x 3 schemes, signed mean excluded",
+    "why": "the validation gate cannot close without it -- hirshfeld_abs_mean is one of the four pre-existing stored aggregates and is mean|q|, which was in no planned group. Three further reasons: mean|q| is NOT charge-constrained, so finding 4's exclusion of the SIGNED mean does not reach it; it is the single most useful column of notebook 44's seven probed and survives the raised 0.96 cut, so omitting it would be the exact mistake this notebook was built to avoid; and doing it for Hirshfeld alone would be an unmotivated asymmetry across schemes.",
+    "alternative": "add hirshfeld_abs_mean only (asymmetric), or drop the gate for that column"
+  },
+  {
+    "decision": "gate tolerance is 0.0 for min/max/range and 1e-15 for abs_mean",
+    "plan_said": "reproduce all three stored columns exactly",
+    "why": "abs_mean reproduces to ~1.2e-16 on a value of order 0.1, i.e. float summation order from .abs().mean() versus the original script, not a disagreement. Same class as notebook 37's documented ~1e-16 drift re-scoring its own cached predictions. The number is printed rather than absorbed into a loose blanket tolerance.",
+    "alternative": "a single 1e-15 tolerance for all four, which would hide a real bug in min/max"
+  },
+  {
+    "decision": "added three genuinely-extensive size-check CALIBRATORS, excluded from the block",
+    "plan_said": "G8's two columns are the extensive positive controls for STEP 3",
+    "why": "they failed as calibrators -- |rho| 0.33 and 0.23 against a 0.80 bar. Both count a RARE EVENT (atoms below -0.25 Hirshfeld are essentially the electronegative ones; bonds above order 1.5 are unsaturation) rather than counting atoms, so neither tracks total size. Extensive in principle, not size proxies in fact. Without a calibrator that the check demonstrably catches, the candidates' clean pass would have been vacuous -- which is exactly the stop condition the plan wrote down. The three calibrators are total atom count, sum|Hirshfeld|, and sum of bond orders; they are diagnostics, not candidates, and nobody would model them. G8's two columns stay in the block as ordinary candidates, since that is what they turned out to be.",
+    "alternative": "report the clean pass without a working calibrator, i.e. prove nothing"
+  },
+  {
+    "decision": "survivors are TIERED (strong / moderate / marginal), not reported as a binary",
+    "plan_said": "a descriptor resists both axes iff max-of-two R^2 < 0.96 on both",
+    "why": "31 of 48 clear that bar, but most sit at 0.88-0.96 -- barely under it -- while the top few sit at 0.41-0.58. A binary verdict lumps those together and would overstate what the screen found. Thresholds were fixed before the tiers were read, and the 0.96 cut itself is unchanged; the tiering only refuses to treat its two sides as homogeneous.",
+    "alternative": "report 31 survivors flat, which reads as a far stronger result than the evidence"
+  },
+  {
+    "decision": "read 3 uses butina_repeat_0 only, not all five repeats",
+    "plan_said": "Butina 25-fold",
+    "why": "the five repeats re-randomise cluster-to-fold ASSIGNMENT over one fixed clustering (notebook 34's own finding), so they sample assignment noise. This read asks whether a descriptor is recoverable under chemotype shift -- one disjoint 5-fold partition answers that, and the question is already labelled secondary and restricted in scope.",
+    "alternative": "all 25 folds, 5x the compute for a secondary read with no paired test attached"
+  },
+  {
+    "decision": "the rejected control is chosen by a stated rule, not by judgement",
+    "plan_said": "at least one descriptor the screen calls redundant, named in the prereg",
+    "why": "picking it after seeing the table would be the forking path the whole notebook is arranged against. The rule is: highest-value rejected member of the pre-existing Hirshfeld family, since that is the one family with a measured in-block ST-RAE gain.",
+    "alternative": "name it by hand, which is unfalsifiable"
+  }
+]

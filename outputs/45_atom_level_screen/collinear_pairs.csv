@@ -1,0 +1,9 @@
+a,b,rho,n
+mulliken_std,mulliken_abs_mean,0.9595174589197861,5655
+loewdin_std,loewdin_abs_mean,0.974009931348195,5655
+hirshfeld_min,hirshfeld_O_min,0.9974700537212756,5382
+mayer_na_std,mulliken_p_mean,0.974567262726659,5655
+mayer_na_std,mulliken_p_std,0.9582973216529642,5655
+mayer_na_std,loewdin_p_mean,0.9797914183277643,5655
+mulliken_p_mean,loewdin_p_mean,0.9912766287797673,5655
+mulliken_p_std,loewdin_p_mean,0.9514221435546227,5655

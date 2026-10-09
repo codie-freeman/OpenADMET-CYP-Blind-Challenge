@@ -32,6 +32,15 @@ an intermediate split file or coordinate launch order.
 `butina_clusters`, added for notebook 05b's cluster-aware CV split, is the clustering
 half of the same rule -- Tanimoto-similarity-threshold clustering (via RDKit's Butina
 algorithm), distinct from `bemis_murcko_scaffold`'s identity-based grouping.
+
+`qm_atom_aggregates`, added for notebook 45's label-free redundancy screen, is the only
+function here that does not start from SMILES: it aggregates `scripts/parse_orca_output.py`'s
+per-atom and per-bond ORCA tables to one row per compound. It is centralized for the same
+reason as the fingerprints above -- notebook 45 screens the block and a later modelling arm
+would consume it, and the two must enumerate identical descriptors. Note it needs no atom-index
+join and so is immune to the hazard notebook 43 documented, that `canonical_smiles` reproduces
+ORCA's atom order on only 4,212 of 5,655 compounds; it groups on `Molecule_Name` and reads
+`element` from the ORCA table itself.
 """
 
 import os
@@ -577,3 +586,165 @@ def assign_final_submission_split(
         out["inchikey"].isin(val_set), "final_val", "final_train"
     )
     return out
+
+
+# Aggregation specification for `qm_atom_aggregates`, kept module-level so notebook 45's
+# screen and any later modelling arm enumerate the same candidate block without either
+# re-deriving it. Group labels match notebook 45's own G1-G8 table.
+QM_AGG_CHARGE_SCHEMES = ("q_mulliken", "q_loewdin", "q_hirshfeld")
+QM_AGG_CORE_ELEMENTS = ("C", "H", "N", "O")
+QM_AGG_SECONDARY_ELEMENTS = ("Cl", "S", "F")
+QM_AGG_BOND_PAIRS = (("C", "C"), ("C", "H"), ("C", "N"), ("C", "O"))
+QM_AGG_HIRSHFELD_ANION_CUT = -0.25
+QM_AGG_BOND_ORDER_CUT = 1.5
+
+
+def qm_atom_aggregates(
+    atoms: pd.DataFrame,
+    bonds: pd.DataFrame,
+    key: str = "Molecule_Name",
+) -> pd.DataFrame:
+    """Aggregate ORCA per-atom and per-bond output to one row per compound.
+
+    Added for notebook 45's label-free redundancy screen on the atom-level QM block.
+    `atoms` is `outputs/qm_parsed/qm_atoms.csv` and `bonds` is `qm_bonds.csv`, both
+    produced by `scripts/parse_orca_output.py`. Lives here rather than in that notebook
+    so a later modelling arm reuses one definition -- descriptor drift between a screen
+    and the arm it motivates is exactly what this module exists to prevent. Distinct
+    from `shape_descriptors()` in `scripts/44_build_qm_feature_blocks.py`, which
+    aggregates the same table's *coordinates* for notebook 44's molecule-level 3D block
+    and never touches charges; that function is notebook 44's and is left alone.
+
+    Returns 54 descriptors in eight groups. Three deliberate design choices, each of
+    which a caller may need to know about:
+
+    1. **Intensive statistics only; no sums.** A sum over atoms is a size descriptor in
+       a chemistry costume, and pIC50 is intensive (the QTAIM warning,
+       10.1039/d4dd00057a). The two exceptions are named `n_atoms_*`/`n_bonds_*` and
+       are *deliberately* extensive -- notebook 45 uses them as positive controls for
+       its size-confound check, so that a clean pass means something.
+    2. **Global mean charge is excluded by construction**, because it is exactly
+       `formal_charge / n_atoms`: the schemes sum to formal charge to 8e-6 (Mulliken,
+       Loewdin) and 1.1e-3 (Hirshfeld, integration noise), `formal_charge` is an exact
+       duplicate of a free descriptor, and `n_atoms` is a size proxy. Per-element mean
+       charge is kept -- it is not charge-constrained -- as is `mayer_va` mean.
+    3. **Shell populations are computed over non-hydrogen atoms only.** ORCA reports no
+       p or d population for hydrogen, so `mulliken_p`/`mulliken_d`/`loewdin_p`/
+       `loewdin_d` are null on exactly the 113,596 H rows (verified both ways: every
+       null is an H, every H is null). That is structural, not missing data, so the
+       restriction is principled rather than imputation.
+
+    Element-conditioned columns are **NaN for compounds not containing that element**,
+    never sentinel-filled. Notebook 45 screens each on its present-subset for a stated
+    reason: with a sentinel standing in for most of the population, a model predicting
+    the descriptor mostly learns to predict the sentinel from "does this molecule
+    contain sulfur", which 2D descriptors encode perfectly, so the descriptor looks
+    recoverable while its informative subset was never tested. Callers building a
+    modelling matrix must decide a sentinel-and-presence-flag policy themselves.
+
+    Bond descriptors use `is_rdkit_bond == True` rows only. That flag separates
+    something physical rather than drawing an arbitrary line: notebook 43 found the
+    Mayer bond-order distribution cleanly bimodal with an empty gap (real bonds
+    0.604-3.125, weak contacts -0.157-0.293, zero of 269,256 pairs between), and ORCA's
+    own 0.1 print threshold sits inside the weak-contact population rather than in the
+    gap. Pair-conditioned means cover the four pairs above 90% population coverage.
+
+    Spread statistics use **ddof=0**. A molecule's atoms are a complete enumeration
+    rather than a sample from a larger population, and ddof=1 would additionally return
+    NaN for any single-atom group. Stated because it differs from the pandas default.
+
+    No row is dropped and no compound is invented: the returned frame is indexed by the
+    unique `key` values of `atoms`, so a compound present in `atoms` but absent from
+    `bonds` keeps its atom-derived columns and carries NaN in the bond-derived ones.
+    """
+    missing_atom_cols = {
+        "element", "mayer_na", "mayer_va", "mulliken_p", "mulliken_d",
+        "loewdin_p", "loewdin_d", key, *QM_AGG_CHARGE_SCHEMES,
+    } - set(atoms.columns)
+    if missing_atom_cols:
+        raise ValueError(f"`atoms` is missing columns: {sorted(missing_atom_cols)}")
+    missing_bond_cols = {
+        key, "element_i", "element_j", "mayer_bond_order", "is_rdkit_bond",
+    } - set(bonds.columns)
+    if missing_bond_cols:
+        raise ValueError(f"`bonds` is missing columns: {sorted(missing_bond_cols)}")
+
+    out = pd.DataFrame(index=pd.Index(atoms[key].unique(), name=key))
+    grp = atoms.groupby(key, sort=False)
+
+    # G1 (15): global charge extremes and mean absolute charge, per scheme. The SIGNED
+    # mean is excluded -- see docstring (2) -- but mean|q| is not charge-constrained, so
+    # that argument does not reach it, and it is the one column of this family with
+    # measured predictive value inside the QM block (notebook 44's post-hoc probe).
+    for scheme in QM_AGG_CHARGE_SCHEMES:
+        short = scheme.removeprefix("q_")
+        g = grp[scheme]
+        lo, hi = g.min(), g.max()
+        out[f"{short}_min"] = lo
+        out[f"{short}_max"] = hi
+        out[f"{short}_range"] = hi - lo
+        out[f"{short}_std"] = g.std(ddof=0)
+        out[f"{short}_abs_mean"] = atoms.assign(_a=atoms[scheme].abs()).groupby(key, sort=False)["_a"].mean()
+
+    # G2 (4): Mayer atomic valence. Not charge-constrained, so the mean is meaningful.
+    g = grp["mayer_va"]
+    out["mayer_va_min"] = g.min()
+    out["mayer_va_max"] = g.max()
+    out["mayer_va_mean"] = g.mean()
+    out["mayer_va_std"] = g.std(ddof=0)
+
+    # G3 (2): Mayer atomic population. Suspected element-identity proxy; kept so
+    # notebook 45's size-confound and redundancy checks can test exactly that.
+    out["mayer_na_max"] = grp["mayer_na"].max()
+    out["mayer_na_std"] = grp["mayer_na"].std(ddof=0)
+
+    # G4 (12) + G5 (6): element-conditioned Hirshfeld charge. NaN where absent.
+    for element in (*QM_AGG_CORE_ELEMENTS, *QM_AGG_SECONDARY_ELEMENTS):
+        sub = atoms.loc[atoms["element"] == element].groupby(key, sort=False)["q_hirshfeld"]
+        out[f"hirshfeld_{element}_min"] = sub.min()
+        out[f"hirshfeld_{element}_max"] = sub.max()
+        if element in QM_AGG_CORE_ELEMENTS:
+            out[f"hirshfeld_{element}_mean"] = sub.mean()
+
+    # G6 (5): shell populations, non-hydrogen atoms only -- see docstring (3).
+    heavy = atoms.loc[atoms["element"] != "H"].groupby(key, sort=False)
+    out["mulliken_p_mean"] = heavy["mulliken_p"].mean()
+    out["mulliken_p_std"] = heavy["mulliken_p"].std(ddof=0)
+    out["mulliken_d_mean"] = heavy["mulliken_d"].mean()
+    out["loewdin_p_mean"] = heavy["loewdin_p"].mean()
+    out["loewdin_d_mean"] = heavy["loewdin_d"].mean()
+
+    # G7 (8): Mayer bond order over real bonds only -- see docstring.
+    real = bonds.loc[bonds["is_rdkit_bond"].astype(bool)]
+    bg = real.groupby(key, sort=False)["mayer_bond_order"]
+    out["bond_order_min"] = bg.min()
+    out["bond_order_max"] = bg.max()
+    out["bond_order_mean"] = bg.mean()
+    out["bond_order_std"] = bg.std(ddof=0)
+    pair_key = pd.Series(
+        [
+            "".join(sorted((a, b)))
+            for a, b in zip(real["element_i"].to_numpy(), real["element_j"].to_numpy())
+        ],
+        index=real.index,
+    )
+    for a, b in QM_AGG_BOND_PAIRS:
+        want = "".join(sorted((a, b)))
+        out[f"bond_order_{a}{b}_mean"] = (
+            real.loc[pair_key == want].groupby(key, sort=False)["mayer_bond_order"].mean()
+        )
+
+    # G8 (2): DELIBERATELY EXTENSIVE. Notebook 45's size-confound positive controls --
+    # these should fail its |rho| >= 0.80 check, and if they pass, the check is suspect.
+    out[f"n_atoms_hirshfeld_lt_neg{abs(QM_AGG_HIRSHFELD_ANION_CUT):.2f}".replace(".", "p")] = (
+        atoms.assign(_f=atoms["q_hirshfeld"] < QM_AGG_HIRSHFELD_ANION_CUT)
+        .groupby(key, sort=False)["_f"]
+        .sum()
+    )
+    out[f"n_bonds_order_gt_{QM_AGG_BOND_ORDER_CUT:.1f}".replace(".", "p")] = (
+        real.assign(_f=real["mayer_bond_order"] > QM_AGG_BOND_ORDER_CUT)
+        .groupby(key, sort=False)["_f"]
+        .sum()
+    )
+
+    return out.reset_index()

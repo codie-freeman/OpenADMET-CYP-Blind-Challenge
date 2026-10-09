@@ -53,6 +53,7 @@ individual files.
 | `41_dataset_audit_3d/` | `41` | Per-compound 3D-readiness audit — size, elements, stereochemistry, basic nitrogen. Reused widely by `42`/`43`. |
 | `42_orca_timing/` | `42` | ORCA timing measurements, cost fits, and core-scaling curves. The raw job tree is gitignored. |
 | `43_coordinating_atom/` | `43` | Candidate SMARTS coverage/overlap/tie-break tables, molecule panels, and the three open decisions. |
+| `45_atom_level_screen/` | `45` | Label-free redundancy screen on the aggregated atom-level QM block: three recoverability reads, the size-check calibrators, the tiered verdict table, and the arm pre-registration. |
 | `board_solved_calibration/` | `16` | Sixth live submission (NB16) candidate, board-metrics-solved recentring. |
 | `calibration_blind_population/` | `13`, `14` | External-population calibration params (floored-mean and censored-MLE). |
 | `final_submission/` | `04b` (`scripts/train_final_submission_multitask.py`) | First live submission's training/prediction artifacts. |

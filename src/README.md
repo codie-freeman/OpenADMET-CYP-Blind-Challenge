@@ -28,6 +28,16 @@ The one shared module for canonicalization, fingerprints, similarity, and splitt
 - `assign_screen_split`, `assign_final_submission_split` — the two non-CV split functions, called
   identically from notebooks and scripts for a byte-identical split without freezing an
   intermediate file. Used by `04a`'s screen and the final-submission training scripts.
+- `qm_atom_aggregates` — the only function here that does not start from SMILES: aggregates
+  `scripts/parse_orca_output.py`'s per-atom and per-bond ORCA tables to one row per compound (54
+  descriptors in eight groups). Added for notebook `45`'s label-free redundancy screen and shared
+  so any later modelling arm enumerates identical descriptors. Intensive statistics only — sums
+  are excluded as size descriptors in disguise, bar two deliberately-extensive columns notebook
+  `45` uses as diagnostics. Element-conditioned columns are **NaN where the element is absent,
+  never sentinel-filled**; a caller building a modelling matrix must choose its own
+  sentinel-and-presence-flag policy. Distinct from `shape_descriptors()` in
+  `scripts/44_build_qm_feature_blocks.py`, which aggregates the same table's *coordinates* for
+  notebook `44` and never touches charges.
 
 ## `scoring.py`
 
