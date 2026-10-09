@@ -554,4 +554,14 @@ co-primary, bars built by `37`'s pooled-SE procedure printed verbatim, both BH f
 is written **after** the screen and defends that ordering explicitly: every quantity is a function
 of the feature matrices alone, so nothing seen leaks outcome information, which is the inverse of
 `44`'s own prereg problem. The aggregation lives in [`../src/features.py`](../src/features.py) so a
-later arm reuses identical descriptors.
+later arm reuses identical descriptors. **Part 7 (appended 2026-10-10, nothing above it
+re-executed)** closes a gap in axis B's design raised after the fact: axis B excluded the
+molecule-level Hirshfeld summaries as group-(c), yet two of the four recommendations are
+`hirshfeld_C_min` and `hirshfeld_H_min`, so the most plausible redundancy partner sat outside both
+axes. Tested two ways against all **27** distinct molecule-level quantities (derived by rule, not
+typed, and independently reproducing notebook 44's own count): pairwise, **0 of 116 pairs reach
+|rho| 0.80**, the largest being +0.45 and `hirshfeld_C_min` against `hirshfeld_min` being **−0.01**;
+and multivariate, where adding all 27 at once moves recoverability by a median of +0.0095 and leaves
+all four below both the 0.96 cut and the 0.80 strong-tier line. **The recommendation is unchanged and
+the hypothesis does not hold** — none of the four is largely a restatement of a column notebook 44
+already tested and found nothing for.
