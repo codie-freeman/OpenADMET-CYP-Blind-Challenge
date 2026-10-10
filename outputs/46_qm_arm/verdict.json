@@ -1,0 +1,12 @@
+{
+  "n_methods": 6,
+  "routes": [
+    "tukey"
+  ],
+  "mstar": "ridge",
+  "n_significant": 6,
+  "n_material": 0,
+  "material_isoforms": [],
+  "passes": false,
+  "verdict": "DETECTED_NOT_MATERIAL"
+}

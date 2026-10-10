@@ -69,7 +69,7 @@ background. Notebooks read these scripts' saved output from disk; they never inv
   partition notebook `15` builds (`data/folds/analog_holdout_split.csv`), structurally like one
   fold of `05b_run_cluster_cv.py`.
 
-## Quantum-chemistry descriptors (notebooks `41`–`43`)
+## Quantum-chemistry descriptors (notebooks `41`–`46`)
 
 - **`run_qm_descriptors.py`** — the production QM run: all 5,655 compounds through notebook `42`'s
   measured pipeline (RDKit ETKDGv3+MMFF conformer → GFN2-xTB optimisation → `B3LYP D3 def2-SV(P)
@@ -92,6 +92,27 @@ background. Notebooks read these scripts' saved output from disk; they never inv
   Eight hard assertions per compound, including an atom-order check against RDKit and a
   bond-subset check that catches same-element permutations the element check cannot see. Parses
   the full set in well under a minute; restartable per compound via sharded writes.
+
+### The QM modelling arms (notebooks `44`–`46`)
+
+- **`44_build_qm_feature_blocks.py`**, **`44_redundancy_triage.py`**, **`44_run_qm_arms.py`**,
+  **`44_posthoc_group_c_probe.py`** — notebook `44`'s molecule-level arm: feature blocks and its
+  pre-registration, the cheap-recoverability triage, the training driver (tier-1 model screen plus
+  the 25-fold confirmation), and the post-hoc probe that added the excluded group-(c) columns back.
+- **`46_build_feature_blocks.py`** — notebook `46`'s six feature blocks and its pre-registration,
+  written **before any training**: the script reads no fold file and no prediction, so the criteria
+  cannot be tuned to a result. Its baseline is notebook `45`'s own axis A (rdkit2d's 217 plus
+  ecfp4_narrow's 9), which is the block the descriptors were screened against — deliberately not
+  notebook `44`'s `RDKIT2D`, which is the 217 alone, and the reason `44`'s arms could not simply be
+  reused despite sharing the partition. The halogen block ships its element-conditioned columns as
+  NaN with presence flags rather than pre-filled, because the fill has to be fitted per fold.
+- **`46_run_arms.py`** — notebook `46`'s training driver. Self-contained by choice rather than
+  importing `44_run_qm_arms.py`: every path that script writes to is a module-level constant inside
+  `outputs/44_qm_molecular_block/`, which is protected, and monkeypatching those globals risks
+  missing one. Functions are copied verbatim with attribution, following the precedent by which
+  notebooks 35 and 37 each copied 34's harness. Two things are new — the loader tolerates NaN for
+  blocks the pre-registration declares may carry it, and the per-fold median fill for those columns
+  is fitted on that fold's training portion only.
 
 All scripts import `src/features.py`, `src/scoring.py`, and (where relevant) `src/chemprop_screen.py`
 or `src/cv_bootstrap.py` rather than reimplementing any of that logic locally — see `src/README.md`.

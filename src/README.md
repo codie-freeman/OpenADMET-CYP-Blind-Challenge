@@ -80,6 +80,17 @@ wrapper module instead"), the fix lives here, not in the vendored file.
   stopping, bagged over random subsets of the candidate library. Used by notebook `11b` (selection)
   and reused by notebook `12` (retrain against the selected weights).
 
+- `ash_protocol.py` — the Ash et al. (2025) method-comparison protocol: Levene branch check,
+  repeated-measures ANOVA, Tukey HSD on the RM error term, Friedman/Conover-Holm, the >10-method
+  BH fallback, and the compact letter display. Written in notebook `05`, copied verbatim into
+  `37`, and lifted here rather than copied a third time by `46`. `validate_assign_cld()` is
+  notebook 05's own check against Ash SI Table 1's worked example, as a function so it does not
+  run on import. **Provenance note in the module docstring**: only the 14-page main text is
+  available in this project, and it carries the parametric route but not the nonparametric
+  workflow, the >10 BH exception or the 9x variance tolerance — those are cited to a Supporting
+  Information that is not in the repository, so the parametric branch is the one whose
+  justification is verifiable here.
+
 ## `vendor/`
 
 **Unmodified upstream code. Do not edit these files** — if a change is needed, add it to a wrapper

@@ -1,0 +1,10 @@
+Notebook 44 compared three QM arms against the `rdkit2d` baseline with paired t or Wilcoxon
+chosen per cell by Levene, then Benjamini-Hochberg. Two things about that are worth naming.
+First, its BH families were 4 isoforms within each arm -- six families of four across the two
+metrics -- not one family of twelve, which is how the design has sometimes been described.
+Second, and more substantively, it ran no omnibus test: Ash's steps (1) repeated-measures
+ANOVA and (2) Bonferroni correction of the ANOVA alpha by the number of metrics were both
+skipped. All-versus-one-control is itself coherent and Ash names the case explicitly, so the
+deviation is the missing omnibus, not the choice of comparator. The practical consequence is
+narrow: with no omnibus there is no gate, so every pairwise test was performed and corrected
+regardless of whether the arms differed at all. Notebook 46 runs the parametric default.

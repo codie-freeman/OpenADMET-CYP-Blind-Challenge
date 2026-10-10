@@ -401,3 +401,14 @@ outputs/44_qm_molecular_block/tier1/oof_long/
 outputs/44_qm_molecular_block/posthoc_group_c/predictions/
 outputs/44_qm_molecular_block/posthoc_group_c/scores/
 outputs/44_qm_molecular_block/posthoc_group_c/oof_long/
+
+# notebook 46 -- bulk per-run artefacts, regeneratable in ~16 min from the two scripts.
+# The summary tables (run_scores, omnibus, levene, increments, contrasts, CLD, verdict,
+# prereg, mstar) and the figures ARE tracked: they are what the notebook's claims rest on.
+outputs/46_qm_arm/features/
+outputs/46_qm_arm/predictions/
+outputs/46_qm_arm/scores/
+outputs/46_qm_arm/oof_long/
+outputs/46_qm_arm/tier1/predictions/
+outputs/46_qm_arm/tier1/scores/
+outputs/46_qm_arm/tier1/oof_long/

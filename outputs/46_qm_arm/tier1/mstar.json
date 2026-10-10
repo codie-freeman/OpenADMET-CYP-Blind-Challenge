@@ -1,0 +1,13 @@
+{
+  "selected_at_utc": "2026-10-10T01:43:22.457960+00:00",
+  "mstar": "ridge",
+  "rule": "lowest mean macro ST-RAE on the FREE baseline block ALONE, so the model cannot be selected for liking the QM blocks",
+  "baseline_block": "FREE",
+  "mean_macro_strae_by_model": {
+    "free__ridge": 0.7562216823202931,
+    "free__rf": 0.7893874294288702,
+    "free__lightgbm": 0.8117881098967414,
+    "free__xgboost": 0.8688608114852636
+  },
+  "n_runs": 72
+}

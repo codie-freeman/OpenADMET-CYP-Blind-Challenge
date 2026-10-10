@@ -1,0 +1,9 @@
+isoform,metric,n_groups,branch,omnibus_p,alpha_adjusted,significant,posthoc
+CYP1A2,ST-RAE,6,parametric,0.0006873549862331661,0.025,True,tukey
+CYP1A2,Spearman_R,6,parametric,6.472561201659631e-07,0.025,True,tukey
+CYP2C9,ST-RAE,6,parametric,0.020454581219472433,0.025,True,tukey
+CYP2C9,Spearman_R,6,parametric,4.456403963690046e-05,0.025,True,tukey
+CYP2D6,ST-RAE,6,parametric,0.9893823089556257,0.025,False,
+CYP2D6,Spearman_R,6,parametric,1.3515646862000575e-07,0.025,True,tukey
+CYP3A4,ST-RAE,6,parametric,0.15925906269035797,0.025,False,
+CYP3A4,Spearman_R,6,parametric,0.9570345984543389,0.025,False,

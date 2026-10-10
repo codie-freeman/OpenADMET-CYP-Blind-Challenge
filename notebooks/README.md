@@ -477,7 +477,7 @@ first non-deliberate submission in this project's history, caused by the comment
 being unsafe against an editor. The notebook now uses an explicit `SEND = False` flag with the
 printed message computed from it, so the cell cannot contradict itself.
 
-## Quantum-chemistry descriptors (41–45)
+## Quantum-chemistry descriptors (41–46)
 
 **[`41_dataset_audit_3d.ipynb`](41_dataset_audit_3d.ipynb)** — COMPLETE, audit only. Replaces the
 assumptions behind a 3D/QM descriptor plan with measurements over all 5,655 compounds. **The size
@@ -554,7 +554,35 @@ co-primary, bars built by `37`'s pooled-SE procedure printed verbatim, both BH f
 is written **after** the screen and defends that ordering explicitly: every quantity is a function
 of the feature matrices alone, so nothing seen leaks outcome information, which is the inverse of
 `44`'s own prereg problem. The aggregation lives in [`../src/features.py`](../src/features.py) so a
-later arm reuses identical descriptors. **Part 7 (appended 2026-10-10, nothing above it
+later arm reuses identical descriptors.
+
+**[`46_qm_arm.ipynb`](46_qm_arm.ipynb)** — COMPLETE. Runs the arm notebook `45` pre-registered:
+six feature blocks, one variable between them, on the frozen 25-fold cluster-disjoint partition.
+**Part 1 resolves a question the project had left open** — notebooks 05, 37 and 44 used three
+different procedures, so which of Ash's routes applies here had to be settled before anything was
+designed. Recomputed from the saved tables: notebook 37 ran *two* things (an all-versus-control
+convenience table with BH over its 10 arms, and the Ash protocol proper all-pairs over 11 arms,
+which routed to BH because 11 > 10 and so **never fired Tukey**); notebook 44's BH families were
+**six of four** (arm × metric), not one of twelve, and more substantively **it ran no omnibus at
+all**, skipping Ash's steps (1) and (2). All-versus-control is itself coherent and Ash names the
+case verbatim. Two further findings, verified against the PDF at notebook 37's pinned sha256:
+Ash's main text recommends Tukey "for general use" and says it controls FWER regardless of the
+number of tests, and **the Supporting Information is not in this environment** — `Friedman`,
+`Conover` and the >10 BH exception appear nowhere in the 14 pages we hold, so the parametric route
+is the one whose justification is verifiable. This arm therefore runs Ash's parametric default
+(RM-ANOVA → alpha 0.05/2 = 0.025 → Tukey HSD → CLD) at **6 methods**, and **Tukey fires for the
+first time in this project**. Part 2 settles two items notebook 44's audit deferred: the
+disclosure, and the BH-pooled-across-metrics sensitivity, which changes **0 of 24** verdicts.
+**RESULT: DETECTED, NOT MATERIAL overall — 6 of 40 increment cells significant, 0 material, the
+largest at 45% of its bar — and for the four descriptors the arm existed to test, NOT DIFFERENT.**
+Isolated by the contrast that separates them from the molecule-level block (adding the 4 to
+`free_qm13`, and to `free` alone), notebook 45's descriptors are **0 of 16 significant**: not
+merely immaterial but not detectable. Every significant cell in the arm comes from the
+molecule-level 13, which re-asked here is 2 of 8 significant and 0 material — reproducing notebook
+44's conclusion on a different baseline. One cell is a significant **harm** (the halogen block on
+CYP2C9 Spearman). The chemprop atom-feature option is scoped in the plan and **not run**: the
+pre-registration declared in advance that an immaterial result would not justify it.
+ **Part 7 (appended 2026-10-10, nothing above it
 re-executed)** closes a gap in axis B's design raised after the fact: axis B excluded the
 molecule-level Hirshfeld summaries as group-(c), yet two of the four recommendations are
 `hirshfeld_C_min` and `hirshfeld_H_min`, so the most plausible redundancy partner sat outside both
