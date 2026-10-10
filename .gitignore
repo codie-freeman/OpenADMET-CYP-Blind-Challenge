@@ -412,3 +412,18 @@ outputs/46_qm_arm/oof_long/
 outputs/46_qm_arm/tier1/predictions/
 outputs/46_qm_arm/tier1/scores/
 outputs/46_qm_arm/tier1/oof_long/
+
+# 47_mae_only_full_retrain (MAE-loss full-data retrain, notebook-only): same treatment
+# as 30_aid_full_retrain / 32_deadzone_aid_retrain above, for the same reason --
+# chemprop_runs/ (249MB, checked directly: the one full-data Chemprop training run this
+# step needed) is excluded and is fully regeneratable by re-running the notebook
+# (deterministic: fixed SEED=2684470948, 100% train / 0 val, 7 epochs from the median
+# per-fold best epoch, no early stopping). No predictions/ or scores/ bulk directories
+# exist here (a full-data retrain, not a per-fold CV run). train_input.csv,
+# predict_input.csv, raw_predictions.csv, both submission candidates,
+# cv_best_epoch_per_fold.csv, prediction_diagnostics.csv, collapse_check.csv,
+# oof_spread_reference.csv, sanity_check_vs_existing.csv, spread_prediction_check.csv,
+# widening_applied.csv, correction_chain.csv, verdict.csv, summary.json,
+# decisions_taken.json, predictions_before_board.json, run_meta.json and figures/ are
+# all small and stay tracked.
+outputs/47_mae_only_full_retrain/chemprop_runs/

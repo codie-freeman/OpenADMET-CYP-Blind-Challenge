@@ -1,0 +1,58 @@
+{
+  "notebook": "47_mae_only_full_retrain",
+  "built_at_utc": "2026-10-10T09:53:33.075684+00:00",
+  "sent": false,
+  "october_2_record": {
+    "source": "outputs/39_ambiguity_and_shared_blend/decisions_taken.json and blind_member_availability.csv, 2026-10-02T11:16 UTC",
+    "what_it_said": "mae_only is a screen arm only (notebooks 31/35), never retrained full-data; excluded from notebook 39's blind-side ambiguity for that reason",
+    "model": "chemprop_chemeleoninit multitask, CheMeleon foundation, V2 atom featuriser, four regression heads",
+    "feature_block": "none -- graph input only, no tabular descriptors, no auxiliary heads",
+    "mae_only_means": "the TRAINING LOSS only (loss-function = mae against plain's mse). Targets are the raw curated labels; the evaluation metric is unchanged ST-RAE.",
+    "ambiguous": false
+  },
+  "hyperparameters": {
+    "source": "identical across all 25 saved config.toml files, asserted",
+    "selection_rule": "none applicable -- there is no chemprop hyperparameter search anywhere in this project, so no per-fold best_params table exists to take a mode or median of",
+    "shared_seed_bug_check": "ruled out independently: the 25 folds carry 25 DISTINCT seeds"
+  },
+  "stopping": {
+    "rule": "median per-fold best epoch across the 25 cluster-disjoint folds, read from chemprop's own best-epoch checkpoint filenames",
+    "median_best_epoch_0indexed": 6,
+    "epochs_trained": 7,
+    "range_across_folds": [
+      2,
+      17
+    ],
+    "early_stopping": "disabled by construction: patience == epochs == 7, which is what chemprop's own default resolves to when --patience is omitted",
+    "validation_split": "none. 100% of the 4,905 curated compounds trained, 0 held out, confirmed from chemprop's own splits.json",
+    "transfer_caveat": "a fold trained on 3335 rows per epoch, this fit on 4905, so 7 epochs here is about 10.2 fold-equivalent epochs of gradient steps"
+  },
+  "corrections": {
+    "layer_1": "CYP2D6 placement onto NB16's deployed board-solved population (mean 3.155762, sd 1.511412), slope rho-shrunk with this model's OWN OOF rho 0.380669",
+    "layer_2": "notebook 36's spread widening to each isoform's board-best spread ratio, applied only where the relative gap exceeds 10%",
+    "target_ratios": {
+      "CYP1A2": 0.836141,
+      "CYP2C9": 0.816767,
+      "CYP2D6": 0.85,
+      "CYP3A4": 0.926182
+    },
+    "transfer_assumption": "both layers were fitted using CV out-of-fold predictions and are applied to a full-data model with a different error profile. Flagged, not established.",
+    "rank_preserving": true
+  },
+  "files": {
+    "raw": {
+      "path": "outputs/47_mae_only_full_retrain/submission_candidate_raw.csv",
+      "sha256": "fb2b7fd915e0249bc6da495da794901c5240cb98b9ad289d1b9b11f5f79706f5"
+    },
+    "corrected": {
+      "path": "outputs/47_mae_only_full_retrain/submission_candidate.csv",
+      "sha256": "5ee259abcffaf590419d3de8b69c89133c0159a340b928dc39c5f47247054418"
+    }
+  },
+  "collapsed_isoforms": [
+    "CYP1A2",
+    "CYP2C9",
+    "CYP2D6"
+  ],
+  "train_wall_min": null
+}

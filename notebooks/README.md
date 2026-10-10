@@ -593,3 +593,71 @@ and multivariate, where adding all 27 at once moves recoverability by a median o
 all four below both the 0.96 cut and the 0.80 strong-tier line. **The recommendation is unchanged and
 the hypothesis does not hold** — none of the four is largely a restatement of a column notebook 44
 already tested and found nothing for.
+
+## MAE-loss full-data retrain (47)
+
+**[`47_mae_only_full_retrain.ipynb`](47_mae_only_full_retrain.ipynb)** — COMPLETE, build and
+validate only, **nothing sent**. Closes the gap notebook `39` recorded on 2026-10-02: `mae_only`
+was one of three arms (with `deadzone` and `single`) excluded from its blind-side analysis because
+no full-data fit existed. `deadzone` was later built inside notebook `40`; this builds `mae_only`.
+The arm matters because it is the **leak-free half of the dead-zone effect** — `deadzone`'s target
+comes from an out-of-fold donor model trained on the fold being held out, so notebooks `31`/`34`/
+`35`/`37` all flag its magnitude as plausibly optimistic, whereas `mae_only` changes the loss
+function alone against the literal curated label. At 25 cluster-disjoint folds it is
+SIGNIFICANTLY BETTER than `plain` on CYP1A2 (−0.0317) and CYP2D6 (−0.0803), NOT DIFFERENT on
+CYP2C9 and CYP3A4.
+
+**What the record specified, read from files not prose.** `chemprop_chemeleoninit` multitask
+(CheMeleon foundation, V2 featuriser, four heads); no feature block at all, graph input only;
+MAE-only means **the training loss and only that** (`loss-function = mae` against `plain`'s `mse`,
+raw curated targets, ST-RAE unchanged as the metric). All 25 saved `config.toml` files agree on
+every architecture key. **No selection rule applies to the hyperparameters**: there is no chemprop
+hyperparameter search anywhere in this project (notebook `07` tuned `chemeleon__rf`, not chemprop),
+so there is no per-fold `best_params` to take a mode or median of — the configuration is identical
+**by construction**. The shared-seed signature is ruled out independently: the 25 folds carry **25
+distinct seeds**.
+
+**Stopping count: 7 epochs**, the median per-fold best epoch (6, 0-indexed; range 2 to 17) read
+off chemprop's own `best-epoch=` checkpoint filenames. Two checks make it meaningful: every fold
+stopped on patience rather than the 50-epoch ceiling, and `last_epoch − best_epoch` equals the
+patience of 5 on **25 of 25** folds. Early stopping is disabled by `patience = epochs = 7`, which
+is exactly what chemprop's default resolves to when `--patience` is omitted, so
+`src/chemprop_screen.run_chemprop_train` is reused unmodified. **No validation split was carved** —
+chemprop's own `splits.json` confirms 4,905 train / 0 val, and the chemprop source was read before
+relying on it (`val_dset = None` makes the tracking metric fall back to `train_loss`, confirmed by
+the written checkpoint). The transfer assumption is stated: a fold trained on 3,335 rows per epoch
+against 4,905 here, so 7 epochs is about 10.2 fold-equivalent epochs of gradient steps, erring
+towards over- rather than under-training.
+
+**The sanity check does not close the question.** Against `27b` (best on record, macro 0.5982)
+Pearson runs 0.810–0.953, mean |difference| 0.213–1.488, and 62–724 of 750 compounds move by more
+than 0.5; against `10c` (the clean read — same architecture, same full-data retrain, no correction)
+Pearson 0.836–0.953 and mean |difference| 0.238–0.348.
+
+**Yes, isoforms collapsed.** Raw spread ratios 0.719 / 0.886 / **0.445** / 0.874 — more compressed
+than `10c` on **four of four** isoforms, by over 10% on three, CYP2D6 reaching only 0.635× `10c`'s
+own ratio with a raw range of 3.69–5.84 against training labels spanning 1.95–7.53. This was
+**recorded as a falsifiable prediction before the fit** from the sign of the CV arm's own
+out-of-fold spread ratios, and **held on 3 of 4** — the miss is reported rather than smoothed:
+CYP3A4's out-of-fold ratio said wider and its blind column came back narrower.
+
+**Corrections: two already board-measured layers, with the transfer assumption flagged not
+applied silently.** Layer 1 is the CYP2D6 placement chain (NB16's deployed solved population, mean
+3.155762 / sd 1.511412) with the rho-shrunk slope using **this** model's own out-of-fold rho,
+0.380669, explicitly not `10c`'s 0.374897 or the AID arm's 0.408626. Layer 2 is notebook `36`'s
+spread widening, its target ratios **re-derived** from the sent CSVs plus the board table and
+confirmed to reproduce notebook `36`'s saved values to under 1e-9; it fires on CYP1A2 only, since
+CYP2C9's raw ratio already *exceeds* its target and CYP3A4's 6.0% gap sits under the 10% bar.
+CYP2D6 lands at exactly 0.85 after layer 1 alone, so layer 2 is a no-op there — a check on the
+rule rather than something built into it. Rank order preserved to 1e-12 on all four.
+
+**Verdict: not worth submitting on this evidence.** The compression signature that is the only
+measurement in this project ever to have correctly anticipated a CV-confirmed model failing on the
+board (notebook `27` Section 1, applied to NB30) is present on four of four isoforms, and CYP2D6
+needs a **1.91×** total SD repair, larger than any prior candidate's — so most of the candidate's
+weight rests on a correction's transfer rather than on the model. The leak-free CV gains are real
+but small, with two isoforms null, against four CV-to-board transfer failures already on record.
+If anything deserves a board reading it is **CYP1A2 as a single-column test** against `27b`'s
+otherwise unchanged recipe, a different and much cheaper experiment. Neither was built or sent.
+Both files validate PASS; `SEND = False` with the printed message computed from the flag; scope
+check 0 violations on four tests, with `32` and `40` never opened.

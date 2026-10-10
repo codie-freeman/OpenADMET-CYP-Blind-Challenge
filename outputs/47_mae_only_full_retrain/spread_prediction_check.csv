@@ -1,0 +1,5 @@
+isoform,oof_predicted,oof_ratio,blind_observed,blind_ratio,held
+CYP1A2,narrower,0.9166,narrower,0.8598,True
+CYP2C9,narrower,0.9671,narrower,0.8904,True
+CYP2D6,narrower,0.7702,narrower,0.635,True
+CYP3A4,wider,1.0389,narrower,0.9367,False

@@ -1,0 +1,23 @@
+[
+  {
+    "decision": "Trained for a fixed 7 epochs (median per-fold best epoch 6, 0-indexed, plus one) with no validation split and no early stopping",
+    "reason": "A full-data fit has no held-out set to stop on. The 25 fold runs' own checkpoint filenames carry their best epoch, so the median is derived from the CV runs rather than invented. Every fold stopped on patience rather than the 50-epoch ceiling, so each best_epoch is a genuine optimum and the median is meaningful. The transfer assumption is stated explicitly: a fold trained on 3335 rows per epoch and this fit trains on 4905, so the same epoch count is about 1.47x the gradient steps.",
+    "alternatives": "Carve a 15% validation split and keep patience=5, which is scripts/10's own full-data precedent and what notebooks 30/32/40 did -- rejected here because the brief asks for 100% of the training compounds and that route fits on 85%; or step-match the epoch count, which would be a number not present in the CV evidence.",
+    "authority": "the brief's own instruction to take the stopping count from the CV runs and to fit on 100% of the training compounds",
+    "at_utc": "2026-10-10T09:53:31.844970+00:00"
+  },
+  {
+    "decision": "Applied both of this project's board-measured corrections (CYP2D6 placement onto the NB16-solved population, then notebook 36's spread widening) rather than one or neither",
+    "reason": "The brief asks for a corrected version alongside the raw one and for the parameters' provenance to be stated. Both layers have real board evidence: the CYP2D6 chain took 10c's 1.1673 to NB16's 0.8299 on identical raw predictions, and NB36-widened gained 0.0665 on CYP1A2 and 0.0200 on CYP2C9 over NB32-A. Applying only one would leave a known, measured defect in place and make the result incomparable to every submission since NB16. They are reported as separate layers with their own tables so the contribution of each is visible rather than bundled.",
+    "alternatives": "CYP2D6 placement only (leaves this model's documented compression uncorrected on three isoforms, which notebook 27's pooled association links to worse ST-RAE); or no correction at all (not comparable to any recent submission).",
+    "authority": "the brief's instruction to report raw and corrected and to state the correction's provenance",
+    "at_utc": "2026-10-10T09:53:32.017569+00:00"
+  },
+  {
+    "decision": "Used this model's own OOF Pearson rho for CYP2D6 (computed from the mae_only arm's 25-fold cluster-disjoint predictions) rather than 10c's or the AID model's",
+    "reason": "The placement slope is rho-shrunk, so rho has to describe the model being corrected. 27b set this precedent explicitly: it used the AID model's own rho and recorded that it is not 10c's. Reusing another arm's rho would mis-scale the transform.",
+    "alternatives": "Reuse 10c's rho (a different model) or the AID arm's (also different).",
+    "authority": "27b's own recorded convention for this chain",
+    "at_utc": "2026-10-10T09:53:32.017584+00:00"
+  }
+]

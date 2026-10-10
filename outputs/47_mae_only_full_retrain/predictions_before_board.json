@@ -1,0 +1,20 @@
+{
+  "recorded_at_utc": "2026-10-10T09:53:31.908951+00:00",
+  "recorded_before": "any blind prediction from this model existed",
+  "prediction_1_spread": {
+    "claim": "the raw blind columns will be more compressed than plain's (10c's) on CYP1A2, CYP2C9 and CYP2D6, and about the same or wider on CYP3A4",
+    "basis": "sign of the pooled OOF prediction-SD ratio, mae_only / plain, notebook 37's 25 folds",
+    "oof_ratios": {
+      "CYP1A2": 0.9166,
+      "CYP2C9": 0.9671,
+      "CYP2D6": 0.7702,
+      "CYP3A4": 1.0389
+    }
+  },
+  "prediction_2_rank_preserving_corrections": {
+    "claim": "every correction applied in Part 6 is affine with positive slope, so Spearman and Kendall of the corrected submission must equal the raw submission's exactly"
+  },
+  "prediction_3_board": {
+    "claim": "not predicted. This notebook builds and validates only; no submission is sent, so no board outcome is forecast."
+  }
+}
