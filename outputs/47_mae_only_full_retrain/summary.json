@@ -1,6 +1,6 @@
 {
   "notebook": "47_mae_only_full_retrain",
-  "built_at_utc": "2026-10-10T09:53:33.075684+00:00",
+  "built_at_utc": "2026-10-10T21:20:28.888664+00:00",
   "sent": false,
   "october_2_record": {
     "source": "outputs/39_ambiguity_and_shared_blend/decisions_taken.json and blind_member_availability.csv, 2026-10-02T11:16 UTC",
