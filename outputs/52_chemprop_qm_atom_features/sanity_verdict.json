@@ -1,0 +1,7 @@
+{
+  "max_abs_strae_diff": 0.0,
+  "threshold": 0.03,
+  "bit_identical": true,
+  "pass": true,
+  "at_utc": "2026-10-11T15:00:03.226889+00:00"
+}

@@ -3,29 +3,21 @@
  "TEST 2 any file inside a protected tree written during this run": [],
  "TEST 3 the two never-open notebooks' mtimes": [],
  "TEST 4 any submission-shaped CSV created outside this notebook's directory": [],
- "run_started_at_utc": "2026-10-11T14:43:48.494669+00:00",
+ "run_started_at_utc": "2026-10-11T22:25:23.198370+00:00",
  "pre_existing_dirty_tracked_paths": [
   ".gitignore",
-  "CLAUDE.md",
   "notebooks/47_mae_only_full_retrain.ipynb",
   "notebooks/52_chemprop_qm_atom_features.ipynb",
   "outputs/47_mae_only_full_retrain/decisions_taken.json",
   "outputs/47_mae_only_full_retrain/predictions_before_board.json",
   "outputs/47_mae_only_full_retrain/run_meta.json",
   "outputs/47_mae_only_full_retrain/summary.json",
-  "outputs/52_chemprop_qm_atom_features/atom_ordering.csv",
   "outputs/52_chemprop_qm_atom_features/decisions_taken.json",
-  "outputs/52_chemprop_qm_atom_features/figures/stage0_ordering_and_wiring.png",
-  "outputs/52_chemprop_qm_atom_features/ordering_verification.json",
   "outputs/52_chemprop_qm_atom_features/run_meta.json",
   "outputs/52_chemprop_qm_atom_features/run_timings.csv",
   "outputs/52_chemprop_qm_atom_features/scope_check.json",
   "outputs/52_chemprop_qm_atom_features/stage0_report.json",
-  "outputs/52_chemprop_qm_atom_features/wiring_check.csv",
-  "outputs/52_chemprop_qm_atom_features/wiring_verdict.json",
   "scripts/52_atom_arrays.py",
-  "scripts/52_build_atom_ordering.py",
-  "scripts/52_run_qm_atom_arms.py",
-  "scripts/README.md"
+  "scripts/52_run_qm_atom_arms.py"
  ]
 }

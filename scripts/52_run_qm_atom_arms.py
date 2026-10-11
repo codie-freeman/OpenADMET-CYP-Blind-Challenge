@@ -214,10 +214,17 @@ class Ctx:
         aa = atom_arrays_module()
         self.aa = aa
         self.src = aa.AtomFeatureSource()
-        self.foundation = OUT / "chemeleon_widened.pt"
+        k = aa.K_ATOM_FEATURES
+        self.foundation = aa.foundation_path(k)
         if not self.foundation.exists():
-            info = aa.build_widened_chemeleon(aa.K_ATOM_FEATURES, self.foundation)
-            (OUT / "widened_encoder.json").write_text(json.dumps(info, indent=2) + "\n")
+            info = aa.build_widened_chemeleon(k, self.foundation)
+            (OUT / f"widened_encoder_k{k}.json").write_text(json.dumps(info, indent=2) + "\n")
+        # A foundation file built for a different k would load and then fail deep inside
+        # training with a shape error. Assert its own d_v instead.
+        d_v = aa.load_foundation_d_v(self.foundation)
+        assert d_v == 72 + k, (
+            f"{self.foundation.name} has d_v={d_v} but k={k} needs {72 + k} -- a stale "
+            f"foundation file for a different feature count.")
         self.arm_args = ["--from-foundation", str(self.foundation),
                          "--multi-hot-atom-featurizer-mode", "V2",
                          "--loss-function", "mse"]
@@ -408,26 +415,29 @@ def fit_arm(ctx, tag, pop, zero_atoms: bool, seed: int, predict_frames: dict,
     return results, wall, last, best
 
 
-def run_confirm_unit(ctx, repeat, fold):
+def run_cv_unit(ctx, repeat, fold, arm=ARM, zero_atoms=False):
+    """One (repeat, fold) of a CV arm. `zero_atoms=True` is the control: identical in every
+    respect including the widened foundation and the 13 molecule-level descriptors, with the
+    npz CONTENTS set to zeros."""
     seed = ctx.fold_seed[(repeat, fold)]
-    tag = f"{ARM}__r{repeat}f{fold}"
+    tag = f"{arm}__r{repeat}f{fold}"
     pop = ctx.population("butina", ctx.butina_cols[repeat], fold, seed)
     held = pop.loc[pop["screen_split"] == "screen_test"].copy()
     expected = set(held["Molecule_Name"])
     pred_path = PRED_DIR / f"{tag}.csv"
     hit = cached(pred_path, expected)
     if hit is not None:
-        score_and_append(ctx, ARM, repeat, fold, seed, hit, tag)
-        save_oof_long(ctx, ARM, repeat, fold, seed, hit, tag)
-        record_timing(ctx, ARM, repeat, fold, seed, 0.0)
+        score_and_append(ctx, arm, repeat, fold, seed, hit, tag)
+        save_oof_long(ctx, arm, repeat, fold, seed, hit, tag)
+        record_timing(ctx, arm, repeat, fold, seed, 0.0)
         print(f"  [cache hit] {tag}")
         return hit, 0.0
-    res, wall, last, best = fit_arm(ctx, tag, pop, False, seed, {"heldout": held})
+    res, wall, last, best = fit_arm(ctx, tag, pop, zero_atoms, seed, {"heldout": held})
     pred = res["heldout"]
     pred.to_csv(pred_path, index=False)
-    score_and_append(ctx, ARM, repeat, fold, seed, pred, tag)
-    save_oof_long(ctx, ARM, repeat, fold, seed, pred, tag)
-    record_timing(ctx, ARM, repeat, fold, seed, wall, last, best)
+    score_and_append(ctx, arm, repeat, fold, seed, pred, tag)
+    save_oof_long(ctx, arm, repeat, fold, seed, pred, tag)
+    record_timing(ctx, arm, repeat, fold, seed, wall, last, best)
     print(f"  {tag}: {wall:.2f} min (last_epoch={last}, best_epoch={best})")
     return pred, wall
 
@@ -557,10 +567,13 @@ def mode_wiring(ctx):
     return 0
 
 
-def mode_confirm(ctx, repeats):
+def mode_confirm(ctx, repeats, arm=ARM, zero_atoms=False):
     print("=" * 78)
-    print(f"CONFIRM -- {ARM} on the frozen cluster-disjoint partition, repeats {repeats}")
+    print(f"{'CONTROL' if zero_atoms else 'CONFIRM'} -- {arm} on the frozen cluster-disjoint "
+          f"partition, repeats {repeats}")
     print("compared against notebook 37's STORED `plain` scores, never a refit")
+    if zero_atoms:
+        print("the npz CONTENTS are zeros; everything else is the main arm exactly")
     print("=" * 78)
     t_start = time.time()
     done, walls = 0, []
@@ -568,19 +581,18 @@ def mode_confirm(ctx, repeats):
     for repeat in repeats:
         for fold in range(N_FOLDS):
             print(f"\n[{done + 1}/{total}] repeat {repeat} fold {fold}")
-            _, wall = run_confirm_unit(ctx, repeat, fold)
+            _, wall = run_cv_unit(ctx, repeat, fold, arm=arm, zero_atoms=zero_atoms)
             done += 1
             if wall > 0:
                 walls.append(wall)
             if len(walls) == 3:
                 rate = float(np.mean(walls))
                 print(f"\n  >>> MEASURED RATE after 3 real folds: {rate:.2f} min/fold "
-                      f"-> {rate * 25 / 60:.2f} h for 25 folds "
-                      f"(the brief projected 9-12 min/fold, 4-5 h)")
+                      f"-> {rate * 25 / 60:.2f} h for 25 folds, against the 7 h budgeted")
             if walls:
                 print(f"  elapsed {(time.time() - t_start) / 60:.1f} min, "
                       f"mean {np.mean(walls):.2f} min/fold")
-    print(f"\n{ARM}: {done} units, {(time.time() - t_start) / 60:.1f} min total")
+    print(f"\n{arm}: {done} units, {(time.time() - t_start) / 60:.1f} min total")
     return 0
 
 
@@ -617,12 +629,14 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--sanity", action="store_true")
     ap.add_argument("--wiring", action="store_true")
+    ap.add_argument("--control", action="store_true",
+                    help="qm_both_zeroatoms over --repeats (default all 25 folds)")
     ap.add_argument("--confirm", action="store_true")
     ap.add_argument("--final", action="store_true")
     ap.add_argument("--repeats", default="0,1,2,3,4")
     ap.add_argument("--epochs", type=int, default=None, help="--final only")
     args = ap.parse_args()
-    if not (args.sanity or args.wiring or args.confirm or args.final):
+    if not (args.sanity or args.wiring or args.control or args.confirm or args.final):
         ap.error("pick a mode")
 
     print(f"started {datetime.now(timezone.utc).isoformat(timespec='seconds')}")
@@ -639,6 +653,9 @@ def main():
         rc = mode_sanity(ctx)
     if rc == 0 and args.wiring:
         rc = mode_wiring(ctx)
+    if rc == 0 and args.control:
+        rc = mode_confirm(ctx, [int(x) for x in args.repeats.split(",")],
+                          arm=ARM_ZEROATOMS, zero_atoms=True)
     if rc == 0 and args.confirm:
         rc = mode_confirm(ctx, [int(x) for x in args.repeats.split(",")])
     if rc == 0 and args.final:

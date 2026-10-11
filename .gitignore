@@ -450,10 +450,10 @@ outputs/49_qm_only_arm/oof_long/
 # scripts/52_atom_arrays.py and scripts/52_run_qm_atom_arms.py. chemprop_runs/ is 510MB
 # (checked directly: two Chemprop training runs' *.pt/*.ckpt checkpoints, their trainer logs,
 # and the train/predict CSVs and atom-feature .npz files each run writes). chemeleon_widened.pt
-# is a 37MB DERIVED artefact -- CheMeleon's own cached checkpoint with k zero columns inserted
-# -- rebuilt in seconds by scripts/52_atom_arrays.py, which asserts it is numerically identical
-# to CheMeleon at initialisation, so tracking a second copy of a 35MB upstream file buys
-# nothing. flag_probe/ is a throwaway 8-molecule fixture the notebook writes to demonstrate
+# chemeleon_widened_k*.pt are 37MB DERIVED artefacts -- CheMeleon's own cached checkpoint with
+# k zero columns inserted -- rebuilt in seconds by scripts/52_atom_arrays.py, which asserts each
+# is numerically identical to CheMeleon at initialisation, so tracking a second copy of a 35MB
+# upstream file buys nothing. flag_probe/ is a throwaway 8-molecule fixture the notebook writes to demonstrate
 # chemprop's CheMeleon refusal and its foundation-path graph_transform gap. atom_ordering.csv
 # (577KB, the per-compound permutation itself) IS tracked: it is the artefact every later stage
 # depends on and the one thing here that is not cheap to be wrong about. ordering_verification,
@@ -461,6 +461,12 @@ outputs/49_qm_only_arm/oof_long/
 # run_meta and figures/ are all small and stay tracked -- they are what the notebook's claims
 # rest on.
 outputs/52_chemprop_qm_atom_features/chemprop_runs/
-outputs/52_chemprop_qm_atom_features/chemeleon_widened.pt
+outputs/52_chemprop_qm_atom_features/chemeleon_widened_k*.pt
 outputs/52_chemprop_qm_atom_features/flag_probe/
 outputs/52_chemprop_qm_atom_features/predictions/
+# scores/ (30MB, the per-bootstrap-sample score files behind every fold) and oof_long/ (14MB,
+# the per-fold held-out predictions) get the same treatment as notebooks 37 and 49's identical
+# directories: both are regeneratable from the cached predictions and the aggregate they feed,
+# run_scores.csv, IS tracked and is what every claim in the notebook rests on.
+outputs/52_chemprop_qm_atom_features/scores/
+outputs/52_chemprop_qm_atom_features/oof_long/

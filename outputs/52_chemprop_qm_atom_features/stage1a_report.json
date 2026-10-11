@@ -1,0 +1,45 @@
+{
+  "atom_feature_cols": [
+    "q_hirshfeld",
+    "mayer_va",
+    "min_attached_H_charge"
+  ],
+  "k": 3,
+  "no_hydrogen_fill": 0.0,
+  "n_heavy_atoms": 138641,
+  "n_no_attached_hydrogen": 62562,
+  "pct_no_attached_hydrogen": 45.13,
+  "real_value_range": [
+    -0.002734,
+    0.203294
+  ],
+  "real_value_variance": 0.0009174071458660086,
+  "sentinel_between_group_pct": {
+    "0.0  (adopted)": 44.92,
+    "-0.5": 99.31,
+    "-1.0": 99.81,
+    "0.0407  (mean-impute)": 0.0
+  },
+  "recovers_nb45_hirshfeld_H_min": {
+    "n_compounds_checked": 5655,
+    "n_skipped_no_hydrogen_at_all": 0,
+    "max_abs_diff_vs_nb45_hirshfeld_H_min": 0.0
+  },
+  "widened_encoder_k3": {
+    "path": "/Users/codiefreeman/OpenADMET-CYP-Blind-Challenge/outputs/52_chemprop_qm_atom_features/chemeleon_widened_k3.pt",
+    "k": 3,
+    "d_v_original": 72,
+    "d_v_widened": 75,
+    "W_i_shape": [
+      2048,
+      89
+    ],
+    "W_o_shape": [
+      2048,
+      2123
+    ],
+    "max_abs_diff_vs_chemeleon_at_init": 0.0,
+    "chemeleon_ckpt_sha256": "c376624d3407204e780a0ed13a9ac097cc9bb1c13ef89cdbc633c1715c183651",
+    "foundation_sha256": "473873a3268adb3633114bfb64b1d656e3a4106351d494123e3081c89fb9db1a"
+  }
+}

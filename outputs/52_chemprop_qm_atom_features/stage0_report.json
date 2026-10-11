@@ -1,5 +1,5 @@
 {
-  "at_utc": "2026-10-11T14:43:57+00:00",
+  "at_utc": "2026-10-11T22:25:35+00:00",
   "flag_used": "--atom-features-path",
   "flag_reason": "V_f is hstacked onto the atom feature matrix before W_i and so enters all 6 message passing steps; V_d is concatenated in finalize(), after the loop, and never reaches a neighbour",
   "chemeleon_refuses_atom_features": true,

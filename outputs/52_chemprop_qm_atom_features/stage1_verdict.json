@@ -1,0 +1,75 @@
+{
+  "control_gate_5fold": {
+    "rule": "material = |mean paired difference| >= notebook 45's frozen bar for that cell",
+    "frozen_before_results": true,
+    "n_cells": 8,
+    "n_material": 1,
+    "passed": false,
+    "material_cells": [
+      {
+        "isoform": "CYP2D6",
+        "metric": "ST-RAE",
+        "mean_diff": -0.047859214700063844,
+        "se": 0.02628526242199661,
+        "bar": 0.0277,
+        "pct_of_bar": 172.77694837568174
+      }
+    ],
+    "diagnosis": {
+      "the_material_cell_is_not_resolved_at_n5": {
+        "abs_diff_over_se": 1.8207622937792411,
+        "ci95": [
+          -0.12082710318352644,
+          0.02510867378339874
+        ],
+        "note": "the bars were built from 25-fold paired SEs, so a 5-fold estimate is about sqrt(5) noisier than the bar assumes -- stated before the numbers were seen"
+      },
+      "an_independent_arm_reproduces_it": {
+        "arm": "notebook 44's plain_qm: the same 13 descriptors with the REMOTE CheMeleon, no widened foundation, no local load path, no extra atom columns",
+        "CYP2D6_ST-RAE_same_5_folds": -0.048994625581839514,
+        "CYP2D6_ST-RAE_25_folds": -0.0036436065172689913,
+        "control_CYP2D6_ST-RAE_same_5_folds": -0.047859214700063844,
+        "reading": "the control and an arm sharing NONE of this notebook's construction changes give the same 5-fold CYP2D6 swing, and that arm is -0.0036 at 25 folds. So the exceedance is a property of repeat 0's five folds, not of the widened foundation or the local load path."
+      },
+      "the_zeroed_columns_are_a_true_no_op": {
+        "checked": "W_i and W_o columns 72:75 of two trained control checkpoints",
+        "max_abs_weight_after_training": 0.0,
+        "why": "a feature that is identically zero has zero gradient w.r.t. its own weights, so those columns cannot move off their zero initialisation"
+      }
+    }
+  },
+  "per_isoform": {
+    "CYP1A2": {
+      "ST-RAE|vs_zeroatoms": "omnibus did not clear",
+      "ST-RAE|vs_plain": "omnibus did not clear",
+      "Spearman_R|vs_zeroatoms": "omnibus did not clear",
+      "Spearman_R|vs_plain": "omnibus did not clear"
+    },
+    "CYP2C9": {
+      "ST-RAE|vs_zeroatoms": "omnibus did not clear",
+      "ST-RAE|vs_plain": "omnibus did not clear",
+      "Spearman_R|vs_zeroatoms": "omnibus did not clear",
+      "Spearman_R|vs_plain": "omnibus did not clear"
+    },
+    "CYP2D6": {
+      "ST-RAE|vs_zeroatoms": "omnibus did not clear",
+      "ST-RAE|vs_plain": "omnibus did not clear",
+      "Spearman_R|vs_zeroatoms": "omnibus did not clear",
+      "Spearman_R|vs_plain": "omnibus did not clear"
+    },
+    "CYP3A4": {
+      "ST-RAE|vs_zeroatoms": "omnibus did not clear",
+      "ST-RAE|vs_plain": "omnibus did not clear",
+      "Spearman_R|vs_zeroatoms": "not different",
+      "Spearman_R|vs_plain": "significant, under bar"
+    }
+  },
+  "n_tukey_cells": 3,
+  "primary_material": 0,
+  "board_material": 0,
+  "control25_material": 0,
+  "hours": {
+    "qm_both": 3.05,
+    "qm_both_zeroatoms": 3.28
+  }
+}

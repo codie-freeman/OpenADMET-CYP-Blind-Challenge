@@ -20,6 +20,16 @@
   "alternative": "None -- this is recorded because it happened, not because it was chosen. No result in this notebook comes from the corrupted attempts; the run directory was emptied before the surviving run started."
  },
  {
+  "decision": "STAGE 1a: heavy atoms with no attached hydrogen are filled with 0.0 in min_attached_H_charge. 45.1% of heavy atoms, so not a corner case.",
+  "why": "Four pieces of evidence, none of them preference. (1) It is chemprop's own convention: MoleculeDatapoint sets NAN_TOKEN = 0 and fills V_f's NaNs with it, so passing NaN produces exactly 0.0. (2) It cannot create a confound, because the V2 featurizer already one-hot encodes total_num_Hs (verified on a real molecule), so the model can distinguish a no-hydrogen atom independently; the fill can distort a scale but cannot hide a distinction. (3) Attached-hydrogen charges run -0.0027 to 0.2033 with p1 at 0.0092, so 0.0 sits at the extreme low edge and reads as 'no hydrogen-borne positive charge', which is literally true -- with 7 of 113,596 hydrogens at or below 0, stated rather than rounded to none. (4) Measured: at 0.0 the has-H split takes 44.9% of the column's variance, leaving 55% genuine within-group variation; at -1.0 it takes 99.8% and the column becomes a has-H indicator in disguise, which is the sentinel failure mode notebook 45 documented.",
+  "alternative": "A far sentinel (-1.0), which measurement rules out; or mean-imputation, which erases the distinction entirely (0.0% between-group)."
+ },
+ {
+  "decision": "STAGE 1a: no second full wiring fit was run after adding the third column.",
+  "why": "The mechanism is unchanged -- one more column through the same path -- and the two things that could break were checked directly instead: the k=3 widened encoder reproduces CheMeleon to 0.0 at init, and the foundation file is named by k with its own d_v asserted on load so a stale k=2 file cannot be reused. Stage 1b's control re-tests the zeroed case at 5 folds in any event.",
+  "alternative": "Repeat the two-fit wiring check at k=3, about 30 min, to re-measure a quantity whose mechanism had not changed."
+ },
+ {
   "decision": "The scaler is fitted on screen_inner_train only, not on the pooled train+val rows.",
   "why": "That is the population chemprop's own scaler uses (train_dset.normalize_inputs, with val_dset given the fitted scaler), so the arm matches what every other chemprop arm in this project effectively did for its molecule-level descriptors, and the early-stopping set stays outside the statistics.",
   "alternative": "Fit on pooled train+val. Marginally more data for the statistics, at the cost of a quantity fitted partly on the set used to stop training."
