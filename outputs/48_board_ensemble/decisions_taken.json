@@ -1,0 +1,37 @@
+[
+ {
+  "decision": "Pool A (notebook 37's cluster-disjoint folds) is primary; pool B (notebook 11's random folds) is reported beside it, never ranked against it directly.",
+  "why": "The two tables have no common fold index, so their absolute scores are different estimates. Pool A carries deadzone/aid/mae_only, this project's strongest arms. The partition offset is measured on the six shared arms so the cross-pool statement that IS made (pool A wins by more than the offset) is defensible.",
+  "alternative": "Fit on pool B and ignore pool A, or try to merge them. The merge is not available; ignoring pool A would discard the three best members."
+ },
+ {
+  "decision": "Two objectives are fitted, not one: greedy ST-RAE and least squares on the simplex.",
+  "why": "The brief specified non-negative weights summing to one but not the loss. Greedy optimises the scored metric but moves on a 1/k grid along a path that must improve at every step; the simplex fit reaches any point but optimises squared error. On CYP2D6 that difference is the whole result -- greedy collapses to one member and the simplex fit does not.",
+  "alternative": "Pick one. That would have hidden the CYP2D6 mechanism entirely."
+ },
+ {
+  "decision": "The objective is chosen per isoform on nested out-of-fold ST-RAE.",
+  "why": "A small selection on the same data (2 options x 4 isoforms), reported with its margin (0.0046-0.0087). Choosing greedy uniformly changes only CYP2D6.",
+  "alternative": "Fix one objective a priori. Defensible, and the difference is reported so a reader can take that route from the saved tables."
+ },
+ {
+  "decision": "ecfp4_narrow__xgboost_stab (notebook 40's seed-averaged member) is carried as an eleventh pool-A arm alongside the single-seed version.",
+  "why": "It is an existing prediction, needs no retraining, and notebook 40 established the single-seed member is early-stopping-split-unstable. Carrying both lets the fit choose; the stabilised one is selected on CYP1A2 and CYP3A4 and the single-seed one nowhere.",
+  "alternative": "Carry only one. Notebook 40 left that choice open, so pre-empting it here would have been a decision without evidence."
+ },
+ {
+  "decision": "Three member-dropout sensitivity arms were added (no_aid, no_deadzone, no_deadzone_no_aid), each judged against the best single IN ITS OWN POOL.",
+  "why": "Not in the brief. Added because deadzone's out-of-fold score is known to be optimistically biased in this exact table and aid's out-of-fold ranking is contradicted by the board. The result is the most consequential finding here: drop aid and the gain is exactly zero.",
+  "alternative": "Report the full-pool fit alone. That would have presented a gain as robust when it rests entirely on one member with a measured board contradiction."
+ },
+ {
+  "decision": "Both board-measured correction layers are applied, as a separate reported layer, and the uncorrected file is kept.",
+  "why": "The brief asked for the collapse check before recommending anything. The check comes back compressed on all four isoforms, and this project has two board measurements of the remedy (10c's CYP2D6 1.1673 -> 0.8299 on identical predictions; notebook 36's widening). Shipping the raw blend would guarantee the CYP2D6 defect. Keeping both files means the ensembling question is still isolable.",
+  "alternative": "Ship raw only, or corrected only. Either hides one of the two questions."
+ },
+ {
+  "decision": "A third, mixed candidate was built: the ensemble on CYP1A2/CYP3A4 and 27b's own columns on CYP2C9/CYP2D6. BEYOND THE BRIEF.",
+  "why": "The brief's own framing -- four very different competitive positions, ship the single model where the ensemble does not earn its place -- points here once Part 4.4 finds no material case on CYP2C9/CYP2D6, where 27b holds the best board score on record. It is a pure recombination, no training, and it follows this project's own precedent (NB19, 27b, notebook 40's candidate B).",
+  "alternative": "Build only the two files the brief asked for and describe this one. Recorded as a decision taken without approval so it can be rejected cheaply."
+ }
+]

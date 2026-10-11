@@ -1,0 +1,15 @@
+{
+ "TEST 1 tracked content newly changed under a protected path": [],
+ "TEST 2 any file inside a protected tree written during this run": [],
+ "TEST 3 the two never-open notebooks' mtimes": [],
+ "TEST 4 any submission-shaped CSV created outside this notebook's directory": [],
+ "run_started_at_utc": "2026-10-11T01:05:26.926704+00:00",
+ "pre_existing_dirty_tracked_paths": [
+  "CLAUDE.md",
+  "notebooks/47_mae_only_full_retrain.ipynb",
+  "outputs/47_mae_only_full_retrain/decisions_taken.json",
+  "outputs/47_mae_only_full_retrain/predictions_before_board.json",
+  "outputs/47_mae_only_full_retrain/run_meta.json",
+  "outputs/47_mae_only_full_retrain/summary.json"
+ ]
+}

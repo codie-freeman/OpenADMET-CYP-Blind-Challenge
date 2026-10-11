@@ -1,0 +1,27 @@
+[
+ {
+  "decision": "The gate threshold is `aid` against notebook 48's DEPLOYABLE pool per isoform, not against the full 12-arm pool-A table the approved plan quoted.",
+  "why": "The ensemble is built from the deployable pool, so that is what a replacement member has to beat. The plan's figures were correct for the reference they were computed on and reproduce to under 5e-5 there; the assertion in scripts/49_freeze_gate.py catches the difference rather than hiding it. Both are recorded per isoform in gate.json. The choice changes no verdict -- every QM arm sits far above `aid` under either.",
+  "alternative": "Use the plan's reference. It would have moved the CYP3A4 threshold from 0.7507 to 0.7396 and changed nothing, since the weight fit decides."
+ },
+ {
+  "decision": "A constant-predictor control was added to the gate. NOT pre-registered.",
+  "why": "The arm passed on CYP3A4 alone -- the isoform where it is weakest relative to the strongest pool -- which is the signature of a metric detecting weakness rather than orthogonality. The control confirms it: a zero-information predictor passes the same gate on CYP3A4 more strongly (0.6834 against 0.6941) and on CYP2C9 as well. The gate as I pre-registered it is not a valid test on its own, and that is reported as a defect in its design rather than presented as a PASS.",
+  "alternative": "Report the PASS and build the blind column. That would have shipped work on the strength of an artefact."
+ },
+ {
+  "decision": "No blind column was built, although the frozen gate passed and the approved plan made step 4 conditional on exactly that. DEPARTS FROM THE PLAN.",
+  "why": "A blind column exists to deploy a member that carries weight. On CYP3A4 the arm carries exactly zero under both objectives, with and without `aid`. The weight fit is free, immune to the defect above, and is the decision itself, so it was run first. Building the column would have answered no question.",
+  "alternative": "Follow the plan literally. It would have cost seconds and produced a column nothing would use; the deviation is recorded so the choice is reviewable."
+ },
+ {
+  "decision": "notebook 46's runner is IMPORTED and repointed, not copied.",
+  "why": "The fitting path is the comparison. Copying it invites drift; importing it means the reproduction check (free__ridge bit-identical to notebook 46 across 98,100 predictions) actually proves the arms are comparable.",
+  "alternative": "Fork the runner, as notebook 46 itself forked notebook 44's. That was right there because the baseline block differed; here nothing differs but the feature directory."
+ },
+ {
+  "decision": "Two QM-only blocks were built (QM13 and QM13_ATOM4), not one.",
+  "why": "Notebook 46's own isolation contrast found the four atom descriptors add at most 2.8% of bar on top of the molecule-level block, so carrying both costs one extra arm and settles whether that holds when the free descriptors are stripped away. It does: the two track each other closely on every measurement here.",
+  "alternative": "QM13 alone. Cheaper, and would have left the atom-level question open on the one design where it could still have mattered."
+ }
+]

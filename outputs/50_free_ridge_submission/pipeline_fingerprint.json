@@ -1,0 +1,93 @@
+{
+ "created_at_utc": "2026-10-11T01:05:29.359441+00:00",
+ "implementation": "scripts/50_ridge_submission.py",
+ "implementation_sha256": "3e14804d09251abac7587656313365b936244e769e004cf41110d6d43d33048e",
+ "nb46_runner_sha256": "bddcbad36f5210ab6f8154755dcabd82a1703372abdd67f48a6fc50e9bfea315",
+ "VARIES_BETWEEN_NOTEBOOKS": {
+  "block": "FREE",
+  "arm": "free__ridge",
+  "out_dir": "outputs/50_free_ridge_submission",
+  "model_tag": "Ridge on the 226 free 2D descriptors (rdkit2d 217 + ecfp4_narrow 9 non-fingerprint), one fit per endpoint on all 4,905 training compounds, RidgeCV alpha. CYP2D6 placement-corrected onto the board-solved blind population using this model's own out-of-fold rho; CYP1A2/CYP2D6/CYP3A4 spread-widened to each isoform's best-board-column ratio; CYP2C9 uncorrected. Matched pair with the QM variant, feature block the only difference.",
+  "n_features": 226
+ },
+ "MUST_BE_IDENTICAL": {
+  "estimator": "notebook 46 make_model('ridge'): Pipeline[clip p1-p99 on the fit rows, StandardScaler, RidgeCV]",
+  "ridge_alphas": [
+   0.01,
+   0.03162277660168379,
+   0.1,
+   0.31622776601683794,
+   1.0,
+   3.1622776601683795,
+   10.0,
+   31.622776601683793,
+   100.0,
+   316.22776601683796,
+   1000.0,
+   3162.2776601683795,
+   10000.0
+  ],
+  "ridge_clip_pct": [
+   1.0,
+   99.0
+  ],
+  "alpha_selection": "RidgeCV internal leave-one-out, per endpoint, training rows only",
+  "seed": 2684470948,
+  "fit_rows_per_endpoint": {
+   "CYP1A2": 1412,
+   "CYP2C9": 1285,
+   "CYP2D6": 1493,
+   "CYP3A4": 2335
+  },
+  "n_train": 4905,
+  "n_blind": 750,
+  "nan_fill": "none required; both blocks are complete (asserted)",
+  "correction_layer1": "CYP2D6 placement onto NB16 solved population mean=3.155762171801848 sd=1.511412192589019 using this model's own OOF rho",
+  "correction_layer2": "notebook 36 widening to the best-board-column ratio, applied where relative gap >= 0.1",
+  "widening_targets": {
+   "CYP1A2": 0.8361405849071823,
+   "CYP2C9": 0.8167673318033296,
+   "CYP2D6": 0.8500000000000002,
+   "CYP3A4": 0.9261815922103821
+  },
+  "output_columns": [
+   "SMILES",
+   "Molecule_Name",
+   "CYP1A2_pIC50_direct_inhibition",
+   "CYP2C9_pIC50_direct_inhibition",
+   "CYP2D6_pIC50_direct_inhibition",
+   "CYP3A4_pIC50_direct_inhibition"
+  ],
+  "validator": "src/vendor/validation/activity_validation.validate_activity_submission"
+ },
+ "FITTED_PER_MODEL": {
+  "alpha_per_endpoint": {
+   "CYP1A2": 1000.0,
+   "CYP2C9": 100.0,
+   "CYP2D6": 316.22776601683796,
+   "CYP3A4": 100.0
+  },
+  "oof_pearson_rho": {
+   "CYP1A2": 0.48286810303867345,
+   "CYP2C9": 0.6051923973368202,
+   "CYP2D6": 0.3564057920176285,
+   "CYP3A4": 0.7207603379612769
+  },
+  "widening_multiplier": {
+   "CYP1A2": 1.5171233952036016,
+   "CYP2C9": 1.0,
+   "CYP2D6": 1.4455473075075136,
+   "CYP3A4": 1.2294822615782923
+  }
+ },
+ "files": {
+  "raw": {
+   "path": "outputs/50_free_ridge_submission/submission_candidate_raw.csv",
+   "sha256": "ec68cf5b1790b77823a071c9dafd5c9a61ce51c7e0a929128257413934548f8b"
+  },
+  "corrected": {
+   "path": "outputs/50_free_ridge_submission/submission_candidate.csv",
+   "sha256": "b73eaf9d2f4976946eed664ab4588d73b1d7ed30ff2d237b6a6feedb661a10ca"
+  }
+ }
+}

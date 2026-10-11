@@ -427,3 +427,20 @@ outputs/46_qm_arm/tier1/oof_long/
 # decisions_taken.json, predictions_before_board.json, run_meta.json and figures/ are
 # all small and stay tracked.
 outputs/47_mae_only_full_retrain/chemprop_runs/
+
+# notebook 49 -- bulk per-run artefacts, 207MB, regeneratable in ~4 min from
+# scripts/49_build_qm_only_blocks.py and scripts/49_run_qm_only.py (ridge is deterministic
+# and the partition is the frozen Butina file, sha-asserted by both scripts). Same treatment
+# as notebook 46's identical directories above. features_blind_extended/ is excluded for the
+# same reason as features/: it is a merge of four tracked upstream sources and the builder
+# asserts it reproduces notebook 46's blocks byte-for-byte on the 4,905 training rows.
+# The summary tables (gate, gate_result, gate_correlations, decorrelation_ranking,
+# constant_predictor_control, arm_accuracy, three_pool_weights, qm_only_weights,
+# discriminating_test, pairwise_ambiguity, oof_spread_ratios, nb46_* , run_scores,
+# run_timings, verdict, feature_manifest, decisions_taken, scope_check, run_meta) and the
+# figures ARE tracked: they are what the notebook's claims rest on.
+outputs/49_qm_only_arm/features/
+outputs/49_qm_only_arm/features_blind_extended/
+outputs/49_qm_only_arm/predictions/
+outputs/49_qm_only_arm/scores/
+outputs/49_qm_only_arm/oof_long/

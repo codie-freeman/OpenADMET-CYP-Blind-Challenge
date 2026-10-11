@@ -1,0 +1,164 @@
+{
+ "written_at_utc": "2026-10-10T23:45:36.152832+00:00",
+ "written_by": "scripts/49_freeze_gate.py",
+ "status": "FROZEN BEFORE THE QM-ONLY ARM WAS TRAINED. Every input is a prediction that already existed; none involves the arm under test.",
+ "question": "Can a QM-only arm carry the diversity `aid` is currently carrying in notebook 48's ensemble pool?",
+ "metric": "mean Pearson correlation of residuals (prediction - truth), pooled over the 25 cluster-disjoint folds, against notebook 48's deployable pool",
+ "rule": {
+  "PASS": "mean residual correlation against the pool BELOW `aid`'s own mean against the rest of the pool, on at least one isoform",
+  "FAIL": "otherwise -- no blind column is built and the question is closed",
+  "threshold_per_isoform": {
+   "CYP1A2": 0.8323197754079453,
+   "CYP2C9": 0.7995583420831579,
+   "CYP2D6": 0.8816074297748502,
+   "CYP3A4": 0.7507092188593542
+  },
+  "threshold_reference": "`aid` against notebook 48's DEPLOYABLE pool for that isoform, which is the pool the ensemble is actually built from. The approved plan quoted `aid` against the full 12-arm pool-A table instead; both are recorded per isoform in `context_not_part_of_the_rule`, and the choice does not change any verdict."
+ },
+ "context_not_part_of_the_rule": {
+  "CYP1A2": {
+   "pool_members": [
+    "plain",
+    "ecfp4_narrow__rf",
+    "ecfp4_narrow__xgboost",
+    "ecfp4_narrow__lightgbm",
+    "mordred_pca__xgboost",
+    "mordred_pca__lightgbm",
+    "aid",
+    "deadzone",
+    "mae_only",
+    "ecfp4_narrow__xgboost_stab"
+   ],
+   "pool_internal_mean": 0.8867202864033613,
+   "aid_mean_vs_rest_DEPLOYABLE_this_is_the_threshold": 0.8323197754079453,
+   "aid_mean_vs_rest_full_pool_A_the_plan_quoted_this": 0.8320550190360148,
+   "members_excluded_from_deployable": [
+    "mordred_pca__rf",
+    "single"
+   ],
+   "best_non_aid_member": "mordred_pca__xgboost",
+   "best_non_aid_value": 0.8612148594286944,
+   "every_member": {
+    "plain": 0.8764677579750484,
+    "ecfp4_narrow__rf": 0.9067194707539658,
+    "ecfp4_narrow__xgboost": 0.8928601810096402,
+    "ecfp4_narrow__lightgbm": 0.9024981595976818,
+    "mordred_pca__xgboost": 0.8612148594286944,
+    "mordred_pca__lightgbm": 0.8810356299792257,
+    "aid": 0.8323197754079453,
+    "deadzone": 0.9088072967482697,
+    "mae_only": 0.8904446721031959,
+    "ecfp4_narrow__xgboost_stab": 0.9148350610299456
+   }
+  },
+  "CYP2C9": {
+   "pool_members": [
+    "plain",
+    "ecfp4_narrow__rf",
+    "ecfp4_narrow__xgboost",
+    "ecfp4_narrow__lightgbm",
+    "mordred_pca__lightgbm",
+    "aid",
+    "deadzone",
+    "mae_only",
+    "ecfp4_narrow__xgboost_stab"
+   ],
+   "pool_internal_mean": 0.8456136148874485,
+   "aid_mean_vs_rest_DEPLOYABLE_this_is_the_threshold": 0.7995583420831579,
+   "aid_mean_vs_rest_full_pool_A_the_plan_quoted_this": 0.7866359414892493,
+   "members_excluded_from_deployable": [
+    "mordred_pca__rf",
+    "mordred_pca__xgboost",
+    "single"
+   ],
+   "best_non_aid_member": "mordred_pca__lightgbm",
+   "best_non_aid_value": 0.8161342355359051,
+   "every_member": {
+    "plain": 0.8367954798441357,
+    "ecfp4_narrow__rf": 0.8670189722868007,
+    "ecfp4_narrow__xgboost": 0.8523924516460627,
+    "ecfp4_narrow__lightgbm": 0.8566236902146798,
+    "mordred_pca__lightgbm": 0.8161342355359051,
+    "aid": 0.7995583420831579,
+    "deadzone": 0.865556949327126,
+    "mae_only": 0.8392871266327127,
+    "ecfp4_narrow__xgboost_stab": 0.8771552864164561
+   }
+  },
+  "CYP2D6": {
+   "pool_members": [
+    "plain",
+    "ecfp4_narrow__rf",
+    "ecfp4_narrow__xgboost",
+    "ecfp4_narrow__lightgbm",
+    "mordred_pca__rf",
+    "mordred_pca__xgboost",
+    "mordred_pca__lightgbm",
+    "aid",
+    "deadzone",
+    "mae_only",
+    "ecfp4_narrow__xgboost_stab"
+   ],
+   "pool_internal_mean": 0.9147441315212376,
+   "aid_mean_vs_rest_DEPLOYABLE_this_is_the_threshold": 0.8816074297748502,
+   "aid_mean_vs_rest_full_pool_A_the_plan_quoted_this": 0.8837994531651385,
+   "members_excluded_from_deployable": [
+    "single"
+   ],
+   "best_non_aid_member": "plain",
+   "best_non_aid_value": 0.8943909830800945,
+   "every_member": {
+    "plain": 0.8943909830800945,
+    "ecfp4_narrow__rf": 0.9205951298000776,
+    "ecfp4_narrow__xgboost": 0.9155147680433313,
+    "ecfp4_narrow__lightgbm": 0.9240406717181104,
+    "mordred_pca__rf": 0.9216701056062082,
+    "mordred_pca__xgboost": 0.8981622358056868,
+    "mordred_pca__lightgbm": 0.9183165346926059,
+    "aid": 0.8816074297748502,
+    "deadzone": 0.9291009882247057,
+    "mae_only": 0.9233559479597512,
+    "ecfp4_narrow__xgboost_stab": 0.9354306520281938
+   }
+  },
+  "CYP3A4": {
+   "pool_members": [
+    "plain",
+    "ecfp4_narrow__rf",
+    "ecfp4_narrow__xgboost",
+    "ecfp4_narrow__lightgbm",
+    "mordred_pca__lightgbm",
+    "aid",
+    "deadzone",
+    "mae_only",
+    "ecfp4_narrow__xgboost_stab"
+   ],
+   "pool_internal_mean": 0.8070424264810978,
+   "aid_mean_vs_rest_DEPLOYABLE_this_is_the_threshold": 0.7507092188593542,
+   "aid_mean_vs_rest_full_pool_A_the_plan_quoted_this": 0.7395669864783532,
+   "members_excluded_from_deployable": [
+    "mordred_pca__rf",
+    "mordred_pca__xgboost",
+    "single"
+   ],
+   "best_non_aid_member": "mordred_pca__lightgbm",
+   "best_non_aid_value": 0.7672250655510167,
+   "every_member": {
+    "plain": 0.8121635971101779,
+    "ecfp4_narrow__rf": 0.8243471178372479,
+    "ecfp4_narrow__xgboost": 0.8148921692201765,
+    "ecfp4_narrow__lightgbm": 0.8255223373828611,
+    "mordred_pca__lightgbm": 0.7672250655510167,
+    "aid": 0.7507092188593542,
+    "deadzone": 0.8282550863033372,
+    "mae_only": 0.7967733405558683,
+    "ecfp4_narrow__xgboost_stab": 0.84349390550984
+   }
+  }
+ },
+ "arms_under_test": [
+  "qm13__ridge",
+  "qm13_atom4__ridge"
+ ],
+ "reproduction_check_arm": "free__ridge, which must reproduce notebook 46's stored out-of-fold column before anything else is trusted"
+}

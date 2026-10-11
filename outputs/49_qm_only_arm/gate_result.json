@@ -1,0 +1,38 @@
+{
+ "evaluated_at_utc": "2026-10-10T23:50:12.108336+00:00",
+ "gate_frozen_at_utc": "2026-10-10T23:45:36.152832+00:00",
+ "thresholds": {
+  "CYP1A2": 0.8323197754079453,
+  "CYP2C9": 0.7995583420831579,
+  "CYP2D6": 0.8816074297748502,
+  "CYP3A4": 0.7507092188593542
+ },
+ "arms_under_test": [
+  "qm13__ridge",
+  "qm13_atom4__ridge"
+ ],
+ "isoforms_passed_per_arm": {
+  "qm13__ridge": [
+   "CYP3A4"
+  ],
+  "qm13_atom4__ridge": [
+   "CYP3A4"
+  ]
+ },
+ "verdict": "PASS",
+ "consequence": "blind columns may be built for the passing arm",
+ "mean_vs_pool": {
+  "qm13__ridge": {
+   "CYP1A2": 0.8695857324297529,
+   "CYP2C9": 0.8011359398345856,
+   "CYP2D6": 0.9195570687329588,
+   "CYP3A4": 0.6940956742894518
+  },
+  "qm13_atom4__ridge": {
+   "CYP1A2": 0.8735335718562924,
+   "CYP2C9": 0.8059744417462033,
+   "CYP2D6": 0.919797888243956,
+   "CYP3A4": 0.6998509280435913
+  }
+ }
+}

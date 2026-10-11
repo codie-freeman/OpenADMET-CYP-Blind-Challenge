@@ -1,0 +1,33 @@
+isoform,pool,objective,nested_st_rae,nested_spearman,qm_only_weight,weights
+CYP1A2,current,greedy_strae,0.7383858246421492,0.5700551655313484,0.0,deadzone=0.5000;aid=0.2500;ecfp4_narrow__xgboost_stab=0.2500
+CYP1A2,current,nnls_simplex,0.7450985385293815,0.5713416191846387,0.0,aid=0.4898;deadzone=0.4420;ecfp4_narrow__lightgbm=0.0682
+CYP1A2,+qm_only,greedy_strae,0.7374151342287056,0.5707000560610728,0.0,deadzone=0.5000;aid=0.2500;ecfp4_narrow__xgboost_stab=0.2500
+CYP1A2,+qm_only,nnls_simplex,0.7450985392908165,0.5713416191846387,0.0,aid=0.4898;deadzone=0.4420;ecfp4_narrow__lightgbm=0.0682
+CYP1A2,no_aid,greedy_strae,0.7666240349213588,0.5400062286705827,0.0,deadzone=1.0000
+CYP1A2,no_aid,nnls_simplex,0.7637034495852756,0.5430947187653941,0.0,deadzone=0.6971;plain=0.1836;ecfp4_narrow__lightgbm=0.1193
+CYP1A2,no_aid +qm_only,greedy_strae,0.7666240349213588,0.5400062286705827,0.0,deadzone=1.0000
+CYP1A2,no_aid +qm_only,nnls_simplex,0.7637034493173369,0.5430947187653941,0.0,deadzone=0.6971;plain=0.1836;ecfp4_narrow__lightgbm=0.1193
+CYP2C9,current,greedy_strae,0.5438482254445152,0.69446633023011,0.0,deadzone=0.6250;aid=0.2500;ecfp4_narrow__rf=0.1250
+CYP2C9,current,nnls_simplex,0.5484057362098348,0.6901111407489186,0.0,deadzone=0.4703;aid=0.3920;mae_only=0.0720;ecfp4_narrow__rf=0.0495;ecfp4_narrow__xgboost=0.0125
+CYP2C9,+qm_only,greedy_strae,0.5438482254445152,0.69446633023011,0.0,deadzone=0.6250;aid=0.2500;ecfp4_narrow__rf=0.1250
+CYP2C9,+qm_only,nnls_simplex,0.5484057367333711,0.6901111407489186,0.0,deadzone=0.4703;aid=0.3920;mae_only=0.0720;ecfp4_narrow__rf=0.0495;ecfp4_narrow__xgboost=0.0125
+CYP2C9,no_aid,greedy_strae,0.5602904619481498,0.6818833335328516,0.0,deadzone=1.0000
+CYP2C9,no_aid,nnls_simplex,0.5549334245152436,0.6866670799640401,0.0,deadzone=0.6453;mae_only=0.2104;ecfp4_narrow__rf=0.0666;ecfp4_narrow__lightgbm=0.0335;plain=0.0286
+CYP2C9,no_aid +qm_only,greedy_strae,0.5602904619481498,0.6818833335328516,0.0,deadzone=1.0000
+CYP2C9,no_aid +qm_only,nnls_simplex,0.5549334237009584,0.6866670799640401,0.0,deadzone=0.6453;mae_only=0.2104;ecfp4_narrow__rf=0.0666;ecfp4_narrow__lightgbm=0.0335;plain=0.0286
+CYP2D6,current,greedy_strae,0.8717024096499756,0.4477732792608863,0.0,deadzone=1.0000
+CYP2D6,current,nnls_simplex,0.8630346626546987,0.46131697926403187,0.0,deadzone=0.4911;aid=0.3427;ecfp4_narrow__lightgbm=0.1661
+CYP2D6,+qm_only,greedy_strae,0.8717024096499756,0.4477732792608863,0.0,deadzone=1.0000
+CYP2D6,+qm_only,nnls_simplex,0.8630355042599187,0.4612717900501903,0.004189735886428128,deadzone=0.4893;aid=0.3424;ecfp4_narrow__lightgbm=0.1641;qm13_atom4__ridge=0.0042
+CYP2D6,no_aid,greedy_strae,0.8717024096499756,0.4477732792608863,0.0,deadzone=1.0000
+CYP2D6,no_aid,nnls_simplex,0.8675945944663112,0.4511203960269965,0.0,deadzone=0.6643;ecfp4_narrow__lightgbm=0.2110;plain=0.1246
+CYP2D6,no_aid +qm_only,greedy_strae,0.8717024096499756,0.4477732792608863,0.0,deadzone=1.0000
+CYP2D6,no_aid +qm_only,nnls_simplex,0.8667900704022401,0.4518406652980855,0.0340605735285325,deadzone=0.6478;ecfp4_narrow__lightgbm=0.1945;plain=0.1237;qm13_atom4__ridge=0.0341
+CYP3A4,current,greedy_strae,0.45531218620533714,0.8015003716989707,0.0,deadzone=0.6000;aid=0.2000;ecfp4_narrow__xgboost_stab=0.2000
+CYP3A4,current,nnls_simplex,0.46274496028195633,0.8016250368911162,0.0,aid=0.3964;deadzone=0.3150;ecfp4_narrow__xgboost_stab=0.1257;ecfp4_narrow__lightgbm=0.1078;mae_only=0.0551
+CYP3A4,+qm_only,greedy_strae,0.45531218620533714,0.8015003716989707,0.0,deadzone=0.6000;aid=0.2000;ecfp4_narrow__xgboost_stab=0.2000
+CYP3A4,+qm_only,nnls_simplex,0.46274495937259563,0.8016250563083721,0.0,aid=0.3964;deadzone=0.3150;ecfp4_narrow__xgboost_stab=0.1257;ecfp4_narrow__lightgbm=0.1078;mae_only=0.0551
+CYP3A4,no_aid,greedy_strae,0.4753911412923759,0.7821232132352989,0.0,deadzone=1.0000
+CYP3A4,no_aid,nnls_simplex,0.4727943532124034,0.7914880584950149,0.0,deadzone=0.3945;plain=0.1649;mae_only=0.1556;ecfp4_narrow__xgboost_stab=0.1502;ecfp4_narrow__lightgbm=0.1347
+CYP3A4,no_aid +qm_only,greedy_strae,0.4753911412923759,0.7821232132352989,0.0,deadzone=1.0000
+CYP3A4,no_aid +qm_only,nnls_simplex,0.4727943535519216,0.791488070560106,0.0,deadzone=0.3945;plain=0.1649;mae_only=0.1556;ecfp4_narrow__xgboost_stab=0.1502;ecfp4_narrow__lightgbm=0.1347

@@ -1,0 +1,54 @@
+path,n_rows,isoforms
+outputs/10_final_retrain_predict/blind_predictions/chemeleon__rf__cyp2d6_residual_excluded_tuned.csv,750,CYP2D6
+outputs/10_final_retrain_predict/blind_predictions/chemeleon__rf__unexcluded.csv,750,CYP1A2
+outputs/10_final_retrain_predict/blind_predictions/chemprop_chemeleoninit__cyp2d6_residual_excluded.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/10_final_retrain_predict/blind_predictions/chemprop_chemeleoninit__unexcluded.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/10_final_retrain_predict/blind_predictions/ecfp4_narrow__lightgbm__unexcluded.csv,750,CYP1A2 CYP3A4
+outputs/10_final_retrain_predict/blind_predictions/ecfp4_narrow__rf__unexcluded.csv,750,CYP1A2
+outputs/10_final_retrain_predict/chemprop_runs/chemprop_chemeleoninit__cyp2d6_residual_excluded/raw_predictions.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/10_final_retrain_predict/chemprop_runs/chemprop_chemeleoninit__unexcluded/raw_predictions.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/10_final_retrain_predict/submission_candidate.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/10c_control_submission/submission_candidate.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/12_caruana_retrain_predict/blind_predictions/chemeleon__lightgbm.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/12_caruana_retrain_predict/blind_predictions/chemeleon__rf.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/12_caruana_retrain_predict/blind_predictions/chemeleon__xgboost.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/12_caruana_retrain_predict/blind_predictions/chemprop_chemeleoninit.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/12_caruana_retrain_predict/blind_predictions/chemprop_randominit.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/12_caruana_retrain_predict/blind_predictions/ecfp4_narrow__lightgbm.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/12_caruana_retrain_predict/blind_predictions/ecfp4_narrow__rf.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/12_caruana_retrain_predict/blind_predictions/ecfp4_narrow__xgboost.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/12_caruana_retrain_predict/blind_predictions/mordred_pca__lightgbm.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/12_caruana_retrain_predict/blind_predictions/mordred_pca__rf.csv,750,CYP2D6
+outputs/12_caruana_retrain_predict/blind_predictions/mordred_pca__xgboost.csv,750,CYP1A2 CYP2D6
+outputs/12_caruana_retrain_predict/chemprop_runs/chemprop_randominit/raw_predictions.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/12_caruana_retrain_predict/submission_candidate.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/12_caruana_retrain_predict/submission_candidate_uncapped.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/13_aid1851_blind_population_calibration/submission_candidate.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/19_cyp2c9_revert/submission_candidate.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/27_calibration/cyp2d6_widened/submission_candidate.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/27b_aid_cyp2d6_corrected/submission_candidate.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/30_aid_full_retrain/raw_predictions.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/30_aid_full_retrain/submission_candidate.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/32_deadzone_aid_retrain/raw_predictions.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/32_deadzone_aid_retrain/submission_candidate_A_allfour.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/32_deadzone_aid_retrain/submission_candidate_B_cyp2d6only.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/36_spread_corrected_nb32a/submission_candidate_spread_corrected.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/40_single_object_ensemble/deadzone_fulldata_blind_predictions.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/40_single_object_ensemble/part8_stabilised_member/submission_candidate_rebuilt.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/40_single_object_ensemble/part8_stabilised_member/xgboost_fulldata_seed_averaged.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/40_single_object_ensemble/submission_candidate.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/40_single_object_ensemble/submission_candidate_cyp2d6_corrected.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/40_single_object_ensemble/xgboost_fresh_seed_check.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/47_mae_only_full_retrain/raw_predictions.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/47_mae_only_full_retrain/submission_candidate.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/47_mae_only_full_retrain/submission_candidate_raw.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/48_board_ensemble/submission_candidate.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/48_board_ensemble/submission_candidate_mixed.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/48_board_ensemble/submission_candidate_raw.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/50_free_ridge_submission/submission_candidate.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/50_free_ridge_submission/submission_candidate_raw.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/51_qm_ridge_submission/submission_candidate.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/51_qm_ridge_submission/submission_candidate_raw.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/board_solved_calibration/submission_candidate.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/final_submission/predictions/chemprop_multitask_chemeleoninit_raw_predictions.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4
+outputs/submissions/activity_submission_v1.csv,750,CYP1A2 CYP2C9 CYP2D6 CYP3A4

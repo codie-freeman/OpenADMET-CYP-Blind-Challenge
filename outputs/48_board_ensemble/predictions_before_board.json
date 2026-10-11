@@ -1,0 +1,69 @@
+{
+ "recorded_at_utc": "2026-10-11T01:07:09.478275+00:00",
+ "what_is_being_predicted": "the primary candidate, submission_candidate.csv",
+ "sha256": "14ccf684fca506f5d7f1f8ed7ec8596e5ea2a90c79c7589208f500c92b97f6a7",
+ "1_rank_metrics_must_move": {
+  "claim": "Spearman and Kendall will differ from every prior submission on all four isoforms, because a blend reorders compounds where an affine correction cannot.",
+  "why_it_matters": "notebook 38 established that what separates this project's leading columns is RANKING. Every submission since NB16 has left the rank metrics of its underlying model untouched. This is the first candidate since NB32-A that can move them.",
+  "direction": {
+   "CYP1A2": "out-of-fold Spearman is 0.5853 Pearson / 0.5701 Spearman for the blend against 0.4932 for `plain`, so UP is predicted",
+   "CYP2C9": "out-of-fold Spearman is 0.7057 Pearson / 0.6945 Spearman for the blend against 0.6271 for `plain`, so UP is predicted",
+   "CYP2D6": "out-of-fold Spearman is 0.4525 Pearson / 0.4613 Spearman for the blend against 0.3917 for `plain`, so UP is predicted",
+   "CYP3A4": "out-of-fold Spearman is 0.8001 Pearson / 0.8015 Spearman for the blend against 0.7552 for `plain`, so UP is predicted"
+  },
+  "counterexample_carried": "the out-of-fold-to-board Spearman mapping is NOT monotone on this project's record: `aid`'s out-of-fold CYP3A4 Spearman exceeds `plain`'s, yet NB30's board Spearman (0.7651) is below 10c's (0.8177), and `aid` carries 0.20-0.49 of the weight here."
+ },
+ "2_mechanical_checks": {
+  "cyp2d6_ratio_must_be_0.85": "exact by construction",
+  "cyp2c9_column_is_uncorrected": "its 8.0% gap is under the 10% bar, so it is the raw blend",
+  "rank_metrics_identical_between_raw_and_corrected_files": "both layers are affine and rank-preserving (verified at Spearman 1.0 to 1e-12), so the two files must score identically on Spearman and Kendall and differ only on ST-RAE, MAE and R2"
+ },
+ "3_the_case_rests_on_two_members_with_known_problems": {
+  "aid": "out-of-fold prefers it over `plain` on 3 of 4 isoforms; the board prefers `plain` on 4 of 4. Drop it and the ensembling gain goes to exactly zero.",
+  "deadzone": "its out-of-fold score is optimistically biased in this very table (fold crosstalk in how its training target is built). The bias does not reach a blind submission, but it inflates every figure above that contains it."
+ },
+ "4_resolution_limits": {
+  "material_isoforms": [
+   "CYP1A2",
+   "CYP3A4"
+  ],
+  "not_resolvable": [
+   "CYP2C9",
+   "CYP2D6"
+  ],
+  "statement": "the board returns one number per isoform with no error bar, so a single submission cannot resolve a 0.01-0.02 ST-RAE effect either. This candidate can detect a catastrophic failure and can test whether the rank-order gain is real; it cannot settle whether the ensemble helps by the margin measured above."
+ },
+ "5_board_ceiling": {
+  "CYP1A2": {
+   "best_on_record": 0.6954,
+   "held_by": [
+    "10c",
+    "27b",
+    "NB16",
+    "NB19",
+    "NB27-widened"
+   ]
+  },
+  "CYP2C9": {
+   "best_on_record": 0.5375,
+   "held_by": [
+    "27b",
+    "NB12",
+    "NB19",
+    "NB27-widened"
+   ]
+  },
+  "CYP2D6": {
+   "best_on_record": 0.7165,
+   "held_by": [
+    "27b"
+   ]
+  },
+  "CYP3A4": {
+   "best_on_record": 0.4291,
+   "held_by": [
+    "04b"
+   ]
+  }
+ }
+}

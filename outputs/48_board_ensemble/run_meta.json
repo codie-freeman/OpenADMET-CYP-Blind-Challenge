@@ -1,0 +1,11 @@
+{
+ "run_started_at_utc": "2026-10-11T01:06:51.528614+00:00",
+ "pre_existing_dirty_tracked_paths": [
+  "CLAUDE.md",
+  "notebooks/47_mae_only_full_retrain.ipynb",
+  "outputs/47_mae_only_full_retrain/decisions_taken.json",
+  "outputs/47_mae_only_full_retrain/predictions_before_board.json",
+  "outputs/47_mae_only_full_retrain/run_meta.json",
+  "outputs/47_mae_only_full_retrain/summary.json"
+ ]
+}

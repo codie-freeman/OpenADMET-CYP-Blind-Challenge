@@ -1,0 +1,73 @@
+isoform,group,column,relation,representative
+CYP1A2,0,04b,head,04b
+CYP1A2,1,NB10,head,NB10
+CYP1A2,2,10c,head,10c
+CYP1A2,2,NB13-calib,affine,10c
+CYP1A2,2,NB16,bit-identical,10c
+CYP1A2,2,NB19,bit-identical,10c
+CYP1A2,2,NB27-widened,bit-identical,10c
+CYP1A2,2,27b,bit-identical,10c
+CYP1A2,2,plain (chemprop CheMeleon),bit-identical,10c
+CYP1A2,3,NB12,head,NB12
+CYP1A2,4,NB30,head,NB30
+CYP1A2,4,aid (NB30's model),bit-identical,NB30
+CYP1A2,5,NB32-A,head,NB32-A
+CYP1A2,5,NB36-widened,affine,NB32-A
+CYP1A2,5,dz_aid (NB32-A's model),bit-identical,NB32-A
+CYP1A2,6,NB40-rebuilt (unconfirmed send),head,NB40-rebuilt (unconfirmed send)
+CYP1A2,7,deadzone,head,deadzone
+CYP1A2,8,mae_only,head,mae_only
+CYP2C9,0,04b,head,04b
+CYP2C9,1,NB10,head,NB10
+CYP2C9,1,10c,bit-identical,NB10
+CYP2C9,1,NB16,affine,NB10
+CYP2C9,1,plain (chemprop CheMeleon),bit-identical,NB10
+CYP2C9,2,NB12,head,NB12
+CYP2C9,2,NB13-calib,affine,NB12
+CYP2C9,2,NB19,bit-identical,NB12
+CYP2C9,2,NB27-widened,bit-identical,NB12
+CYP2C9,2,27b,bit-identical,NB12
+CYP2C9,3,NB30,head,NB30
+CYP2C9,3,aid (NB30's model),bit-identical,NB30
+CYP2C9,4,NB32-A,head,NB32-A
+CYP2C9,4,NB36-widened,affine,NB32-A
+CYP2C9,4,dz_aid (NB32-A's model),bit-identical,NB32-A
+CYP2C9,5,NB40-rebuilt (unconfirmed send),head,NB40-rebuilt (unconfirmed send)
+CYP2C9,6,deadzone,head,deadzone
+CYP2C9,7,mae_only,head,mae_only
+CYP2D6,0,04b,head,04b
+CYP2D6,1,NB10,head,NB10
+CYP2D6,2,10c,head,10c
+CYP2D6,2,NB13-calib,affine,10c
+CYP2D6,2,NB16,affine,10c
+CYP2D6,2,NB19,affine,10c
+CYP2D6,2,NB27-widened,affine,10c
+CYP2D6,2,plain (chemprop CheMeleon),bit-identical,10c
+CYP2D6,3,NB12,head,NB12
+CYP2D6,4,NB30,head,NB30
+CYP2D6,4,27b,affine,NB30
+CYP2D6,4,aid (NB30's model),bit-identical,NB30
+CYP2D6,5,NB32-A,head,NB32-A
+CYP2D6,5,NB36-widened,bit-identical,NB32-A
+CYP2D6,5,dz_aid (NB32-A's model),affine,NB32-A
+CYP2D6,6,NB40-rebuilt (unconfirmed send),head,NB40-rebuilt (unconfirmed send)
+CYP2D6,7,deadzone,head,deadzone
+CYP2D6,8,mae_only,head,mae_only
+CYP3A4,0,04b,head,04b
+CYP3A4,1,NB10,head,NB10
+CYP3A4,2,10c,head,10c
+CYP3A4,2,NB13-calib,affine,10c
+CYP3A4,2,NB16,bit-identical,10c
+CYP3A4,2,NB19,bit-identical,10c
+CYP3A4,2,NB27-widened,bit-identical,10c
+CYP3A4,2,27b,bit-identical,10c
+CYP3A4,2,plain (chemprop CheMeleon),bit-identical,10c
+CYP3A4,3,NB12,head,NB12
+CYP3A4,4,NB30,head,NB30
+CYP3A4,4,aid (NB30's model),bit-identical,NB30
+CYP3A4,5,NB32-A,head,NB32-A
+CYP3A4,5,NB36-widened,affine,NB32-A
+CYP3A4,5,dz_aid (NB32-A's model),bit-identical,NB32-A
+CYP3A4,6,NB40-rebuilt (unconfirmed send),head,NB40-rebuilt (unconfirmed send)
+CYP3A4,7,deadzone,head,deadzone
+CYP3A4,8,mae_only,head,mae_only

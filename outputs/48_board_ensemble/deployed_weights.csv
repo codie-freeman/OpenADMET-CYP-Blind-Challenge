@@ -1,0 +1,13 @@
+isoform,objective,member,weight
+CYP1A2,greedy_strae,deadzone,0.5
+CYP1A2,greedy_strae,aid,0.25
+CYP1A2,greedy_strae,ecfp4_narrow__xgboost_stab,0.25
+CYP2C9,greedy_strae,deadzone,0.625
+CYP2C9,greedy_strae,aid,0.25
+CYP2C9,greedy_strae,ecfp4_narrow__rf,0.125
+CYP2D6,nnls_simplex,ecfp4_narrow__lightgbm,0.16612514683409133
+CYP2D6,nnls_simplex,aid,0.34274559875154653
+CYP2D6,nnls_simplex,deadzone,0.4911292544143621
+CYP3A4,greedy_strae,deadzone,0.6
+CYP3A4,greedy_strae,aid,0.2
+CYP3A4,greedy_strae,ecfp4_narrow__xgboost_stab,0.2

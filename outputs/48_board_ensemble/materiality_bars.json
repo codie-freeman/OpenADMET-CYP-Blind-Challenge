@@ -1,0 +1,32 @@
+{
+ "used": {
+  "ST-RAE": {
+   "CYP1A2": 0.0234,
+   "CYP2C9": 0.0209,
+   "CYP2D6": 0.0277,
+   "CYP3A4": 0.016
+  },
+  "Spearman": {
+   "CYP1A2": 0.0183,
+   "CYP2C9": 0.016,
+   "CYP2D6": 0.0212,
+   "CYP3A4": 0.01
+  },
+  "construction": "bar(isoform) = 2 * mean_over_arms( se(arm, isoform) ), where se is the standard error of the 25-fold paired difference of that arm against `plain`, pooled across notebook 37's ten arms. Pooling across arms is the point: it estimates how well a 25-fold paired comparison on this partition can resolve ANY difference, independently of the one being tested.",
+  "explicitly_not": "2 x the SE of the comparison under test (circular)"
+ },
+ "recomputed_on_point_estimates": {
+  "ST-RAE": {
+   "CYP1A2": 0.02333262650070262,
+   "CYP2C9": 0.02080732677588179,
+   "CYP2D6": 0.027257526714198937,
+   "CYP3A4": 0.01589357410815997
+  },
+  "Spearman": {
+   "CYP1A2": 0.018354061098097795,
+   "CYP2C9": 0.016047594542718598,
+   "CYP2D6": 0.02119350692917762,
+   "CYP3A4": 0.009925543503817939
+  }
+ }
+}

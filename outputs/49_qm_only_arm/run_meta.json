@@ -1,0 +1,15 @@
+{
+ "ran_at_utc": "2026-10-10T23:49:54.481373+00:00",
+ "blocks": [
+  "FREE",
+  "QM13",
+  "QM13_ATOM4"
+ ],
+ "mstar": "ridge",
+ "n_units": 75,
+ "wall_min": 3.248880219459534,
+ "free_ridge_reproduces_nb46_max_abs_diff": 0.0,
+ "n_predictions_compared": 98100,
+ "KMP_DUPLICATE_LIB_OK_at_start": null,
+ "OMP_NUM_THREADS": null
+}

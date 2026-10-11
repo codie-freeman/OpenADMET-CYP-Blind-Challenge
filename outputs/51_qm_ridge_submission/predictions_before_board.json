@@ -1,0 +1,42 @@
+{
+ "recorded_at_utc": "2026-10-11T01:05:53.936811+00:00",
+ "notebook": "51_qm_ridge_submission.ipynb",
+ "file": "outputs/51_qm_ridge_submission/submission_candidate.csv",
+ "sha256": "e0f08a577b2877b3bcbc85063157078def6a1708774a667fefbf9b856a006b90",
+ "1_what_this_pair_tests": "The only difference between notebook 50's file and notebook 51's is the feature block, so the board difference between them is the first direct read this project will have on whether the quantum descriptors are worth anything on real blind data. Notebook 46 put the effect at 23.6% of bar at its largest on ST-RAE; a single pair of board readings has no error bar, so this pair can detect a large difference and cannot resolve a small one.",
+ "2_the_correction_removes_spread_as_a_confounder": "After correction both notebooks' CYP1A2, CYP2D6 and CYP3A4 columns are forced to the SAME target ratio, and CYP2D6's mean is forced to the same solved value as well. On those three isoforms the two files can therefore differ only in rank order, which is exactly the quantity notebook 38 identified as what separates this project's leading columns. CYP2C9 is left uncorrected in both, so there the spread can differ.",
+ "3_absolute_expectation": "These are ridge models on 2D descriptors. Every submission this project has sent was chemprop-based or an ensemble containing one, so there is no close precedent. Out-of-fold they are comparable to `plain` on CYP1A2 and CYP3A4 and better on CYP2D6, but `plain`'s board score is far better than its own out-of-fold score (CYP1A2 0.6954 against 0.8534), and nothing says a ridge arm enjoys the same gap. Expected macro is therefore wide and stated as such: 0.62 to 0.85, and NOT expected to beat 27b's 0.5982.",
+ "4_falsifiable_mechanical_checks": {
+  "cyp2d6_corrected_ratio_is_0.85": "exact by construction",
+  "cyp2c9_is_uncorrected": "relative gap -0.0086 did not reach the 0.1 bar",
+  "raw_and_corrected_files_must_share_Spearman_and_Kendall": "both layers are affine and rank-preserving, verified at Spearman 1.0 to 1e-12"
+ },
+ "5_the_risk": "Compression. The raw ratios here run 0.405 to 0.824, short of the board targets on CYP1A2 and CYP2D6. The correction addresses it on three isoforms, but every correction this project has deployed was fitted on out-of-fold predictions and applied to a full-data model, and notebook 21 established that out-of-fold optima need not transfer.",
+ "6_board_best_on_record": {
+  "per_isoform": {
+   "CYP1A2": 0.6954,
+   "CYP2C9": 0.5375,
+   "CYP2D6": 0.7165,
+   "CYP3A4": 0.4291
+  },
+  "macro": 0.5982
+ },
+ "7_out_of_fold_reference": {
+  "CYP1A2": {
+   "ST-RAE": 0.8388226408074896,
+   "Spearman": 0.48599353181814614
+  },
+  "CYP2C9": {
+   "ST-RAE": 0.7010383549441421,
+   "Spearman": 0.5943057066299235
+  },
+  "CYP2D6": {
+   "ST-RAE": 0.9510401591685984,
+   "Spearman": 0.3586190004497184
+  },
+  "CYP3A4": {
+   "ST-RAE": 0.5930496776438384,
+   "Spearman": 0.723631649098132
+  }
+ }
+}
