@@ -1,0 +1,22 @@
+{
+  "generated_utc": "2026-10-11T13:50:00+00:00",
+  "n_compounds": 5655,
+  "n_train": 4905,
+  "n_blind": 750,
+  "addhs_preserves_heavy_indices": 5655,
+  "bijection": 5655,
+  "element_sequence_under_permutation": 5655,
+  "element_sequence_against_qm_atoms_csv": 5655,
+  "bond_subset_under_permutation": 5655,
+  "permutation_is_identity": 4112,
+  "permutation_does_work_on": 1543,
+  "canonical_smiles_element_sequence_matches": 4212,
+  "nb43_recorded_element_sequence_matches": 4212,
+  "negative_control_probes": 50,
+  "negative_control_rejected": 50,
+  "orca_atom_rows_total": 252237,
+  "hydrogen_rows_dropped": 113596,
+  "heavy_atom_rows_used": 138641,
+  "qm_atoms_sha256": "3d333c41ed6e76531bc23dbf0507d6c5177e20c8d0e1f51d088f1f8b2f2652e5",
+  "ordering_csv_sha256": "3a0434fa6bc6af6a617c6ea62d253d2766ad1e399fb93edb13abf1556a74680e"
+}

@@ -1,0 +1,11 @@
+{
+  "at_utc": "2026-10-11T14:37:41.576970+00:00",
+  "arms": [
+    "qm_both",
+    "qm_both_zeroatoms"
+  ],
+  "difference_is_only_the_npz_contents": true,
+  "blind_max_abs_diff": 0.7766120999999999,
+  "heldout_max_abs_diff": 0.8397363999999996,
+  "wired": true
+}

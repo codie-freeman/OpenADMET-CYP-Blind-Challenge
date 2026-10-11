@@ -1,0 +1,3 @@
+repeat,fold,arm,seed,wall_min,last_epoch,best_epoch,min_per_epoch
+0,0,wiring_qm_both,2684470948,12.990048531691231,18,13,0.7216693628717352
+0,0,wiring_qm_both_zeroatoms,2684470948,17.58974596261978,25,20,0.7035898385047912

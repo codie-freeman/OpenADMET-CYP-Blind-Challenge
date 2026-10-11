@@ -1,0 +1,80 @@
+{
+  "at_utc": "2026-10-11T14:43:57+00:00",
+  "flag_used": "--atom-features-path",
+  "flag_reason": "V_f is hstacked onto the atom feature matrix before W_i and so enters all 6 message passing steps; V_d is concatenated in finalize(), after the loop, and never reaches a neighbour",
+  "chemeleon_refuses_atom_features": true,
+  "route": "local foundation file: CheMeleon's weights widened by k zero columns at index d_v",
+  "widened_encoder_max_abs_diff_at_init": 0.0,
+  "atom_feature_scaling": "done in scripts/52_atom_arrays.py on screen_inner_train atoms; --no-atom-feature-scaling passed, because the foundation path drops chemprop's own GraphTransform",
+  "ordering": {
+    "n_compounds": 5655,
+    "addhs_preserves_heavy_indices": 5655,
+    "bijection": 5655,
+    "element_sequence_under_permutation": 5655,
+    "element_sequence_against_qm_atoms_csv": 5655,
+    "bond_subset_under_permutation": 5655,
+    "permutation_is_identity": 4112,
+    "permutation_does_work_on": 1543,
+    "negative_control_probes": 50,
+    "negative_control_rejected": 50,
+    "canonical_smiles_element_sequence_matches": 4212,
+    "hydrogen_rows_dropped": 113596,
+    "heavy_atom_rows_used": 138641
+  },
+  "features": {
+    "molecule_level": [
+      "dft_homo_ev",
+      "dft_lumo_ev",
+      "homo1_ev",
+      "homo2_ev",
+      "lumo1_ev",
+      "gfn2_homo_ev",
+      "gfn2_lumo_ev",
+      "dft_dipole_debye",
+      "gfn2_relaxation_strain_eh",
+      "npr1",
+      "npr2",
+      "radius_of_gyration",
+      "I1"
+    ],
+    "atom_level": [
+      "q_hirshfeld",
+      "mayer_va"
+    ],
+    "excluded_nb45_aggregates": [
+      "hirshfeld_C_min",
+      "hirshfeld_H_min",
+      "bond_order_min",
+      "mayer_va_min"
+    ],
+    "bond_features": null
+  },
+  "wiring": {
+    "at_utc": "2026-10-11T14:37:41.576970+00:00",
+    "arms": [
+      "qm_both",
+      "qm_both_zeroatoms"
+    ],
+    "difference_is_only_the_npz_contents": true,
+    "blind_max_abs_diff": 0.7766120999999999,
+    "heldout_max_abs_diff": 0.8397363999999996,
+    "wired": true
+  },
+  "stage1_cost_hours_mean_to_slow": [
+    6.4,
+    7.3
+  ],
+  "stage1_cost_brief_projection_hours": [
+    4,
+    5
+  ],
+  "wiring_fit_minutes": [
+    12.990048531691231,
+    17.58974596261978
+  ],
+  "wiring_fit_epochs": [
+    18,
+    25
+  ],
+  "send": false
+}

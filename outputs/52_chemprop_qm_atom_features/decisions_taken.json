@@ -1,0 +1,27 @@
+[
+ {
+  "decision": "CheMeleon is loaded from a LOCAL foundation file holding its own weights widened by two zero-initialised atom-feature columns. DEPARTS FROM THE BRIEF, which assumed `--atom-features-path` was available with CheMeleon.",
+  "why": "chemprop 2.3.1 refuses --atom-features-path outright when CheMeleon is named (cli/train.py, 'CheMeleon does not support passing --atom-features-path'), confirmed by a real CLI call in Part 0.2, because its published W_i is (2048, 86) against a 72-wide V2 atom featurizer. The brief names CheMeleon AND per-atom features and those are mutually exclusive through the documented route. The local path skips that validation and takes only message_passing and agg from the file, so the surgery preserves the pretrained encoder exactly: at init the widened block reproduces CheMeleon to 0.0 on a real molecule with random extra feature values, and the only new parameters are the two zero columns.",
+  "alternative": "Drop CheMeleon and use a random-init chemprop, which supports the flag. That would have moved the baseline off `plain` -- this project's best single model and the arm notebook 37 stored on these exact folds -- onto chemprop_randominit, answering a weaker question. Or abandon the per-atom half, which is the entire bet, leaving a re-run of notebook 44's null."
+ },
+ {
+  "decision": "--no-atom-feature-scaling is passed and the per-atom values are standardised in scripts/52_atom_arrays.py instead, from each fold's screen_inner_train atoms.",
+  "why": "On the --from-foundation path chemprop computes the atom-feature scaler and LOGS it but never attaches the GraphTransform to the loaded encoder (Part 0.4b: the foundation branch contains no graph_transform assignment; the non-foundation branch does). normalize_inputs mutates the training arrays in place, so training is scaled and the checkpoint carries nn.Identity -- predict would feed the same features UNSCALED. Demonstrated on two real checkpoints, not inferred. Left alone this would be a silent train/predict mismatch on every blind prediction.",
+  "alternative": "Let chemprop scale and accept the mismatch, which would corrupt stage 2's submission invisibly. Or patch the installed chemprop, which this project does not do to vendored dependencies."
+ },
+ {
+  "decision": "The wiring control is an all-ZEROS npz rather than dropping the flag.",
+  "why": "Dropping the flag would also change the encoder and the command line, so a difference could come from anywhere. Holding everything fixed but the npz CONTENTS means a non-zero difference can only be the values having reached the model.",
+  "alternative": "Fit plain CheMeleon as the control, which is what the brief's wording suggests. It answers a looser question and cannot isolate the wiring."
+ },
+ {
+  "decision": "PROCESS NOTE, not a design choice: the wiring check was run three times because I corrupted the first attempt myself.",
+  "why": "The first driver was launched with `nohup ... &` inside a foreground shell call. When that call returned, a single `pgrep` on the DRIVER's own command line came back empty and I concluded the run was dead -- but the pattern never matched the `chemprop` CHILD, which was alive and still training. Acting on that reading I deleted the run directory under a live process and started a second driver on the same paths; the two collided inside Lightning's CSVLogger (`ValueError: dict contains fields not in fieldnames`) and the second crashed while the first carried on into a deleted directory. Both were killed, every partial artefact was removed, and the check was re-run as a single harness-tracked job. Same class as notebook 30's nbformat/nbconvert race: two processes, one set of files. The lesson is to check for the CHILD process, not just the driver, and never to delete a run directory on the strength of one liveness probe.",
+  "alternative": "None -- this is recorded because it happened, not because it was chosen. No result in this notebook comes from the corrupted attempts; the run directory was emptied before the surviving run started."
+ },
+ {
+  "decision": "The scaler is fitted on screen_inner_train only, not on the pooled train+val rows.",
+  "why": "That is the population chemprop's own scaler uses (train_dset.normalize_inputs, with val_dset given the fitted scaler), so the arm matches what every other chemprop arm in this project effectively did for its molecule-level descriptors, and the early-stopping set stays outside the statistics.",
+  "alternative": "Fit on pooled train+val. Marginally more data for the statistics, at the cost of a quantity fitted partly on the set used to stop training."
+ }
+]

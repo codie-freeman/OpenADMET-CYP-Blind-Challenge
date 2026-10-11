@@ -444,3 +444,23 @@ outputs/49_qm_only_arm/features_blind_extended/
 outputs/49_qm_only_arm/predictions/
 outputs/49_qm_only_arm/scores/
 outputs/49_qm_only_arm/oof_long/
+
+# notebook 52 (stage 0: the per-atom QM arm's ordering, features and wiring check) -- bulk
+# per-run artefacts, regeneratable from scripts/52_build_atom_ordering.py,
+# scripts/52_atom_arrays.py and scripts/52_run_qm_atom_arms.py. chemprop_runs/ is 510MB
+# (checked directly: two Chemprop training runs' *.pt/*.ckpt checkpoints, their trainer logs,
+# and the train/predict CSVs and atom-feature .npz files each run writes). chemeleon_widened.pt
+# is a 37MB DERIVED artefact -- CheMeleon's own cached checkpoint with k zero columns inserted
+# -- rebuilt in seconds by scripts/52_atom_arrays.py, which asserts it is numerically identical
+# to CheMeleon at initialisation, so tracking a second copy of a 35MB upstream file buys
+# nothing. flag_probe/ is a throwaway 8-molecule fixture the notebook writes to demonstrate
+# chemprop's CheMeleon refusal and its foundation-path graph_transform gap. atom_ordering.csv
+# (577KB, the per-compound permutation itself) IS tracked: it is the artefact every later stage
+# depends on and the one thing here that is not cheap to be wrong about. ordering_verification,
+# wiring_check, wiring_verdict, run_timings, stage0_report, decisions_taken, scope_check,
+# run_meta and figures/ are all small and stay tracked -- they are what the notebook's claims
+# rest on.
+outputs/52_chemprop_qm_atom_features/chemprop_runs/
+outputs/52_chemprop_qm_atom_features/chemeleon_widened.pt
+outputs/52_chemprop_qm_atom_features/flag_probe/
+outputs/52_chemprop_qm_atom_features/predictions/

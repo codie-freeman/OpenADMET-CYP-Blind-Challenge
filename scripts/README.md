@@ -114,6 +114,35 @@ background. Notebooks read these scripts' saved output from disk; they never inv
   blocks the pre-registration declares may carry it, and the per-fold median fill for those columns
   is fitted on that fold's training portion only.
 
+### The per-atom QM arm (notebook `52`)
+
+- **`52_build_atom_ordering.py`** — builds and verifies the per-compound ORCA-to-chemprop atom
+  permutation, which is the whole risk in notebook `52`. The QM run featurised every compound as
+  `Chem.AddHs(Chem.MolFromSmiles(row.SMILES))` — the **raw** `SMILES` column — while chemprop is
+  given `-s canonical_smiles`, and `canonical_smiles` reproduces ORCA's element sequence on only
+  4,212 of 5,655 compounds. Both molecules are routed through one `Chem.MolToSmiles` call and
+  matched on `_smilesAtomOutputOrder`, so RDKit's own tie-breaking resolves symmetry identically on
+  both sides. Every check is a hard failure rather than a warning, including notebook `43`'s
+  element-sequence and bond-subset assertions, the same element check again against
+  `qm_atoms.csv` itself, and a **negative control** that corrupts a verified permutation and
+  requires the checks to reject it — without which the assertions could be vacuous.
+- **`52_atom_arrays.py`** — the `.npz` per-atom arrays and the widened CheMeleon encoder. Two
+  things here are corrections rather than preferences, both documented in the module docstring.
+  chemprop 2.3.1 **refuses** `--atom-features-path` when CheMeleon is named, because its published
+  `W_i` is `(2048, 86)` against a 72-wide V2 featurizer; the refusal is guarded by
+  `if not local_foundation:`, so this builder writes a local foundation file carrying CheMeleon's
+  own weights widened by *k* zero columns at index `d_v`, asserted numerically identical to
+  CheMeleon at initialisation. And on the `--from-foundation` path chemprop computes an
+  atom-feature scaler, logs it, and never attaches the `GraphTransform` to the loaded encoder,
+  while `normalize_inputs` mutates the training arrays in place — so training would be scaled and
+  `predict` unscaled. The scaling is therefore done here, from each fold's `screen_inner_train`
+  atoms only, with `--no-atom-feature-scaling` passed.
+- **`52_run_qm_atom_arms.py`** — notebook `52`'s training driver: `--sanity` (reproduce notebook
+  `05`'s stored `chemprop_chemeleoninit__repeat0_fold0`), `--wiring` (two fits differing only in
+  the `.npz` contents, real against all-zeros, as the gate on whether the CV is worth running),
+  `--confirm` (the frozen 25 cluster-disjoint folds) and `--final` (full-data fit). The harness is
+  notebook `44`'s, itself notebook `37`'s, with the differences the arm forces.
+
 All scripts import `src/features.py`, `src/scoring.py`, and (where relevant) `src/chemprop_screen.py`
 or `src/cv_bootstrap.py` rather than reimplementing any of that logic locally — see `src/README.md`.
 `parse_orca_output.py` additionally reuses `run_qm_descriptors.py`'s own `read_orca_xyz()` rather
