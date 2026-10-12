@@ -50,6 +50,73 @@ none of these numbers are the final, full-set result, and later reveals could mo
 *ST-RAE is this project's governing metric (lower is better); R², Spearman, and Kendall are
 better higher; MAE is better lower. See `src/vendor/openadmet_eval/` for the scoring definitions.*
 
+## PENDING SCORES — two accepted submissions, no board result yet
+
+**Two further submissions have been accepted by the portal and are awaiting leaderboard
+results.** Neither has a score, so neither appears in the metrics table above, which remains a
+record of the twelve scored submissions. Both are recorded here on arrival rather than afterwards,
+because this document has already been stale three times (see "Provenance") and each time a later
+notebook built on a wrong premise as a result — notebook 47's own row below is the third instance,
+found only when notebook 48's send was being prepared and its cell output was read.
+
+| field | NB47-mae | NB48-ensemble |
+|---|---|---|
+| notebook | `47_mae_only_full_retrain.ipynb` | `48_board_ensemble.ipynb` |
+| file | `outputs/47_mae_only_full_retrain/submission_candidate.csv` | `outputs/48_board_ensemble/submission_candidate.csv` |
+| sha256 | `5ee259abcffaf590419d3de8b69c89133c0159a340b928dc39c5f47247054418` | `14ccf684fca506f5d7f1f8ed7ec8596e5ea2a90c79c7589208f500c92b97f6a7` |
+| submitted (UTC) | ~2026-10-10 21:44 (notebook file mtime; the cell captured no timestamp) | **2026-10-12 00:08:07** (recorded by the cell itself) |
+| account / alias | `codie-freeman`, anonymous as `fold-zero` | `codie-freeman`, anonymous as `fold-zero` |
+| track | Regression Prediction | Regression Prediction |
+| Method Report Link | empty → "Not submitted" | empty → "Not submitted" |
+| server reply | `Submission received from 'fold-zero' for the Regression Prediction track.` — captured in the notebook's own cell output | same reply, captured in the cell output **and** in `outputs/48_board_ensemble/submission_receipt.json` |
+| deliberate? | Yes — uncommented and run by hand | Yes — gate opened and run deliberately, on explicit instruction |
+| **board score** | **pending** | **pending** |
+
+**NB47-mae — the model.** `chemprop_chemeleoninit` retrained on all 4,905 compounds under an **MAE
+training loss instead of MSE**, raw point-estimate targets, no validation split, a fixed 7 epochs
+taken from the median per-fold best epoch across notebook 37's 25 cluster-disjoint folds. This is
+the leak-free half of the dead-zone effect: it changes the loss function alone, against the literal
+curated label, so it carries none of `deadzone`'s fold-crosstalk exposure. At 25 folds it is
+significantly better than `plain` on CYP1A2 (−0.0317) and CYP2D6 (−0.0803), and not different on
+CYP2C9/CYP3A4. **Corrections applied:** CYP1A2 spread-widened to 0.8361 of the training-label SD
+(×1.1631); CYP2D6 placement-corrected onto NB16's board-solved blind population (mean 3.155762, sd
+1.511412) using **this model's own** pooled OOF Pearson rho (0.380669), then widened to 0.85 (total
+×1.9109); CYP2C9 and CYP3A4 raw and unchanged, both under notebook 36's 10% bar. Notebook 47's own
+verdict was **not worth submitting** — its raw column is more compressed than `10c` on four of four
+isoforms, the signature that correctly anticipated NB30's failure. It was sent anyway, so the board
+reading is now a real test of that verdict.
+
+**NB48-ensemble — the model.** A **per-isoform non-negative ensemble**, weights constrained to sum
+to one, fitted on notebook 37's 25-fold cluster-disjoint out-of-fold predictions and deployed on
+full-data blind columns. This is the first submission this project has made that is not an affine
+transform of a single model's output, so it is **the first that can move the rank metrics** —
+notebook 38 established that ranking is what separates the leading columns and that no affine
+correction reaches it. Weights: CYP1A2 `deadzone` 0.500 / `aid` 0.250 / `ecfp4_narrow__xgboost`
+(seed-averaged) 0.250; CYP2C9 `deadzone` 0.625 / `aid` 0.250 / `ecfp4_narrow__rf` 0.125; CYP2D6
+`deadzone` 0.491 / `aid` 0.343 / `ecfp4_narrow__lightgbm` 0.166; CYP3A4 `deadzone` 0.600 / `aid`
+0.200 / `ecfp4_narrow__xgboost` (seed-averaged) 0.200. **Corrections applied:** CYP2D6
+placement-corrected onto NB16's board-solved blind population using the blend's own nested OOF rho
+(0.4525), then spread-widened; CYP1A2 and CYP3A4 spread-widened to the ratio of each isoform's
+best-scoring board column; **CYP2C9 left uncorrected**, its 8.0% gap falling under the 10% bar.
+
+Notebook 48 made **no recommendation** to send this, and two of its own findings are adverse: the
+entire material gain rests on `aid`, whose out-of-fold ranking against `plain` the board
+contradicts on four of four isoforms, and the Krogh–Vedelsby ambiguity **shrinks** onto the blind
+set for this pool (scale-free ratio 0.50–0.94, below 1.0 on every measurable isoform) — the one
+direction that, per notebook 39's Part D.1, can close a route. Its pre-registered predictions are
+in `outputs/48_board_ensemble/predictions_before_board.json`, and include the explicit caveat that
+a single board reading **cannot resolve** a 0.01–0.02 ST-RAE effect: it can detect a catastrophic
+failure and test whether the ranking gain is real, not settle whether the ensemble helps.
+
+**A submission-cell fault worth carrying forward.** Notebook 48's cell could not have sent
+anything as written, on two counts: the host `openadmet-cyp-challenge-leaderboard.hf.space` does
+not exist (404 — the call raised inside `Client.__init__` before `client.predict` was reached, so
+the first attempt transmitted nothing), and its `activity_predictions`/`tdi_predictions` parameter
+set is stale — `/submit_predictions` takes a verified huggingface.co username, an alias, a track,
+one file and a set of declarations. **Notebooks 50 and 51 carry both faults and would fail the
+same way.** Notebooks 36 and 47 carry the correct call; it was copied from them rather than
+reinvented.
+
 ## UNCONFIRMED SUBMISSION — 2026-10-02 ~13:44 UTC, notebook 40's rebuilt candidate
 
 **A real call to `/submit_predictions` completed on 2026-10-02 at approximately 13:44 UTC and is
@@ -113,6 +180,8 @@ and the content each one sent was correct.
 
 **NB27-widened's own notebook text creates a similar risk of the same wrong inference, and for the same underlying reason.** Its submission cell is fully commented out by this project's now-standard convention — every line, including the `client.predict(...)` call itself, is a `#` comment — and its closing markdown cell is titled "Section 2 — summary, no action taken." Read from the notebook's text alone, both would reasonably suggest this candidate was built and left unsent. **It was not.** It was submitted by hand on 2026-09-16 at 21:36 UTC, exactly as this project's manual-gated process requires; the notebook itself was not updated with that fact until afterward, via a single markdown cell appended to its end (see notebook 27's own closing note). Recorded here so a future reader does not draw the same incorrect inference from the notebook's text alone that the earlier diagnostic pass drew from the header-comment bug.
 | **NB36-widened** | `36_spread_corrected_nb32a.ipynb` | 2026-10-01 19:54 UTC | NB32-A's submitted file with CYP1A2, CYP2C9 and CYP3A4 each widened about their own mean to the spread ratio of the column holding that isoform's best board ST-RAE (multipliers x1.4145, x1.1304, x1.1317 onto target ratios 0.8361, 0.8168, 0.9262); CYP2D6 carried over byte-identical, since NB32-A already placed and widened it to 0.85 | Yes — manually reviewed and sent, per this project's manual-gated submission process |
+| **NB47-mae** | `47_mae_only_full_retrain.ipynb` | ~2026-10-10 21:44 UTC (notebook mtime) | `chemprop_chemeleoninit` full-data retrain under an **MAE training loss** instead of MSE, raw point-estimate targets, no validation split, fixed 7 epochs from the median per-fold best epoch across 25 cluster-disjoint folds; CYP1A2 spread-widened (×1.1631), CYP2D6 placement-corrected on this model's own OOF rho (0.380669) then widened to 0.85 (total ×1.9109), CYP2C9/CYP3A4 raw | Yes — uncommented and run by hand. **Score pending** |
+| **NB48-ensemble** | `48_board_ensemble.ipynb` | 2026-10-12 00:08:07 UTC | Per-isoform **non-negative ensemble** (weights summing to one) fitted on notebook 37's 25-fold cluster-disjoint OOF predictions, deployed on full-data blind columns — `deadzone` + `aid` + an `ecfp4_narrow` tree per isoform; CYP2D6 placement-corrected on the blend's own nested OOF rho (0.4525) then widened, CYP1A2/CYP3A4 spread-widened, CYP2C9 uncorrected (8.0% gap, under the 10% bar). The first submission that is not an affine transform of one model, so the first that can move the rank metrics | Yes — gate opened and run deliberately, on explicit instruction. **Score pending** |
 
 ## NB13-calib: population calibration tested and rejected on real blind data
 

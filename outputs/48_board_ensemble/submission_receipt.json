@@ -1,0 +1,12 @@
+{
+ "sent_at_utc": "2026-10-12T00:08:07.870168+00:00",
+ "file": "outputs/48_board_ensemble/submission_candidate.csv",
+ "sha256": "14ccf684fca506f5d7f1f8ed7ec8596e5ea2a90c79c7589208f500c92b97f6a7",
+ "hf_username": "codie-freeman",
+ "alias": "fold-zero",
+ "anonymous": true,
+ "track": "Regression Prediction",
+ "model_tag": "",
+ "recipe": "Per-isoform non-negative ensemble (weights summing to one) fitted on notebook 37's 25-fold cluster-disjoint out-of-fold predictions, deployed on full-data blind columns: CYP1A2 deadzone 0.500 / aid 0.250 / ecfp4_narrow xgboost seed-averaged 0.250; CYP2C9 deadzone 0.625 / aid 0.250 / ecfp4_narrow rf 0.125; CYP2D6 deadzone 0.491 / aid 0.343 / ecfp4_narrow lightgbm 0.166; CYP3A4 deadzone 0.600 / aid 0.200 / ecfp4_narrow xgboost seed-averaged 0.200. CYP2D6 placement-corrected onto the board-solved blind population; CYP1A2/CYP2D6/CYP3A4 spread-widened to the ratio of each isoform's best-scoring board column; CYP2C9 uncorrected (under the bar).",
+ "server_reply": "{'visible': True, 'value': \"Submission received from 'fold-zero' for the Regression Prediction track. Your predictions are being processed and should appear on the leaderboard within 2 hours.\", '__type__': 'update'}"
+}
