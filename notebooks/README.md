@@ -661,3 +661,54 @@ If anything deserves a board reading it is **CYP1A2 as a single-column test** ag
 otherwise unchanged recipe, a different and much cheaper experiment. Neither was built or sent.
 Both files validate PASS; `SEND = False` with the printed message computed from the flag; scope
 check 0 violations on four tests, with `32` and `40` never opened.
+
+## The board ensemble, the QM diversity question, and the matched ridge pair (48–52)
+
+**[`48_board_ensemble.ipynb`](48_board_ensemble.ipynb)** -- COMPLETE, **sent and scored**. Fits
+per-isoform non-negative weights, constrained to sum to one, on notebook `37`'s 25-fold
+cluster-disjoint out-of-fold predictions and deploys them on full-data blind columns: `deadzone`
+plus `aid` plus one `ecfp4_narrow` tree per isoform. Part 1 establishes the structural point that
+makes the exercise possible at all: the repository's 46 saved blind prediction files collapse to
+only eight or nine genuinely distinct prediction objects per isoform, because every calibration
+submission is an affine transform of an earlier model's column, so "ensemble the sent submissions"
+is not available as stated. Judged against its own best single component on notebook `45`'s frozen
+resolution bar, the blend was material on CYP1A2 (156% of the Spearman bar) and CYP3A4 (183%).
+**Submitted 2026-10-12 as NB48-ensemble and scored macro 0.6356, board rank 74, sixth of fourteen.**
+The mechanism worked and the benefit did not: the rank metrics moved on all four isoforms, which no
+prior submission could do, but CYP1A2's Spearman fell and CYP3A4's was flat. Its one ST-RAE gain,
+CYP2D6, is placement rather than ranking, since that column's Spearman fell at the same time.
+**Transfer failure 6 of 6, and the first where the cross-validated result was material on both
+metrics rather than merely significant.** Two of its own adverse findings, recorded in advance,
+were vindicated: the whole case rested on `aid`, which the board prefers `plain` over on four of
+four isoforms, and the Krogh-Vedelsby ambiguity shrinks onto the blind set for this pool.
+
+**[`49_qm_only_arm.ipynb`](49_qm_only_arm.ipynb)** -- COMPLETE, read-only plus one trained arm, no
+submission. Asks whether a QM arm can carry the diversity `aid` is carrying, since notebook `48`
+showed the ensemble gain collapses to exactly zero without it. The answer is no on every axis:
+`aid` is the single most decorrelated pool member on all four isoforms and none of notebook `46`'s
+six blocks comes below it anywhere, because those blocks correlate 0.995–0.997 with a zero-quantum
+ridge arm. A new QM-only arm passes the pre-frozen diversity gate on CYP3A4 only, and that pass is
+an artefact: a **constant predictor** with no information passes the same gate more strongly, so
+residual correlation against a pool is depressed by weakness as much as by orthogonality. The
+weight fit, which is immune to that defect, gives the arm exactly zero weight.
+
+**[`50_free_ridge_submission.ipynb`](50_free_ridge_submission.ipynb)** and
+**[`51_qm_ridge_submission.ipynb`](51_qm_ridge_submission.ipynb)** -- COMPLETE, built and validated,
+**neither sent**. A matched pair whose only difference is the feature block: `50` fits the 226 free
+2D descriptors, `51` those plus the 13 molecule-level and 4 atom-level QM columns. The pairing is
+guaranteed structurally rather than by inspection, through one implementation in
+[`../scripts/50_ridge_submission.py`](../scripts/50_ridge_submission.py) called twice, with `51`
+asserting all 14 pipeline fields identical to `50`'s. Both carry a latent submission-cell fault
+(the wrong Space host and a stale parameter set) that notebook `48`'s send exposed and that is
+fixed only in `48`.
+
+**[`52_chemprop_qm_atom_features.ipynb`](52_chemprop_qm_atom_features.ipynb)** -- COMPLETE, a clean
+null, one validated candidate **not sent**. Routes the QM data through CheMeleon message passing as
+per-atom features rather than table columns, the one untried mechanism notebook `49` identified.
+Stage 0 establishes that chemprop 2.3.1 refuses `--atom-features-path` with CheMeleon and works
+around it by widening the published encoder with zero columns, reproducing CheMeleon to 0.0 at
+init; it also finds and fixes a real scaling defect where training would be scaled and prediction
+unscaled. At 25 folds the isolation against a zeroed-array control arm is significant on 0 of 8
+cells and material on 0 of 8, and the small CYP3A4 ranking gain that does appear is **more**
+significant in the control than in the real arm, so it comes from the molecule-level columns and
+the load path rather than the per-atom values.

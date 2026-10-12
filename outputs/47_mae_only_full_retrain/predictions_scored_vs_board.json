@@ -1,0 +1,32 @@
+{
+ "scored_at_utc": "2026-10-12T00:35:15.976694+00:00",
+ "scores_this_file_grades": "outputs/47_mae_only_full_retrain/predictions_before_board.json",
+ "note": "Written beside the prediction file, which is left unmodified.",
+ "submission": {
+  "tag": "NB47-mae",
+  "submitted_utc": "2026-10-10T21:44:38+00:00",
+  "sha256": "5ee259abcffaf590419d3de8b69c89133c0159a340b928dc39c5f47247054418",
+  "macro_st_rae": 0.6328,
+  "macro_rank": 83,
+  "rank_of_14_by_macro_st_rae": 5
+ },
+ "headline": "Notebook 47 recorded NO board forecast, so there is no board prediction to score. Its prediction_3_board reads 'not predicted. This notebook builds and validates only; no submission is sent, so no board outcome is forecast.' The file was written at 21:42:28, two minutes before the submission went out at 21:44:38, and was not revised when the decision to send was taken. The two predictions it does carry are both internal and neither needs the board to settle it.",
+ "prediction_1_spread": {
+  "verdict": "ALREADY SCORED AT BUILD TIME, 3 of 4",
+  "detail": "Claimed the raw columns would be more compressed than plain/10c on CYP1A2, CYP2C9 and CYP2D6 and about the same or wider on CYP3A4. The first three held; CYP3A4 came back narrower (0.937x of 10c's ratio), so that arm missed. Recorded as a miss in CLAUDE.md's own notebook 47 entry at build time. The board adds nothing to this.",
+  "board_relevance": "none, it is a property of the built file"
+ },
+ "prediction_2_rank_preserving_corrections": {
+  "verdict": "NOT CHECKABLE FROM THE BOARD",
+  "detail": "Claimed the corrected file's Spearman and Kendall must equal the raw file's, both corrections being affine with positive slope. Only the corrected file was sent, so the board holds one of the two numbers the claim compares. It was verified internally at Spearman 1.0 to within 1e-12 before sending."
+ },
+ "prediction_3_board": {
+  "verdict": "NO FORECAST RECORDED",
+  "detail": "Explicitly declined."
+ },
+ "what_the_board_does_settle": {
+  "the_notebooks_own_verdict": "Notebook 47's verdict was 'not worth submitting', argued from the raw columns being more compressed than 10c on 4 of 4 isoforms. The board neither confirms nor refutes it cleanly: macro 0.6328 is 5th of 14, worse than 27b's 0.5982 as the verdict implied, but better than both raw baselines and better than NB16 and NB32-A. The verdict was directionally right about not taking the lead and wrong about the submission being worthless.",
+  "cv_to_board": "The 25-fold CV result (significantly better than plain on CYP1A2 -0.0317 and CYP2D6 -0.0803) did not transfer: CYP1A2 scored 0.7254 against plain's own 0.6954. Recorded as transfer failure 5 of 6 in docs/leaderboard_submissions.md.",
+  "unpredicted_gain": "CYP2C9, which the CV called not different, set a new best on record at 0.5255, beating the 0.5375 held by NB12/NB19/NB27-widened/27b."
+ }
+}

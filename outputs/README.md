@@ -53,9 +53,15 @@ individual files.
 | `41_dataset_audit_3d/` | `41` | Per-compound 3D-readiness audit — size, elements, stereochemistry, basic nitrogen. Reused widely by `42`/`43`. |
 | `42_orca_timing/` | `42` | ORCA timing measurements, cost fits, and core-scaling curves. The raw job tree is gitignored. |
 | `43_coordinating_atom/` | `43` | Candidate SMARTS coverage/overlap/tie-break tables, molecule panels, and the three open decisions. |
+| `44_qm_molecular_block/` | `44` | The molecule-level QM block's arm: 19 arms x 25 folds, the tier-1 model screen, the redundancy triage, and the pre-declared negative. Audited read-only in `docs/44_audit_report.md`. |
 | `45_atom_level_screen/` | `45` | Label-free redundancy screen on the aggregated atom-level QM block: three recoverability reads, the size-check calibrators, the tiered verdict table, and the arm pre-registration. |
 | `46_qm_arm/` | `46` | The arm itself: six feature blocks, the frozen pre-registration, tier-1 model screen, and the 25-fold Ash-protocol comparison with Tukey HSD and compact letter display. |
 | `47_mae_only_full_retrain/` | `47` | The MAE-loss full-data retrain: per-fold best-epoch table, raw and corrected blind predictions, the collapse check, and two validated submission candidates (neither sent). |
+| `48_board_ensemble/` | `48` | The per-isoform non-negative ensemble: blind-prediction inventory, distinct-object grouping, fitted weights, ambiguity and spread checks, three validated candidates, the submission receipt, and the board-scored predictions. |
+| `49_qm_only_arm/` | `49` | QM-only arm: the frozen diversity gate, the constant-predictor control that also passes it, decorrelation rankings, and the zero-weight result. |
+| `50_free_ridge_submission/` | `50` | Free-2D-descriptor ridge submission candidates, raw and corrected, with the pipeline fingerprint. Never sent. |
+| `51_qm_ridge_submission/` | `51` | The matched QM-augmented ridge candidates, fingerprint-asserted identical to `50`'s on all 14 pipeline fields. Never sent. |
+| `52_chemprop_qm_atom_features/` | `52` | Per-atom QM features through CheMeleon message passing: the widened foundation file, atom-ordering proof, three-arm Tukey comparison, and one validated candidate. Never sent. |
 | `board_solved_calibration/` | `16` | Sixth live submission (NB16) candidate, board-metrics-solved recentring. |
 | `calibration_blind_population/` | `13`, `14` | External-population calibration params (floored-mean and censored-MLE). |
 | `final_submission/` | `04b` (`scripts/train_final_submission_multitask.py`) | First live submission's training/prediction artifacts. |

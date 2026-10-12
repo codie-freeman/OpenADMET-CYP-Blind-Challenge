@@ -51,7 +51,7 @@ submitted 2026-09-19:
 | **ST-RAE** | **0.5982** | 0.6954 | 0.5375 | 0.7165 | 0.4434 |
 
 `docs/leaderboard_submissions.md` is the single canonical, full-precision record of every real
-submission (all metrics, all isoforms, all eleven submissions to date) — read it rather than
+submission (all metrics, all isoforms, all fourteen submissions to date) — read it rather than
 reconstructing scores from notebook prose.
 
 ## Repository map

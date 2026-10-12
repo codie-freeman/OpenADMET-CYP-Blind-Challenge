@@ -1,0 +1,124 @@
+{
+ "scored_at_utc": "2026-10-12T00:35:15.976694+00:00",
+ "scores_this_file_grades": "outputs/48_board_ensemble/predictions_before_board.json",
+ "note": "Written beside the prediction file, which is left unmodified.",
+ "submission": {
+  "tag": "NB48-ensemble",
+  "submitted_utc": "2026-10-12T00:08:07+00:00",
+  "sha256": "14ccf684fca506f5d7f1f8ed7ec8596e5ea2a90c79c7589208f500c92b97f6a7",
+  "macro_st_rae": 0.6356,
+  "macro_rank": 74,
+  "rank_of_14_by_macro_st_rae": 6
+ },
+ "1_rank_metrics_must_move": {
+  "claim_a_they_must_differ_from_every_prior_submission": {
+   "verdict": "CONFIRMED, 4 of 4",
+   "detail": "Board Spearman 0.7107 / 0.7692 / 0.4173 / 0.7985 is distinct from every value in the twelve prior columns on all four isoforms. The mechanism held: a blend reorders compounds where an affine correction cannot."
+  },
+  "claim_b_direction_up": {
+   "verdict": "FAILED, 2 of 4",
+   "reference": "plain, which appears on the board as 10c, the reference the prediction names",
+   "per_isoform": {
+    "CYP1A2": {
+     "predicted": "up",
+     "from": 0.7375,
+     "to": 0.7107,
+     "outcome": "FAILED, fell 0.0268"
+    },
+    "CYP2C9": {
+     "predicted": "up",
+     "from": 0.7389,
+     "to": 0.7692,
+     "outcome": "CONFIRMED, rose 0.0303, highest on record"
+    },
+    "CYP2D6": {
+     "predicted": "up",
+     "from": 0.4,
+     "to": 0.4173,
+     "outcome": "CONFIRMED, rose 0.0173"
+    },
+    "CYP3A4": {
+     "predicted": "up",
+     "from": 0.8177,
+     "to": 0.7985,
+     "outcome": "FAILED, fell 0.0192"
+    }
+   },
+   "the_carried_counterexample_bit": "The prediction carried, in writing, that the out-of-fold-to-board Spearman mapping is not monotone on this project's record, citing aid. That is exactly what happened, and it happened on the two isoforms the CV called material."
+  },
+  "versus_the_adjacent_submission_NB47_mae": {
+   "CYP1A2": {
+    "from": 0.7423,
+    "to": 0.7107,
+    "outcome": "fell 0.0316"
+   },
+   "CYP3A4": {
+    "from": 0.7974,
+    "to": 0.7985,
+    "outcome": "flat, +0.0011"
+   },
+   "CYP2C9": {
+    "from": 0.7419,
+    "to": 0.7692,
+    "outcome": "rose 0.0273"
+   },
+   "CYP2D6": {
+    "from": 0.4602,
+    "to": 0.4173,
+    "outcome": "fell 0.0429"
+   }
+  }
+ },
+ "2_mechanical_checks": {
+  "cyp2d6_ratio_must_be_0.85": {
+   "verdict": "CONFIRMED",
+   "detail": "measured 0.8500 on the sent file"
+  },
+  "cyp2c9_column_is_uncorrected": {
+   "verdict": "CONFIRMED",
+   "detail": "ratio 0.7517, 8.0% under its 0.8168 target, left raw"
+  },
+  "rank_metrics_identical_between_raw_and_corrected": {
+   "verdict": "NOT CHECKABLE FROM THE BOARD",
+   "detail": "only the corrected file was sent; verified internally at Spearman 1.0 to 1e-12"
+  }
+ },
+ "3_the_case_rests_on_two_members_with_known_problems": {
+  "verdict": "WARNING VINDICATED",
+  "detail": "The prediction recorded that out-of-fold prefers aid over plain on 3 of 4 isoforms while the board prefers plain on 4 of 4, and that dropping aid takes the ensembling gain to exactly zero. The board outcome is consistent with the aid-driven gain being an out-of-fold artefact. deadzone's own fold-crosstalk bias, also recorded in advance, inflates every CV figure the submission rested on and is untestable from one board reading."
+ },
+ "4_resolution_limits": {
+  "verdict": "OVERTAKEN BY THE MARGIN",
+  "detail": "The prediction stated that one board reading cannot resolve a 0.01-0.02 ST-RAE effect. The observed regressions on the two material isoforms are larger than that band: CYP1A2 0.7414 against the 0.6954 record is +0.0460 and CYP3A4 0.5067 against 0.4434 is +0.0633, roughly 3x to 6x the stated resolution limit. So the negative IS resolved at this sample size, even though a positive of the measured size would not have been. The limit was correctly stated and simply did not bind.",
+  "material_isoforms_named_in_advance": [
+   "CYP1A2",
+   "CYP3A4"
+  ],
+  "outcome_on_those_two": "both regressed; CYP1A2's Spearman fell and CYP3A4's was flat"
+ },
+ "5_board_ceiling": {
+  "verdict": "1 of 4 beaten",
+  "CYP1A2": {
+   "ceiling": 0.6954,
+   "actual": 0.7414,
+   "beaten": false
+  },
+  "CYP2C9": {
+   "ceiling": 0.5375,
+   "actual": 0.529,
+   "beaten": true,
+   "note": "beaten, though NB47-mae's 0.5255 two days earlier is the new record"
+  },
+  "CYP2D6": {
+   "ceiling": 0.7165,
+   "actual": 0.7652,
+   "beaten": false
+  },
+  "CYP3A4": {
+   "ceiling": 0.4291,
+   "actual": 0.5067,
+   "beaten": false
+  }
+ },
+ "overall": "Mechanism confirmed, benefit not. The blend did what no prior submission could, it moved the rank metrics on all four isoforms, and the movement was net negative on the two isoforms the cross-validation had resolved as material on both metrics. Its one ST-RAE gain over NB47-mae, CYP2D6 0.7872 to 0.7652, is placement rather than ranking, since that column's Spearman fell at the same time. Transfer failure 6 of 6, and the first where the CV result was material on both metrics rather than merely significant."
+}
