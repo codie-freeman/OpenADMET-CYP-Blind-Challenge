@@ -1,0 +1,64 @@
+submission,isoform,status,action
+04b,CYP1A2,UNAVAILABLE,"PLACEMENT: cannot be computed -- 2 equations, 3 unknowns"
+04b,CYP1A2,ALREADY APPLIED,SPREAD: within +1.9% of the candidate-best ratio
+04b,CYP2C9,UNAVAILABLE,"PLACEMENT: cannot be computed -- 2 equations, 3 unknowns"
+04b,CYP2C9,ALREADY APPLIED,SPREAD: within -8.9% of the candidate-best ratio
+04b,CYP2D6,AVAILABLE,"PLACEMENT: re-place on the identified population using this model's own implied rho 0.5476, recovering up to 0.9218 R2"
+04b,CYP3A4,UNAVAILABLE,"PLACEMENT: cannot be computed -- 2 equations, 3 unknowns"
+04b,CYP3A4,ALREADY APPLIED,SPREAD: within +0.0% of the candidate-best ratio
+10c,CYP1A2,UNAVAILABLE,"PLACEMENT: cannot be computed -- 2 equations, 3 unknowns"
+10c,CYP1A2,ALREADY APPLIED,SPREAD: within +0.0% of the candidate-best ratio
+10c,CYP2C9,UNAVAILABLE,"PLACEMENT: cannot be computed -- 2 equations, 3 unknowns"
+10c,CYP2C9,AVAILABLE,SPREAD: -11.0% from the candidate-best ratio (x0.8904 would close it)
+10c,CYP2D6,AVAILABLE,"PLACEMENT: re-place on the identified population using this model's own implied rho 0.5703, recovering up to 0.9193 R2"
+10c,CYP3A4,UNAVAILABLE,"PLACEMENT: cannot be computed -- 2 equations, 3 unknowns"
+10c,CYP3A4,ALREADY APPLIED,SPREAD: within -0.7% of the candidate-best ratio
+NB12,CYP1A2,UNAVAILABLE,"PLACEMENT: cannot be computed -- 2 equations, 3 unknowns"
+NB12,CYP1A2,AVAILABLE,SPREAD: +55.0% from the candidate-best ratio (x1.5498 would close it)
+NB12,CYP2C9,UNAVAILABLE,"PLACEMENT: cannot be computed -- 2 equations, 3 unknowns"
+NB12,CYP2C9,ALREADY APPLIED,SPREAD: within +8.5% of the candidate-best ratio
+NB12,CYP2D6,AVAILABLE,"PLACEMENT: re-place on the identified population using this model's own implied rho 0.4572, recovering up to 1.0817 R2"
+NB12,CYP3A4,UNAVAILABLE,"PLACEMENT: cannot be computed -- 2 equations, 3 unknowns"
+NB12,CYP3A4,AVAILABLE,SPREAD: +19.3% from the candidate-best ratio (x1.1930 would close it)
+NB16,CYP1A2,UNAVAILABLE,"PLACEMENT: cannot be computed -- 2 equations, 3 unknowns"
+NB16,CYP1A2,ALREADY APPLIED,SPREAD: within +0.0% of the candidate-best ratio
+NB16,CYP2C9,UNAVAILABLE,"PLACEMENT: cannot be computed -- 2 equations, 3 unknowns"
+NB16,CYP2C9,AVAILABLE,SPREAD: +11.0% from the candidate-best ratio (x1.1103 would close it)
+NB16,CYP2D6,AVAILABLE,"PLACEMENT: re-place on the identified population using this model's own implied rho 0.5621, recovering up to 0.0446 R2"
+NB16,CYP3A4,UNAVAILABLE,"PLACEMENT: cannot be computed -- 2 equations, 3 unknowns"
+NB16,CYP3A4,ALREADY APPLIED,SPREAD: within -0.7% of the candidate-best ratio
+NB30,CYP1A2,UNAVAILABLE,"PLACEMENT: cannot be computed -- 2 equations, 3 unknowns"
+NB30,CYP1A2,AVAILABLE,SPREAD: +22.0% from the candidate-best ratio (x1.2197 would close it)
+NB30,CYP2C9,UNAVAILABLE,"PLACEMENT: cannot be computed -- 2 equations, 3 unknowns"
+NB30,CYP2C9,AVAILABLE,SPREAD: +22.0% from the candidate-best ratio (x1.2204 would close it)
+NB30,CYP2D6,AVAILABLE,"PLACEMENT: re-place on the identified population using this model's own implied rho 0.7102, recovering up to 1.2703 R2"
+NB30,CYP3A4,UNAVAILABLE,"PLACEMENT: cannot be computed -- 2 equations, 3 unknowns"
+NB30,CYP3A4,AVAILABLE,SPREAD: +15.9% from the candidate-best ratio (x1.1591 would close it)
+NB32-A,CYP1A2,UNAVAILABLE,"PLACEMENT: cannot be computed -- 2 equations, 3 unknowns"
+NB32-A,CYP1A2,AVAILABLE,SPREAD: +41.4% from the candidate-best ratio (x1.4145 would close it)
+NB32-A,CYP2C9,UNAVAILABLE,"PLACEMENT: cannot be computed -- 2 equations, 3 unknowns"
+NB32-A,CYP2C9,AVAILABLE,SPREAD: +22.6% from the candidate-best ratio (x1.2262 would close it)
+NB32-A,CYP2D6,AVAILABLE,"PLACEMENT: re-place on the identified population using this model's own implied rho 0.6299, recovering up to 0.0200 R2"
+NB32-A,CYP3A4,UNAVAILABLE,"PLACEMENT: cannot be computed -- 2 equations, 3 unknowns"
+NB32-A,CYP3A4,AVAILABLE,SPREAD: +13.2% from the candidate-best ratio (x1.1317 would close it)
+NB36-widened,CYP1A2,UNAVAILABLE,"PLACEMENT: cannot be computed -- 2 equations, 3 unknowns"
+NB36-widened,CYP1A2,ALREADY APPLIED,SPREAD: within +0.0% of the candidate-best ratio
+NB36-widened,CYP2C9,UNAVAILABLE,"PLACEMENT: cannot be computed -- 2 equations, 3 unknowns"
+NB36-widened,CYP2C9,ALREADY APPLIED,SPREAD: within +8.5% of the candidate-best ratio
+NB36-widened,CYP2D6,AVAILABLE,"PLACEMENT: re-place on the identified population using this model's own implied rho 0.6299, recovering up to 0.0200 R2"
+NB36-widened,CYP3A4,UNAVAILABLE,"PLACEMENT: cannot be computed -- 2 equations, 3 unknowns"
+NB36-widened,CYP3A4,ALREADY APPLIED,SPREAD: within +0.0% of the candidate-best ratio
+NB47-mae,CYP1A2,UNAVAILABLE,"PLACEMENT: cannot be computed -- 2 equations, 3 unknowns"
+NB47-mae,CYP1A2,ALREADY APPLIED,SPREAD: within -0.0% of the candidate-best ratio
+NB47-mae,CYP2C9,UNAVAILABLE,"PLACEMENT: cannot be computed -- 2 equations, 3 unknowns"
+NB47-mae,CYP2C9,ALREADY APPLIED,SPREAD: within +0.0% of the candidate-best ratio
+NB47-mae,CYP2D6,AVAILABLE,"PLACEMENT: re-place on the identified population using this model's own implied rho 0.5990, recovering up to 0.0133 R2"
+NB47-mae,CYP3A4,UNAVAILABLE,"PLACEMENT: cannot be computed -- 2 equations, 3 unknowns"
+NB47-mae,CYP3A4,ALREADY APPLIED,SPREAD: within +6.0% of the candidate-best ratio
+NB48-ensemble,CYP1A2,UNAVAILABLE,"PLACEMENT: cannot be computed -- 2 equations, 3 unknowns"
+NB48-ensemble,CYP1A2,ALREADY APPLIED,SPREAD: within +0.0% of the candidate-best ratio
+NB48-ensemble,CYP2C9,UNAVAILABLE,"PLACEMENT: cannot be computed -- 2 equations, 3 unknowns"
+NB48-ensemble,CYP2C9,AVAILABLE,SPREAD: +17.9% from the candidate-best ratio (x1.1787 would close it)
+NB48-ensemble,CYP2D6,AVAILABLE,"PLACEMENT: re-place on the identified population using this model's own implied rho 0.6077, recovering up to 0.0150 R2"
+NB48-ensemble,CYP3A4,UNAVAILABLE,"PLACEMENT: cannot be computed -- 2 equations, 3 unknowns"
+NB48-ensemble,CYP3A4,ALREADY APPLIED,SPREAD: within -0.0% of the candidate-best ratio

@@ -1,0 +1,40 @@
+{
+ "frozen_at_utc": "2026-10-19T17:01:05.125571+00:00",
+ "refuses_to_run_if": "any outputs/54_interval_2d6_arm/predictions/interval_2d6__*.csv exists",
+ "interval_2d6_predictions_present_at_freeze": 0,
+ "comparison": {
+  "arm": "interval_2d6",
+  "comparator": "mae_only, notebook 37's existing 25-fold arm -- nothing retrained for it",
+  "paired_on": "the 25 (repeat, fold) cells of data/folds/cv_folds_butina_5x5.csv",
+  "single_variable": "CYP2D6's label column only: screened + unpromoted + no-inhibition readout compounds carry the assay bound instead of NaN. All four scored columns on curve-bearing rows, and the other three isoforms' columns entirely, are bit-identical to mae_only's.",
+  "scored_population": "UNCHANGED from mae_only -- curve-bearing held-out compounds only. The ground truth passed to the scorer is the unmodified curated file, in which every interval compound is NaN on CYP2D6 and so is dropped by the scorer for that endpoint. No interval window reaches the scoring side."
+ },
+ "primary_metric": "Spearman",
+ "co_primary_metric": "ST-RAE",
+ "materiality_bars": {
+  "ST-RAE": {
+   "CYP1A2": 0.023441,
+   "CYP2C9": 0.020876,
+   "CYP2D6": 0.027676,
+   "CYP3A4": 0.015971
+  },
+  "Spearman": {
+   "CYP1A2": 0.018306,
+   "CYP2C9": 0.01604,
+   "CYP2D6": 0.021159,
+   "CYP3A4": 0.009964
+  }
+ },
+ "bar_procedure": "notebook 37's pooled-SE rule: 2 x the mean paired SE across its ten arms against plain, per isoform. NOT 2 x the SE of this comparison.",
+ "verdict_rule": "per isoform and metric: SIGNIFICANT if p_BH < 0.05 under Ash's parametric route; MATERIAL additionally requires |mean paired difference| >= the bar. A result that is significant but under bar is reported as DETECTED NOT MATERIAL, which is this project's standing language.",
+ "directional_prediction": "CYP2D6 should gain. It carries both the strongest promotion filter (AUC of screen activity for promotion = 0.9998) and the strongest over-prediction on the population that filter removed (66.4% of confirmed non-inhibitors predicted above a bound they are known to be below) -- notebook 53 Parts 1 and 3.4.",
+ "inference_asymmetry_recorded_before_the_run": "The target figure (CYP2D6 rho 0.378 -> 0.476) was measured on talindrew's V2 surface, which CONTAINS the interval compounds. V1 does not. V1 asks whether teaching the model where the low end sits improves rank order among compounds that all have curves -- a harsher question. The labelled CYP2D6 range is 1.95 to 7.53 and the low end is where compression bites, so a gain is plausible. But the inference is ONE-SIDED: a positive result on V1 is strong evidence for the training claim; a NULL is AMBIGUOUS, because V1 cannot see the population the intervention is about. This is written here, before the arm runs, rather than concluded afterwards.",
+ "built_in_control": "CYP1A2, CYP2C9 and CYP3A4 labels are untouched, so ANY movement on those three measures Chemprop's multitask loss reweighting by valid-label count (notebooks 06 and 20), not chemistry. CYP2D6's labelled count goes 1,493 -> 4,141 (x2.77), so movement is expected. These three cells are reported under that heading and are NOT evidence about selection bias in either direction.",
+ "secondary_outcome_prediction_spread": "NOT a gate, measured and reported. 2,648 of the arm's 4,141 CYP2D6 training labels (64%) will be the identical constant 4.3054. Under MAE loss the conditional median is what is optimised, so the arm is at real risk of compressing its CYP2D6 prediction spread toward that point. This project's own standing association (notebook 27 Section 1: Spearman -0.822 between a submitted column's spread ratio and its board ST-RAE, observational) makes compression a known risk, so the arm's out-of-fold CYP2D6 prediction SD is compared against mae_only's and reported whichever way it falls.",
+ "stated_limitation_of_the_target": "A point target at the bound UNDER-corrects: a compound genuinely at pIC50 2.0 is pulled only to 4.3054, not to 2.0. The error is bounded, one-directional and conservative. Accepted in exchange for needing no donor model and no fitted window -- see decisions_taken.json.",
+ "analysis": "Ash's parametric route, Levene measured per cell, RM-ANOVA per metric at alpha = 0.05/2, post-hoc where the omnibus clears, CLD. With two arms the omnibus reduces to the paired test, as notebook 29 recorded for the same situation. BH across the four isoforms within each metric: two families of four. 10-fold and 15-fold reported alongside 25-fold.",
+ "provenance": {
+  "fold_file_sha256": "52f39b1a1cea9200b58dce0a061d4a21ce94d9d58ec77067cf6508b0f4b3e87e",
+  "nb37_paired_tests_sha256": "386f6cca83ed647b09c9007fc5f4e1c8bb273e87e35f6862ad13d22b8183034f"
+ }
+}

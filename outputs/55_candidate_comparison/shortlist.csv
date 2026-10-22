@@ -1,0 +1,10 @@
+rank,submission,macro_spearman,within_noise_of_top,single_or_ensemble,n_training_runs,n_actions_available,defence,defensible
+1,NB36-widened,0.6894,True,single,1,1,"the dead-zone + AID model with every spread correction this project has already put on the board applied, leaving exactly one unapplied action",True
+2,NB47-mae,0.6854,True,single,1,1,the plain recipe retrained with an absolute-error loss instead of squared error -- a single-variable change from the control,True
+3,NB32-A,0.6894,True,single,1,4,the dead-zone + AID model with its CYP2D6 column placed and widened and the other three left raw,True
+4,NB30,0.6831,True,single,1,4,"the AID auxiliary-head model, raw and uncorrected on all four isoforms",True
+5,04b,0.6739,False,single,1,1,"the original single model, raw, trained under the superseded environment",True
+6,10c,0.6735,False,single,1,2,"the plain single model, raw, under the current environment -- the control",True
+7,NB16,0.6735,False,single,1,2,the control with two isoforms recentred onto a solved blind population,True
+8,NB48-ensemble,0.6739,False,ensemble,4,2,"a per-isoform weighted blend of three existing models, fitted out of fold",True
+9,NB12,0.6613,False,ensemble,8,3,"per-isoform Caruana-selected ensembles of up to eight configs, raw",True

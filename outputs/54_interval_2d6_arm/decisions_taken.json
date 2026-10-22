@@ -1,0 +1,20 @@
+[
+ {
+  "decision": "point target at the bound vs a clipped dead-zone band",
+  "chose": "point target at BOUND = 4.3054 for every unpromoted CYP2D6 compound with a no-inhibition readout",
+  "why": "a clipped band needs a donor prediction, and every OOF donor available here was itself trained on the fold being held out -- notebook 31's documented fold crosstalk, which is precisely what mae_only exists to avoid, so using one would contaminate the arm's only real virtue. A point target needs no donor and no fitted window (notebook 53 established no window is calibratable on CYP2D6 anyway), and talindrew's own rule licenses the right end of a flat-risk window. STATED LIMITATION: it under-corrects -- a compound truly at pIC50 2.0 is pulled only to 4.3054 -- which is bounded, one-directional and conservative.",
+  "alternative": "clip(donor_prediction, lo, hi) under MAE, as notebooks 31/32 do -- REJECTED for the crosstalk reason above"
+ },
+ {
+  "decision": "whether to build a submission candidate anyway",
+  "chose": "NO -- Part 7's condition is pre-registered and did not fire",
+  "why": "the gate was frozen in prereg.json before the arm ran; building a candidate after a non-material result would be exactly the post-hoc selection this project's own rules warn against (Caruana et al. 2004, and this project's NB10/NB12 history).",
+  "alternative": "build it as a diagnostic -- rejected: it would need a board slot to mean anything, and the CV evidence for spending one is not there"
+ },
+ {
+  "decision": "adding Part 8, which was not pre-registered",
+  "chose": "decompose the CYP2D6 ST-RAE difference into location and spread, both affine",
+  "why": "the 25-fold result is a split -- rank order moves the predicted way while the scored metric materially worsens -- and leaving that unexplained would have been the least useful possible stopping point. The decomposition is cheap, uses predictions only (no labels), and turned out to REVERSE the pre-registered expectation: compression was the registered risk and is not the cause; location is, and the compression was partly masking it. Labelled post-hoc throughout and explicitly does not re-grade Part 6.",
+  "alternative": "report the split and stop -- rejected as leaving the single most decision-relevant question (is the harm repairable?) unasked when it costs three minutes"
+ }
+]

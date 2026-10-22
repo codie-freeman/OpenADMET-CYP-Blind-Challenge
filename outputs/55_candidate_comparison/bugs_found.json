@@ -1,0 +1,8 @@
+[
+  {
+    "where": "Part 0.2, spread_ratio",
+    "bug": "Mapped TRAIN (keyed on the four isoforms) across the whole board frame, which also carries 'MA (Overall)' rows -- KeyError on the first execution.",
+    "found_by": "the notebook failing to execute",
+    "fix": "map only on isoform rows; the macro row is left NaN rather than invented, since it is a mean of metrics and has no prediction column of its own"
+  }
+]

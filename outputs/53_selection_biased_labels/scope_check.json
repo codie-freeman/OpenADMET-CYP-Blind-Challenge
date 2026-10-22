@@ -1,0 +1,10 @@
+{
+ "TEST 1 tracked content newly changed under a protected path": [],
+ "TEST 2 any file inside a protected tree written during this run": [],
+ "TEST 3 the two never-open notebooks' mtimes": [],
+ "TEST 4 any submission-shaped CSV created outside this notebook's directory": [],
+ "run_started_at_utc": "2026-10-19T16:13:48.101220+00:00",
+ "pre_existing_dirty_tracked_paths": [
+  "CLAUDE.md"
+ ]
+}

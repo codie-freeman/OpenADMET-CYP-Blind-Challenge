@@ -1,0 +1,13 @@
+{
+  "rank_on": [
+    "macro board Spearman (ordering quality)",
+    "defensibility"
+  ],
+  "never_rank_on": "macro ST-RAE -- Part 2 showed the board cannot resolve the candidate spread",
+  "defensibility_test": "the candidate can be described in one sentence that does not use the word 'best' applied to a board reading",
+  "noise_bar_macro_spearman": 0.013964,
+  "noise_bar_derivation": "SE of a correlation at the board's half-set size n=375, (1-rho^2)/sqrt(n-1) = 0.0279 per isoform, halved for the mean of four",
+  "tie_break": "where macro ordering is within the noise bar, prefer the single training run over the ensemble, because the ensemble gain is not attributable: 87.5% of NB40's weight sits on members at or above the plain re-seed floor, and dropping aid collapses the blend to exactly zero gain on all four isoforms",
+  "second_tie_break": "prefer the candidate with the fewest UNAPPLIED actions, because a candidate with one remaining change gives a clean single-variable test while one with several confounds its own result",
+  "banned": "27b"
+}

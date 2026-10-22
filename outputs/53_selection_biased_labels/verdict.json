@@ -1,0 +1,42 @@
+{
+ "gate": "FAIL",
+ "gate_rule_as_set": "proceed only if V2 reproduces the board materially better than V1 does",
+ "stopped_at": "Part 3; no pre-registration frozen, no arm trained, no submission built",
+ "st_rae_mean_abs_gap": {
+  "V1": 0.1361,
+  "V2_R1_measured": 0.1573,
+  "V2_R2_lod": 0.2043,
+  "V2_R3_borrow": 0.2256
+ },
+ "spearman_mean_abs_gap": {
+  "V1": 0.1023,
+  "V2_R1_measured": 0.0793,
+  "V2_R2_lod": 0.0808,
+  "V2_R3_borrow": 0.081
+ },
+ "cyp2d6_v2_strae_across_window_rules": {
+  "V1": 0.9984,
+  "V2_R1_measured": 1.0034,
+  "V2_R2_lod": 0.8153,
+  "V2_R3_borrow": 1.6046
+ },
+ "cyp2d6_v2_spread_strae": 0.7893,
+ "why_fail": [
+  "V2 is FURTHER from the board than V1 on ST-RAE under all three window rules (0.1361 against 0.1573-0.2256).",
+  "V2's only clear per-isoform gain is CYP2C9, measured here as the isoform with essentially no activity-based selection (AUC 0.596) and therefore the one the premise predicts least benefit for. The gain is in the wrong place for the mechanism.",
+  "CYP2D6's V2 ST-RAE is not identified: it spans 0.8153-1.6046 across three defensible window rules, with the board's 1.1673 inside that range. A window exists that reproduces the board, but choosing it for that reason is fitting the answer.",
+  "V2's CYP1A2 ST-RAE is 1.0010 -- this project's reference model is no better than predicting the mean on that surface, which is not a board-like surface."
+ ],
+ "what_the_gate_does_NOT_establish": [
+  "It does not refute the TRAINING claim. The external report makes two separable claims: that adding interval rows to TRAINING is worth -0.243 macro ST-RAE, and that an interval VALIDATION SURFACE reproduces the board. The gate tested only the second. The first is untested here and remains open.",
+  "It does not say the interval labels are wrong, only that a surface built from them does not track the board -- which is expected once measured, because the board's population is curve-bearing compounds and V2's is mostly screened-only compounds with bands 1.8-8.7x wider than a real credible interval."
+ ],
+ "what_IS_established_and_is_stronger_than_the_gate": [
+  "CYP2D6 promotion is a hard activity threshold: log2FC < -0.613 classifies it at 99.57% against a 65.9% base rate, AUC 0.9998. The external claim reproduces exactly, as does its ~2,883 count (2,882 measured).",
+  "The promotion rule is NOT the same on the other three isoforms, which was not quoted anywhere: CYP1A2 AUC 0.896 (biased, not a cut), CYP2C9 0.596 (near-independent), CYP3A4 0.411 (INVERTED -- less-inhibitory compounds more likely promoted).",
+  "CYP2D6's no-inhibition interval window cannot be calibrated from this project's own data at all: zero promoted compounds carry a no-inhibition readout, and 2,648 of its 2,882 excluded compounds (91.9%) fall in that bin.",
+  "The model IS mis-calibrated on the excluded population, measured without any fitted window: 66.4% of CYP2D6's confirmed non-inhibitors are predicted above the assay's own detection limit, against 43.2% / 18.4% / 8.8% for CYP1A2 / CYP2C9 / CYP3A4 -- an ordering IDENTICAL to the ordering of selection strength."
+ ],
+ "cheapest_decisive_next_test_NOT_run_here": "The training claim can be tested without the V2 surface at all: train arm A (CYP2D6 interval rows added) against notebook 37's existing mae_only arm on the frozen partition, and score it on the UNCHANGED V1 surface -- curve-bearing compounds only, identical cells. If the premise's diagnosis is right, fixing the training population should improve the model on the dose-response population too, because a model that stops over-predicting non-inhibitors should rank the weak end better. That is one arm (~4-6 h), not two, needs no interval window on the scoring side, and so is immune to everything the gate just rejected. Not run here: the task's rule was to stop at a failed gate, and starting a 6 h run against it is not this notebook's call to make.",
+ "assay_condition_caveat": "UNVERIFIED-HERE: the brief states the single-concentration screen is the TDI/+NADPH condition, not the scored direct-inhibition condition. Nothing in this repository records the file's assay condition, and the no-fetch rule forbids retrieving the dataset card. If true, every interval label here rests on an adjacent assay, which would weaken the training claim too, not just the surface."
+}

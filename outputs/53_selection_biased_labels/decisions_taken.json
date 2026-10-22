@@ -1,0 +1,38 @@
+[
+ {
+  "decision": "how to handle the unverifiable TDI/+NADPH condition claim",
+  "chose": "state it as UNVERIFIED-HERE and carry it as a live caveat; proceed to measure anyway",
+  "why": "the claim cannot be checked without fetching the dataset card, which this project's rules forbid; and it does not change what the promotion rule IS, only what the readout MEANS. Measuring the rule is still correct; interpreting the interval as a direct-inhibition bound is what carries the risk.",
+  "alternative": "refuse to build interval labels at all until the condition is confirmed -- rejected as disproportionate, since the gate in Part 3 can reject the approach on cheaper grounds"
+ },
+ {
+  "decision": "how to fill CYP2D6's unestimable no-inhibition window",
+  "chose": "carry THREE rules (R1 exclude / R2 LOD-censored / R3 borrowed-tight) through the gate and report all three, rather than picking one",
+  "why": "the window is not measurable from this project's data on the one isoform that matters, so any single choice would be an assumption the gate verdict then silently depended on. Reporting the spread makes the dependence visible and is the honest form of the result.",
+  "alternative": "pick one (e.g. the LOD-censored bound, which is at least first-principles) -- rejected because Part 3 shows the choice moves CYP2D6's V2 ST-RAE by 0.79 units, i.e. it would have DETERMINED the verdict"
+ },
+ {
+  "decision": "whether to run Parts 4-7 (pre-registration, two training arms, submission) anyway",
+  "chose": "NO -- stop at Part 3 and report",
+  "why": "the task set an explicit gate at Part 3 with 'if it does not, stop and write that up as the result', and the gate fails on the governing metric under every window rule. Spending 8-12 h of training against the user's own pre-committed rule is not a decision this notebook should take unilaterally.",
+  "alternative": "override the gate on the strength of Part 3.4's diagnosis evidence, which IS strong -- flagged in verdict.json as the recommended next step with its cost, and left to the user"
+ },
+ {
+  "decision": "which comparator the gate scores against",
+  "chose": "notebook 37's `plain` arm at 25 folds, against the board figures for `10c`",
+  "why": "`10c` is the submission built from exactly that model -- plain chemprop_chemeleoninit, full-data retrain, no correction of any kind -- so the CV-to-board comparison is like-for-like. Any corrected submission would confound the surface question with a calibration layer.",
+  "alternative": "compare against the best submission on record (27b, 0.5982) -- rejected as not like-for-like: 27b is a different model with two correction layers applied"
+ },
+ {
+  "decision": "adding Part 3.4, which the task did not ask for",
+  "chose": "measure over-prediction on the excluded population directly, against the assay's own detection limit",
+  "why": "the gate as specified can only reject the validation surface, and a flat 'fail' would have left the premise's actual diagnosis untested when it costs nothing to test: a no-inhibition readout at 50 uM bounds the true pIC50 below -log10(conc) with no fitted window needed. It turned out to be the strongest result in the notebook and it points the opposite way to the gate.",
+  "alternative": "report only the gate verdict -- rejected as leaving the most informative cheap measurement on the table"
+ },
+ {
+  "decision": "the bin-edge and minimum-count constants in Part 2",
+  "chose": "MIN_PROMOTED_PER_BIN_TARGET=30 for edge placement, MIN_PROMOTED_FOR_WINDOW=5 for whether a bin's [p10,p90] counts as an estimate",
+  "why": "the brief says to derive bin edges from the data and copy no external number, but fixes no resolution. 30 gives ~10 bins on every isoform's promoted mass; 5 is the point below which a 10th/90th percentile is not an estimate. Both are stated rather than tuned, and the three-rule sweep is what protects the verdict from them.",
+  "alternative": "a single fixed bin count (e.g. deciles regardless of count) -- rejected because it would silently produce windows from bins with 0-2 compounds"
+ }
+]

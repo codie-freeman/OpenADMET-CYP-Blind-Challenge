@@ -1,0 +1,27 @@
+[
+  {
+    "order": 1,
+    "name": "NB55-2D6-placed",
+    "file": "outputs/55_candidate_comparison/submission_candidate.csv",
+    "sha256": "11c30bbba7b057061bac9f6ad3d06eadd910432a9d65dfff10e511e130219797",
+    "question": "Does placement computed from an IDENTIFIED population transfer to the board? Three columns are byte-identical to NB36-widened, so CYP2D6's returned R2 is a clean read on one correction, uncontaminated by any other change.",
+    "what_would_change_the_next_decision": [
+      "CYP2D6 R2 rises to about the predicted value -> the identified solve transfers, and the second send should push the shrinkage fraction up, because half the displacement was the conservative choice and the data would say it was too conservative.",
+      "CYP2D6 R2 rises only slightly -> the solve transfers weakly; the second send should NOT spend itself on more of the same correction and should instead test a different base model.",
+      "CYP2D6 R2 falls -> the identified population is wrong, or the live half it was identified on is not representative of the full set. Stop correcting CYP2D6 and send nothing further on this route."
+    ],
+    "why_first": "its answer determines what the second send should be, so it cannot go last"
+  },
+  {
+    "order": 2,
+    "name": "(not built -- determined by the first result)",
+    "file": null,
+    "sha256": null,
+    "question": "Conditional, by design. Either: is the full displacement better than half (one number changed, same base, same three untouched columns)? Or: does a different base model with equal ordering score differently once CYP2D6 is placed the same way (NB47-mae being the obvious comparator -- a single training run, ordering within the noise bar, and a genuinely different architecture)?",
+    "what_would_change_the_next_decision": [
+      "Nothing -- it is last on purpose. There is no third send in the window, so no score is left to react to and nothing is gained by leaving the decisive question unanswered."
+    ],
+    "why_last": "a second reading is only interpretable against the first, and committing to it now would mean choosing its variable before the first result exists",
+    "deliberately_not_built": true
+  }
+]

@@ -1,0 +1,5 @@
+isoform,n,board_order,cv_order,same,rank_corr
+CYP1A2,3,NB30>NB47-mae>10c,NB30>NB47-mae>10c,True,1.0
+CYP2C9,2,NB47-mae>NB30,NB30>NB47-mae,False,-1.0
+CYP2D6,3,NB30>NB47-mae>10c,NB30>NB47-mae>10c,True,1.0
+CYP3A4,3,10c>NB47-mae>NB30,NB30>NB47-mae>10c,False,-1.0

@@ -1,0 +1,9 @@
+claim,value,checkable_here,where
+CYP2D6 promotion is a hard activity threshold: a curve exists iff log2FC < approx -0.6,-0.6,True,Part 1
+CYP2D6 unpromoted-but-screened count,~2883,True,Part 1
+adding the failed rows as interval labels is worth -0.243 macro ST-RAE,-0.243,False,"would need the two training arms (Part 5), which the gate decides"
+...and +0.0508 macro Spearman,+0.0508,False,as above
+CYP2D6 Pearson rho 0.378 -> 0.476 under the fix,0.378 -> 0.476,partly,the 0.378 starting point is comparable to this project's own plain OOF rho; the 0.476 is not
+a dose-response-only validation surface never reproduced the board,qualitative,True,Part 3 (V1)
+a surface with held-out screened compounds on interval labels did reproduce it,their V2 0.77/0.53/1.35/0.48 vs their board 0.88/0.52/1.46/0.57,their own numbers: NO; the mechanism: YES,"Part 3 (V2). Their board row matches no submission in this repo, so it is their own model."
+the single-concentration screen is run under the TDI/+NADPH condition,qualitative,False,Part 1.4 -- no dataset card is stored in this repo

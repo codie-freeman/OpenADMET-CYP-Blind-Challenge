@@ -1,0 +1,32 @@
+[
+  {
+    "where": "builder (all code cells)",
+    "bug": "Nested triple-quoted docstrings inside the triple-quoted cell sources terminated the outer string, so the builder would not parse at all.",
+    "found_by": "SyntaxError on the first build",
+    "fix": "inner docstrings became # comments"
+  },
+  {
+    "where": "Part 2.1 solver",
+    "bug": "`ex = [r for r in roots if r['exact']] or roots[:1]` was computed and never used -- dead code left from an earlier design that returned a single root.",
+    "found_by": "reading the cell's own output",
+    "fix": "removed"
+  },
+  {
+    "where": "Part 5.1 consistency check",
+    "bug": "Printed FAIL against a 5e-3 bar while asserting at 5e-2 -- two different bars for one check, so it reported a failure and passed anyway. It was also the wrong test: with 4 equations and 3 unknowns the implied rho CANNOT equal the fitted rho for every member.",
+    "found_by": "the printed verdict contradicting the assertion that followed it",
+    "fix": "replaced by the fit residual propagated through d(rho)/d(R2) = 1/(2k), plus a sharp machine-precision check on an EXACT three-subset, which is where exactness is required"
+  },
+  {
+    "where": "Part 3.2 verdict prose",
+    "bug": "Asserted the measured disagreement was 'the same order of magnitude as the ~0.5 reported externally'. It is 0.077 -- about 6x smaller. The sentence was written before the numbers came back and the numbers contradict it. A following sentence then claimed 'it is not a null, so the grouping earns its place', when pooling in fact costs 0.005 pIC50, i.e. it IS a null and the grouping does NOT earn its place on that evidence.",
+    "found_by": "reading the executed output against the prose",
+    "fix": "both claims rewritten to what the numbers say, including the conclusion that runs against this notebook's own method"
+  },
+  {
+    "where": "Part 6 criteria markdown",
+    "bug": "Claimed that targeting the R2 optimum 'makes this correction err toward under-placing rather than over-placing'. That is backwards: the ST-RAE optimum is NARROWER than the R2 optimum (notebook 26, all four isoforms), so targeting the R2 optimum OVER-spreads relative to the scored metric.",
+    "found_by": "checking the cited evidence against the claim it was supporting",
+    "fix": "corrected in the markdown and in criteria.json, with the overshoot stated as known, signed and deliberately unremedied"
+  }
+]

@@ -470,3 +470,16 @@ outputs/52_chemprop_qm_atom_features/predictions/
 # run_scores.csv, IS tracked and is what every claim in the notebook rests on.
 outputs/52_chemprop_qm_atom_features/scores/
 outputs/52_chemprop_qm_atom_features/oof_long/
+
+# 53_selection_biased_labels (the promotion-rule gate) and 54_interval_2d6_arm (the CYP2D6
+# interval-label arm, 25 cluster-disjoint folds). Same treatment as notebooks 28/29/34/35/37/52
+# above, for the same reason and verified by `du` rather than assumed: chemprop_runs/ is 250MB
+# and 6.3GB respectively (Chemprop checkpoints and streamed training logs), and 54's scores/
+# (15MB, the per-bootstrap-sample files) and predictions/ (2.9MB, the per-fold held-out
+# predictions) are regeneratable from those runs. The aggregates every claim actually rests on --
+# run_scores.csv, the paired tests, prediction_spread.csv, the affine decomposition, surface
+# scores, prereg.json and every figure -- stay TRACKED.
+outputs/53_selection_biased_labels/chemprop_runs/
+outputs/54_interval_2d6_arm/chemprop_runs/
+outputs/54_interval_2d6_arm/scores/
+outputs/54_interval_2d6_arm/predictions/

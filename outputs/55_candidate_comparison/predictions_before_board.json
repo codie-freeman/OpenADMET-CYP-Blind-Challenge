@@ -1,0 +1,49 @@
+{
+  "recorded_utc": "2026-10-22T17:21:54.730058+00:00",
+  "candidate": "NB36-widened",
+  "file": "outputs/55_candidate_comparison/submission_candidate.csv",
+  "sha256": "11c30bbba7b057061bac9f6ad3d06eadd910432a9d65dfff10e511e130219797",
+  "shrinkage_fraction": 0.5,
+  "shrinkage_rationale": "The placement is identified from board metrics measured on the LIVE HALF of the blind set (~375 of 750, split by chemical series). It is applied to all 750. Under the neutral assumption that the correction is right on the half it was identified on and carries no information about the unseen half, its expected value over the full set is half its nominal size -- so half the displacement is applied. This is a derivation from the scoring design, not a tuned number, and it is fixed here before any corrected column exists.",
+  "metrics_pre_registered": [
+    "R2",
+    "Spearman"
+  ],
+  "metrics_not_forecast": [
+    "ST-RAE",
+    "MAE",
+    "Kendall"
+  ],
+  "why_no_strae_forecast": "an external simulator forecast 0.4223 against a returned 0.6256, a miss of 0.203 against back-test errors of 0.040 and 0.128 -- the error was not bounded by what had been seen",
+  "per_isoform": {
+    "CYP1A2": {
+      "spearman_exact": 0.7565,
+      "R2_point": 0.3068,
+      "basis": "unchanged column"
+    },
+    "CYP2C9": {
+      "spearman_exact": 0.7554,
+      "R2_point": 0.5308,
+      "basis": "unchanged column"
+    },
+    "CYP2D6": {
+      "spearman_exact": 0.4438,
+      "R2_point": 0.3918075,
+      "R2_lo": 0.3768,
+      "R2_hi": 0.3918075,
+      "basis": "re-placed on the identified population"
+    },
+    "CYP3A4": {
+      "spearman_exact": 0.802,
+      "R2_point": 0.6563,
+      "basis": "unchanged column"
+    }
+  },
+  "falsification": [
+    "FALSIFIED if any isoform's returned Spearman differs from its stated value by more than 0.0001. The only change is affine and cannot move rank order; this project has confirmed that on the board five times, so a miss means the file is not what this notebook thinks it is.",
+    "FALSIFIED if CYP1A2, CYP2C9 or CYP3A4 returns any metric differing from NB36-widened's own row. Those three columns are byte-identical and the board has reproduced byte-identical columns exactly on five separate occasions.",
+    "FALSIFIED if CYP2D6's returned R2 falls below its current 0.3768. The displacement was computed to increase R2; a decrease falsifies the identified population, not the shrinkage fraction.",
+    "The SHRINKAGE FRACTION is NOT falsifiable from one reading. If CYP2D6's R2 lands between the stated bounds, that is consistent with any fraction in a wide band -- it would take a second submission at a different fraction to resolve, which is what Part 6's schedule is for.",
+    "NOT a test of the candidate CHOICE. Three of its four columns are unchanged, so this submission cannot say whether NB36-widened was the right base; it tests one correction on one isoform."
+  ]
+}

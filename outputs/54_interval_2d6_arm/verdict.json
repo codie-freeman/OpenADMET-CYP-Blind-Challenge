@@ -1,0 +1,106 @@
+{
+ "arm": "interval_2d6 vs mae_only, 25 cluster-disjoint folds, scored on the unchanged V1 surface",
+ "single_variable_proved": "all 25 mae_only training tables reproduced byte-identically",
+ "primary_metric_CYP2D6_Spearman": {
+  "mae_only": 0.4118,
+  "interval_2d6": 0.4305,
+  "mean_diff": 0.0187,
+  "ci": [
+   0.0031,
+   0.0342
+  ],
+  "dz": 0.4964,
+  "folds_improving": 16,
+  "p_BH": 0.08182961542016096,
+  "bar": 0.021159,
+  "pct_of_bar": 88.4,
+  "verdict": "NOT DIFFERENT"
+ },
+ "co_primary_CYP2D6_ST_RAE": {
+  "mean_diff": 0.0495,
+  "ci": [
+   0.0296,
+   0.0693
+  ],
+  "folds_improving": 2,
+  "p_BH": 0.00011925305452749385,
+  "pct_of_bar": 178.7,
+  "verdict": "SIGNIFICANT AND MATERIAL"
+ },
+ "directional_prediction_held": true,
+ "control_isoforms_reweighting_only": {
+  "CYP1A2/ST-RAE": {
+   "mean_diff": 0.0093,
+   "pct_of_bar": 39.8,
+   "verdict": "NOT DIFFERENT"
+  },
+  "CYP2C9/ST-RAE": {
+   "mean_diff": -0.0099,
+   "pct_of_bar": 47.2,
+   "verdict": "NOT DIFFERENT"
+  },
+  "CYP3A4/ST-RAE": {
+   "mean_diff": -0.0015,
+   "pct_of_bar": 9.2,
+   "verdict": "NOT DIFFERENT"
+  },
+  "CYP1A2/Spearman": {
+   "mean_diff": 0.0039,
+   "pct_of_bar": 21.4,
+   "verdict": "NOT DIFFERENT"
+  },
+  "CYP2C9/Spearman": {
+   "mean_diff": 0.0059,
+   "pct_of_bar": 36.7,
+   "verdict": "NOT DIFFERENT"
+  },
+  "CYP3A4/Spearman": {
+   "mean_diff": 0.0054,
+   "pct_of_bar": 54.1,
+   "verdict": "NOT DIFFERENT"
+  }
+ },
+ "secondary_spread": {
+  "CYP1A2": 1.024,
+  "CYP2C9": 1.0181,
+  "CYP2D6": 0.8203,
+  "CYP3A4": 1.0087
+ },
+ "inference_asymmetry": "The target figure (CYP2D6 rho 0.378 -> 0.476) was measured on talindrew's V2 surface, which CONTAINS the interval compounds. V1 does not. V1 asks whether teaching the model where the low end sits improves rank order among compounds that all have curves -- a harsher question. The labelled CYP2D6 range is 1.95 to 7.53 and the low end is where compression bites, so a gain is plausible. But the inference is ONE-SIDED: a positive result on V1 is strong evidence for the training claim; a NULL is AMBIGUOUS, because V1 cannot see the population the intervention is about. This is written here, before the arm runs, rather than concluded afterwards.",
+ "part7_submission_built": false,
+ "post_hoc_affine_decomposition": {
+  "status": "POST-HOC, not pre-registered; does NOT re-grade Part 6",
+  "strae_by_variant": {
+   "raw": 0.9675,
+   "mean_only": 0.886,
+   "spread_only": 0.9876,
+   "both": 0.9173
+  },
+  "mae_only_reference": 0.918,
+  "diff_vs_mae_only": {
+   "raw": 0.0495,
+   "mean_only": -0.032,
+   "spread_only": 0.0695,
+   "both": -0.0007
+  },
+  "pct_of_bar": {
+   "raw": 178.7,
+   "mean_only": 115.6,
+   "spread_only": 251.3,
+   "both": 2.6
+  },
+  "folds_better": {
+   "raw": 2,
+   "mean_only": 19,
+   "spread_only": 1,
+   "both": 13
+  },
+  "spearman_invariant_max_spread": 0.0,
+  "reading": "the pre-registered risk was compression; compression occurred (mean per-fold SD ratio 0.820) but is NOT the cause -- correcting spread alone makes ST-RAE worse (251% of bar). The harm is LOCATION: the arm is taught where non-inhibitors sit and applies it to a population of inhibitors, shifting its mean to 4.432 against a scored-label mean of 4.784. Correcting location alone turns the material harm into a material GAIN (-0.0320, 115% of bar, 19/25 folds, p=1.3e-04) on top of the unchanged Spearman gain; correcting both returns it to null (3% of bar), which is the cleanest statement that the whole ST-RAE difference is affine.",
+  "caveats": [
+   "one comparison, no multiplicity correction, found after the fact",
+   "the shift is fitted per fold on the fold being scored -- label-free, but in-fold",
+   "it uses mae_only's own OOF mean as the target, which is not a blind-population quantity; a deployable version would use this project's board-solved target"
+  ]
+ }
+}

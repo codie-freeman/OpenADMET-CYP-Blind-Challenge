@@ -1,0 +1,12 @@
+[
+  {
+    "decision": "Ranked NB36-widened above NB32-A on 'fewest unapplied actions' after the ordering tie and the single-run tie-break both failed to separate them.",
+    "reasoning": "They are the same model with the same ordering, so no ordering criterion can distinguish them. NB36-widened has its spread work done and board-confirmed, leaving one action; NB32-A would need that work repeated, so its result would confound two changes. Choosing the cleaner experiment is a design criterion, not a score criterion.",
+    "alternative_considered": "Rank NB32-A first on the grounds that it has more unused headroom -- which is true, but the headroom in question is precisely what NB36-widened has already spent, so this would mean undoing a board-confirmed gain in order to re-earn it."
+  },
+  {
+    "decision": "Used this candidate's OWN implied rho (0.6299) rather than the brief's literal rho = 0.5600.",
+    "reasoning": "0.5600 is finding 1's recovered rho for the PLAIN chemprop ordering. rho is a property of a model's ranking against the truth, not of the isoform; the solved POPULATION is model-independent and does transfer, rho does not. Using 0.5600 on a different model's column would be a real error. The brief's intent -- correct the undershooting proxy -- is preserved, and Part 3 confirmed the undershoot reproduces on this candidate (0.6299 against a proxy of 0.4606).",
+    "alternative_considered": "Apply 0.5600 literally, which would place this column using another model's correlation with the truth."
+  }
+]

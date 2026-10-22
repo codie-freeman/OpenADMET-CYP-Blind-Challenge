@@ -1,0 +1,37 @@
+submission,isoform,identified,n_equations,state,constants,R2_board,spread_ratio,board_spearman,rho,k,b,R2_ceiling,headroom_R2,rho_spearman_proxy
+04b,CYP1A2,False,2,raw,-,0.2824,0.8208623,0.743,,,,,,
+04b,CYP2C9,False,2,raw,-,0.5263,0.9727427,0.7428,,,,,,
+04b,CYP2D6,True,4,raw,-,-0.622,0.6955147,0.3769,0.5475503,0.4138322,0.9507528,0.2998113,0.9218113,0.3921319
+04b,CYP3A4,False,2,raw,-,0.6898,0.9261816,0.8329,,,,,,
+10c,CYP1A2,False,2,raw,-,0.3073,0.8361406,0.7375,,,,,,
+10c,CYP2C9,False,2,raw,-,0.5272,0.9950276,0.7389,,,,,,
+10c,CYP2D6,True,4,raw,-,-0.5941,0.7004831,0.4,0.5702983,0.4167884,0.9464539,0.3252402,0.9193402,0.4158234
+10c,CYP3A4,False,2,raw,-,0.6709,0.9327159,0.8177,,,,,,
+NB12,CYP1A2,False,2,raw,-,0.2275,0.5395263,0.7389,,,,,,
+NB12,CYP2C9,False,2,raw,-,0.5432,0.8167673,0.7585,,,,,,
+NB12,CYP2D6,True,4,raw,-,-0.8726,0.3987261,0.3771,0.4572267,0.2372426,1.0164956,0.2090563,1.0816563,0.3923373
+NB12,CYP3A4,False,2,raw,-,0.5655,0.776326,0.7706,,,,,,
+NB16,CYP1A2,False,2,raw,-,0.3073,0.8361406,0.7375,,,,,,
+NB16,CYP2C9,False,2,corrected,recentred onto solved blind population,0.5133,0.7979633,0.7389,,,,,,
+NB16,CYP2D6,True,4,corrected,"recentred onto solved blind population (mean 3.155762, sd 1.511412)",0.2713,0.6084225,0.4,0.5620567,0.3620122,0.067749,0.3159077,0.0446077,0.4158234
+NB16,CYP3A4,False,2,raw,-,0.6709,0.9327159,0.8177,,,,,,
+NB30,CYP1A2,False,2,raw,-,0.2588,0.6855307,0.7466,,,,,,
+NB30,CYP2C9,False,2,raw,-,0.4789,0.726012,0.7333,,,,,,
+NB30,CYP2D6,True,4,raw,-,-0.766,0.4152272,0.4872,0.7101685,0.2470608,1.0275556,0.5043393,1.2703393,0.5046792
+NB30,CYP3A4,False,2,raw,-,0.5708,0.7990229,0.7651,,,,,,
+NB32-A,CYP1A2,False,2,raw,-,0.2125,0.5911408,0.7565,,,,,,
+NB32-A,CYP2C9,False,2,raw,-,0.5016,0.7225667,0.7554,,,,,,
+NB32-A,CYP2D6,True,4,corrected,placed x1.708956 then widened x1.118063 to ratio 0.85,0.3768,0.85,0.4438,0.6299285,0.5057512,0.067749,0.3968099,0.0200099,0.460575
+NB32-A,CYP3A4,False,2,raw,-,0.6405,0.8183993,0.802,,,,,,
+NB36-widened,CYP1A2,False,2,corrected,widened x1.414452 to ratio 0.8361,0.3068,0.8361406,0.7565,,,,,,
+NB36-widened,CYP2C9,False,2,corrected,widened x1.130370 to ratio 0.8168,0.5308,0.8167673,0.7554,,,,,,
+NB36-widened,CYP2D6,True,4,corrected,inherited from NB32-A (placed then widened to 0.85); not re-widened,0.3768,0.85,0.4438,0.6299285,0.5057512,0.067749,0.3968099,0.0200099,0.460575
+NB36-widened,CYP3A4,False,2,corrected,widened x1.131699 to ratio 0.9262,0.6563,0.9261816,0.802,,,,,,
+NB47-mae,CYP1A2,False,2,corrected,widened x1.163109 to ratio 0.8361,0.2763,0.8361406,0.7423,,,,,,
+NB47-mae,CYP2C9,False,2,raw,-,0.5358,0.8860039,0.7419,,,,,,
+NB47-mae,CYP2D6,True,4,corrected,widened x1.910924 to ratio 0.8500 after placement onto the solved blind population,0.3455,0.85,0.4602,0.5989845,0.5057512,0.067749,0.3587824,0.0132824,0.4772703
+NB47-mae,CYP3A4,False,2,raw,-,0.6406,0.8736503,0.7974,,,,,,
+NB48-ensemble,CYP1A2,False,2,corrected,widened to board-best ratio,0.2899,0.8361406,0.7107,,,,,,
+NB48-ensemble,CYP2C9,False,2,raw,-,0.5258,0.7516746,0.7692,,,,,,
+NB48-ensemble,CYP2D6,True,4,corrected,placed on the blend's own OOF rho (0.4525) then widened to 0.85,0.3543,0.85,0.4173,0.6076844,0.5057512,0.067749,0.3692803,0.0149803,0.4335267
+NB48-ensemble,CYP3A4,False,2,corrected,widened to board-best ratio,0.6326,0.9261816,0.7985,,,,,,

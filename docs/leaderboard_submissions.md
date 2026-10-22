@@ -18,7 +18,12 @@ of the blind test set (split by chemical series) as submissions come in — the 
 only at the intermediate reveal and at the competition's close. This applies to every row below;
 none of these numbers are the final, full-set result, and later reveals could move any of them.
 
-## All fourteen submissions to date
+## The fourteen submissions with a full per-isoform record
+
+**There are fifteen real sends.** The fifteenth, **NB40-ensemble**, is absent from this table
+because only three of its numbers were ever captured (macro ST-RAE 0.6384, rank 75, CYP2D6 ST-RAE
+0.7751) and the rest cannot be recovered — see its own section below. It is not missing from the
+record; it is missing from this *table*, which is per-isoform and per-metric.
 
 | Isoform | Metric | 04b | 10c | NB10 | NB12 | NB13-calib | NB16 | NB19 | NB27-widened | NB30 | 27b | NB32-A | NB36-widened | NB47-mae | NB48-ensemble |
 |---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
@@ -54,8 +59,8 @@ better higher; MAE is better lower. See `src/vendor/openadmet_eval/` for the sco
 ## NB47-mae and NB48-ensemble: both scored, and the gains landed where the CV said they would not
 
 Two submissions were sent before either was recorded here, and both have now been scored. Neither
-beats 27b. On macro ST-RAE they come 5th and 6th of fourteen, between NB36-widened (0.627) and
-NB16 (0.6364), so both sit in the corrected-submission band and well clear of the raw baselines
+beats 27b. On macro ST-RAE they come 5th and 6th of the fifteen real sends, between NB36-widened
+(0.627) and NB16 (0.6364), so both sit in the corrected-submission band and well clear of the raw baselines
 `10c` (0.7138) and `04b` (0.7179).
 
 | | NB47-mae | NB48-ensemble |
@@ -178,42 +183,80 @@ model-quality gap. NB47-mae sits in the same place, R2 0.4495 predicting 0.601 a
 
 **Source and its status.** The fit was supplied by the user, attributed to a public competitor
 write-up. It is **not** independently verifiable from anything in this repository, no primary
-source is held here, and it has not been checked against this project's own fourteen submissions,
+source is held here, and it has not been checked against this project's own submissions,
 so it is recorded as an external reference figure rather than a measured result, in the same spirit
 as `docs/stereochemistry_provenance.md`'s `CONSISTENT_WITH_LOCAL_DATA` status. The validity window
 matters: both submissions fall inside R2 [0.40, 0.50], but 27b (R2 0.4835) and the raw baselines
 (`10c` at 0.2278) would need the fit extrapolated or would fall outside it entirely.
 
-## UNCONFIRMED SUBMISSION — 2026-10-02 ~13:44 UTC, notebook 40's rebuilt candidate
+## NB40-ensemble — 2026-10-02 13:37 UTC, notebook 40's rebuilt candidate: ACCEPTED AND SCORED
 
-**A real call to `/submit_predictions` completed on 2026-10-02 at approximately 13:44 UTC and is
-NOT yet confirmed as accepted.** It is recorded here rather than left out, because this document
-has already been stale twice (see "Provenance") and each time a later notebook built on a wrong
-premise as a result. It must be either promoted to a full row or struck out once the board is
-checked.
+**This section previously read `UNCONFIRMED SUBMISSION ... accepted? unknown — must be checked on
+the leaderboard`. That was answerable and wrong as written, and it is corrected here.** The send
+was accepted and scored. The reply was not *never received* — it was **discarded by a
+bare-expression bug in notebook 40's submission cell**, where `result` was written as a bare
+expression rather than the cell's last statement, so nothing was captured.
+
+Leaving the row as "unknown" was itself a hazard: a later reader would reasonably conclude the
+send had failed, which is the mirror image of the staleness failures recorded under "The record
+gap and its consequence" below.
 
 | field | value |
 |---|---|
+| submission | **NB40-ensemble** |
+| notebook | `40_single_object_ensemble.ipynb` (Part 8, rebuilt candidate) |
 | file | `outputs/40_single_object_ensemble/part8_stabilised_member/submission_candidate_rebuilt.csv` |
-| sha256 | `7df6e263cf463d1ebd72139922e98c7a870d335a1448152efb890a56ab09bf53` |
+| sha256 | `7df6e263cf463d1ebd72139922e98c7a870d335a1448152efb890a56ab09bf53` (verified present on disk) |
+| submitted (UTC) | **2026-10-02 13:37** |
 | alias | `fold-zero` |
-| model_tag | Single-object ensemble, one shared weight vector across all four isoforms (deadzone 0.625 / AID 0.25 / ecfp4_narrow xgboost 0.125), full-data retrain, xgboost member stabilised as the mean of ten fits differing in their early-stopping validation split; spread-corrected, CYP2D6 placement-corrected onto the board-solved blind population |
-| deliberate? | **No.** Fired as a side effect of a notebook re-run, not as a reviewed, hand-run action — the first submission in this project's history that was not deliberate |
-| server reply | **not captured** — `result` was a bare expression and not the cell's last statement, so nothing was recorded |
-| accepted? | **unknown** — must be checked on the leaderboard |
+| accepted? | **Yes** |
+| **macro ST-RAE** | **0.6384** |
+| **board rank** | **75** |
+| **CYP2D6 ST-RAE** | **0.7751** |
+| deliberate? | **No** — fired as a side effect of a notebook re-run, the only non-deliberate submission in this project's history |
+
+**What is NOT recorded, and cannot be.** Only three numbers survive. The following were never
+captured and are **not recoverable**:
+
+- per-isoform **R²**, **Spearman**, **Kendall** and **MAE**, on all four isoforms;
+- per-isoform **ST-RAE** for CYP1A2, CYP2C9 and CYP3A4 (only CYP2D6's survives);
+- macro MAE, R², Spearman and Kendall.
+
+**Why they cannot be recovered: the leaderboard keeps one row per user, and NB48-ensemble replaced
+this row on 2026-10-12.** Checking the board now returns NB48-ensemble, not this submission. The
+only surviving record is screenshots taken on 2026-10-02. This is a permanent gap in the record,
+not a pending action — the earlier instruction in this section to "check the leaderboard" is
+withdrawn because it cannot succeed.
+
+**Consequence for analysis.** NB40-ensemble is excluded from any analysis consuming per-isoform
+R² or Spearman, **on column availability rather than because it is unscored**. That exclusion is a
+real gap rather than a formality: this submission is an *ensemble*, and an ensemble is precisely
+the object that can rank well on Spearman while placing badly, which is the case any ordering-based
+comparison exists to detect. Analyses are built so the row can be completed later without rework if
+the 2026-10-02 screenshots turn out to carry the missing columns.
+
+**Where it sits.** At macro ST-RAE 0.6384 it is **seventh of the fifteen real sends**, between
+NB48-ensemble (0.6356) and NB16 (0.6364) above it and NB32-A (0.6488) below — inside the
+corrected-submission band and clear of the raw baselines `10c` (0.7138) and `04b` (0.7179). Its
+CYP2D6 ST-RAE of 0.7751 sits between NB48-ensemble's 0.7652 and NB47-mae's 0.7872. It did **not**
+beat 27b (0.5982).
+
+**The timestamp.** 13:37 UTC is the board's own. This document previously estimated "~13:44"; that
+estimate is superseded. The preceding attempt at ~13:33 UTC reached `Loaded as API` and then
+raised `ValueError` on a bad relative path, so **that** one transmitted nothing.
+
+**Predicted scores**, recorded before the board was read, are in
+`outputs/40_single_object_ensemble/part8_stabilised_member/predictions_before_board_rebuilt.json`:
+macro ST-RAE in [0.582, 0.707] against 27b's 0.5982. **The prediction held** — 0.6384 falls inside
+that interval — though notebook 40 itself stated in advance that the interval was ±0.05 around the
+anchor, wider than the effect being tested, so it could detect a catastrophic failure but could not
+resolve whether the ensemble helped. It did not help.
 
 **What happened.** Notebook 40's submission cell was uncommented in the IDE between a verification
 run and a subsequent `jupyter nbconvert --execute --inplace` re-run; the re-run executed it. The
 cell's own text still read "fully commented out and was NOT executed. Nothing was sent." while the
 call was completing — the NB10/10c/12 header-comment hazard in its most dangerous form, this time
-with a real send behind it. The preceding attempt (~13:33 UTC) had reached `Loaded as API` and then
-raised `ValueError` on a bad relative path, so **that** one sent nothing.
-
-**Predicted scores**, recorded before the board is read, are in
-`outputs/40_single_object_ensemble/part8_stabilised_member/predictions_before_board_rebuilt.json`:
-macro ST-RAE in [0.582, 0.707] against `27b`'s 0.5982, with the explicit caveat that the
-CYP1A2/CYP2C9/CYP3A4 intervals are the anchor ±0.05 — wider than the effect being tested — so the
-result can detect a catastrophic failure but cannot resolve whether the ensemble helps.
+with a real send behind it.
 
 **Consequence for the cell.** The comment gate is no longer used in notebook 40. It has been
 replaced by an explicit `SEND = False` flag whose printed message is computed from the flag, so the
@@ -236,14 +279,16 @@ check the gate on disk first.
 | **27b** | `27b_aid_cyp2d6_corrected.ipynb` | 2026-09-19 12:11 UTC | NB30's AID 1851 auxiliary-head model, mixed recipe: CYP1A2/CYP3A4 carried over byte-identical from `10c`, CYP2C9 byte-identical from NB19, CYP2D6 placement-corrected onto the board-solved blind population (mean 3.1614, sd 1.5121, solved from NB30's own published metrics) then widened to 0.85 of the CYP2D6 training-label SD — the same recipe NB27 Section 2 used, applied to NB30's own OOF rho instead of the plain model's | Yes — manually reviewed and sent, per this project's manual-gated submission process |
 | **NB32-A** | `32_deadzone_aid_retrain.ipynb` (candidate A, `submission_candidate_A_allfour.csv`) | 2026-09-20 02:10 UTC | The DEADZONE+AID model's own four columns (AID 1851 auxiliary-head architecture — notebook 29's 5×5-CV-confirmed recipe — trained against notebook 31's screened dead-zone clipped target instead of the point estimate, full-data retrain), CYP2D6 placement-corrected and widened using the same NB16-solved target and 0.85-of-training-SD ratio as NB27-widened/27b; CYP1A2, CYP2C9 and CYP3A4 raw from that model, uncorrected | Yes — manually reviewed and sent, per this project's manual-gated submission process |
 
-**On "deliberate":** all fourteen submissions were reviewed and uncommented/run by hand, exactly as
+**On "deliberate":** fourteen of the fifteen real sends were reviewed and uncommented/run by hand, exactly as
 this project's manual-gated-submission process requires. An earlier diagnostic pass over this
 repo (before this correction) reasoned from file evidence alone — a misleading header comment on
 the NB10/10c/NB12 submission cells, which claimed "every line below is a comment" when only the
 explanatory paragraph was — and concluded the submissions might have fired by accident. **That
 conclusion was wrong.** The header comment itself was a real bug (now fixed, 2026-09-07 — see
 CLAUDE.md's Rules section), but the submissions it sat on top of were intended, reviewed actions,
-and the content each one sent was correct.
+and the content each one sent was correct. **The one genuine exception is NB40-ensemble**, which
+fired as a side effect of a notebook re-run on 2026-10-02 and is the only non-deliberate
+submission in this project's history — see its own section above.
 
 **NB27-widened's own notebook text creates a similar risk of the same wrong inference, and for the same underlying reason.** Its submission cell is fully commented out by this project's now-standard convention — every line, including the `client.predict(...)` call itself, is a `#` comment — and its closing markdown cell is titled "Section 2 — summary, no action taken." Read from the notebook's text alone, both would reasonably suggest this candidate was built and left unsent. **It was not.** It was submitted by hand on 2026-09-16 at 21:36 UTC, exactly as this project's manual-gated process requires; the notebook itself was not updated with that fact until afterward, via a single markdown cell appended to its end (see notebook 27's own closing note). Recorded here so a future reader does not draw the same incorrect inference from the notebook's text alone that the earlier diagnostic pass drew from the header-comment bug.
 | **NB36-widened** | `36_spread_corrected_nb32a.ipynb` | 2026-10-01 19:54 UTC | NB32-A's submitted file with CYP1A2, CYP2C9 and CYP3A4 each widened about their own mean to the spread ratio of the column holding that isoform's best board ST-RAE (multipliers x1.4145, x1.1304, x1.1317 onto target ratios 0.8361, 0.8168, 0.9262); CYP2D6 carried over byte-identical, since NB32-A already placed and widened it to 0.85 | Yes — manually reviewed and sent, per this project's manual-gated submission process |
@@ -621,8 +666,75 @@ blind board on this project**, extending the pattern already recorded in the "NB
    CYP2D6's ST-RAE, is attributable to placement rather than ranking, since that column's Spearman
    fell at the same time. See the NB47-mae/NB48-ensemble section above.
 
+7. **The CV-versus-board disagreement on SPEARMAN itself** (2026-10-22; canonical record
+   `docs/findings.md`, finding 3). This one is a different kind from the six above and is recorded
+   separately below.
+
 Items 1 to 4 were recorded when NB32-A was scored; items 5 and 6 were added later, when the two
-2026-10 submissions were scored.
+2026-10 submissions were scored; item 7 when the submitted orderings were ranked against the
+25-fold cluster-disjoint CV.
+
+### Item 7 — the first transfer disagreement calibration cannot explain
+
+> **Canonical record: `docs/findings.md`, finding 3.**
+
+Items 1 to 6 are all **ST-RAE** failures, and ST-RAE mixes model quality with placement, so
+"the model was fine, the calibration was not" was always an available explanation. Notebook 55
+ranked the submitted orderings on **Spearman**, which no affine correction can move, and
+cross-checked that ranking against the 25-fold cluster-disjoint CV for the four orderings whose
+architecture exists as an arm (`plain` ← `10c`, `aid` ← NB30, `mae_only` ← NB47-mae).
+
+**The board and the CV disagree about which model ranks better on 2 of 4 isoforms**, and CYP3A4 is
+a complete reversal:
+
+| Isoform | CV says (25-fold OOF Spearman) | The board says | |
+|---|---|---|---|
+| CYP1A2 | NB30 > NB47-mae > 10c | NB30 > NB47-mae > 10c | agree |
+| CYP2C9 | NB30 > NB47-mae | NB47-mae > NB30 | **disagree** |
+| CYP2D6 | NB30 > NB47-mae > 10c | NB30 > NB47-mae > 10c | agree |
+| CYP3A4 | NB30 > NB47-mae > 10c | 10c > NB47-mae > NB30 | **disagree, fully reversed** |
+
+Because Spearman is affine-invariant on both sides, calibration cannot account for this: the two
+estimates disagree about the models themselves. It also reproduces, at 25 folds and on the board,
+the specific counterexample notebook 40 wrote down *in advance* and notebook 48 then hit — that
+the out-of-fold-to-board Spearman mapping is not monotone on this project's record.
+
+## The ρ substitution in the deployed correction chain is biased low
+
+> **Canonical record: `docs/findings.md`, finding 1.** The summary below is kept here because it
+> bears directly on every correction in this document; the method, the three-subset spread and the
+> backing data live there.
+
+Every placement correction this project has deployed — NB16, NB19, NB27-widened, 27b, NB32-A,
+NB47-mae, NB48-ensemble — applies a ρ-shrunk slope, and takes ρ either from the board's Spearman
+directly (notebook 16) or from the bivariate-normal relation ρ = 2·sin(πρ_S/6) (notebook 38).
+**That substitution had never been checked against an independently recovered ρ, because there was
+no way to recover one.** Notebook 55 found one.
+
+Within a single *ordering group* — submissions whose columns are affine transforms of each other,
+and which therefore share one Pearson ρ — each distinct member contributes one equation
+`R² = 2ρk − k² − b²` in the three unknowns (ȳ, σ_y, ρ). Three distinct members identify it with no
+proxy anywhere. **CYP2D6 is the only isoform on this record with enough distinct variants** (four:
+`10c`, NB13-calib, NB16, NB27-widened — four genuinely different affine maps of one ranking), and
+the other three isoforms max out at two, because their repeated submissions were byte-identical
+resubmissions rather than different corrections.
+
+| quantity | value |
+|---|---|
+| ρ **recovered**, 4 equations, no proxy | **0.5600** (three-subset range 0.5502–0.6156) |
+| board Spearman, used as ρ by notebook 16 | 0.4000 — understates by **+0.1600** |
+| ρ = 2·sin(πρ_S/6), notebook 38's refinement | 0.4158 — understates by **+0.1442** |
+
+Both proxies understate it, and the refinement closes about a tenth of the gap. Since ρ sets the
+placement slope, the deployed chain **shrinks too hard** — the same direction notebook 26 reached
+independently from an out-of-fold spread sweep, where the ST-RAE-optimal multiplier sits strictly
+above ρ on every isoform. Two independent routes, same sign.
+
+**This does not invalidate the deployed corrections.** The same solve puts the blind CYP2D6
+population at mean 3.0515, SD 1.5397, against NB16's deployed target of 3.1558 / 1.5114 — agreeing
+to ~0.10 and ~0.03 pIC50 despite the ρ error, because ρ enters the *slope* and not the *target*,
+so the two errors do not compound. The caveat that matters is that this is one isoform, and it is
+the one notebook 21 established cannot be ranked on out-of-fold ST-RAE.
 
 Each instance carries progressively stronger CV backing than the last (a single uncrossvalidated
 selection pass; a single-fold screen; a full paired 5×5 confirmation; a single-fold screen combined
@@ -737,8 +849,12 @@ timestamp:
 | 10 | 27b | 2026-09-19 12:11 UTC | 0.5982 |
 | 11 | NB32-A | 2026-09-20 02:10 UTC | 0.6488 |
 | 12 | NB36-widened | 2026-10-01 19:54 UTC | 0.627 |
-| 13 | NB47-mae | 2026-10-10 21:44:38 UTC | 0.6328 |
-| 14 | NB48-ensemble | 2026-10-12 00:08 UTC | 0.6356 |
+| 13 | **NB40-ensemble** | **2026-10-02 13:37 UTC** | **0.6384** |
+| 14 | NB47-mae | 2026-10-10 21:44:38 UTC | 0.6328 |
+| 15 | NB48-ensemble | 2026-10-12 00:08 UTC | 0.6356 |
+
+NB40-ensemble is the only row here that is not in the per-isoform table above, and the only one
+that was not a deliberate, hand-run send.
 
 The trajectory is not monotonic: five step-to-step regressions (04b→NB10 +0.1120, 10c→NB12
 +0.1161, NB12→NB13-calib +0.0512, NB27-widened→NB30 +0.2005, 27b→NB32-A +0.0506) interrupt an
