@@ -1,0 +1,7 @@
+{
+  "at_utc": "2026-10-29T14:18:11.716013+00:00",
+  "file": "/Users/codiefreeman/OpenADMET-CYP-Blind-Challenge/outputs/56b_cyp1a2_corrected/submission_candidate_s050.csv",
+  "sha256": "a1da00e209975f4b82fdaeae1bc0210eb83953ef13872d22aa04d354c438aa8e",
+  "model_tag": "NB36-widened with CYP1A2 and CYP2C9 placement+scale corrected onto blind populations solved exactly from three board readings (rho recovered, no Spearman proxy), shrinkage s=0.5; CYP2D6 and CYP3A4 carried byte-identical.",
+  "reply": "{'visible': True, 'value': \"Submission received from 'fold-zero' for the Regression Prediction track. Your predictions are being processed and should appear on the leaderboard within 2 hours.\", '__type__': 'update'}"
+}
