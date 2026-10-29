@@ -150,6 +150,19 @@ on this dataset, on at least half the isoforms, and the failure is not fixable b
 calibration. Model selection on out-of-fold Spearman carries the same risk this project has already
 paid for six times on ST-RAE.
 
+**Coverage limitation — the comparison does not cover the arms the cross-validation ranked
+highest.** Eleven arms were compared at 25 cluster-disjoint folds; **three have ever been
+submitted** — `plain`, `aid` and `mae_only`. The other eight (`deadzone`, `single`, and all six
+tree arms) have no board reading at all, and **`deadzone` is among them: the arm that holds the
+compact-letter-display `a` on all four isoforms and on the macro, uniquely and tied with nothing.**
+So every CV-to-board comparison on this project is made over the three arms that happened to be
+submitted, which are not the three the cross-validation ranked highest, and the disagreement above
+is measured on the arms that were available rather than on the ones under test. The one submission
+built on the dead-zone target, NB32-A, applies it to a **different architecture** (the AID
+auxiliary-head model) and so does not fill the gap. Whether cross-validated ordering transfers for
+the arm it most favours is untested and, with submissions closing 2026-11-03, likely to stay that
+way.
+
 **Arms and directories.** `plain` ← `10c`, `aid` ← NB30, `mae_only` ← NB47-mae. `plain`'s repeats 0
 and 1 are in `outputs/34_butina_5x5/`, repeat 2 in `outputs/35_butina_repeat3/`, repeats 3 and 4 in
 `outputs/37_butina_5x5_complete/`; `mae_only`'s repeats 0–2 are **all** notebook 35's. All arms
