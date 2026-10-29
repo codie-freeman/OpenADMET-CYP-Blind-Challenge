@@ -1,5 +1,5 @@
 {
-  "recorded_utc": "2026-10-29T14:15:02.736170+00:00",
+  "recorded_utc": "2026-10-29T21:27:59.736184+00:00",
   "base": "NB36-widened",
   "base_sha256": "6bcb254b62c4656a32ac3f6fa73d606602a4fc15154137c3c82c5c2ec380118e",
   "corrected": [
@@ -25,8 +25,8 @@
         "CYP1A2": {
           "R2_predicted": 0.5203,
           "ST_RAE_band": [
-            0.4974,
-            0.6954
+            0.5294,
+            0.5631
           ],
           "Spearman_must_equal": 0.7565,
           "Kendall_must_equal": 0.5611
@@ -34,7 +34,7 @@
         "CYP2C9": {
           "R2_predicted": 0.5614,
           "ST_RAE_band": [
-            0.5255,
+            0.5262,
             0.5255
           ],
           "Spearman_must_equal": 0.7554,
@@ -54,8 +54,8 @@
         }
       },
       "macro_ST_RAE_band": [
-        0.5659,
-        0.6154
+        0.5741,
+        0.5823
       ]
     },
     "s=1.0": {
@@ -65,8 +65,8 @@
         "CYP1A2": {
           "R2_predicted": 0.5914,
           "ST_RAE_band": [
-            0.4297,
-            0.6954
+            0.4696,
+            0.5631
           ],
           "Spearman_must_equal": 0.7565,
           "Kendall_must_equal": 0.5611
@@ -74,7 +74,7 @@
         "CYP2C9": {
           "R2_predicted": 0.5716,
           "ST_RAE_band": [
-            0.5194,
+            0.5204,
             0.5255
           ],
           "Spearman_must_equal": 0.7554,
@@ -94,8 +94,8 @@
         }
       },
       "macro_ST_RAE_band": [
-        0.5474,
-        0.6154
+        0.5576,
+        0.5823
       ]
     }
   },
