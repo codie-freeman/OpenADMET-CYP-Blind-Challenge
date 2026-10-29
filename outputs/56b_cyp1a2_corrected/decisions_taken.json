@@ -1,0 +1,13 @@
+[
+  {
+    "decision": "Report the falsified sign prior as a finding, decomposed into premise and conclusion.",
+    "why": "The pre-registration required exactly this and forbade quietly discarding it. The decomposition is the informative part: the premise is correct on two isoforms and the conclusion still fails, because the chain assumed predictions sit near the training mean.",
+    "alternative": "Record only that the prior was wrong."
+  },
+  {
+    "decision": "Leave CYP2D6 byte-identical; do not apply the A1 slope fix in this candidate.",
+    "why": "Worth +0.0154 R2, about 0.004 macro ST-RAE, and it would move the spread ratio from 0.850 to 1.059 when 0.85 is the value the board has rewarded twice. Keeping it out leaves send 2 attributable to CYP1A2 and CYP2C9 alone and preserves CYP2D6 as a control.",
+    "alternative": "Apply it as the approved plan's step 3 specified.",
+    "deviation_from_approved_plan": true
+  }
+]

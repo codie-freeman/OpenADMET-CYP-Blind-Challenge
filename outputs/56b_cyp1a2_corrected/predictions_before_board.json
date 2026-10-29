@@ -1,0 +1,113 @@
+{
+  "recorded_utc": "2026-10-29T14:15:02.736170+00:00",
+  "base": "NB36-widened",
+  "base_sha256": "6bcb254b62c4656a32ac3f6fa73d606602a4fc15154137c3c82c5c2ec380118e",
+  "corrected": [
+    "CYP1A2",
+    "CYP2C9"
+  ],
+  "cyp2d6_and_cyp3a4": "carried byte-identical from NB36-widened; both are controls",
+  "metrics_forecast": [
+    "R2",
+    "Spearman",
+    "Kendall"
+  ],
+  "metrics_not_forecast": [
+    "ST-RAE",
+    "MAE"
+  ],
+  "why_strae_is_a_range_only": "the per-isoform ST-RAE~R2 fits are extrapolated well beyond the observed R2 range (CYP1A2 observed max 0.3073, these candidates reach 0.52-0.59), so ST-RAE is given as a band whose upper end extrapolates nothing",
+  "candidates": {
+    "s=0.5": {
+      "file": "outputs/56b_cyp1a2_corrected/submission_candidate_s050.csv",
+      "sha256": "a1da00e209975f4b82fdaeae1bc0210eb83953ef13872d22aa04d354c438aa8e",
+      "per_isoform": {
+        "CYP1A2": {
+          "R2_predicted": 0.5203,
+          "ST_RAE_band": [
+            0.4974,
+            0.6954
+          ],
+          "Spearman_must_equal": 0.7565,
+          "Kendall_must_equal": 0.5611
+        },
+        "CYP2C9": {
+          "R2_predicted": 0.5614,
+          "ST_RAE_band": [
+            0.5255,
+            0.5255
+          ],
+          "Spearman_must_equal": 0.7554,
+          "Kendall_must_equal": 0.5652
+        },
+        "CYP2D6": {
+          "R2_must_equal": 0.3768,
+          "ST_RAE_must_equal": 0.7502,
+          "Spearman_must_equal": 0.4438,
+          "Kendall_must_equal": 0.3076
+        },
+        "CYP3A4": {
+          "R2_must_equal": 0.6563,
+          "ST_RAE_must_equal": 0.4904,
+          "Spearman_must_equal": 0.802,
+          "Kendall_must_equal": 0.6132
+        }
+      },
+      "macro_ST_RAE_band": [
+        0.5659,
+        0.6154
+      ]
+    },
+    "s=1.0": {
+      "file": "outputs/56b_cyp1a2_corrected/submission_candidate_s100.csv",
+      "sha256": "b2c53f136f1d2684643126492a98d2b718b696e55b216a17d60bf7ff6f79a228",
+      "per_isoform": {
+        "CYP1A2": {
+          "R2_predicted": 0.5914,
+          "ST_RAE_band": [
+            0.4297,
+            0.6954
+          ],
+          "Spearman_must_equal": 0.7565,
+          "Kendall_must_equal": 0.5611
+        },
+        "CYP2C9": {
+          "R2_predicted": 0.5716,
+          "ST_RAE_band": [
+            0.5194,
+            0.5255
+          ],
+          "Spearman_must_equal": 0.7554,
+          "Kendall_must_equal": 0.5652
+        },
+        "CYP2D6": {
+          "R2_must_equal": 0.3768,
+          "ST_RAE_must_equal": 0.7502,
+          "Spearman_must_equal": 0.4438,
+          "Kendall_must_equal": 0.3076
+        },
+        "CYP3A4": {
+          "R2_must_equal": 0.6563,
+          "ST_RAE_must_equal": 0.4904,
+          "Spearman_must_equal": 0.802,
+          "Kendall_must_equal": 0.6132
+        }
+      },
+      "macro_ST_RAE_band": [
+        0.5474,
+        0.6154
+      ]
+    }
+  },
+  "falsification": [
+    "CYP2D6 or CYP3A4 returns ANY metric differing from NB36-widened's row -> the file is not what this notebook thinks it is. STOP and re-send the fallback.",
+    "CYP1A2 or CYP2C9 Spearman/Kendall moves at all -> an affine correction moved rank order, which is impossible. STOP.",
+    "CYP1A2's returned R2 differs from the predicted value by more than 0.03 -> the solved population does not transfer from the live half to the scored half, which is the governing risk this whole route carries. Fall back to NB36-widened.",
+    "Macro ST-RAE does not improve on NB36-widened's 0.6270 -> the correction does not pay, and the fallback is re-sent byte-identical as the final row."
+  ],
+  "what_this_cannot_settle": [
+    "whether NB36-widened was the right base: two of its four columns are untouched",
+    "the CYP2D6 A1 slope fix, deliberately not applied here",
+    "anything about the full set -- every reading is the live half"
+  ]
+}

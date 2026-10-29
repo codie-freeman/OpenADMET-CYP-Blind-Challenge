@@ -1,0 +1,18 @@
+{
+  "run_started_at": "2026-10-28T19:38:51.112419+00:00",
+  "pre_existing_dirty_tracked_paths": [
+    "CLAUDE.md",
+    "docs/findings.md",
+    "docs/leaderboard_submissions.md",
+    "notebooks/04b_final_submission.ipynb",
+    "notebooks/13_aid1851_blind_population_calibration.ipynb",
+    "notebooks/16_board_solved_population_calibration.ipynb",
+    "notebooks/19_cyp2c9_revert_submission_candidate.ipynb",
+    "notebooks/27b_aid_cyp2d6_corrected.ipynb",
+    "notebooks/30_aid_full_retrain.ipynb",
+    "notebooks/32_deadzone_aid_retrain.ipynb",
+    "notebooks/47_mae_only_full_retrain.ipynb"
+  ],
+  "note": "step 0 of this plan deliberately edited eight notebooks' submission cells (source-only, +10 lines each, 0 deletions, never re-executed). Those paths are pre-existing dirt for this run and are subtracted by the scope check.",
+  "python": "3.11.13"
+}

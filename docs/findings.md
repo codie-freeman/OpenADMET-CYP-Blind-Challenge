@@ -80,6 +80,21 @@ SD and the same board R², so it restates an equation already in the system. Cou
 every isoform's largest group has 5 or 6 and all four would look identified. Counted as *distinct
 equations*, only CYP2D6 is.
 
+**Sharpened 2026-10-27: being a distinct equation is necessary but NOT sufficient. A
+mean-PRESERVING variant adds an equation without breaking the sign ambiguity.** The b² term is even
+in (p̄ − ȳ), so the mirror root ȳ′ = 2p̄ − ȳ is killed only by a member sitting at a *different
+prediction mean*. Two members that share a mean share their mirror, and it survives into the
+solved system. CYP1A2 is the worked case: its two distinct equations are NB32-A and NB36-widened,
+and notebook 36's widening was **mean-preserving** (both columns sit at mean 5.0478), so solving
+the pair returns **four roots** — ȳ = 4.2543 / 4.3007 / 5.7950 / 5.8413 — in two mirror pairs, and
+notebook 16's own ambiguity ratio against the training mean 4.9554 is 1.26 and 1.28, *undetermined*
+under its own 1.5 bar. σ_y is not pinned either (1.49 against 2.64 at the same ρ).
+
+The structural cause is visible in one number per isoform — how far this project's own submitted
+prediction mean has ever moved: **CYP2D6 1.4778 pIC50** (identified), CYP3A4 0.7233, CYP2C9 0.3731,
+**CYP1A2 0.0892** (four-fold ambiguous). Identifiability is a property of the submission history,
+not of the chemistry.
+
 **Why CYP2D6 and not the others.** It is the isoform this project corrected most often *and with
 the most different transforms* — raw, population calibration, placement recentring, spread
 widening. CYP1A2's and CYP3A4's six-member group is `10c` resubmitted byte-identically five times
@@ -89,8 +104,12 @@ plus one calibration: two equations.
 the other three. Any correction proposed for CYP1A2, CYP2C9 or CYP3A4 on a solved-population basis
 rests on an assumed ρ, not a recovered one.
 
-**The cheapest way to identify another isoform** is to submit a second, *differently* corrected
-variant of an ordering already on the board — a different affine map, not a resubmission.
+**The cheapest way to identify another isoform** is to submit a variant of an ordering already on
+the board whose **prediction mean differs** — not merely a different affine map, and not a
+resubmission. A mean shift is what breaks the mirror (see the sharpening above); a pure rescale
+does not. With two mean-preserving equations already in hand, one mean-shifted third column makes
+the system three equations in three unknowns and returns a unique root, with ρ *recovered* rather
+than proxied — the same standard as CYP2D6's solve in finding 1.
 
 **Provenance.** Grouping verified on `Spearman == 1.0` to floating point, then each within-group
 member verified genuinely **affine** to its base (max |residual| ≈ 1e-14 across all groups), which

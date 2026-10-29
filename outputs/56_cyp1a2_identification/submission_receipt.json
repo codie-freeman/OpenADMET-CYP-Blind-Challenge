@@ -1,0 +1,7 @@
+{
+  "at_utc": "2026-10-28T19:38:58.676610+00:00",
+  "file": "/Users/codiefreeman/OpenADMET-CYP-Blind-Challenge/outputs/56_cyp1a2_identification/submission_candidate_identify.csv",
+  "sha256": "80dfdef1d8734b1118c16d1c1596bd3d7155e959f4d2c0889bdcb5141b2b7815",
+  "model_tag": "IDENTIFICATION PROBE -- NB36-widened with CYP1A2/CYP2C9/CYP3A4 translated +0.25 pIC50 and CYP2D6 unchanged. Diagnostic, not a modelling candidate: it reads the sign of the CYP1A2 placement error off the returned R2. Expected to score worse.",
+  "reply": "{'visible': True, 'value': \"Submission received from 'fold-zero' for the Regression Prediction track. Your predictions are being processed and should appear on the leaderboard within 2 hours.\", '__type__': 'update'}"
+}

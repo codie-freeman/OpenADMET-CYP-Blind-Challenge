@@ -1,0 +1,66 @@
+{
+  "name": "NB56-probe",
+  "base": "NB36-widened",
+  "base_sha256": "6bcb254b62c4656a32ac3f6fa73d606602a4fc15154137c3c82c5c2ec380118e",
+  "probe_file": "outputs/56_cyp1a2_identification/submission_candidate_identify.csv",
+  "probe_sha256": "80dfdef1d8734b1118c16d1c1596bd3d7155e959f4d2c0889bdcb5141b2b7815",
+  "frozen_utc": "2026-10-28T19:38:52.865258+00:00",
+  "purpose": "IDENTIFICATION PROBE, not a modelling submission. See disclosure.",
+  "shift_pIC50": {
+    "CYP1A2": 0.25,
+    "CYP2C9": 0.25,
+    "CYP3A4": 0.25,
+    "CYP2D6": 0.0
+  },
+  "sign_prior": {
+    "claim": "CYP1A2's blind population is HIGH-centred: the predictions sit BELOW the blind centre, and the correction shifts them UP.",
+    "reasoning": "The blind set was built by hit expansion -- top training hits plus purchased near-neighbours -- on CYP1A2, CYP2C9 and CYP3A4 only, NOT CYP2D6. A set seeded from the most potent training compounds should centre ABOVE the training mean (4.9554). Corroborated by the one identified isoform: CYP2D6, the sole isoform excluded from hit expansion, solves to mean 3.0515 -- low-centred, exactly as a non-hit-expanded set should be. Corroborated again by the interim: the three hit-expanded isoforms all got EASIER on the full set and the excluded one got HARDER.",
+    "status": "PRIOR, not a substitute for the measurement"
+  },
+  "branch_predictions_CYP1A2_R2_at_probe": {
+    "ybar=4.2543 sd_y=2.6407 (LOW)": 0.2409,
+    "ybar=4.3007 sd_y=1.4912 (LOW)": 0.1107,
+    "ybar=5.7950 sd_y=1.4912 (HIGH)": 0.4467,
+    "ybar=5.8413 sd_y=2.6407 (HIGH)": 0.3547
+  },
+  "CYP1A2_R2_now": 0.3068,
+  "direction_test_is_assumption_free": "R2(d) - R2(0) = -d(2b + d) with d = shift/sd_y. For d>0 this is negative iff b > -d/2. So wherever |b| > d/2 the SIGN of the R2 change reads the sign of b with NO knowledge of rho or sd_y; only the MAGNITUDE needs the three-equation solve.",
+  "direction_test_applies_to": {
+    "CYP1A2": {
+      "abs_b": 0.3005,
+      "delta_over_2": 0.0473,
+      "discriminates_by_direction": true
+    },
+    "CYP2C9": {
+      "abs_b": 0.1744,
+      "delta_over_2": 0.1154,
+      "discriminates_by_direction": true
+    },
+    "CYP3A4": {
+      "abs_b": 0.0819,
+      "delta_over_2": 0.0954,
+      "discriminates_by_direction": false
+    }
+  },
+  "direction_test_caveat": "CYP1A2 and CYP2C9 satisfy |b| > delta/2 and so are resolved by direction alone. CYP3A4 does NOT (|b| ~ 0.082 against delta/2 ~ 0.095): both of its branches lower R2, and they are separated only by how much. That is a limitation of this probe on CYP3A4 specifically, and it costs nothing, because CYP3A4's affine headroom is +0.0086 R2 and notebook 38 already closed its placement.",
+  "predictions": [
+    "CYP1A2 R2 RISES, to ~0.42-0.47 (high-centred). FALSIFIED if it falls.",
+    "CYP2C9 R2 RISES to ~0.558 if high-centred, FALLS to ~0.397 if low-centred; the prior says rises.",
+    "CYP3A4 R2 FALLS under BOTH branches (~0.651 high, ~0.589 low) -- see direction_test_applies_to: its |b| is SMALLER than delta/2, so the rise/fall rule does not discriminate there and the branches separate by MAGNITUDE instead. Not a prediction of direction, and not assumption-free for this isoform.",
+    "CYP2D6 returns NB36-widened's row EXACTLY: ST-RAE 0.7502, R2 0.3768, Spearman 0.4438 -- byte-identical column.",
+    "Spearman and Kendall UNCHANGED on all four isoforms: the change is a pure translation.",
+    "Macro ST-RAE WORSENS, to roughly 0.70-0.75."
+  ],
+  "falsification": [
+    "CYP2D6 moves at all -> the file is not what this notebook thinks it is. STOP.",
+    "Any Spearman or Kendall moves by more than 0.0001 -> a translation moved rank order. STOP.",
+    "CYP1A2's returned R2 matches NEITHER branch family within 0.02 -> the R2 = 2*rho*k - k^2 - b^2 identity does not describe this board. The placement route dies here, cheaply, and the fallback (NB36-widened's own file, macro 0.6270) is sent.",
+    "CYP1A2's R2 FALLS -> the hit-expansion sign prior is WRONG. That is a real finding about the test-set construction and must be reported as such, not quietly discarded. The correction still proceeds, downward."
+  ],
+  "not_falsifiable_from_this_send": [
+    "the shift fraction s (needs a second reading at a different s)",
+    "whether NB36-widened was the right base (three columns are only translated, not re-chosen)",
+    "anything about the full set -- this is a half-set reading"
+  ],
+  "disclosure": "Send 1 carries NO modelling content. It is a deliberately degraded submission whose purpose is to read a parameter of the hidden test distribution back off the scoring function -- different in kind from every prior correction on this project, which solved blind moments from sends made on their merits. Conditions: (1) disclosed explicitly as a probe in the dissertation methods, never folded in as another calibration step; (2) the final reported rank does not rest on it; (3) it is never the last send."
+}

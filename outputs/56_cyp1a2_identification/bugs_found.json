@@ -1,0 +1,26 @@
+[
+  {
+    "where": "Part 5, probe construction",
+    "bug": "Applied .round(7) to all four columns including CYP2D6, whose shift is zero. The base file stores more precision than 7 dp, so 'adding zero then rounding' perturbed the one column that must stay byte-identical as the built-in control.",
+    "found_by": "this notebook's own control assertion, on the first execution -- the atol=1e-6 integrity print said exact=True while the exact-equality assert failed, which is why both checks exist",
+    "fix": "transform only the columns with a non-zero shift; leave CYP2D6 untouched and assert byte-identity of the written text as well as float equality"
+  },
+  {
+    "where": "Part 5, the byte-identity control check itself",
+    "bug": "Compared the CYP2D6 column by a naive comma split on the raw lines. 13 of 750 SMILES carry CXSMILES enhanced-stereo annotations containing a comma (e.g. '|&1:17,19|'), so those fields are CSV-QUOTED and the naive split misaligns every column after SMILES on exactly those rows -- it reported 13 differences that were really the shifted CYP1A2/CYP2C9 values read out of the wrong field.",
+    "found_by": "the check failing while pandas simultaneously reported exact float equality -- two checks disagreeing is what exposed it",
+    "fix": "use csv.DictReader. Worth carrying forward as a repo-level hazard: any code in this project that parses a submission CSV by splitting on commas is wrong on those 13 rows."
+  },
+  {
+    "where": "Part 6, figure 2",
+    "bug": "Grouped the four CYP1A2 roots by their raw float sd_y to find mirror pairs. fsolve returns sd_y to about 1e-9, so mirror partners landed in separate singleton groups and the pair annotation indexed .iloc[1] out of bounds.",
+    "found_by": "the notebook failing to execute at the figure cell",
+    "fix": "group on sd_y rounded to 4 dp, and guard the annotation on len(group) == 2"
+  },
+  {
+    "where": "Part 5, prereg.json predictions",
+    "bug": "A draft prediction read 'CYP2C9 and CYP3A4 R2 also rise'. The notebook's own Part 4 table contradicts it for CYP3A4: BOTH of its branches lower R2 (~0.651 high, ~0.589 low), because the rise/fall rule needs |b| > delta/2 and CYP3A4's |b| (0.082) is smaller than delta/2 (0.095).",
+    "found_by": "reading the executed output against the prose -- the same way the two prose errors in the superseded notebook 55 were caught, and the reason this project reads its own output rather than trusting its drafts",
+    "fix": "state the prediction per isoform, add a direction_test_applies_to block computing |b| against delta/2 for each, and say plainly that the probe resolves CYP3A4 by magnitude rather than by direction"
+  }
+]

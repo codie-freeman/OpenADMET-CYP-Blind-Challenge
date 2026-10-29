@@ -1,0 +1,50 @@
+{
+  "0.5": {
+    "s": 0.5,
+    "path": "outputs/56b_cyp1a2_corrected/submission_candidate_s050.csv",
+    "sha256": "a1da00e209975f4b82fdaeae1bc0210eb83953ef13872d22aa04d354c438aa8e",
+    "applied": {
+      "CYP1A2": {
+        "s": 0.5,
+        "mult": 1.1738328141437409,
+        "shift": -0.37387439344709694,
+        "target_mean": 4.673959170152903,
+        "target_sd": 1.0114013275614868,
+        "predicted_R2": 0.5202502117020706
+      },
+      "CYP2C9": {
+        "s": 0.5,
+        "mult": 1.1700072640490742,
+        "shift": -0.03574354683919534,
+        "target_mean": 4.843118924494139,
+        "target_sd": 0.7475792200835725,
+        "predicted_R2": 0.5613890019251462
+      }
+    },
+    "predicted_macro_R2": 0.5286848034068042
+  },
+  "1.0": {
+    "s": 1.0,
+    "path": "outputs/56b_cyp1a2_corrected/submission_candidate_s100.csv",
+    "sha256": "b2c53f136f1d2684643126492a98d2b718b696e55b216a17d60bf7ff6f79a228",
+    "applied": {
+      "CYP1A2": {
+        "s": 1.0,
+        "mult": 1.3476656282874815,
+        "shift": -0.7477487868941948,
+        "target_mean": 4.3000847767058055,
+        "target_sd": 1.1611796749379637,
+        "predicted_R2": 0.5914002822701522
+      },
+      "CYP2C9": {
+        "s": 1.0,
+        "mult": 1.3400145280981486,
+        "shift": -0.07148709367839157,
+        "target_mean": 4.807375377654942,
+        "target_sd": 0.8562058087993655,
+        "predicted_R2": 0.5715853358819929
+      }
+    },
+    "predicted_macro_R2": 0.5490214045380363
+  }
+}

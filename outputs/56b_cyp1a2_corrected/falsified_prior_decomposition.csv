@@ -1,0 +1,4 @@
+isoform,blind_centre,train_mean,blind_minus_train,premise_holds,pred_mean,pred_minus_train,b,conclusion_holds
+CYP1A2,4.300085,4.95541,-0.655326,False,5.047834,0.092423,0.495219,False
+CYP2C9,4.807375,4.580738,0.226637,True,4.878862,0.298125,0.063123,False
+CYP3A4,4.797424,4.096054,0.701369,True,4.877704,0.781649,0.061072,False

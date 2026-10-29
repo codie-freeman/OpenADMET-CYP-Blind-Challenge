@@ -1,0 +1,7 @@
+[
+  {
+    "decision": "Treat the interim full-set board as having scored 27b.",
+    "why": "Three independent lines agree (mtime-to-the-second, the board timestamp being a submission time, and the 24 Sep deadline ordering). A nearest-neighbour fingerprint over half-set vectors instead ranks NB27-widened first, but three of four isoforms are identical across NB16/NB19/NB27-widened/27b so they cannot discriminate, and the CYP2D6 disagreement that drives it IS the half-vs-full finding rather than evidence against the identification.",
+    "alternative": "Take the fingerprint at face value and treat the interim as NB27-widened."
+  }
+]

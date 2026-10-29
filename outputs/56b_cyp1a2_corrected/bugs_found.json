@@ -1,0 +1,14 @@
+[
+  {
+    "where": "Part 5, the byte-identity control check",
+    "bug": "Asserted that an untouched column comes back byte-identical as TEXT. CYP3A4 fails that on 4 of 750 rows while being float-identical: pandas writes floats with Python's shortest round-tripping repr, so 3.1777130448602082 in the base file is rewritten as 3.177713044860208 -- the same float, one digit shorter. CYP2D6 passes only because its column was itself inherited byte-identically through notebook 32 rather than computed and written by notebook 36.",
+    "found_by": "the build assertion failing while the float comparison passed",
+    "fix": "assert float equality -- which is what the board parses -- and separately assert that every textual difference is representation-only, reporting the count"
+  },
+  {
+    "where": "Part 5 again -- the real cause, found after the first fix was wrong",
+    "bug": "The textual differences were NOT representation-only: 3.1777130448602082 and 3.177713044860208 are DIFFERENT floats. pandas' default C float parser is not correctly rounded, so reading NB36-widened and writing it back perturbs 25 of its 750 CYP3A4 values by up to 8.9e-16. pandas' own == said the columns matched only because both sides had been parsed by the same inexact parser; Python's float() disagreed, which is what exposed it.",
+    "found_by": "two checks disagreeing -- pandas reporting equality while a str-level float() comparison did not",
+    "fix": "read every submission CSV with float_precision='round_trip', which makes the read->write byte-exact on all four columns, and keep the strict control assertion. Immaterial to any score (the board prints 4 dp) but it means every earlier 'carried byte-identical' claim in this project built through a plain pandas read is exact only to ~1e-15, not to the bit."
+  }
+]
