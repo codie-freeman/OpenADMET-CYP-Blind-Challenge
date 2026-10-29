@@ -1,0 +1,56 @@
+# Thesis target: A4 with 3 cm left and 2 cm right margins, so the text block is
+# 16 cm = 6.3 in wide. Sans, matching the slides target.
+font.family:        sans-serif
+font.sans-serif:    Arial, Helvetica Neue, Helvetica, DejaVu Sans
+font.size:          10
+mathtext.fontset:   dejavusans
+
+# Type 42 (TrueType) rather than matplotlib's Type 3 default: Type 3 leaves text
+# unselectable and is rejected by some thesis-submission systems.
+pdf.fonttype:       42
+ps.fonttype:        42
+
+axes.titlesize:     medium
+axes.labelsize:     medium
+xtick.labelsize:    small
+ytick.labelsize:    small
+legend.fontsize:    small
+figure.titlesize:   large
+
+axes.spines.top:    False
+axes.spines.right:  False
+axes.edgecolor:     333333   # no leading "#": in an mplstyle it starts a comment
+axes.linewidth:     0.7
+axes.facecolor:     white
+axes.axisbelow:     True
+axes.titlelocation: left
+axes.titlepad:      4.0
+
+figure.facecolor:   white
+savefig.facecolor:  white
+savefig.transparent: False
+
+xtick.direction:    out
+ytick.direction:    out
+xtick.major.width:  0.7
+ytick.major.width:  0.7
+xtick.major.size:   3.0
+ytick.major.size:   0.0
+
+grid.color:         E0E0E0   # ditto -- must match palette.GRID
+
+# Rule 3: all text is palette.TEXT. Set here so no figure has to remember.
+text.color:         333333
+axes.labelcolor:    333333
+xtick.color:        333333
+ytick.color:        333333
+xtick.labelcolor:   333333
+ytick.labelcolor:   333333
+grid.linewidth:     0.6
+
+lines.linewidth:    1.2
+lines.markersize:   4.0
+
+# ASCII hyphen rather than U+2212, so no glyph can trigger a fallback font and
+# quietly embed DejaVu alongside Times.
+axes.unicode_minus: False

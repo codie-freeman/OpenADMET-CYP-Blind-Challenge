@@ -1,0 +1,52 @@
+# Web target: PNG about 880 px wide (8.0 in at 110 dpi). Sans, slightly larger
+# than thesis because it is read on screen without a caption beside it.
+font.family:        sans-serif
+font.sans-serif:    Arial, Helvetica Neue, Helvetica, DejaVu Sans
+font.size:          11
+mathtext.fontset:   dejavusans
+
+pdf.fonttype:       42
+ps.fonttype:        42
+
+axes.titlesize:     medium
+axes.labelsize:     medium
+xtick.labelsize:    small
+ytick.labelsize:    small
+legend.fontsize:    small
+figure.titlesize:   large
+
+axes.spines.top:    False
+axes.spines.right:  False
+axes.edgecolor:     333333   # no leading "#": in an mplstyle it starts a comment
+axes.linewidth:     0.9
+axes.facecolor:     white
+axes.axisbelow:     True
+axes.titlelocation: left
+axes.titlepad:      5.0
+
+figure.facecolor:   white
+savefig.facecolor:  white
+savefig.transparent: False
+
+xtick.direction:    out
+ytick.direction:    out
+xtick.major.width:  0.9
+ytick.major.width:  0.9
+xtick.major.size:   3.5
+ytick.major.size:   0.0
+
+grid.color:         E0E0E0   # ditto -- must match palette.GRID
+
+# Rule 3: all text is palette.TEXT. Set here so no figure has to remember.
+text.color:         333333
+axes.labelcolor:    333333
+xtick.color:        333333
+ytick.color:        333333
+xtick.labelcolor:   333333
+ytick.labelcolor:   333333
+grid.linewidth:     0.7
+
+lines.linewidth:    1.5
+lines.markersize:   5.5
+
+axes.unicode_minus: False
