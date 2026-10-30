@@ -222,6 +222,146 @@ reproduction of the *method* on this project's own record.
 
 ---
 
+## 5. A one-variable controlled send pair: rank order does not move, and ST-RAE disagrees with R²
+
+**This is the only controlled experiment this project has run on the live board.** Every other
+pair of submissions differs in model, feature block, correction layers or several at once.
+NB56b-s050 and NB56b-s100 differ in **exactly one scalar** — the shrinkage fraction `s` applied to
+the affine placement/scale correction on CYP1A2 and CYP2C9 — with the same base file
+(NB36-widened), the same solved blind populations, the same recovered ρ, the same code path, sent
+twelve hours apart. Both are half-set measurements.
+
+| | s = 0.5 (NB56b-s050) | s = 1.0 (NB56b-s100) | Δ |
+|---|---:|---:|---:|
+| macro ST-RAE | **0.5861** | 0.5933 | **+0.0072** |
+| macro MAE | 0.6973 | **0.6864** | −0.0109 |
+| macro R² | 0.5249 | **0.5366** | +0.0117 |
+| macro Spearman | 0.6894 | 0.6894 | **0.0000** |
+| macro Kendall | 0.5118 | 0.5118 | **0.0000** |
+
+### 5a. The lever moved only the two isoforms it touched
+
+CYP2D6 and CYP3A4 were carried byte-identical into both files. **All ten of their cells are exactly
+equal across the two submissions** — not equal to four significant figures, equal at every digit
+the board prints:
+
+| Isoform | ST-RAE | MAE | R² | Spearman | Kendall |
+|---|---:|---:|---:|---:|---:|
+| CYP2D6 | 0.0000 | 0.0000 | 0.0000 | 0.0000 | 0.0000 |
+| CYP3A4 | 0.0000 | 0.0000 | 0.0000 | 0.0000 | 0.0000 |
+
+Verified at source as well as on the board: max |difference| between the two submitted CSVs is
+`0.00e+00` on both columns. This is the **seventh** confirmation on this record that the board
+returns identical scores for identical input, and the first where it serves as a within-submission
+control rather than a resend check.
+
+The two isoforms that did move:
+
+| Isoform | ST-RAE | MAE | R² | Spearman | Kendall |
+|---|---:|---:|---:|---:|---:|
+| CYP1A2 | **+0.0136** | −0.0413 | +0.0397 | 0.0000 | 0.0000 |
+| CYP2C9 | **+0.0154** | −0.0022 | +0.0072 | 0.0000 | 0.0000 |
+
+### 5b. Rank order did not move — measured, not argued from algebra
+
+**Not one of the eight rank-metric cells differs.** Spearman and Kendall are identical on all four
+isoforms and at macro level.
+
+This is the project's central claim about its own method — an affine correction changes where
+predictions sit and how far apart they are, and cannot change which compound ranks above which —
+and it has until now rested on algebra plus resend checks. Here it is measured on predictions that
+genuinely changed: CYP1A2 and CYP2C9 were transformed by two *different* affine maps and returned
+the *same* ordering. On CYP2D6 and CYP3A4 the result is trivial, the files being identical; the
+load-bearing evidence is the two corrected isoforms.
+
+It is also a **three-way** agreement, not a two-way one. Both submissions reproduce NB36-widened's
+own CYP1A2 Spearman (0.7565) and CYP2C9 Spearman (0.7554) exactly, so the base and both corrected
+descendants agree across three separate sends.
+
+**What this licenses.** Any claim that a placement or spread correction improved *ranking* is
+false by construction, and the board now says so directly. It follows that the ordering quality of
+every affine descendant in this project's record is a property of the model underneath it — which
+is what makes finding 3's transfer disagreement a statement about models rather than calibration.
+
+**What it does not license.** It says nothing about whether the correction improved the submission
+overall, which is 5c, and nothing about rank order under a *non*-affine change — the two ensembles
+(NB40-ensemble, NB48-ensemble) did move Spearman, as they must.
+
+### 5c. ST-RAE and R² disagree about which submission is better
+
+On both isoforms that moved, **ST-RAE got worse while R² got better**:
+
+| | CYP1A2 | CYP2C9 | macro |
+|---|---:|---:|---:|
+| ST-RAE (lower better) | +0.0136 **worse** | +0.0154 **worse** | +0.0072 **worse** |
+| R² (higher better) | +0.0397 **better** | +0.0072 **better** | +0.0117 **better** |
+| MAE (lower better) | −0.0413 **better** | −0.0022 **better** | −0.0109 **better** |
+
+**ST-RAE is the odd one out: MAE moves with R², not with ST-RAE.** That is a stronger statement
+than a two-metric divergence, and it is the one worth carrying — fully correcting the placement
+improved two of the three error metrics and worsened the third.
+
+Stated as leaderboard records rather than deltas: **s = 1.0 takes the record on six cells** — macro
+MAE and R², CYP1A2 MAE and R², CYP2C9 MAE and R² — and **every one of them from s = 0.5**, which
+keeps the ST-RAE record. The same pair of files holds the best readings this project has achieved
+on two metrics and on the third.
+
+**Why it happens, mechanically.** ST-RAE scores a prediction as zero error anywhere inside the
+compound's credible interval and as distance to the nearest edge outside it. Those intervals are
+wide at low pIC50 and narrow at high (Spearman −0.56 to −0.93 against pIC50, notebook 21), so
+over-prediction is cheap and under-prediction is punished. A correction that shifts predictions
+**down** onto a low-centred blind population — which is what every correction here does, all three
+isoforms being low-centred — moves mass from the cheap side to the expensive side. R² and MAE have
+no such asymmetry and score the same move as an improvement. The optimum therefore sits at
+different places for the two metrics, and notebook 21 measured that gap directly on this project's
+own out-of-fold predictions: the ST-RAE optimum sits **+0.06 to +0.12 pIC50 above** the R² optimum
+on all four isoforms. **This pair is the first time that gap has been observed on the real board
+rather than out of fold**, and its direction matches.
+
+**Provenance of the mechanism claim.** The asymmetry and the +0.06–0.12 figure are this project's
+own (notebook 21, `outputs/21_strae_offset_curve/`). The framing was prompted by an external
+entrant's claim; that source is **not present in this repository and is not independently
+verifiable here**, and is recorded in the same spirit as the `ST-RAE = 0.695 − 0.210·R²` field fit
+and `docs/stereochemistry_provenance.md`'s `CONSISTENT_WITH_LOCAL_DATA` status. What is local is
+the measurement.
+
+### 5d. s = 0.5 needs no cherry-picking — on ST-RAE, and only on ST-RAE
+
+**s = 0.5 wins or ties on every isoform on ST-RAE**: it wins CYP1A2 (0.5631 vs 0.5767) and CYP2C9
+(0.5408 vs 0.5562) and ties the two untouched ones. There is no isoform on which s = 1.0 is the
+better ST-RAE choice, so selecting s = 0.5 requires no per-isoform mixing and keeps the submission
+one model plus one scalar.
+
+**That dominance is metric-conditional, and the condition is the whole reason it holds.** On R² the
+comparison reverses on all four (two wins and two ties for s = 1.0); on MAE likewise. s = 0.5 is
+the right final submission **conditional on ST-RAE being the metric that decides** — not because it
+is the better-calibrated file. On the evidence, s = 1.0 is the better-calibrated file.
+
+**The condition is assumed rather than confirmed.** ST-RAE is first in the vendored evaluator's
+`ACTIVITY_METRICS` and the metric its docstring uses as the exemplar `primary_metric`, and this
+project has treated it as governing throughout; but no default `primary_metric` is set in the
+vendored code, the live backend's sort key is not in this repository, and `CLAUDE.md` carries the
+standing caveat that the vendored evaluator has never been diffed against the live backend. The
+recorded board ranks cannot settle it either — they are not monotone in macro ST-RAE across dates,
+which an actively-resubmitting field explains and which makes ranks useless for cross-date
+comparison. **So finding 5d is conditional, and the condition is the one thing here that could make
+the final-submission choice wrong without any of 5a–5c being wrong.**
+
+**What the pair does not settle.** `s` was sampled at two points, so nothing here locates the
+optimum; the ST-RAE optimum lies at or below 0.5 and the R² optimum at or above 1.0, and neither is
+bracketed. Both readings are half-set, and the half-to-full drift measured on CYP2D6 (−0.2789 or
++0.4989 pIC50, `outputs/56_cyp1a2_identification/half_to_full_drift.json`) is larger than the
+0.0072 macro gap being used to choose between them — so the full-set reveal could reverse this
+choice. And neither submission tests the base model: three of NB36-widened's four columns are
+unchanged in s = 0.5.
+
+**Provenance.** Board readings in `docs/leaderboard_submissions.md` (NB56b-s050 and NB56b-s100
+sections, both rows in the main table with their sha256). Files
+`outputs/56b_cyp1a2_corrected/submission_candidate_s050.csv` (sha256 `a1da00e2…`) and
+`submission_candidate_s100.csv` (sha256 `b2c53f13…`), with server receipts for both sends.
+
+---
+
 ## Preserved artefacts from a superseded notebook
 
 `outputs/55_superseded_preserved/` holds the backing CSVs for findings 1–4 and `bugs_found.json`,

@@ -1,12 +1,7 @@
 {
-  "run_started_at": "2026-10-29T21:27:59.237131+00:00",
+  "run_started_at": "2026-10-30T07:54:06.369044+00:00",
   "pre_existing_dirty_tracked_paths": [
-    ".gitignore",
-    "docs/findings.md",
-    "docs/leaderboard_submissions.md",
-    "notebooks/56b_cyp1a2_corrected.ipynb",
-    "outputs/56b_cyp1a2_corrected/predictions_before_board.json",
-    "outputs/56b_cyp1a2_corrected/run_meta.json"
+    "notebooks/56b_cyp1a2_corrected.ipynb"
   ],
   "python": "3.11.13"
 }

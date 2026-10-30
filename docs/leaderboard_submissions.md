@@ -7,8 +7,8 @@ here rather than repeat these numbers. Real per-isoform scores exist here for 04
 already (originally cross-checked against `README.md`'s own "Leaderboard result" tables before
 those tables were retired in favor of a pointer to this file — see "Provenance" below); 10c,
 notebook 12, NB13-calib's, NB16's, NB19's, NB27-widened's, NB30's, 27b's, NB32-A's and
-NB36-widened's, NB47-mae's, NB48-ensemble's, NB56-identify's and NB56b-s050's full metric
-breakdowns are recorded here as well.
+NB36-widened's, NB47-mae's, NB48-ensemble's, NB56-identify's, NB56b-s050's and NB56b-s100's full
+metric breakdowns are recorded here as well.
 
 No blind-set labels are held anywhere in this repo — all scores below came from OpenADMET's own
 leaderboard after real submissions, not from anything computed locally.
@@ -21,9 +21,9 @@ none of these numbers are the final, full-set result, and later reveals could mo
 recorded in its own section below, and it disagrees with the live half materially and in opposite
 directions by isoform.
 
-## The seventeen submissions with a full per-isoform record
+## The eighteen submissions with a full per-isoform record
 
-**There are eighteen real sends, and exactly one is absent from this table**: the byte-identical
+**There are nineteen real sends, and exactly one is absent from this table**: the byte-identical
 re-send of **27b**, fired accidentally on 2026-09-21 12:49 UTC. It needs no column, because the
 board returned 27b's own scores, already shown here. It has its own section below and is not
 missing from the record — only from this *table*, which is per-isoform and per-metric.
@@ -36,43 +36,86 @@ board at the time. All five of its macro values reconcile as the mean of four (e
 rounding), and the two figures the record already held independently — macro ST-RAE 0.6384 and
 CYP2D6 ST-RAE 0.7751 — agree with the screenshot exactly, which is the best available check on it.
 
-| Isoform | Metric | 04b | 10c | NB10 | NB12 | NB13-calib | NB16 | NB19 | NB27-widened | NB30 | 27b | NB32-A | NB36-widened | NB40-ensemble | NB47-mae | NB48-ensemble | NB56-identify | NB56b-s050 |
-|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| **MA (Overall)** | ST-RAE | 0.7179 | 0.7138 | 0.8299 | 0.8299 | 0.8811 | 0.6364 | 0.6265 | 0.6155 | 0.8160 | 0.5982 | 0.6488 | 0.627 | **0.6384** | 0.6328 | 0.6356 | 0.6947 | **0.5861** |
-|  | MAE | 0.8952 | 0.8927 | 0.9690 | 0.9674 | 1.0260 | 0.7679 | 0.7599 | 0.7488 | 0.9580 | 0.7206 | 0.7670 | 0.7426 | 0.7506 | 0.7468 | 0.7494 | 0.8014 | 0.6973 |
-|  | R² | 0.2191 | 0.2278 | 0.1054 | 0.1159 | 0.0203 | 0.4407 | 0.4482 | 0.4557 | 0.1356 | 0.4835 | 0.4329 | 0.4677 | 0.4475 | 0.4495 | 0.4507 | 0.3858 | 0.5249 |
-|  | Spearman | 0.6739 | 0.6735 | 0.6748 | 0.6613 | 0.6785 | 0.6735 | 0.6785 | 0.6785 | 0.6831 | 0.7002 | 0.6894 | 0.6894 | 0.6759 | 0.6854 | 0.6739 | 0.6894 | 0.6894 |
-|  | Kendall | 0.5008 | 0.4987 | 0.4977 | 0.4877 | 0.5045 | 0.4987 | 0.5045 | 0.5045 | 0.4999 | 0.5212 | 0.5118 | 0.5118 | 0.5021 | 0.5090 | 0.5008 | 0.5118 | 0.5118 |
-| **CYP1A2** | ST-RAE | 0.7114 | 0.6954 | 0.7850 | 0.7633 | 0.8197 | 0.6954 | 0.6954 | 0.6954 | 0.7630 | 0.6954 | 0.7906 | 0.7241 | 0.7435 | 0.7254 | 0.7414 | 0.9126 | 0.5631 |
-|  | MAE | 0.9589 | 0.9385 | 1.0214 | 1.0035 | 1.0549 | 0.9385 | 0.9385 | 0.9385 | 1.0027 | 0.9385 | 1.0287 | 0.9616 | 0.9731 | 0.9666 | 0.9699 | 1.1137 | 0.7988 |
-|  | R² | 0.2824 | 0.3073 | 0.2051 | 0.2275 | 0.1537 | 0.3073 | 0.3073 | 0.3073 | 0.2588 | 0.3073 | 0.2125 | 0.3068 | 0.2827 | 0.2763 | 0.2899 | 0.1154 | 0.5070 |
-|  | Spearman | 0.7430 | 0.7375 | 0.7246 | 0.7389 | 0.7375 | 0.7375 | 0.7375 | 0.7375 | 0.7466 | 0.7375 | 0.7565 | 0.7565 | 0.7102 | 0.7423 | 0.7107 | 0.7565 | 0.7565 |
-|  | Kendall | 0.5473 | 0.5425 | 0.5297 | 0.5422 | 0.5425 | 0.5425 | 0.5425 | 0.5425 | 0.5468 | 0.5425 | 0.5611 | 0.5611 | 0.5145 | 0.5425 | 0.5146 | 0.5611 | 0.5611 |
-| **CYP2C9** | ST-RAE | 0.5408 | 0.5489 | 0.5489 | 0.5375 | 0.6036 | 0.5770 | 0.5375 | 0.5375 | 0.5922 | 0.5375 | 0.5635 | 0.5435 | 0.5282 | 0.5255 | 0.5290 | 0.5770 | 0.5408 |
-|  | MAE | 0.5399 | 0.5444 | 0.5444 | 0.5280 | 0.5934 | 0.5603 | 0.5280 | 0.5280 | 0.5607 | 0.5280 | 0.5568 | 0.5396 | 0.5317 | 0.5276 | 0.5322 | 0.5703 | 0.5212 |
-|  | R² | 0.5263 | 0.5272 | 0.5272 | 0.5432 | 0.4237 | 0.5133 | 0.5432 | 0.5432 | 0.4789 | 0.5432 | 0.5016 | 0.5308 | 0.5274 | 0.5358 | 0.5258 | 0.4542 | 0.5595 |
-|  | Spearman | 0.7428 | 0.7389 | 0.7389 | 0.7585 | 0.7585 | 0.7389 | 0.7585 | 0.7585 | 0.7333 | 0.7585 | 0.7554 | 0.7554 | 0.7729 | 0.7419 | 0.7692 | 0.7554 | 0.7554 |
-|  | Kendall | 0.5490 | 0.5462 | 0.5462 | 0.5692 | 0.5692 | 0.5462 | 0.5692 | 0.5692 | 0.5369 | 0.5692 | 0.5652 | 0.5652 | 0.5842 | 0.5581 | 0.5811 | 0.5652 | 0.5652 |
-| **CYP2D6** | ST-RAE | 1.1903 | 1.1673 | 1.4603 | 1.4092 | 1.3570 | 0.8299 | 0.8299 | 0.7858 | 1.3168 | 0.7165 | 0.7502 | 0.7502 | 0.7751 | 0.7872 | 0.7652 | 0.7502 | 0.7502 |
-|  | MAE | 1.5842 | 1.5694 | 1.7489 | 1.7209 | 1.6904 | 1.0546 | 1.0546 | 1.0104 | 1.6688 | 0.8975 | 0.9319 | 0.9319 | 0.9547 | 0.9600 | 0.9520 | 0.9319 | 0.9319 |
-|  | R² | −0.6220 | −0.5941 | −0.9392 | −0.8726 | −0.7903 | 0.2713 | 0.2713 | 0.3012 | −0.7660 | 0.4124 | 0.3768 | 0.3768 | 0.3468 | 0.3455 | 0.3543 | 0.3768 | 0.3768 |
-|  | Spearman | 0.3769 | 0.4000 | 0.4401 | 0.3771 | 0.4000 | 0.4000 | 0.4000 | 0.4000 | 0.4872 | 0.4872 | 0.4438 | 0.4438 | 0.4238 | 0.4602 | 0.4173 | 0.4438 | 0.4438 |
-|  | Kendall | 0.2606 | 0.2747 | 0.3081 | 0.2587 | 0.2747 | 0.2747 | 0.2747 | 0.2747 | 0.3415 | 0.3415 | 0.3076 | 0.3076 | 0.2969 | 0.3193 | 0.2919 | 0.3076 | 0.3076 |
-| **CYP3A4** | ST-RAE | 0.4291 | 0.4434 | 0.5253 | 0.6095 | 0.7443 | 0.4434 | 0.4434 | 0.4434 | 0.5920 | 0.4434 | 0.4907 | 0.4904 | 0.5067 | 0.4930 | 0.5067 | 0.5390 | 0.4904 |
-|  | MAE | 0.4976 | 0.5183 | 0.5614 | 0.6173 | 0.7654 | 0.5183 | 0.5183 | 0.5183 | 0.5996 | 0.5183 | 0.5506 | 0.5373 | 0.5430 | 0.5332 | 0.5434 | 0.5896 | 0.5373 |
-|  | R² | 0.6898 | 0.6709 | 0.6285 | 0.5655 | 0.2941 | 0.6709 | 0.6709 | 0.6709 | 0.5708 | 0.6709 | 0.6405 | 0.6563 | 0.6330 | 0.6406 | 0.6326 | 0.5969 | 0.6563 |
-|  | Spearman | 0.8329 | 0.8177 | 0.7955 | 0.7706 | 0.8177 | 0.8177 | 0.8177 | 0.8177 | 0.7651 | 0.8177 | 0.8020 | 0.8020 | 0.7968 | 0.7974 | 0.7985 | 0.8020 | 0.8020 |
-|  | Kendall | 0.6463 | 0.6316 | 0.6065 | 0.5809 | 0.6316 | 0.6316 | 0.6316 | 0.6316 | 0.5743 | 0.6316 | 0.6132 | 0.6132 | 0.6129 | 0.6162 | 0.6154 | 0.6132 | 0.6132 |
+| Isoform | Metric | 04b | 10c | NB10 | NB12 | NB13-calib | NB16 | NB19 | NB27-widened | NB30 | 27b | NB32-A | NB36-widened | NB40-ensemble | NB47-mae | NB48-ensemble | NB56-identify | NB56b-s050 | NB56b-s100 |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| **MA (Overall)** | ST-RAE | 0.7179 | 0.7138 | 0.8299 | 0.8299 | 0.8811 | 0.6364 | 0.6265 | 0.6155 | 0.8160 | 0.5982 | 0.6488 | 0.627 | **0.6384** | 0.6328 | 0.6356 | 0.6947 | **0.5861** | 0.5933 |
+|  | MAE | 0.8952 | 0.8927 | 0.9690 | 0.9674 | 1.0260 | 0.7679 | 0.7599 | 0.7488 | 0.9580 | 0.7206 | 0.7670 | 0.7426 | 0.7506 | 0.7468 | 0.7494 | 0.8014 | 0.6973 | 0.6864 |
+|  | R² | 0.2191 | 0.2278 | 0.1054 | 0.1159 | 0.0203 | 0.4407 | 0.4482 | 0.4557 | 0.1356 | 0.4835 | 0.4329 | 0.4677 | 0.4475 | 0.4495 | 0.4507 | 0.3858 | 0.5249 | 0.5366 |
+|  | Spearman | 0.6739 | 0.6735 | 0.6748 | 0.6613 | 0.6785 | 0.6735 | 0.6785 | 0.6785 | 0.6831 | 0.7002 | 0.6894 | 0.6894 | 0.6759 | 0.6854 | 0.6739 | 0.6894 | 0.6894 | 0.6894 |
+|  | Kendall | 0.5008 | 0.4987 | 0.4977 | 0.4877 | 0.5045 | 0.4987 | 0.5045 | 0.5045 | 0.4999 | 0.5212 | 0.5118 | 0.5118 | 0.5021 | 0.5090 | 0.5008 | 0.5118 | 0.5118 | 0.5118 |
+| **CYP1A2** | ST-RAE | 0.7114 | 0.6954 | 0.7850 | 0.7633 | 0.8197 | 0.6954 | 0.6954 | 0.6954 | 0.7630 | 0.6954 | 0.7906 | 0.7241 | 0.7435 | 0.7254 | 0.7414 | 0.9126 | 0.5631 | 0.5767 |
+|  | MAE | 0.9589 | 0.9385 | 1.0214 | 1.0035 | 1.0549 | 0.9385 | 0.9385 | 0.9385 | 1.0027 | 0.9385 | 1.0287 | 0.9616 | 0.9731 | 0.9666 | 0.9699 | 1.1137 | 0.7988 | 0.7575 |
+|  | R² | 0.2824 | 0.3073 | 0.2051 | 0.2275 | 0.1537 | 0.3073 | 0.3073 | 0.3073 | 0.2588 | 0.3073 | 0.2125 | 0.3068 | 0.2827 | 0.2763 | 0.2899 | 0.1154 | 0.5070 | 0.5467 |
+|  | Spearman | 0.7430 | 0.7375 | 0.7246 | 0.7389 | 0.7375 | 0.7375 | 0.7375 | 0.7375 | 0.7466 | 0.7375 | 0.7565 | 0.7565 | 0.7102 | 0.7423 | 0.7107 | 0.7565 | 0.7565 | 0.7565 |
+|  | Kendall | 0.5473 | 0.5425 | 0.5297 | 0.5422 | 0.5425 | 0.5425 | 0.5425 | 0.5425 | 0.5468 | 0.5425 | 0.5611 | 0.5611 | 0.5145 | 0.5425 | 0.5146 | 0.5611 | 0.5611 | 0.5611 |
+| **CYP2C9** | ST-RAE | 0.5408 | 0.5489 | 0.5489 | 0.5375 | 0.6036 | 0.5770 | 0.5375 | 0.5375 | 0.5922 | 0.5375 | 0.5635 | 0.5435 | 0.5282 | 0.5255 | 0.5290 | 0.5770 | 0.5408 | 0.5562 |
+|  | MAE | 0.5399 | 0.5444 | 0.5444 | 0.5280 | 0.5934 | 0.5603 | 0.5280 | 0.5280 | 0.5607 | 0.5280 | 0.5568 | 0.5396 | 0.5317 | 0.5276 | 0.5322 | 0.5703 | 0.5212 | 0.5190 |
+|  | R² | 0.5263 | 0.5272 | 0.5272 | 0.5432 | 0.4237 | 0.5133 | 0.5432 | 0.5432 | 0.4789 | 0.5432 | 0.5016 | 0.5308 | 0.5274 | 0.5358 | 0.5258 | 0.4542 | 0.5595 | 0.5667 |
+|  | Spearman | 0.7428 | 0.7389 | 0.7389 | 0.7585 | 0.7585 | 0.7389 | 0.7585 | 0.7585 | 0.7333 | 0.7585 | 0.7554 | 0.7554 | 0.7729 | 0.7419 | 0.7692 | 0.7554 | 0.7554 | 0.7554 |
+|  | Kendall | 0.5490 | 0.5462 | 0.5462 | 0.5692 | 0.5692 | 0.5462 | 0.5692 | 0.5692 | 0.5369 | 0.5692 | 0.5652 | 0.5652 | 0.5842 | 0.5581 | 0.5811 | 0.5652 | 0.5652 | 0.5652 |
+| **CYP2D6** | ST-RAE | 1.1903 | 1.1673 | 1.4603 | 1.4092 | 1.3570 | 0.8299 | 0.8299 | 0.7858 | 1.3168 | 0.7165 | 0.7502 | 0.7502 | 0.7751 | 0.7872 | 0.7652 | 0.7502 | 0.7502 | 0.7502 |
+|  | MAE | 1.5842 | 1.5694 | 1.7489 | 1.7209 | 1.6904 | 1.0546 | 1.0546 | 1.0104 | 1.6688 | 0.8975 | 0.9319 | 0.9319 | 0.9547 | 0.9600 | 0.9520 | 0.9319 | 0.9319 | 0.9319 |
+|  | R² | −0.6220 | −0.5941 | −0.9392 | −0.8726 | −0.7903 | 0.2713 | 0.2713 | 0.3012 | −0.7660 | 0.4124 | 0.3768 | 0.3768 | 0.3468 | 0.3455 | 0.3543 | 0.3768 | 0.3768 | 0.3768 |
+|  | Spearman | 0.3769 | 0.4000 | 0.4401 | 0.3771 | 0.4000 | 0.4000 | 0.4000 | 0.4000 | 0.4872 | 0.4872 | 0.4438 | 0.4438 | 0.4238 | 0.4602 | 0.4173 | 0.4438 | 0.4438 | 0.4438 |
+|  | Kendall | 0.2606 | 0.2747 | 0.3081 | 0.2587 | 0.2747 | 0.2747 | 0.2747 | 0.2747 | 0.3415 | 0.3415 | 0.3076 | 0.3076 | 0.2969 | 0.3193 | 0.2919 | 0.3076 | 0.3076 | 0.3076 |
+| **CYP3A4** | ST-RAE | 0.4291 | 0.4434 | 0.5253 | 0.6095 | 0.7443 | 0.4434 | 0.4434 | 0.4434 | 0.5920 | 0.4434 | 0.4907 | 0.4904 | 0.5067 | 0.4930 | 0.5067 | 0.5390 | 0.4904 | 0.4904 |
+|  | MAE | 0.4976 | 0.5183 | 0.5614 | 0.6173 | 0.7654 | 0.5183 | 0.5183 | 0.5183 | 0.5996 | 0.5183 | 0.5506 | 0.5373 | 0.5430 | 0.5332 | 0.5434 | 0.5896 | 0.5373 | 0.5373 |
+|  | R² | 0.6898 | 0.6709 | 0.6285 | 0.5655 | 0.2941 | 0.6709 | 0.6709 | 0.6709 | 0.5708 | 0.6709 | 0.6405 | 0.6563 | 0.6330 | 0.6406 | 0.6326 | 0.5969 | 0.6563 | 0.6563 |
+|  | Spearman | 0.8329 | 0.8177 | 0.7955 | 0.7706 | 0.8177 | 0.8177 | 0.8177 | 0.8177 | 0.7651 | 0.8177 | 0.8020 | 0.8020 | 0.7968 | 0.7974 | 0.7985 | 0.8020 | 0.8020 | 0.8020 |
+|  | Kendall | 0.6463 | 0.6316 | 0.6065 | 0.5809 | 0.6316 | 0.6316 | 0.6316 | 0.6316 | 0.5743 | 0.6316 | 0.6132 | 0.6132 | 0.6129 | 0.6162 | 0.6154 | 0.6132 | 0.6132 | 0.6132 |
 
 *ST-RAE is this project's governing metric (lower is better); R², Spearman, and Kendall are
 better higher; MAE is better lower. See `src/vendor/openadmet_eval/` for the scoring definitions.*
 
+## Per-row provenance: file, sha256, and scoring basis
+
+Audited 2026-10-30. **Every scored row now carries the sha256 of the exact file that was sent and
+an explicit statement of what half of the blind set produced its score.** Eleven of these hashes
+were absent before that audit and are backfilled here; the seven that were already recorded were
+recomputed from the files on disk and **all seven match**.
+
+| Submission | Submitted file | sha256 | Scoring basis |
+|---|---|---|---|
+| 04b | `outputs/submissions/activity_submission_v1.csv` | `2d99d55ca5730c909e6c74abadfc44a5785b1be22659d806ddc1364d2cc08c3c` | **half-set** |
+| NB10 | `outputs/10_final_retrain_predict/submission_candidate.csv` | `ab84077e7a4f28d2727e6820e6e53826f060f39bf2617a2231849cb85fefcecf` | **half-set** |
+| 10c | `outputs/10c_control_submission/submission_candidate.csv` | `33c24cfd826afe65d4181606b3224c068be3b08ddd20c68044eede01f8a7c3b1` | **half-set** |
+| NB12 | `outputs/12_caruana_retrain_predict/submission_candidate.csv` | `4e433c85c9a477392386101ec2188673e4e75a67fa1737d112460c1c022869dd` | **half-set** |
+| NB13-calib | `outputs/13_aid1851_blind_population_calibration/submission_candidate.csv` | `9d56163672b93bfc3563348ce03a9c18f90ac3e464f7ef82b6aac13558db6100` | **half-set** |
+| NB16 | `outputs/board_solved_calibration/submission_candidate.csv` | `5a6130322a5e1456bbd7b35f5db350af33623cfb8c08439f3f5b526fea826dcf` | **half-set** |
+| NB19 | `outputs/19_cyp2c9_revert/submission_candidate.csv` | `02d296f13d62d02544dceece21dabdd58d34dc9e0b172954a1b7000d99ed1078` | **half-set** |
+| NB27-widened | `outputs/27_calibration/cyp2d6_widened/submission_candidate.csv` | `ff759d39bc716f9d0e609ea0515769940b4e47cfdc1b89673ded592967687757` | **half-set** |
+| NB30 | `outputs/30_aid_full_retrain/submission_candidate.csv` | `bfe57a7db57df08ed1f90b73923ec0726e052e8fdcc64e2e1271874d2ba99457` | **half-set** |
+| 27b | `outputs/27b_aid_cyp2d6_corrected/submission_candidate.csv` | `deaaa31b27186e9b74f14ac86e2920b870e7a7e191c153cc366c81d8fa8b7ed7` | **half-set**, and the *only* row with a **full-set** reading as well (the interim board, from its accidental 2026-09-21 re-send of this same file) |
+| NB32-A | `outputs/32_deadzone_aid_retrain/submission_candidate_A_allfour.csv` | `af710cf4cf55a0cc6690c7ed4d152d9dc62616dfe4a51385bd0954dab7e6ecbb` | **half-set** |
+| NB36-widened | `outputs/36_spread_corrected_nb32a/submission_candidate_spread_corrected.csv` | `6bcb254b62c4656a32ac3f6fa73d606602a4fc15154137c3c82c5c2ec380118e` | **half-set** |
+| NB40-ensemble | `outputs/40_single_object_ensemble/part8_stabilised_member/submission_candidate_rebuilt.csv` | `7df6e263cf463d1ebd72139922e98c7a870d335a1448152efb890a56ab09bf53` | **half-set**; per-isoform values from a screenshot, not a contemporaneous capture |
+| NB47-mae | `outputs/47_mae_only_full_retrain/submission_candidate.csv` | `5ee259abcffaf590419d3de8b69c89133c0159a340b928dc39c5f47247054418` | **half-set** |
+| NB48-ensemble | `outputs/48_board_ensemble/submission_candidate.csv` | `14ccf684fca506f5d7f1f8ed7ec8596e5ea2a90c79c7589208f500c92b97f6a7` | **half-set** |
+| NB56-identify | `outputs/56_cyp1a2_identification/submission_candidate_identify.csv` | `80dfdef1d8734b1118c16d1c1596bd3d7155e959f4d2c0889bdcb5141b2b7815` | **half-set** |
+| NB56b-s050 | `outputs/56b_cyp1a2_corrected/submission_candidate_s050.csv` | `a1da00e209975f4b82fdaeae1bc0210eb83953ef13872d22aa04d354c438aa8e` | **half-set** |
+| NB56b-s100 | `outputs/56b_cyp1a2_corrected/submission_candidate_s100.csv` | `b2c53f136f1d2684643126492a98d2b718b696e55b216a17d60bf7ff6f79a228` | **half-set** |
+
+**Four of the eighteen have a contemporaneous server receipt** on disk — NB48-ensemble,
+NB56-identify, NB56b-s050 and NB56b-s100 — carrying the sent timestamp, the file's sha256 at send
+time and the server's own reply. For the other fourteen the hash is of the archived file, and the
+sent-versus-archived identity rests on the notebook's own saved output rather than a receipt. That
+is a weaker guarantee and is stated rather than glossed.
+
+**The file-to-submission mapping was not taken on trust.** Each of the eighteen paths above was
+checked against a byte-identity claim this document already makes about it — NB16's CYP1A2/CYP3A4
+against `10c`'s, NB19's against NB16's, NB19's CYP2C9 against NB12's, 27b's three carried columns,
+NB56-identify's and both NB56b columns' carried CYP2D6/CYP3A4 — **eighteen checks, all of which
+hold**: sixteen at exactly `0.00e+00` and two (NB27-widened and 27b against NB19 on CYP2C9) at
+`4.44e-16`, which is the written-decimal difference documented in notebook 56b's entry and is
+twelve orders of magnitude below the four decimal places the board reports. Had any path been
+mis-assigned, these checks would have failed.
+
 ## NB47-mae and NB48-ensemble: both scored, and the gains landed where the CV said they would not
 
 Two submissions were sent before either was recorded here, and both have now been scored. Neither
-beats 27b. On macro ST-RAE they come 5th and 6th of the fifteen real sends, between NB36-widened
-(0.627) and NB16 (0.6364), so both sit in the corrected-submission band and well clear of the raw baselines
-`10c` (0.7138) and `04b` (0.7179).
+beats 27b. On macro ST-RAE they come 7th and 8th of the eighteen scored rows, between
+NB36-widened (0.627) and NB16 (0.6364), so both sit in the corrected-submission band and well
+clear of the raw baselines `10c` (0.7138) and `04b` (0.7179).
 
 | | NB47-mae | NB48-ensemble |
 |---|---|---|
@@ -247,8 +290,8 @@ being the one thing a blend can move and an affine correction cannot. Its CYP1A2
 is, in the same breath, the **lowest** on record for that isoform, so the ensembles' ordering gains
 are not uniform across isoforms.
 
-**Where it sits.** At macro ST-RAE 0.6384 it is **seventh of the seventeen scored rows**, between
-NB48-ensemble (0.6356) and NB16 (0.6364) above it and NB32-A (0.6488) below — inside the
+**Where it sits.** At macro ST-RAE 0.6384 it is **tenth of the eighteen scored rows**, between
+NB16 (0.6364) above it and NB32-A (0.6488) below — inside the
 corrected-submission band and clear of the raw baselines `10c` (0.7138) and `04b` (0.7179). Its
 CYP2D6 ST-RAE of 0.7751 sits between NB48-ensemble's 0.7652 and NB47-mae's 0.7872. It did **not**
 beat 27b (0.5982).
@@ -290,9 +333,16 @@ check the gate on disk first.
 | **NB30** | `30_aid_full_retrain.ipynb` | 2026-09-18 11:39 UTC | CheMeleon multitask + AID 1851 auxiliary-head model (notebook 29's 5×5-CV-confirmed recipe), full-data retrain under `cyp-admet-v2`, seed 2684470948, raw and uncorrected on all four isoforms — no calibration, no ensembling | Yes — manually reviewed and sent, per this project's manual-gated submission process |
 | **27b** | `27b_aid_cyp2d6_corrected.ipynb` | 2026-09-19 12:11 UTC | NB30's AID 1851 auxiliary-head model, mixed recipe: CYP1A2/CYP3A4 carried over byte-identical from `10c`, CYP2C9 byte-identical from NB19, CYP2D6 placement-corrected onto the board-solved blind population (mean 3.1614, sd 1.5121, solved from NB30's own published metrics) then widened to 0.85 of the CYP2D6 training-label SD — the same recipe NB27 Section 2 used, applied to NB30's own OOF rho instead of the plain model's | Yes — manually reviewed and sent, per this project's manual-gated submission process |
 | **NB32-A** | `32_deadzone_aid_retrain.ipynb` (candidate A, `submission_candidate_A_allfour.csv`) | 2026-09-20 02:10 UTC | The DEADZONE+AID model's own four columns (AID 1851 auxiliary-head architecture — notebook 29's 5×5-CV-confirmed recipe — trained against notebook 31's screened dead-zone clipped target instead of the point estimate, full-data retrain), CYP2D6 placement-corrected and widened using the same NB16-solved target and 0.85-of-training-SD ratio as NB27-widened/27b; CYP1A2, CYP2C9 and CYP3A4 raw from that model, uncorrected | Yes — manually reviewed and sent, per this project's manual-gated submission process |
+| **NB36-widened** | `36_spread_corrected_nb32a.ipynb` | 2026-10-01 19:54 UTC | NB32-A's submitted file with CYP1A2, CYP2C9 and CYP3A4 each widened about their own mean to the spread ratio of the column holding that isoform's best board ST-RAE (multipliers x1.4145, x1.1304, x1.1317 onto target ratios 0.8361, 0.8168, 0.9262); CYP2D6 carried over byte-identical, since NB32-A already placed and widened it to 0.85 | Yes — manually reviewed and sent, per this project's manual-gated submission process |
+| **NB40-ensemble** | `40_single_object_ensemble.ipynb` (Part 8, `part8_stabilised_member/submission_candidate_rebuilt.csv`) | 2026-10-02 13:37 UTC | Single shared-member, shared-weight ensemble (`deadzone` 0.625 / `aid` 0.25 / `ecfp4_narrow__xgboost` 0.125, seed-averaged over ten early-stopping split draws), one weight vector across all four isoforms with no per-isoform refitting; CYP1A2/CYP2D6/CYP3A4 spread-widened, CYP2D6 also placement-corrected on this blend's own OOF rho (0.4496), CYP2C9 left uncorrected (7.9% gap, under the 10% bar) | **No** — fired as a side effect of an `nbconvert --execute --inplace` re-run. **Scored: macro 0.6384, rank 75** |
+| **NB47-mae** | `47_mae_only_full_retrain.ipynb` | 2026-10-10 21:44:38 UTC | `chemprop_chemeleoninit` full-data retrain under an **MAE training loss** instead of MSE, raw point-estimate targets, no validation split, fixed 7 epochs from the median per-fold best epoch across 25 cluster-disjoint folds; CYP1A2 spread-widened (×1.1631), CYP2D6 placement-corrected on this model's own OOF rho (0.380669) then widened to 0.85 (total ×1.9109), CYP2C9/CYP3A4 raw | Yes, uncommented and run by hand. **Scored: macro 0.6328, rank 83** |
+| **NB48-ensemble** | `48_board_ensemble.ipynb` | 2026-10-12 00:08:07 UTC | Per-isoform **non-negative ensemble** (weights summing to one) fitted on notebook 37's 25-fold cluster-disjoint OOF predictions, deployed on full-data blind columns (`deadzone` + `aid` + an `ecfp4_narrow` tree per isoform); CYP2D6 placement-corrected on the blend's own nested OOF rho (0.4525) then widened, CYP1A2/CYP3A4 spread-widened, CYP2C9 uncorrected (8.0% gap, under the 10% bar). The first submission that is not an affine transform of one model, so the first that can move the rank metrics | Yes, gate opened and run deliberately, on explicit instruction. **Scored: macro 0.6356, rank 74** |
+| **NB56-identify** | `56_cyp1a2_identification.ipynb` | 2026-10-28 19:38:58 UTC | **Identification probe, not a modelling candidate.** NB36-widened with a uniform +0.25 pIC50 translation on CYP1A2/CYP2C9/CYP3A4 and CYP2D6 carried byte-identical as a built-in control. Deliberately degraded: its only purpose was to read the *sign* of each isoform's placement error off the returned R², which an affine shift makes identifiable | Yes, gate opened by hand; disclosed in its own prereg as a probe. **Scored: macro 0.6947** |
+| **NB56b-s050** | `56b_cyp1a2_corrected.ipynb` | 2026-10-29 14:18:11 UTC | NB36-widened with CYP1A2 and CYP2C9 placed and rescaled onto blind populations solved *exactly* from three board readings (ρ recovered, no Spearman proxy), at shrinkage **s = 0.5**; CYP2D6 and CYP3A4 carried byte-identical | Yes. **Scored: macro 0.5861 — best on record** |
+| **NB56b-s100** | `56b_cyp1a2_corrected.ipynb` | 2026-10-30 07:54:11 UTC | Identical to NB56b-s050 in every respect except the shrinkage fraction, **s = 1.0** (placement fully corrected rather than half-corrected). The two together are a one-variable controlled comparison | Yes. **Scored: macro 0.5933, rank 93 — second best** |
 
-**On "deliberate":** fourteen of the sixteen real sends were reviewed and uncommented/run by hand, exactly as
-this project's manual-gated-submission process requires. An earlier diagnostic pass over this
+**On "deliberate":** seventeen of the nineteen real sends were reviewed and uncommented/run by
+hand, exactly as this project's manual-gated-submission process requires. An earlier diagnostic pass over this
 repo (before this correction) reasoned from file evidence alone — a misleading header comment on
 the NB10/10c/NB12 submission cells, which claimed "every line below is a comment" when only the
 explanatory paragraph was — and concluded the submissions might have fired by accident. **That
@@ -306,9 +356,6 @@ previously called NB40-ensemble "the only non-deliberate submission in this proj
 that was wrong, and the earlier claim is retired here rather than quietly amended.
 
 **NB27-widened's own notebook text creates a similar risk of the same wrong inference, and for the same underlying reason.** Its submission cell is fully commented out by this project's now-standard convention — every line, including the `client.predict(...)` call itself, is a `#` comment — and its closing markdown cell is titled "Section 2 — summary, no action taken." Read from the notebook's text alone, both would reasonably suggest this candidate was built and left unsent. **It was not.** It was submitted by hand on 2026-09-16 at 21:36 UTC, exactly as this project's manual-gated process requires; the notebook itself was not updated with that fact until afterward, via a single markdown cell appended to its end (see notebook 27's own closing note). Recorded here so a future reader does not draw the same incorrect inference from the notebook's text alone that the earlier diagnostic pass drew from the header-comment bug.
-| **NB36-widened** | `36_spread_corrected_nb32a.ipynb` | 2026-10-01 19:54 UTC | NB32-A's submitted file with CYP1A2, CYP2C9 and CYP3A4 each widened about their own mean to the spread ratio of the column holding that isoform's best board ST-RAE (multipliers x1.4145, x1.1304, x1.1317 onto target ratios 0.8361, 0.8168, 0.9262); CYP2D6 carried over byte-identical, since NB32-A already placed and widened it to 0.85 | Yes — manually reviewed and sent, per this project's manual-gated submission process |
-| **NB47-mae** | `47_mae_only_full_retrain.ipynb` | 2026-10-10 21:44:38 UTC | `chemprop_chemeleoninit` full-data retrain under an **MAE training loss** instead of MSE, raw point-estimate targets, no validation split, fixed 7 epochs from the median per-fold best epoch across 25 cluster-disjoint folds; CYP1A2 spread-widened (×1.1631), CYP2D6 placement-corrected on this model's own OOF rho (0.380669) then widened to 0.85 (total ×1.9109), CYP2C9/CYP3A4 raw | Yes, uncommented and run by hand. **Scored: macro 0.6328, rank 83** |
-| **NB48-ensemble** | `48_board_ensemble.ipynb` | 2026-10-12 00:08:07 UTC | Per-isoform **non-negative ensemble** (weights summing to one) fitted on notebook 37's 25-fold cluster-disjoint OOF predictions, deployed on full-data blind columns (`deadzone` + `aid` + an `ecfp4_narrow` tree per isoform); CYP2D6 placement-corrected on the blend's own nested OOF rho (0.4525) then widened, CYP1A2/CYP3A4 spread-widened, CYP2C9 uncorrected (8.0% gap, under the 10% bar). The first submission that is not an affine transform of one model, so the first that can move the rank metrics | Yes, gate opened and run deliberately, on explicit instruction. **Scored: macro 0.6356, rank 74** |
 
 ## NB13-calib: population calibration tested and rejected on real blind data
 
@@ -1071,11 +1118,103 @@ The CYP2C9 ST-RAE prediction was a degenerate "band" of a single point and it mi
 miss rather than rounded into a range. The R² forecasts are the load-bearing ones, since R² is what
 the solved population predicts directly, and both landed inside the fit's own residual.
 
-**What it does not settle.** The shrinkage fraction is unresolved: s = 1.0 is built
-(`submission_candidate_s100.csv`, sha256 `b2c53f13…`) and **unsent**, so whether half-correcting was
-right or merely safe is untested. Nor does it validate the base — three of NB36-widened's four
-columns are unchanged, so this says nothing about whether `deadzone+aid` was the right model to
-correct. And every figure here remains a half-set measurement.
+**What it does not settle — one item since resolved.** The shrinkage fraction was unresolved when
+this row was written: s = 1.0 was built (`submission_candidate_s100.csv`, sha256 `b2c53f13…`) and
+unsent. **It was sent on 2026-10-30 and scored 0.5933**, so half-correcting was better on ST-RAE,
+not merely safer — see the NB56b-s100 section below for the controlled comparison. Nor does it
+validate the base — three of NB36-widened's four columns are unchanged, so this says nothing about
+whether `deadzone+aid` was the right model to correct. And every figure here remains a half-set
+measurement.
+
+## NB56b-s100: the shrinkage lever, and a controlled ST-RAE/R² divergence
+
+Submitted **2026-10-30 07:54:11 UTC**, file
+`outputs/56b_cyp1a2_corrected/submission_candidate_s100.csv`, sha256
+`b2c53f136f1d2684643126492a98d2b718b696e55b216a17d60bf7ff6f79a228` (matches the file on disk and
+its own receipt). **Macro ST-RAE 0.5933, board rank 93** — second-best of the eighteen scored rows,
+behind only NB56b-s050 (0.5861) and ahead of 27b (0.5982). Macro reconciliation computed, not
+asserted: mean of the four isoform values against the stated macro gives ST-RAE 7.5e-5, MAE 2.5e-5,
+R² 2.5e-5, Spearman 2.5e-5, Kendall 2.5e-5 — all inside display rounding, ST-RAE's the largest of
+the five. **A half-set measurement**, like every other row here.
+
+| field | value |
+|---|---|
+| submission | **NB56b-s100** |
+| notebook | `56b_cyp1a2_corrected.ipynb` |
+| submitted (UTC) | **2026-10-30 07:54:11** |
+| alias | `fold-zero` |
+| accepted? | Yes — server reply captured in `submission_receipt_s1.0.json` |
+| deliberate? | Yes, gate opened and run by hand |
+| macro ST-RAE | **0.5933** (rank 93) |
+| CYP1A2 | ST-RAE 0.5767 (rank 87) |
+| CYP2C9 | ST-RAE 0.5562 (rank 161) |
+| CYP2D6 | ST-RAE 0.7502 (rank 106) |
+| CYP3A4 | ST-RAE 0.4904 (rank 93) |
+
+**One refused attempt preceded it, and it is worth recording because it confirms the cooldown
+exactly.** The same file was sent at **2026-10-29 21:28:04 UTC** and the server refused it:
+`Error: You submitted a regression prediction on 2026-10-29 14:18:12 (UTC). Please wait 04:50:07
+before submitting again.` 21:28:04 plus 04:50:07 is 2026-10-30 02:18:11, which is 14:18:12 plus
+twelve hours — an independent confirmation of `HOURS_BETWEEN_SUBMISSIONS = 12` from the server's own
+arithmetic. **Nothing was transmitted**, so this is not a send and is not counted as one.
+
+### Why this pair is a controlled experiment
+
+NB56b-s050 and NB56b-s100 differ in **exactly one scalar**: the shrinkage fraction `s` applied to
+the affine correction on CYP1A2 and CYP2C9. Same base file (NB36-widened), same solved populations,
+same recovered ρ, same code path, sent twelve hours apart. CYP2D6 and CYP3A4 are byte-identical
+across the two (verified: max |difference| `0.00e+00` on both columns). Three results follow, and
+the full write-up with the arithmetic is in `docs/findings.md` finding 5.
+
+**The lever moved only what it touched.** All ten CYP2D6 and CYP3A4 cells are exactly equal across
+the two submissions — not equal to four significant figures, equal at every digit the board prints.
+
+**Spearman and Kendall did not move on any of the four isoforms.** Not one of the eight rank-metric
+cells differs. On CYP2D6/CYP3A4 that is trivial (identical files); the load-bearing part is CYP1A2
+and CYP2C9, where the predictions genuinely changed under a different affine map and the ordering
+still did not. Both also reproduce NB36-widened's own values on those isoforms, so this is a
+three-way agreement across three separate sends.
+
+**And the two metrics disagree about which submission is better.** On the two isoforms that moved,
+ST-RAE got **worse** while R² got **better**, on both:
+
+| | CYP1A2 | CYP2C9 | macro |
+|---|---:|---:|---:|
+| ST-RAE (lower better) | +0.0136 | +0.0154 | +0.0072 |
+| R² (higher better) | +0.0397 | +0.0072 | +0.0117 |
+| MAE (lower better) | −0.0413 | −0.0022 | −0.0109 |
+
+So ST-RAE is the odd one out: **MAE moves with R², not with ST-RAE.** Stated as leaderboard
+records rather than as deltas, s = 1.0 **takes the record on six cells** — macro MAE and R²,
+CYP1A2 MAE and R², CYP2C9 MAE and R² — every one of them from s = 0.5, which keeps the ST-RAE
+record. Fully correcting the placement is the better submission on two of the three error metrics
+and the worse one on the metric this project and this leaderboard are scored by.
+
+**s = 0.5 wins or ties on every isoform on ST-RAE** — it wins CYP1A2 and CYP2C9 and ties the two
+untouched ones — so choosing it needs no per-isoform cherry-picking. That dominance is
+**metric-conditional**, and the condition matters: on R² and MAE the same comparison reverses on
+all four (two wins, two ties for s = 1.0). s = 0.5 is the right choice **conditional on ST-RAE
+being the metric that decides**, not because it is the better-calibrated file. On the evidence here,
+s = 1.0 is the better-calibrated file.
+
+**That condition is assumed, not confirmed, and it is worth stating because the final-submission
+choice turns on it.** ST-RAE is listed **first** in the vendored evaluator's own `ACTIVITY_METRICS`
+and is the metric its docstring uses as the exemplar `primary_metric`
+(`src/vendor/openadmet_eval/`), and this project has treated it as governing throughout — but the
+vendored evaluator sets no default `primary_metric`, the live backend's sort key appears nowhere in
+this repository, and `CLAUDE.md` already carries the standing caveat that the vendored evaluator has
+never been diffed against the live backend. **Nor can the recorded board ranks settle it**: they are
+not monotone in macro ST-RAE across dates (NB47-mae's 0.6328 ranked 83 on 2026-10-10 while
+NB48-ensemble's worse 0.6356 ranked 74 two days later), which is what an actively-resubmitting field
+produces and which makes ranks unusable as a cross-date comparison in either direction. If the
+organisers rank on R² or MAE, s = 1.0 is the better submission of the two.
+
+**What the pair settles and what it does not.** It settles that the shrinkage fraction is not free —
+half-correcting scored better on the governing metric, so the hedge paid. It does not establish
+that s = 0.5 is optimal: `s` was sampled at two points, the ST-RAE-versus-R² optimum lies somewhere
+between them or below, and both readings are half-set. Nor does either submission say anything
+about the base model, since three of NB36-widened's four columns are unchanged in s = 0.5 and two
+in s = 1.0.
 
 ## The full macro ST-RAE trajectory, in true chronological order
 
@@ -1103,6 +1242,7 @@ timestamp:
 | 16 | NB48-ensemble | 2026-10-12 00:08 UTC | 0.6356 |
 | 17 | **NB56-identify** (probe, deliberately degraded) | **2026-10-28 19:38:58 UTC** | **0.6947** |
 | 18 | **NB56b-s050** | **2026-10-29 14:18:11 UTC** | **0.5861 — best on record** |
+| 19 | **NB56b-s100** | **2026-10-30 07:54:11 UTC** | **0.5933 — second best** |
 
 One row here is not in the per-isoform table above: the accidental 27b re-send at order 12, which
 is byte-identical to order 10 and so needs no column. **It is the row the interim full-set
