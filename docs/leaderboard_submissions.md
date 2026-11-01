@@ -1252,7 +1252,8 @@ screenshots on 2026-10-29; both it and the re-send were the two non-deliberate, 
 
 The trajectory is not monotonic: five step-to-step regressions (04b→NB10 +0.1120, 10c→NB12
 +0.1161, NB12→NB13-calib +0.0512, NB27-widened→NB30 +0.2005, 27b→NB32-A +0.0506) interrupt an
-otherwise steady improvement from `10c` (0.7138) down to 27b (0.5982, the best on record). **NB30's
+otherwise steady improvement from `10c` (0.7138) down to NB56b-s050 (0.5861, the best on record),
+which took the record from 27b (0.5982) on 2026-10-29. **NB30's
 regression is the largest single step-to-step increase in macro ST-RAE anywhere in this
 trajectory** — larger than 04b→NB10, 10c→NB12, NB12→NB13-calib, and 27b→NB32-A, each recomputed
 directly from the chronological table above rather than assumed. **NB30→27b is the largest single

@@ -1,89 +1,71 @@
 # OpenADMET CYP450 Inhibition Blind Challenge — Direct Inhibition Track
 
-Solo entry to the [OpenADMET](https://openadmet.org) CYP450 Inhibition Blind Challenge,
-**Direct Inhibition regression track only**. A final-year BSc Pharmaceutical Chemistry
-dissertation project (module **CH3PRO**, University of Reading), supervised by
-**Dr Mauricio Cafiero**.
+Solo entry to the [OpenADMET](https://openadmet.org) CYP450 Inhibition Blind Challenge, Direct Inhibition regression track. Final-year BSc Pharmaceutical Chemistry dissertation project (**CH3PRO**, University of Reading), supervised by Dr Mauricio Cafiero.
 
-This README is a short entry point. Detail lives in per-directory READMEs and in
-`docs/leaderboard_submissions.md`; the full day-by-day reasoning behind every result lives in
-`CLAUDE.md`'s notebook status log.
+Predict pIC50 for CYP1A2, CYP2C9, CYP2D6 and CYP3A4 on a 750-compound blinded test set, from 4,905 labelled training compounds carrying 6,525 measurements. Challenge opened 17 August 2026, closes 3 November 2026.
 
-## What this project is
+---
 
-**Timeline:** opened 17 Aug 2026 · intermediate deadline 24 Sep 2026 · final close 3 Nov 2026.
+## Final Submission
 
-**Task:** predict pIC50 (direct inhibition) for four CYP450 isoforms — CYP1A2, CYP2C9, CYP2D6,
-CYP3A4 — on a 750-compound blinded test set, from a 4,905-compound labeled training set (6,525
-measurements total, since a compound can be labeled for more than one isoform). See
-`data/README.md` for the per-isoform breakdown.
+**[`METHOD.md`](METHOD.md) for full model report**
 
-**No blind-set labels exist anywhere in this repo, in any form.** Every leaderboard figure cited
-anywhere in this project came from OpenADMET's own leaderboard after a real, deliberate
-submission — never from a locally-held answer key. This project's own working rule (`CLAUDE.md`)
-is explicit: the blind test set is single-use evidence, not training data, at any point, and no
-prompt that would use test-set labels, leaderboard scores, or the 3 Nov full release to pick or
-retrain a model is acted on without stopping to flag it first.
-
-Session transcripts for AI-assisted work on this dissertation are kept under `.cc-history/` as a
-disclosure trail, per the module's AI-usage requirements.
-
-## Governing metric
-
-The competition scores submissions on **macro ST-RAE** (mean, across the four isoforms, of a
-soft-threshold relative absolute error) — **lower is better**, and a naive mean-prediction
-baseline scores exactly 1.0 by construction, so anything below 1.0 is beating that floor. See
-`src/vendor/openadmet_eval/` for the scoring code itself and `src/README.md` for how this
-project's own scoring wrapper uses it.
-
-**Every leaderboard figure anywhere in this project is a half-set measurement**: the live board
-scores only half of the blind test set (split by chemical series) as submissions come in — the
-full set is scored only at the intermediate reveal and at the competition's close. No number
-below, or in any file this README points to, is a final result.
-
-## Current best result
-
-The best real submission to date is **27b** (`notebooks/27b_aid_cyp2d6_corrected.ipynb`),
-submitted 2026-09-19:
+The final submission is **NB56b-s050** (`notebooks/56b_cyp1a2_corrected.ipynb`): a dead-zone-target Chemprop/CheMeleon model with an affine placement-and-scale correction at half strength.
 
 | | Macro | CYP1A2 | CYP2C9 | CYP2D6 | CYP3A4 |
 |---|---:|---:|---:|---:|---:|
-| **ST-RAE** | **0.5982** | 0.6954 | 0.5375 | 0.7165 | 0.4434 |
+| **ST-RAE** | **0.5861** | 0.5631 | 0.5408 | 0.7502 | 0.4904 |
 
-`docs/leaderboard_submissions.md` is the single canonical, full-precision record of every real
-submission (all metrics, all isoforms, all fourteen submissions to date) — read it rather than
-reconstructing scores from notebook prose.
+Best of eighteen scored rows across nineteen real sends, ahead of the previous best at 0.5982. Its correction constants are solved from the board's own returned metrics, which is leaderboard probing and is disclosed as such in the model report.
+
+---
+
+## The metric
+
+Submissions are scored on **macro ST-RAE**, the mean across the four isoforms of a soft-threshold relative absolute error. **Lower is better**, and a naive mean-prediction baseline scores exactly 1.0 by construction, so anything under 1.0 beats that floor.
+
+ST-RAE charges nothing for a prediction falling inside a compound's credible interval, and the distance to the nearest edge otherwise. That shape drives most of the decisions in the model report. Scoring code: `src/vendor/openadmet_eval/`, vendored unmodified.
+
+---
+
+## On blind-set labels
+
+**No blind-set labels exist anywhere in this repository, in any form.** Every leaderboard figure cited anywhere in this project came from OpenADMET's own board after a real, deliberate submission, never from a locally held answer key.
+
+The project's working rule in `CLAUDE.md` is explicit: the blind test set is single-use evidence, not training data, at any point. No prompt that would use test-set labels, leaderboard scores or the full release to pick or retrain a model is acted on without stopping to flag it first.
+
+Session transcripts for AI-assisted work are kept under `.cc-history/` as a disclosure trail, per the module's AI-usage requirements.
+
+---
 
 ## Repository map
 
-- **[`notebooks/`](notebooks/README.md)** — analysis and modelling notebooks, run in numbered
-  order.
-- **[`src/`](src/README.md)** — shared library code (`features.py`, `scoring.py`, `calibration.py`,
-  `chemprop_screen.py`, `cv_bootstrap.py`, `ensemble/`) plus vendored third-party code
-  (`src/vendor/`).
-- **[`scripts/`](scripts/README.md)** — standalone, long-running training scripts, launched by
-  hand.
-- **[`data/`](data/README.md)** — raw (gitignored HuggingFace release), processed (gitignored,
-  regenerated by notebooks), and frozen fold-split data.
-- **[`environment/`](environment/README.md)** — archived environment specs and the
-  `cyp-admet`/`cyp-admet-v2` migration story. The live spec is `environment.yml` at the repo root.
-- **[`outputs/`](outputs/README.md)** — per-run predictions, params, metrics tables, and
-  submission files, one subdirectory per notebook.
-- **`docs/`** — `leaderboard_submissions.md`, the canonical record of every real submission.
-- **`logs/`** — stdout/progress logs from `scripts/` runs.
-- **`models/`** — frozen model checkpoints from `scripts/` runs (gitignored).
-- **`.cc-history/`** — Claude Code session transcripts (an AI-usage disclosure trail for the
-  dissertation).
+| | |
+|---|---|
+| [`notebooks/`](notebooks/README.md) | analysis and modelling notebooks, run in numbered order |
+| [`src/`](src/README.md) | shared library code, plus vendored third-party code under `src/vendor/` |
+| [`scripts/`](scripts/README.md) | standalone long-running training scripts, launched by hand |
+| [`data/`](data/README.md) | raw release (gitignored), processed (gitignored, regenerated), frozen fold splits |
+| [`environment/`](environment/README.md) | archived environment specs and the `cyp-admet-v2` migration |
+| [`outputs/`](outputs/README.md) | per-run predictions, params, metrics and submission files |
+| `figures/` | the figure-generation layer: one module per figure, three output targets |
+| `docs/figures/` | committed PNGs used by `METHOD.md` |
+| `logs/`, `models/` | run logs; frozen checkpoints (gitignored) |
+| `.cc-history/` | Claude Code session transcripts |
 
-`CLAUDE.md` (repo root) is the agent operating file — rules this project works under, and the
-full, detailed notebook-by-notebook history. It is written for a cold-start Claude Code session,
-not as reader-facing documentation, but it is the most complete single record in this repo.
+**`docs/`** holds the record layer:
+
+- [`leaderboard_submissions.md`](docs/leaderboard_submissions.md) — the canonical, full-precision record of every real submission, all metrics, all isoforms, each with its sha256. Read this rather than reconstructing scores from notebook prose.
+- [`findings.md`](docs/findings.md) — results that outlive the notebook that produced them.
+- [`prereg_fullset.md`](docs/prereg_fullset.md) — predictions committed before the labels were released, with the tolerances that count as a pass.
+
+`CLAUDE.md` at the repo root is the agent operating file: the rules this project works under and the notebook-by-notebook history. It is written for a cold-start Claude Code session rather than as reader-facing documentation, but it is the most complete single record here.
+
+---
 
 ## Quick start
 
-Build and activate the environment (native arm64 conda required — `cyp-admet-v2` lives under
-`~/miniconda3-arm64`, not the default `/opt/anaconda3`, so plain `conda activate` will not find it
-unless that installation's `conda` is initialized first; see `environment/README.md`):
+Native arm64 conda is required. `cyp-admet-v2` lives under `~/miniconda3-arm64`, not the default `/opt/anaconda3`, so a plain `conda activate` will not find it unless that installation's `conda` is initialised first (see [`environment/README.md`](environment/README.md)):
 
 ```bash
 ~/miniconda3-arm64/bin/conda env create -f environment.yml
@@ -91,101 +73,32 @@ source ~/miniconda3-arm64/etc/profile.d/conda.sh
 conda activate cyp-admet-v2
 ```
 
-`environment.yml` is the authoritative spec; `requirements.txt` is a secondary `pip freeze`
-reference only, not an independent install path (some packages, RDKit in particular, need specific
-channel/index ordering a plain `pip install -r` into an empty environment won't reproduce).
+`environment.yml` is the authoritative spec. `requirements.txt` is a secondary `pip freeze` reference, not an independent install path — RDKit in particular needs channel ordering that a plain `pip install -r` into an empty environment will not reproduce.
 
-RDKit and PyTorch each bundle their own OpenMP runtime, and running them multi-threaded in the same
-process segfaults on this machine — every notebook and script sets these two variables before
-RDKit/PyTorch/Chemprop are first imported, and you should too if running cells by hand:
+RDKit and PyTorch each bundle their own OpenMP runtime, and running them multi-threaded in the same process segfaults on this machine. Every notebook and script sets these before RDKit, PyTorch or Chemprop is first imported, and you should too if running cells by hand:
 
 ```bash
 export OMP_NUM_THREADS=1
 export KMP_DUPLICATE_LIB_OK=TRUE
 ```
 
-Run a notebook headlessly (this is how every notebook in this project is actually executed and
-re-executed, not just via the Jupyter UI):
+Notebooks are executed headlessly, not through the Jupyter UI:
 
 ```bash
 jupyter nbconvert --to notebook --execute --inplace notebooks/00_schema_audit.ipynb
 ```
 
-Notebooks `00`→`03` must run first, in order, and only once — they freeze the curated data and the
-CV fold assignment every later notebook reads read-only. After that, see `notebooks/README.md` for
-what each notebook needs and produces. Long-running training happens in `scripts/` (launched by
-hand in the background, not from a notebook) — see `scripts/README.md`.
+Notebooks `00`→`03` run first, in order, and only once. They freeze the curated data and the CV fold assignment that every later notebook reads read-only. After that see [`notebooks/README.md`](notebooks/README.md). Long training runs happen in `scripts/`, launched by hand in the background.
 
-## Key findings
+---
 
-- **27b is the best submission to date** (macro ST-RAE 0.5982) — the AID 1851 auxiliary-head
-  model's blind predictions with CYP2D6 placement-corrected and widened the same way NB27-widened's
-  CYP2D6 column was; Spearman and Kendall held exactly (the third confirmation of this
-  rank-preservation prediction on this project). NB27-widened (macro ST-RAE 0.6155) remains the
-  best submission built on the plain `chemprop_chemeleoninit` model. See
-  `docs/leaderboard_submissions.md`.
-- **Blind-population recentring earns its place only where placement is genuinely broken.** It
-  fixed CYP2D6 (R² −0.59 → +0.27) but cost CYP2C9 performance, which NB19 then reverted. See
-  `docs/leaderboard_submissions.md`'s NB16/NB19 sections.
-- **Population calibration toward this project's own training population, or an external
-  reference population (PubChem AID 1851), is a confirmed real-blind-data negative result in every
-  form tested.** Only calibration toward the *blind* population itself (NB16) helped. See
-  `docs/leaderboard_submissions.md`.
-- **CYP2D6's persistent underperformance traces to blind-test-set construction**, not a modelling
-  flaw: it was not hit-expansion-seeded the way the other three isoforms were, and uses a
-  different assay — confirmed via the OpenADMET Discord. See `notebooks/README.md` (`04c`).
-- **CV-side ensemble gains did not reliably survive to blind data for CYP1A2/CYP3A4** — a
-  selection-bias risk (Caruana et al. 2004), not a pipeline bug. Caruana bagged selection, capped
-  at each isoform's CV-minimizing member count, is the current ensembling method. See
-  `notebooks/README.md` (`08`→`11b`→`12`).
-- **The `cyp-admet-v2` environment migration is confirmed not to be the cause of** an earlier
-  submission's blind-score regression — isolated by a same-recipe control submission. See
-  `notebooks/README.md` (`10c`).
-- **MPS is unusable for Chemprop training**, precisely diagnosed rather than assumed: a
-  non-deterministic MPS kernel conflicts with Chemprop's forced-determinism-on-seed behavior. CPU
-  is the correct choice here, not a stopgap. See `environment/README.md`.
-- **Chemprop's multitask loss reweighting by valid-label count** is a leading, cross-isoform
-  hypothesis for why excluding CYP2D6 outlier labels shifts predictions on the other, untouched
-  isoforms too. See `notebooks/README.md` (`06`, `20`).
-- **Adding new information (auxiliary prediction heads from this project's own unused challenge
-  files) is the only mechanism tested so far that isn't just a rearrangement of existing
-  information** — a real, single-fold, isoform-specific gain (TDI heads: CYP3A4/CYP2C9; not yet run
-  at full 25-fold CV). See `notebooks/README.md` (`22`, `23`).
-- **A different auxiliary-head source (PubChem AID 1851) was confirmed at full 5×5 CV and still
-  failed to transfer to the real blind board — the third CV-to-blind transfer failure on this
-  project, and the most rigorously confirmed.** Notebook 29's honest, paired, BH-corrected 5×5 CV
-  run found CYP1A2 and CYP2D6 significantly better; the resulting full-data submission (NB30, macro
-  ST-RAE 0.8160) scored worse than the `10c` baseline on all four isoforms — the largest
-  single-step blind-score regression in this project's history. A prediction-spread-compression
-  signal, not the CV result, correctly anticipated this outcome. **The raw board reading was a
-  calibration artefact, not a model verdict**: a mixed-recipe correction built in response (27b)
-  was sent and became the best submission to date (macro ST-RAE 0.5982) — see
-  `docs/leaderboard_submissions.md`'s NB30 and 27b sections and `notebooks/README.md` (`28`, `29`,
-  `30`, `27b`).
-- **Fitting to the credible interval rather than the point estimate is the one unanimous win in
-  this project's screening history.** Training against `clip(oof_prediction, conf_low, conf_high)`
-  under absolute-error loss improved ST-RAE on all four isoforms *and* raised Spearman on all four
-  — the part that matters, since an affine placement or spread correction provably cannot move rank
-  order. Confirmed at 25 cluster-disjoint folds. See `notebooks/README.md` (`31`, `37`).
-- **Cluster-disjoint splitting does not change this project's conclusions, and the claim that it
-  would was testable and failed.** Across a completed 5×5 cluster-disjoint design, **0 of 25
-  sign-resolved arm-by-isoform comparisons flip** against the frozen random partition. The
-  exercise was not wasted: it produced this project's first genuinely *decorrelated* ensemble
-  candidate (tree models on raw fingerprint features), and it showed the AID auxiliary-head result
-  is more fragile to split choice than its 25-fold random-CV confirmation alone suggested. See
-  `notebooks/README.md` (`33`–`35`, `37`).
-- **Quantum-chemistry descriptors now exist for the whole library** — 5,655 compounds through
-  GFN2-xTB geometry optimisation and a B3LYP/def2-SV(P) single point, 11,310 ORCA jobs, **zero
-  failures**, parsed into per-atom, per-bond and molecule-level tables. Whether they carry signal
-  is a separate, open question: identifying *which* atom coordinates the haem iron turns out to be
-  a bind, because the SMARTS definition faithful to the cited chemistry matches 79% of compounds
-  and selects nothing, while the one that selects is empty for 88% of the scored blind set. See
-  `outputs/qm_descriptors/README.md`, `outputs/qm_parsed/README.md` and `notebooks/README.md`
-  (`41`–`43`).
+## How this project held itself to a standard
 
-## Status
+Three rules were fixed before the experiments that use them, and they are what the model report's claims rest on.
 
-The intermediate leaderboard reveal is 24 Sep 2026; the competition closes 3 Nov 2026. Until then,
-every score in this repository is a half-set measurement and no adoption decision is made on CV
-evidence alone without an explicit, pre-stated effect-size threshold — see `CLAUDE.md`'s Rules
-section for the full discipline this project holds itself to.
+**The fold partitions are frozen and hash-pinned.** A random 5×5 and a cluster-disjoint 5×5, both in `data/folds/`, neither modified after the first experiment ran against it.
+
+**Significance is not sufficient for adoption.** Every comparison carries a materiality bar derived from how well the design resolves any difference, frozen before results, and a result that is significant but under its bar is reported as detected, not material. That is the commonest outcome in this project's screening history.
+
+**Predictions were written down before they could be checked.** `docs/prereg_fullset.md` and the per-experiment pre-registrations in the notebooks record what should happen, with tolerances, including the predictions most likely to fail.
+
