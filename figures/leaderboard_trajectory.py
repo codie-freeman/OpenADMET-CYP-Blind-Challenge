@@ -37,8 +37,11 @@ scores for the same bytes; that repetition is the point, not a plotting artefact
 sixth confirmation of board determinism on this record. It is also the send the interim full-set
 reveal scored, which the labelled dashed rule marks.
 
-The trajectory is not monotonic. It now terminates on the best row on record, NB56b-s050 at macro
-0.5861, which is also the first record-holder that is not a per-isoform assembly.
+The trajectory is not monotonic, and it does **not** end on its own best point. The best row on
+record is NB56b-s050 at macro 0.5861, at order 18 — the first record-holder that is not a
+per-isoform assembly. Order 19 is its full-strength twin, NB56b-s100, which scored 0.5933: the two
+differ in one scalar, and sending both is what established that half strength was the right
+setting rather than an assumption.
 """
 
 
